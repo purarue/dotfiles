@@ -69,15 +69,19 @@ havecmd git || exit $?
 echo 'Checking git config...'
 # check for global name config
 if [[ -z $(git config --global user.name) ]]; then
-	printf "No global name set. Enter full name: "
+	printf "No global name set. Enter name: "
 	read -r githubusername
 	git config --global user.name "${githubusername}"
 fi
 # check for global email config
 if [[ -z $(git config --global user.email) ]]; then
-	printf "No global email set. Enter email connected to your GitHub account: "
-	read -r githubemail
-	git config --global user.email "${githubemail}"
+	if [[ -n "$GITHUB_EMAIL" ]]; then
+		git config --global user.email "$GITHUB_EMAIL"
+	else
+		printf "No global email set. Enter email connected to your GitHub account: "
+		read -r githubemail
+		git config --global user.email "${githubemail}"
+	fi
 fi
 
 # set editor to use as nvim
