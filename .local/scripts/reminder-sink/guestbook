@@ -2,7 +2,7 @@
 # if there are comments to approve, warn me
 
 CACHE_FILE="$HOME/.cache/guestbook-comments"
-[[ -f $CACHE_FILE ]] || exit 2
+[[ ! -f $CACHE_FILE ]] && exit 0
 
 EXIT=0
 if FILE="$(is-integer "$(cat "$CACHE_FILE")")"; then
