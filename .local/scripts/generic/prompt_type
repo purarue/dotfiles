@@ -3,7 +3,7 @@
 """
 A basic script that prompts the user for a type, optionally coercing it to a type
 
-Made to be used in ranger, to prompt for text https://sean.fish/d/rc.conf?dark
+Made to be used in ranger, to prompt for text https://purarue.xyz/d/rc.conf?dark
 """
 
 import click

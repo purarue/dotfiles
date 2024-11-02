@@ -1,0 +1,27 @@
+#!/usr/bin/env python3
+
+"""
+runs figlet and renders the text so that it can be
+embedded into code as a single string with newlines
+
+copies that to my clipboard
+"""
+
+
+import subprocess
+
+import click
+from pura.clipboard import clipcopy
+
+
+@click.command(help=__doc__)
+@click.argument("TEXT")
+def main(text: str) -> None:
+    resp = subprocess.check_output(["figlet", text]).decode("utf-8")
+    rendered = repr(resp)
+    clipcopy(rendered)
+    click.echo(f"copied to clipboard:\n\n{resp}")
+
+
+if __name__ == "__main__":
+    main()

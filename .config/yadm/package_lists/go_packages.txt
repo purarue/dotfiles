@@ -6,17 +6,17 @@ guru golang.org/x/tools/cmd/guru
 goimports golang.org/x/tools/cmd/goimports
 
 # my packages
-keyvol github.com/seanbreckenridge/keyvol
-twitchlive github.com/seanbreckenridge/twitchlive
-darker_errors github.com/seanbreckenridge/darker_errors
-spkglist github.com/seanbreckenridge/spkglist/cmd/spkglist
-newest github.com/seanbreckenridge/newest
-chomp github.com/seanbreckenridge/chomp
-fzfcache github.com/seanbreckenridge/fzfcache
-on_machine github.com/seanbreckenridge/on_machine/cmd/on_machine
-server_clipboard github.com/seanbreckenridge/server_clipboard/cmd/server_clipboard
-is-integer github.com/seanbreckenridge/is-integer
-markdown_stew github.com/seanbreckenridge/markdown_stew/cmd/markdown_stew
+keyvol github.com/purarue/keyvol
+twitchlive github.com/purarue/twitchlive
+darker_errors github.com/purarue/darker_errors
+spkglist github.com/purarue/spkglist/cmd/spkglist
+newest github.com/purarue/newest
+chomp github.com/purarue/chomp
+fzfcache github.com/purarue/fzfcache
+on_machine github.com/purarue/on_machine/cmd/on_machine
+server_clipboard github.com/purarue/server_clipboard/cmd/server_clipboard
+is-integer github.com/purarue/is-integer
+markdown_stew github.com/purarue/markdown_stew/cmd/markdown_stew
 
 # others
 wuzz github.com/asciimoo/wuzz

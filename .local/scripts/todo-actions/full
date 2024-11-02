@@ -8,5 +8,5 @@ if [[ -z "$TODO_DIR" ]]; then
 fi
 
 export TODO_DIR="$TODO_DIR"
-# https://github.com/seanbreckenridge/full_todotxt
+# https://github.com/purarue/full_todotxt
 full_todotxt -ps || exit $?

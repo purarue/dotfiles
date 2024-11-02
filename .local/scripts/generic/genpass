@@ -4,7 +4,7 @@ set -e
 set -o pipefail
 
 # generates a password and puts it on your clipboard
-# uses https://github.com/seanbreckenridge/genpasswd
+# uses https://github.com/purarue/genpasswd
 # or 'pip install diceware'
 generate() {
 	if [[ -n "$USE_DICEWARE" ]]; then

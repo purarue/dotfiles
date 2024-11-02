@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # checks if a file has been modified within some amount of timeJ
 # this script uses `evry duration` internally to parse a human readable duration
-# 'https://github.com/seanbreckenridge/evry'
+# 'https://github.com/purarue/evry'
 
 # disable debug mode, if enabled
 [[ -n "$EVRY_DEBUG" ]] && unset EVRY_DEBUG

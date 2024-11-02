@@ -1,8 +1,8 @@
 """
 Configuration file for
 https://github.com/karlicoss/HPI/
-https://github.com/seanbreckenridge/HPI/
-https://github.com/seanbreckenridge/HPI-personal
+https://github.com/purarue/HPI/
+https://github.com/purarue/HPI-personal
 [Human Programming Interface]
 """
 
@@ -15,9 +15,9 @@ from datetime import datetime, date, timedelta
 from my.core.common import PathIsh, Paths
 
 from .common import repo
-from .reorder_path import seanbreckenridge_reorder_path
+from .reorder_path import purarue_reorder_path
 
-seanbreckenridge_reorder_path()  # type: ignore[no-untyped-call]
+purarue_reorder_path()  # type: ignore[no-untyped-call]
 
 #############
 #           #
@@ -175,7 +175,7 @@ class reddit:
     class pushshift:
         """
         comment export using
-        https://github.com/seanbreckenridge/pushshift_comment_export
+        https://github.com/purarue/pushshift_comment_export
         """
 
         export_path: Paths = data("pushshift")
@@ -224,14 +224,14 @@ class commits:
         [
             repo(""),
             path.expanduser("~/Files/OldRepos"),
-            path.expanduser("~/.local/share/go/src/github.com/seanbreckenridge/"),
+            path.expanduser("~/.local/share/go/src/github.com/purarue/"),
         ]
     )
 
 
 class mpv:
     class history_daemon:
-        """https://github.com/seanbreckenridge/mpv-history-daemon"""
+        """https://github.com/purarue/mpv-history-daemon"""
 
         export_path: Paths = data("mpv")
 
@@ -250,7 +250,7 @@ except Exception:
 
 class browser:
     """
-    uses browserexport https://github.com/seanbreckenridge/browserexport
+    uses browserexport https://github.com/purarue/browserexport
     """
 
     class export:
@@ -262,7 +262,7 @@ class browser:
 
 class league:
     class export:
-        """https://github.com/seanbreckenridge/lolexport"""
+        """https://github.com/purarue/lolexport"""
 
         export_path: Paths = data("league_of_legends/*.json")
         username = "purplepinapples"
@@ -270,28 +270,28 @@ class league:
 
 class chess:
     class export:
-        """https://github.com/seanbreckenridge/chess_export"""
+        """https://github.com/purarue/chess_export"""
 
         export_path: Paths = data("chess")
 
 
 class listenbrainz:
     class export:
-        """https://github.com/seanbreckenridge/listenbrainz_export"""
+        """https://github.com/purarue/listenbrainz_export"""
 
         export_path: Paths = data("listenbrainz")
 
 
 class trakt:
     class export:
-        """https://github.com/seanbreckenridge/traktexport"""
+        """https://github.com/purarue/traktexport"""
 
         export_path: Paths = data("trakt")
 
 
 class mal:
     class export:
-        """https://github.com/seanbreckenridge/malexport"""
+        """https://github.com/purarue/malexport"""
 
         export_path: PathIsh = data("malexport")
         zip_backup_path: PathIsh = data("malexport_backups")
@@ -299,7 +299,7 @@ class mal:
 
 class grouvee:
     class export:
-        """https://github.com/seanbreckenridge/grouvee_export"""
+        """https://github.com/purarue/grouvee_export"""
 
         export_path: Paths = data("grouvee")
 
@@ -307,7 +307,7 @@ class grouvee:
 class nextalbums:
     """
     uses my personal albums system
-    https://github.com/seanbreckenridge/albums
+    https://github.com/purarue/albums
     """
 
     export_path: Paths = data("albums.json")
@@ -315,20 +315,20 @@ class nextalbums:
 
 class steam:
     class scraper:
-        """https://github.com/seanbreckenridge/steamscraper"""
+        """https://github.com/purarue/steamscraper"""
 
         export_path: Paths = data("steam/*.json")
 
 
 class piazza:
     class scraper:
-        """https://github.com/seanbreckenridge/piazza-scraper"""
+        """https://github.com/purarue/piazza-scraper"""
 
         export_path: Paths = data("piazza/*.json")
 
 
 class blizzard:
-    """https://github.com/seanbreckenridge/blizzard_gdpr_parser"""
+    """https://github.com/purarue/blizzard_gdpr_parser"""
 
     class gdpr:
         export_path: Paths = data("gdpr/blizzard/parsed.json")
@@ -338,7 +338,7 @@ environ["OLD_FORUMS_SELECTORS"] = str(data("old_forum_selectors.json"))
 
 
 class old_forums:
-    """https://github.com/seanbreckenridge/old_forums"""
+    """https://github.com/purarue/old_forums"""
 
     # path[s]/glob to the folder which contains JSON/HTML files
     export_path: Paths = data("old_forums")
@@ -372,7 +372,7 @@ class twitch:
     class overrustle:
         """
         my chat logs from the overrustle_logs dump
-        https://github.com/seanbreckenridge/overrustle_parser
+        https://github.com/purarue/overrustle_parser
         """
 
         export_path: Paths = data("twitch/overrustle_logs.json")
@@ -395,20 +395,20 @@ class ipython:
 class google:
     """
     parses https://takeout.google.com using
-    https://github.com/seanbreckenridge/google_takeout_parser
+    https://github.com/purarue/google_takeout_parser
     """
 
     takeout_path: Paths = data("google_takeout/*.zip")
 
 
 class ttt:
-    """https://github.com/seanbreckenridge/ttt"""
+    """https://github.com/purarue/ttt"""
 
     export_path: Paths = data("ttt/*.csv")
 
 
 class activitywatch:
-    """https://github.com/seanbreckenridge/aw-watcher-window"""
+    """https://github.com/purarue/aw-watcher-window"""
 
     class active_window:
         export_path: Paths = (
@@ -435,7 +435,7 @@ class linkedin:
 
 class discord:
     class data_export:
-        """https://github.com/seanbreckenridge/discord_data"""
+        """https://github.com/purarue/discord_data"""
 
         export_path: Paths = data("discord/*.zip")
 

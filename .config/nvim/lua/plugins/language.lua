@@ -16,7 +16,7 @@ return {
     { "Bilal2453/luvit-meta", lazy = true },
     { "tpope/vim-sleuth", event = "VeryLazy" }, -- detect indentation
     {
-        "seanbreckenridge/tree-sitter-rifleconfig",
+        "purarue/tree-sitter-rifleconfig",
         ft = "rifleconfig",
         -- dir = '~/Repos/tree-sitter-rifleconfig'
     },

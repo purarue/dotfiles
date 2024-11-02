@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # generates a jumplist of directories, so I can cd to one
-# https://sean.fish/d/cd.zsh?dark
+# https://purarue.xyz/d/cd.zsh?dark
 #
 # using
-# https://sean.fish/d/tttlist?dark
+# https://purarue.xyz/d/tttlist?dark
 # and the commits modules to scan my local repos
 # https://github.com/karlicoss/HPI/blob/master/my/coding/commits.py
 

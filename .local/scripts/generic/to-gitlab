@@ -5,5 +5,5 @@ in-gitdir || {
 	echo "Not currently in a git repository" >&2
 	exit 1
 }
-git remote add origin "git@gitlab.com:seanbreckenridge/$(basename "$(pwd)").git"
+git remote add origin "git@gitlab.com:purarue/$(basename "$(pwd)").git"
 exec git push --set-upstream origin master

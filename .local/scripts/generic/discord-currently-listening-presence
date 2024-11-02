@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 wait-for-internet
-# https://github.com/seanbreckenridge/currently_listening
-with-secrets currently_listening_py discord-presence --server-url wss://sean.fish/currently_listening/ws --image-url https://sean.fish/currently_listening/currently-listening-image "$@"
+# https://github.com/purarue/currently_listening
+with-secrets currently_listening_py discord-presence --server-url wss://purarue.xyz/currently_listening/ws --image-url https://purarue.xyz/currently_listening/currently-listening-image "$@"
 sleep 30m

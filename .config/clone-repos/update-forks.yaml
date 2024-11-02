@@ -1,4 +1,4 @@
-"https://github.com/seanbreckenridge/HPI-fork":
+"https://github.com/purarue/HPI-fork":
   dirname: "HPI-karlicoss"
   preinstall: git pull
   postinstall:
@@ -7,7 +7,7 @@
     - git pull upstream master
     - git push
   pipefail: true
-"https://github.com/seanbreckenridge/promnesia-fork":
+"https://github.com/purarue/promnesia-fork":
   preinstall: git pull
   postinstall:
     - git checkout master
@@ -15,7 +15,7 @@
     - git pull upstream master
     - git push
   pipefail: true
-"https://github.com/seanbreckenridge/bleanser-fork":
+"https://github.com/purarue/bleanser-fork":
   preinstall: git pull
   postinstall:
     - git checkout master

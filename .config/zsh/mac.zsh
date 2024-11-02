@@ -3,7 +3,7 @@
 # If on mac, put gnu utils on path before others:
 # ~/.local/bin/ here is duplicated, so that its before
 # /usr/local/bin/, for any scripts I want to override
-# e.g. https://github.com/seanbreckenridge/mpv-sockets#install
+# e.g. https://github.com/purarue/mpv-sockets#install
 PATH="\
 ${HOME}/.local/bin:\
 /usr/local/bin:\

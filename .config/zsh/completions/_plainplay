@@ -1,7 +1,7 @@
 #!/bin/zsh
 #compdef plainplay
 
-# autocompletion for https://github.com/seanbreckenridge/plaintext-playlist
+# autocompletion for https://github.com/purarue/plaintext-playlist
 
 # to enable this, put the following in your zsh config:
 #

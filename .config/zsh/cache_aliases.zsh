@@ -1,6 +1,6 @@
 # periodically cache my aliases so I can reconstruct the meaning of commands using them
 # should be the last thing run when starting zsh
-# meant to be used as part of HPI https://github.com/seanbreckenridge/HPI
+# meant to be used as part of HPI https://github.com/purarue/HPI
 
 hash evry && evry 1 week -zsh_alias_cache && {
 	ALIAS_CACHE_BACKUP_DIR="$(python3 -m my.utils.backup_to 'zsh_aliases')" || exit $?

@@ -5,6 +5,5 @@
 # I do not have a login greeter, I launch directly
 # into the arch cmdline
 
-# shellcheck source=/home/sean/.profile
 source ~/.profile
 exec Hyprland

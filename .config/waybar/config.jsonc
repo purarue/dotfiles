@@ -184,16 +184,16 @@
 		"on-click": "pamixer --toggle-mute"
 	},
 	"custom/calcurse": {
-	    // run by b-calendar script
-	    "format": "{icon} {}",
-	    "format-icons": {
-	        "default": ""
-	    },
-	    "exec": "b-calendar",
-	    "interval": 600,
-	    "on-click-right": "launch calcursed",
-	    "on-click": "BLOCK_BUTTON=1 b-calendar",
-	    "signal": 5
+		// run by b-calendar script
+		"format": "{icon} {}",
+		"format-icons": {
+			"default": ""
+		},
+		"exec": "b-calendar",
+		"interval": 600,
+		"on-click-right": "launch calcursed",
+		"on-click": "BLOCK_BUTTON=1 b-calendar",
+		"signal": 5
 	},
 	"custom/mail": {
 		// run by b-mail script

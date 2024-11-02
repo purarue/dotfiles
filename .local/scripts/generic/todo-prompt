@@ -1,9 +1,9 @@
 #!/bin/sh
 # requires todo.sh (todo.txt)
 # Uses my OS-agnostic wrapper scripts:
-# https://github.com/seanbreckenridge/dotfiles/tree/master/.local/scripts/cross-platform
+# https://github.com/purarue/dotfiles/tree/master/.local/scripts/cross-platform
 
-# allow me to use this interface for https://github.com/seanbreckenridge/bookmark.txt
+# allow me to use this interface for https://github.com/purarue/bookmark.txt
 cmd='todo.sh'
 if [ "$1" = 'bookmark' ]; then
 	cmd="$1"

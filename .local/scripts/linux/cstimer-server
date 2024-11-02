@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# https://github.com/seanbreckenridge/cstimer-save-server
+# https://github.com/purarue/cstimer-save-server
 
 main() {
 	save_to="$(backup_to "cubing/cstimer")" || return $?

@@ -1,5 +1,5 @@
 #!/bin/sh
-# use cached https://github.com/seanbreckenridge/projects repository information
+# use cached https://github.com/purarue/projects repository information
 # to quickly open one of my Github repositories
 chosen="$(jq -r '.[] | .html_url' <"${REPOS}/projects/cache.json" | fzf -0)" || exit $?
 echo "$chosen" | clipcopy

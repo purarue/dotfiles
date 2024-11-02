@@ -31,9 +31,9 @@ set +u
 echo "Installing computer python packages..."
 python3 -m pip install --user --break-system-packages -q -r "${PACKAGE_DIR}/computer_python.txt"
 
-install_python_personal "plus1" "https://github.com/seanbreckenridge/plus1"
-install_python_personal "pythonanywhere_3_months" "https://github.com/seanbreckenridge/pythonanywhere-3-months"
-install_python_personal "calcurse_load" "https://github.com/seanbreckenridge/calcurse-load"
+install_python_personal "plus1" "https://github.com/purarue/plus1"
+install_python_personal "pythonanywhere_3_months" "https://github.com/purarue/pythonanywhere-3-months"
+install_python_personal "calcurse_load" "https://github.com/purarue/calcurse-load"
 
 havecmd cargo || exit $?
 echo "Installing global cargo packages..."
@@ -93,4 +93,4 @@ havecmd opam && {
 }
 clone-repos ~/.config/clone-repos/computer-clone-repos.yaml
 
-havecmd mapscii-at || yarn global add --prefix "${HOME}/.local" git+https://github.com/seanbreckenridge/mapscii-at
+havecmd mapscii-at || yarn global add --prefix "${HOME}/.local" git+https://github.com/purarue/mapscii-at

@@ -36,6 +36,7 @@ source "${ZDOTDIR}/lazy.zsh"                    # lazy load shell tools
 source "${ZDOTDIR}/progressive_enhancement.zsh" # slightly improve commands
 source "${ZDOTDIR}/updates.zsh"                 # update globally installed lang-specific packages
 source "${ZDOTDIR}/hpi.zsh"                     # handle syncing hpi config
+source "${ZDOTDIR}/ssh.zsh"                     # create a ssh-agent socket
 
 # source all aliases
 source "${ZDOTDIR}/source_aliases.zsh"

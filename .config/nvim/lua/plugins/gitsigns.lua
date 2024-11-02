@@ -1,6 +1,6 @@
 return {
     {
-        "seanbreckenridge/gitsigns-yadm.nvim",
+        "purarue/gitsigns-yadm.nvim",
         -- dir = "~/Repos/gitsigns-yadm.nvim",
         -- opts = { yadm_repo_git = "~/.config/yadm/repo.git", shell_timeout_ms = 1000 },
         lazy = true,

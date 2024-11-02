@@ -38,7 +38,7 @@
   (#offset! @injection.content 0 1 0 -1)
   (#set! injection.language "jq")) @sh_embedded_jq
 
-; https://github.com/seanbreckenridge/fzfcache
+; https://github.com/purarue/fzfcache
 (command
   name: (command_name
     (word) @cmd_name

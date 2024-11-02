@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # wrapper script to handle sonic-pi on arch with pulseaudio
-# see https://exobrain.sean.fish/devlog/sonic_pi/
+# see https://purarue.xyz/x/devlog/sonic_pi/
 # for an explanation
 
 jackd -R -d alsa -d hw:1 &

@@ -1,2 +1,2 @@
 #!/bin/sh
-exec openurl "https://sean.fish/x/notes/?search"
+exec openurl "https://purarue.xyz/x/notes/?search"

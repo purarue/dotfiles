@@ -1,3 +1,3 @@
 #!/bin/sh
-# https://github.com/seanbreckenridge/HPI-personal/blob/master/scripts/listens
+# https://github.com/purarue/HPI-personal/blob/master/scripts/listens
 exec listens --desc "$@"

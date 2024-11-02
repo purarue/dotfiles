@@ -1,35 +1,35 @@
-"https://github.com/seanbreckenridge/shortcuts":
+"https://github.com/purarue/shortcuts":
   pip: install
   postinstall:
     - shortcuts create
-"https://github.com/seanbreckenridge/ttally":
+"https://github.com/purarue/ttally":
   pip: install
-"https://github.com/seanbreckenridge/personal":
-"https://github.com/seanbreckenridge/reminder-sink":
+"https://github.com/purarue/personal":
+"https://github.com/purarue/reminder-sink":
   pip: install
-"https://github.com/seanbreckenridge/seanb-utils":
+"https://github.com/purarue/pura-utils":
   postinstall: make install
-"https://github.com/seanbreckenridge/plaintext_playlist_py":
+"https://github.com/purarue/plaintext_playlist_py":
   pip: install
-"https://github.com/seanbreckenridge/calcurse-load":
+"https://github.com/purarue/calcurse-load":
   pip: install
-"https://github.com/seanbreckenridge/oh-my-stars":
+"https://github.com/purarue/oh-my-stars":
   pip: install
-"https://github.com/seanbreckenridge/evry":
-"https://github.com/seanbreckenridge/vps":
-"https://github.com/seanbreckenridge/currently_listening":
-  base: ~/.local/share/go/src/github.com/seanbreckenridge
+"https://github.com/purarue/evry":
+"https://github.com/purarue/vps":
+"https://github.com/purarue/currently_listening":
+  base: ~/.local/share/go/src/github.com/purarue
   symlink_to: ~/Repos
   postinstall: pip install --user --break-system-packages ./currently_listening_py
-"https://github.com/seanbreckenridge/albums":
+"https://github.com/purarue/albums":
   pip: editable
-"https://github.com/seanbreckenridge/bleanser-fork":
+"https://github.com/purarue/bleanser-fork":
   pip: install
   postinstall: git remote add upstream "https://github.com/karlicoss/bleanser"
-"https://github.com/seanbreckenridge/bleanser":
+"https://github.com/purarue/bleanser":
   pip: install
-"https://github.com/seanbreckenridge/promnesia-fork":
+"https://github.com/purarue/promnesia-fork":
   pip: editable
   postinstall: git remote add upstream "https://github.com/karlicoss/promnesia"
-"https://github.com/seanbreckenridge/promnesia":
+"https://github.com/purarue/promnesia":
   pip: editable

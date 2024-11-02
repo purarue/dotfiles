@@ -14,8 +14,8 @@ case "$BLOCK_BUTTON" in
 	fi
 	;;
 3)
-	# https://sean.fish/d/cross-platform/launch?dark
-	# https://sean.fish/d/newsboat-force?dark
+	# https://purarue.xyz/d/cross-platform/launch?dark
+	# https://purarue.xyz/d/newsboat-force?dark
 	launch newsboat-force
 	;;
 esac

@@ -1,10 +1,10 @@
-"https://github.com/seanbreckenridge/HPI":
+"https://github.com/purarue/HPI":
   # this install script also HPI-karlicoss, git clones into the directory
   # its already managed there because it was needed for CI
   postinstall: ./install
-"https://github.com/seanbreckenridge/HPI-personal":
+"https://github.com/purarue/HPI-personal":
   postinstall: ./install
-"https://github.com/seanbreckenridge/HPI-fork":
+"https://github.com/purarue/HPI-fork":
   dirname: "HPI-karlicoss" # name of directory to clone into
   postinstall:
     - pip install pyfzf_iter logzero colorlog cachew

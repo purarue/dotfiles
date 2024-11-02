@@ -14,7 +14,7 @@ main() {
 		# otherwise run the server
 		cache_dir="${XDG_CACHE_DIR:-${HOME}/.cache}"
 		clone_loc="${cache_dir}/cstimer"
-		[[ -e "$clone_loc" ]] || git clone 'https://github.com/seanbreckenridge/cstimer' "$clone_loc"
+		[[ -e "$clone_loc" ]] || git clone 'https://github.com/purarue/cstimer' "$clone_loc"
 		cd "$clone_loc" || exit 1
 		make server
 	fi

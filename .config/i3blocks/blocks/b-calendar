@@ -17,7 +17,7 @@ case "$BLOCK_BUTTON" in
 	;;
 3)
 	# open calcurse in my terminal
-	# https://sean.fish/d/cross-platform/launch?dark
+	# https://purarue.xyz/d/cross-platform/launch?dark
 	launch calcursed
 	;;
 esac

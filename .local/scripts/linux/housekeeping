@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # A script for unrelated tasks I want to run every so often
 # Uses my 'evry' tool to handle how often to run tasks:
-# https://github.com/seanbreckenridge/evry
+# https://github.com/purarue/evry
 
 declare -a wfi_args=()
 if [[ -z "$1" ]]; then
@@ -15,13 +15,13 @@ wait-for-internet "${wfi_args[@]}" || exit $?
 # make sure commands exist
 export HAVECMD_REPORT=1
 
-# approve guestbook comments on https://github.com/seanbreckenridge/glue
+# approve guestbook comments on https://github.com/purarue/glue
 evry 6 hours -approve-comments && approve-comments
 
 # backup cache/tokens/logs from my server
-evry 3 days -backup_fish_server && vps_backup_server
+evry 3 days -backup_server && vps_backup_server
 
-# https://github.com/seanbreckenridge/reminder-sink
+# https://github.com/purarue/reminder-sink
 evry 1 day -reminders-notify && reminder-sink-notify
 evry 1 day -reminder-silence-prune && reminder-sink --debug silence reset --if-expired
 
@@ -39,11 +39,13 @@ evry 6 hours -google-drive && {
 	(
 		cd "${HOME}/GoogleDrive/" || exit $?
 		echo "Syncing Google Drive..."
-		drive pull -ignore-conflict -no-prompt
+		drive pull -ignore-conflict -no-prompt || {
+			drive pull -fix-clashes -no-prompt && drive pull -no-prompt
+		}
 		drive push -no-prompt
 		# if there's a new google takeout, unzip it
-		# https://github.com/seanbreckenridge/google_takeout_parser
-		# script from https://github.com/seanbreckenridge/HPI-personal
+		# https://github.com/purarue/google_takeout_parser
+		# script from https://github.com/purarue/HPI-personal
 		TAKEOUT_DIR="${HOME}/GoogleDrive/Takeout"
 		[[ -e "$TAKEOUT_DIR" ]] && unzip-google-takeout "$TAKEOUT_DIR" && drive push
 		# remove takeout dir (only works if directory is empty)
@@ -55,7 +57,7 @@ evry 6 hours -google-drive && {
 }
 
 # refresh https://dev.twitch.tv/docs/api/
-# so that https://github.com/seanbreckenridge/twitchlive continues to work
+# so that https://github.com/purarue/twitchlive continues to work
 evry 2 months -twitch_cli && twitch token
 
 evry 2 hours -data-sync-conflicts && {
@@ -70,24 +72,24 @@ evry 2 hours -data-sync-conflicts && {
 evry 1 day -check-music-extensions && check-music-extensions
 
 # make sure none of my playlist paths are broken
-# https://github.com/seanbreckenridge/plaintext-playlist
+# https://github.com/purarue/plaintext-playlist
 evry 1 day -plainplay-resolve && plainplay resolve
 
 # fix broken ID3 metadata on my music, add songs to my car playlist
-# https://github.com/seanbreckenridge/plaintext_playlist_py
+# https://github.com/purarue/plaintext_playlist_py
 evry 3 weeks -id3stuff && id3stuff -R
 evry 1 day -car-playlist && car-playlist
 
 evry 1 day -backup-keepassdb && backup-keepass-db
 
 # check for new formats in normalizing solves into a single schema
-# https://github.com/seanbreckenridge/scramble-history
+# https://github.com/purarue/scramble-history
 evry 1 day -check-scramble-history-formats && {
 	python3 -m scramble_history merge --check
 	rifleman "$XDG_CONFIG_HOME/scramble_history/sourcemap.json"
 }
 
-# update https://github.com/seanbreckenridge/mnu_gsheets
+# update https://github.com/purarue/mnu_gsheets
 evry 1 day -mnu && {
 	ssh vultr ~/vps/bin/mnu update && mnu sync
 }
@@ -95,7 +97,7 @@ evry 1 day -mnu && {
 if main-machine; then
 
 	# make sure my pythonanywhere website doesn't expire:
-	# https://github.com/seanbreckenridge/pythonanywhere-3-months
+	# https://github.com/purarue/pythonanywhere-3-months
 	evry 2 months -pythonanywhere && python3 -m pythonanywhere_3_months -c "$(which chromedriver)"
 
 	evry 1 day -update-projects && {
@@ -106,25 +108,25 @@ if main-machine; then
 		(cd "$REPOS/dbsentinel" && ./scripts/sync_from_remote)
 	}
 
-	# https://github.com/seanbreckenridge/grouvee_export
+	# https://github.com/purarue/grouvee_export
 	evry 2 months -grouvee-export && python3 -m grouvee_export export
 
-	# https://github.com/seanbreckenridge/albums
+	# https://github.com/purarue/albums
 	# try to resolve releases to their collection URLs/refresh expired album data
 	evry 1 week -discogs-update && {
 		(cd "$REPOS/albums" && ./update -r)
 	}
 
-	# https://github.com/seanbreckenridge/HPI-personal/blob/master/scripts/backup-cubing
+	# https://github.com/purarue/HPI-personal/blob/master/scripts/backup-cubing
 	backup-cubing
 
 	# remove redundant backups, merge browser/mpv history
-	# https://github.com/seanbreckenridge/bleanser
+	# https://github.com/purarue/bleanser
 	evry 1 week -merge-browser-history && merge-browser-history
 	evry 1 week -merge-mpv-history && merge-mpv-history
 	evry 1 month -dedupe-ghexport && dedupe-ghexport --move-files
 
-	# https://github.com/seanbreckenridge/HPI-personal/blob/master/scripts/mpv_clean_priv_frames
+	# https://github.com/purarue/HPI-personal/blob/master/scripts/mpv_clean_priv_frames
 	evry 1 day -clean-mpv-priv-frames && {
 		echo 'Checking priv mpv frames...'
 		mpv-clean-priv-frames clean
@@ -152,7 +154,7 @@ if main-machine; then
 	evry 3 days -auto-mal-update && {
 		auto-mal-update && rm -rvf "$(evry location -malexport_partial_update)"
 	}
-	# run malexport update https://github.com/seanbreckenridge/malexport/
+	# run malexport update https://github.com/purarue/malexport/
 	bash "${HPIDATA}/malexport.job"
 	evry 1 day -malexport_partial_update && {
 		malexport_partial_update
@@ -161,12 +163,12 @@ fi
 
 evry 1 day -review-removed-dir && review-removed-dir
 
-# https://github.com/seanbreckenridge/my_feed
+# https://github.com/purarue/my_feed
 # once a week, re-index to update any scores/metadata I've updated
 if evry 1 week -my-feed-re-index; then
-	FEED_REINDEX=1 "${REPOS}/my_feed/index"
+	FEED_REINDEX=1 "${REPOS}/my_feed/scripts/feed_index"
 else
-	evry 1 day -my-feed-index && "${REPOS}/my_feed/index"
+	evry 1 day -my-feed-index && "${REPOS}/my_feed/scripts/feed_index"
 	# evry 6 hours -timezone-has-changed && timezone-has-changed && {
 	# 	# shellcheck disable=SC2016
 	# 	notify 'Timezone has changed, should run timedatectl set-timezone "$(current-timezone)"'

@@ -8,7 +8,7 @@ set $mod Mod4
 set $alt Mod1
 
 # ttt is littered throughout here, to track i3 bindsyms
-# see https://github.com/seanbreckenridge/ttt/ for more info
+# see https://github.com/purarue/ttt/ for more info
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -71,7 +71,7 @@ bindsym $mod+grave exec --no-startup-id dunstctl close-all
 bindsym $mod+Shift+Tab exec --no-startup-id ttt i3binds-prompt
 
 # Bind brightness keys
-# sudo usermod -aG video sean
+# sudo usermod -aG video <yourusername>
 # to allow my user to modify files in /sys/class/backlight
 # symlinked to the /sys/devices/pcie...
 # (may have to restart window manager for it to take affect)
@@ -128,7 +128,7 @@ bindsym --release Print exec --no-startup-id ttt screenshot
 bindsym Shift+Print exec --no-startup-id ttt screenshot --full
 # upload latest screenshot to my server
 bindsym $mod+Print exec --no-startup-id ttt screenshot-upload
-# add to my self model from https://github.com/seanbreckenridge/ttally
+# add to my self model from https://github.com/purarue/ttally
 bindsym $alt+s exec --no-startup-id self-picker
 # edit clipboard in vim
 bindsym $mod+Shift+c exec --no-startup-id clipedit
@@ -136,7 +136,7 @@ bindsym $mod+Shift+c exec --no-startup-id clipedit
 bindsym $mod+$alt+c exec --no-startup-id clipreset
 
 # mpv commands
-# https://github.com/seanbreckenridge/mpv-sockets.git
+# https://github.com/purarue/mpv-sockets.git
 bindsym $mod+XF86AudioMute exec --no-startup-id mpv-play-pause && i3blocks-refresh-mpv
 bindsym $mod+XF86AudioMicMute exec --no-startup-id mpv-next-song && i3blocks-refresh-mpv
 bindsym $mod+Shift+XF86AudioMute exec --no-startup-id mpv-quit-latest && i3blocks-refresh-mpv
@@ -269,7 +269,7 @@ bindsym $mod+Shift+r restart
 # if a mpv window with --x11-name=mpv_stream_media is launched,
 # resize it into the bottom right of the screen
 # (picture-in-picture style).
-# see my stream-media script: https://sean.fish/d/stream-media
+# see my stream-media script: https://purarue.xyz/d/stream-media
 # binding for this below (stream-corner)
 # when a new window is launched, its focused automatically, so we
 # dont have to do xdotool trickery
@@ -363,13 +363,13 @@ exec --no-startup-id nm-applet
 
 # start supervisor background processes
 exec --no-startup-id super --daemon
-# https://sean.fish/d/cstimer-server?dark
+# https://purarue.xyz/d/cstimer-server?dark
 exec --no-startup-id cstimer-server
 
 exec --no-startup-id ~/Repos/exobrain/scripts/exobrain-launch-in-editor
 
 # Run cstimer on my machine locally
-# https://sean.fish/d/cstimer?dark
+# https://purarue.xyz/d/cstimer?dark
 exec --no-startup-id cstimer
 
 # enable tap to click

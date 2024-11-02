@@ -10,6 +10,7 @@ evry 6 hours -exobrain && {
 		printlog 'exobrain:uncommitted changes, not building'
 		exit 0
 	}
+	git pull
 	make link_personal_notes
 	make built_and_stork
 	./scripts/sync_with_retry

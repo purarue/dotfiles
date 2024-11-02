@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # sync photos from my data directory to my XDG_PICTURES_DIR
 # on my phone, this is synced from the underlying dcim/Camera folder:
-# https://sean.fish/d/backup_images.job?dark
+# https://purarue.xyz/d/backup_images.job?dark
 
 evry 5 minutes -copy_images && {
 	rsync -Pavh --exclude=".*" "${HPIDATA}/phone_pictures" "${XDG_PICTURES_DIR}" &&

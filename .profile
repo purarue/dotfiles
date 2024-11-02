@@ -24,7 +24,7 @@ SCREENSHOTS="${FILES_DIR}/Screenshots"
 
 export REPOS="${HOME}/Repos"
 
-# https://github.com/seanbreckenridge/HPI
+# https://github.com/purarue/HPI
 # the 'root data directory' for HPI
 HPIDATA="${HOME}/data"
 

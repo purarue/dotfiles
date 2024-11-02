@@ -53,3 +53,48 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
         vim.b["codeium_enabled"] = false
     end,
 })
+
+--- converts a filename to a title
+---@param name string
+---@return string
+local function unslugify(name)
+    name = name:gsub("_", " "):match("(.+)%..+")
+    name = name:sub(1, 1):upper() .. name:sub(2)
+    return name
+end
+
+--- frontmatter generator
+---@param items table<string, string>
+---@return string[]
+local function frontmatter(items)
+    local res = { "---" }
+    for k, v in pairs(items) do
+        table.insert(res, k .. ": " .. v)
+    end
+    table.insert(res, "---")
+    return res
+end
+
+-- if a file like filename.md is opened in
+-- anything that uses yaml frontmatter
+-- and its empty, add something like:
+-- ---
+-- title: Filename
+-- ---
+vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
+    desc = "Add metadata to new empty Markdown files in ~/Documents/Notes/exo/",
+    group = clear_group("NotesMarkdown"),
+    pattern = { "*/Documents/Notes/exo/*.md", "*/Repos/exobrain/src/content/*.md" },
+    callback = function()
+        local file_size = vim.fn.getfsize(vim.fn.expand("%"))
+
+        if file_size <= 0 then
+            local items = frontmatter({ title = unslugify(vim.fn.expand("%:t")) })
+            for line_no, content in ipairs(items) do
+                vim.fn.append(line_no - 1, content)
+            end
+            vim.cmd("normal! G")
+            vim.cmd.startinsert()
+        end
+    end,
+})

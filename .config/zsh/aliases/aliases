@@ -53,6 +53,7 @@ ycp() {
 }
 alias e=editor
 alias t=rg-nvim
+alias rgv='rg --vimgrep'
 
 conflicts() {
 	local chosen sourcefile
@@ -109,6 +110,7 @@ alias 'countdown=termdown'
 alias cl='clipcopy'
 alias 'ml=mailsync-loop'
 alias 'confirm=fzf --multi'
+alias rss='e "$HOME/.config/newsboat/urls"'
 alias 'up=TERM=xterm up'
 alias screens='cd $SCREENSHOTS'
 
@@ -133,7 +135,7 @@ alias sc=sctl
 alias slogs='super --logs'
 
 # custom non-standard stuff
-# shorthand for reverse of https://sean.fish/d/star?dark
+# shorthand for reverse of https://purarue.xyz/d/star?dark
 unstar() {
 	star "$1" DELETE
 }

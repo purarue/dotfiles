@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # indexes local data and publishes it to my feed
-# https://github.com/seanbreckenridge/my_feed
+# https://github.com/purarue/my_feed
 
 # shellcheck disable=SC1091
 
 # in case it needs to prompt me for something, skip that
 # feed item for now -- I run this in
-# https://sean.fish/d/housekeeping?dark as well,
+# https://purarue.xyz/d/housekeeping?dark as well,
 # so it'll prompt me when I next do that
 export MY_FEED_BG=1
 
@@ -14,14 +14,14 @@ wait-for-internet -q --timeout "${WFI_TIMEOUT:-10}" || exit 0
 
 evry 3 hours -my-feed-index-bg && {
 	printlog 'bg-feed-index:running my_feed index...'
-	with-secrets "${REPOS}/my_feed/index" || send-error 'Error updating my_feed'
+	with-secrets "${REPOS}/my_feed/scripts/feed_index" || send-error 'Error updating my_feed'
 
 }
 
 # check recently updated data every 15 minutes to push updates
 evry 15 minutes -my-feed-live-update && {
-	with-secrets feed_live_update --remote-base 'https://sean.fish/feed_api/data/' \
+	with-secrets feed_live_update --remote-base 'https://purarue.xyz/feed_api/data/' \
 		--trakt-username purplepinapples \
-		--chessdotcom-username seanbreckenridge \
-		--listenbrainz-username seanbreckenridge
+		--chessdotcom-username purarue \
+		--listenbrainz-username "$LISTENBRAINZ_USERNAME"
 }

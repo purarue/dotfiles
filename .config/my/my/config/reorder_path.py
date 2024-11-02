@@ -12,12 +12,12 @@ from .common import repo
 # I resolve imports for my multiple local HPI repositories
 # You can do the same, but take a look at reorder_editable to
 # make sure you're actually using this:
-# https://github.com/seanbreckenridge/reorder_editable
+# https://github.com/purarue/reorder_editable
 
 
-def seanbreckenridge_reorder_path():
+def purarue_reorder_path():
     try:
-        # https://github.com/seanbreckenridge/reorder_editable
+        # https://github.com/purarue/reorder_editable
         # if my easy-install.pth file was ordered wrong, fix it and exit!
         from reorder_editable.core import Editable, ReorderEditableError
     except Exception as ex:

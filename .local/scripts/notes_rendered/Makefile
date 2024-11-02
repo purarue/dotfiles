@@ -1,7 +1,7 @@
 # this creates self-contained HTML files which include journal entries
 # and whisper-generated subtitles for any of my video logs
 #
-# https://github.com/seanbreckenridge/markdown_stew
+# https://github.com/purarue/markdown_stew
 
 ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 

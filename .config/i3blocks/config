@@ -2,7 +2,7 @@ seperator_block_width=15
 markup=pango
 
 # anything with a signal gets refreshed by an entr
-# command in my i3 config https://sean.fish/d/i3/config
+# command in my i3 config https://purarue.xyz/d/i3/config
 
 [reminders]
 command=b-reminders

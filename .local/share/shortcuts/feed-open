@@ -1,2 +1,2 @@
 #!/bin/sh
-exec openurl 'https://sean.fish/feed/'
+exec openurl 'https://purarue.xyz/feed/'

@@ -1,5 +1,5 @@
 #!/bin/sh
-# vendorized from https://github.com/seanbreckenridge/ttt,
+# vendorized from https://github.com/purarue/ttt,
 # so that I'm not missing it when Im installing stuff on
 # my computer
 tttlog "$@"

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # add my vitamins to my food tracker
-# https://github.com/seanbreckenridge/ttally
+# https://github.com/purarue/ttally
 
 set -eu
 set -o pipefail

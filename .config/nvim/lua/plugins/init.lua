@@ -11,7 +11,7 @@ return {
     },
     -- []x to encode/decode HTML, []u to encode/decode URLs, []y to do C-style escaping
     {
-        "seanbreckenridge/vim-unimpaired-conversions",
+        "purarue/vim-unimpaired-conversions",
         keys = { { "[", mode = { "n", "v" } }, { "]", mode = { "n", "v" } } },
         -- dir = "~/Files/OldRepos/vim-unimpaired-conversions"
     },

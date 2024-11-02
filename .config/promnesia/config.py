@@ -3,7 +3,7 @@ import os
 from promnesia.common import Source
 from promnesia.sources import reddit, twitter, auto, github, smscalls, takeout, browser
 
-from promnesia_sean.sources import (
+from promnesia_pura.sources import (
     facebook,
     ipython,
     commits,

@@ -83,5 +83,5 @@ loopcmd() {
 bindkey -s '\eo' '^uecho "!!" >/tmp/loopcmd; loopcmd^M'
 
 # Alt+q to run the last command I did, but pipe the output to a quickfix list in nvim
-# this uses my 'qf' script: https://sean.fish/d/qf?dark
+# this uses my 'qf' script: https://purarue.xyz/d/qf?dark
 bindkey -s '\eq' '^uqf <(!!)^M'

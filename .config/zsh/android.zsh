@@ -12,7 +12,7 @@ uqf() {
 }
 
 # run bgproc jobs
-# https://github.com/seanbreckenridge/bgproc
+# https://github.com/purarue/bgproc
 evry 1 hour -run_android_jobs && {
 	echo 'running jobs...' >&2
 	uqf || true
@@ -43,7 +43,7 @@ uu() {
 }
 
 # for building ocaml
-# https://exobrain.sean.fish/devlog/ocaml_android/
+# https://purarue.xyz/x/devlog/ocaml_android/
 export LD_LIBRARY_PATH=/data/data/com.termux/files/usr/lib
 
 # for building rust/ffi python packages

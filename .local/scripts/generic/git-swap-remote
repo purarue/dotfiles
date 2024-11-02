@@ -49,7 +49,7 @@ git remote set-url "$REMOTE_NAME" "$SWAPPED_URL" || exit $?
 MSG="$(printf "From:\t%s\nTo:\t%s\n" "$REMOTE_URL" "$SWAPPED_URL")"
 
 # print the logo of what we've swapped to!
-# https://sean.fish/d/chafa-cache?dark
+# https://purarue.xyz/d/chafa-cache?dark
 if command -v chafa-cache >/dev/null 2>&1; then
 	case "$LOGO" in
 	1)

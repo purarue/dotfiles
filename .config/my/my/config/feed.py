@@ -1,25 +1,9 @@
 """
-Config file for https://github.com/seanbreckenridge/my_feed
+Config file for https://github.com/purarue/my_feed
 """
 
-from .feed_secret import broken_tags, ignore_specific_files  # noqa
-from .seanb.feed_transform_secret import TRANSFORMS  # noqa
-
-ignore_mpv_prefixes: set[str] = {
-    "/home/sean/Repos/",
-    "/home/sean/Downloads",
-    "/home/sean/Documents",
-    "/home/sean/Files",
-}
-
-allow_mpv_prefixes: set[str] = {
-    "/home/sean/Music/",
-    "/home/data/media/music/",
-    "/home/sean/Downloads/Sort/",
-    "/Users/sean/Music",
-}
-
-ignore_mpv_prefixes.update(ignore_specific_files)
+from .feed_secret import broken_tags, ignore_mpv_prefixes, allow_mpv_prefixes
+from .pura.feed_transform_secret import TRANSFORMS
 
 from typing import Iterator, Callable, TYPE_CHECKING
 
@@ -55,3 +39,13 @@ def sources() -> Iterator[Callable[[], Iterator["FeedItem"]]]:
     yield transform(listens.history)
     yield transform(mpv.history)
     yield transform(facebook_spotify_listens.history)
+
+
+__all__ = [
+    "sources",
+    "broken_tags",
+    "TRANSFORMS",
+    "ignore_mpv_prefixes",
+    "allow_mpv_prefixes",
+    "FeedItem",
+]

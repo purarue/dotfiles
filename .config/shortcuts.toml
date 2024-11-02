@@ -1,4 +1,4 @@
-# This file is converted by https://github.com/seanbreckenridge/shortcuts
+# This file is converted by https://github.com/purarue/shortcuts
 # into standalone shell scripts
 default_shebang = "#!/bin/sh"
 
@@ -401,7 +401,7 @@ exec stream-corner-480
 command="exec openurl 'https://discord.com/login'"
 
 [feed-open]
-command="exec openurl 'https://sean.fish/feed/'"
+command="exec openurl 'https://purarue.xyz/feed/'"
 
 [newsboat-force]
 command='''
@@ -440,7 +440,7 @@ command='exec ssh-keygen -t ed25519'
 [mystarsfzf]
 command='''
 update-my-stars
-# https://github.com/seanbreckenridge/oh-my-stars
+# https://github.com/purarue/oh-my-stars
 PICKED="$(fzfcache mystars "$@" | fzf --ansi -0)" || exit $?
 printf '%s\n' "${PICKED}"
 URL="$(echo "${PICKED}" | urlextract)"
@@ -540,7 +540,7 @@ command = '''exec clr -hr quantity,water "$@"'''
 
 [mz]
 command = '''
-# use cached https://github.com/seanbreckenridge/projects repository information
+# use cached https://github.com/purarue/projects repository information
 # to quickly open one of my Github repositories
 chosen="$(jq -r '.[] | .html_url' <"${REPOS}/projects/cache.json" | fzf -0)" || exit $?
 echo "$chosen" | clipcopy
@@ -575,7 +575,7 @@ exec dragon-drop -x "$(clippaste)"
 '''
 
 [albums]
-command = 'exec openurl "https://sean.fish/s/albums"'
+command = 'exec openurl "https://purarue.xyz/s/albums"'
 
 [boxes-python]
 command='''
@@ -591,7 +591,7 @@ command="exec boxes -dada-box -pv1h2"
 
 [flake8c]
 command='''
-# flake8 with my default config -- https://sean.fish/d/.config/flake8?dark
+# flake8 with my default config -- https://purarue.xyz/d/.config/flake8?dark
 exec flake8 --config ~/.config/flake8 "$@"
 '''
 
@@ -620,7 +620,7 @@ shebang = "#!/usr/bin/env zsh"
 
 [listens-desc]
 command='''
-# https://github.com/seanbreckenridge/HPI-personal/blob/master/scripts/listens
+# https://github.com/purarue/HPI-personal/blob/master/scripts/listens
 exec listens --desc "$@"
 '''
 
@@ -641,7 +641,7 @@ command = '''
 # pastes text from the clipboard and creates a quickfist list
 # this is typically called from kitty -- which saves the
 # output of the previous command, then calls this in a new window
-# https://github.com/seanbreckenridge/dotfiles/blob/cdae322fa6b735d5ca12dd3248354b5eeaaab0be/.config/kitty/kitty.conf#L1581-L1588
+# https://github.com/purarue/dotfiles/blob/cdae322fa6b735d5ca12dd3248354b5eeaaab0be/.config/kitty/kitty.conf#L1581-L1588
 set -e
 exec nvim -q <(clippaste) +copen
 '''
@@ -861,7 +861,7 @@ command = "ipinfo | grep -m1 city | cut -d':' -f2- | chomp"
 
 [core]
 command='''
-export BASE_URL='https://sean.fish/c/'
+export BASE_URL='https://purarue.xyz/c/'
 exec give
 '''
 
@@ -923,7 +923,7 @@ command = "exec prefix '- '"
 command = 'clippaste | qr'
 
 [exo-web]
-command = 'exec openurl "https://sean.fish/x/notes/?search"'
+command = 'exec openurl "https://purarue.xyz/x/notes/?search"'
 
 [render-notes]
 command = 'exec make -f "$HOME/.local/scripts/notes_rendered/Makefile" "$@"'

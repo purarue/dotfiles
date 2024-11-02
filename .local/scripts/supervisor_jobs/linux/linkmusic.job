@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # sync music in playlists to my phone
-# https://github.com/seanbreckenridge/plaintext-playlist
-# https://sean.fish/d/linkmusic?dark
+# https://github.com/purarue/plaintext-playlist
+# https://purarue.xyz/d/linkmusic?dark
 
 evry 30 minutes -linkmusic && linkmusic ~/.local/share/musicsync/ --delete

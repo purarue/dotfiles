@@ -3,7 +3,7 @@
 # if new sockets have been added or any mpv instances
 # have quit
 #
-# https://github.com/seanbreckenridge/mpv-history-daemon
+# https://github.com/purarue/mpv-history-daemon
 
 pkill -f 'python3 -m mpv_history_daemon daemon' -RTMIN || true
 

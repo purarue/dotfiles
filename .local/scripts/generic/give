@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # prompts me to select a dotfile from
-# https://github.com/seanbreckenridge/subpath-serve.git
+# https://github.com/purarue/subpath-serve.git
 # and copies a link to that file to the clipboard
 
 # if run from rofi/i3, use picker instead
-# cross platform GUI picker https://sean.fish/d/picker?redirect
+# cross platform GUI picker https://purarue.xyz/d/picker?redirect
 pick='fzf'
 attached-to-terminal || pick='picker'
 
-readonly BASE_URL="${BASE_URL:-https://sean.fish/d/}"
+readonly BASE_URL="${BASE_URL:-https://purarue.xyz/d/}"
 declare SCRIPT_INDEX SCRIPT_CHOICE BASE_FILEPATHS
 SCRIPT_CHOICE="$(fzfcache curl -s "${BASE_URL}" | "$pick")" || exit 1
 

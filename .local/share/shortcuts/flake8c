@@ -1,3 +1,3 @@
 #!/bin/sh
-# flake8 with my default config -- https://sean.fish/d/.config/flake8?dark
+# flake8 with my default config -- https://purarue.xyz/d/.config/flake8?dark
 exec flake8 --config ~/.config/flake8 "$@"

@@ -6,7 +6,7 @@ set -e
 # want to be able to pipe the current buffer (disregarding if its saved or not)
 # to the formatter
 #
-# I use this from nvim using conform.nvim, see https://sean.fish/d/format.lua?redirect
+# I use this from nvim using conform.nvim, see https://purarue.xyz/d/format.lua?redirect
 dname="$PWD" # callee can override this if its not the same dir
 if [[ ! -e "${dname}/setup.cfg" ]]; then
 	printf 'No setup.cfg found at %s\n' "$dname" >&2

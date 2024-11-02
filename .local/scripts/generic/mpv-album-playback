@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# use https://github.com/seanbreckenridge/mpv-sockets
+# use https://github.com/purarue/mpv-sockets
 # to get the currently playing file
 #
 # this assumes I'm playing through the whole album, and tells

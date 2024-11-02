@@ -6,5 +6,5 @@ IMAGE_URL="$(curl -s "${YOUTUBE_URL}" | pup 'link[itemprop="thumbnailUrl"] attr{
 	exit 1
 }
 
-# https://sean.fish/d/urlpicpreview?dark
+# https://purarue.xyz/d/urlpicpreview?dark
 exec urlpicpreview "${IMAGE_URL}"

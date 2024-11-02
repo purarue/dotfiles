@@ -1,6 +1,6 @@
 #!/bin/sh
 # update rss feeds on my computer
-# sean.fish/d/update-rss
+# purarue.xyz/d/update-rss
 
 wait-for-internet -q --timeout "${WFI_TIMEOUT:-10}" || exit 0
 

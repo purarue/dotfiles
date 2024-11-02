@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec curl -s -o /dev/null -w "%{http_code}\n" "${1:?Missing URL}"

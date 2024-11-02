@@ -24,10 +24,10 @@ abort() {
 install_go_cmds() {
 	havecmd go || return $?
 	if ! havecmd spkglist; then
-		go install -v 'github.com/seanbreckenridge/spkglist/cmd/spkglist@latest' || return $?
+		go install -v 'github.com/purarue/spkglist/cmd/spkglist@latest' || return $?
 	fi
 	if ! havecmd on_machine; then
-		go install -v 'github.com/seanbreckenridge/on_machine/cmd/on_machine@latest' || return $?
+		go install -v 'github.com/purarue/on_machine/cmd/on_machine@latest' || return $?
 	fi
 } && export -f install_go_cmds
 
@@ -49,7 +49,7 @@ ON_OS="${ON_OS:=$(on_machine)}"
 declare -rx ON_OS
 
 # match files in ~/.config/yadm, run based on OS
-# https://github.com/seanbreckenridge/on_machine
+# https://github.com/purarue/on_machine
 # e.g. run the android_bootstrap, linux_bootstrap, mac_bootstrap files
 while read -r -d $'\0' bootstrap_script; do
 	printf 'Executing %s\n' "$bootstrap_script"
@@ -62,7 +62,7 @@ declare -rx NODE_PACKAGE_LIST="${PACKAGE_DIR}/node_packages.txt"
 declare -rx COMPUTER_NODE_PACKAGE_LIST="${PACKAGE_DIR}/computer_node_packages.txt"
 declare -rx BASH_PACKAGE_LIST="${PACKAGE_DIR}/bash_packages.txt"
 
-# data directory for https://github.com/seanbreckenridge/HPI
+# data directory for https://github.com/purarue/HPI
 [[ -n "${HPIDATA}" && ! -d "${HPIDATA}" ]] && mkdir -p "${HPIDATA}"
 
 havecmd git || exit $?
@@ -121,8 +121,8 @@ function install_python_personal() {
 	havecmd "${1}" || python3 -m pip install --user --break-system-packages "git+${2}"
 } && export -f install_python_personal
 
-install_python_personal "clone-repos" "https://github.com/seanbreckenridge/clone-repos"
-install_python_personal "mlength" "https://github.com/seanbreckenridge/mlength"
+install_python_personal "clone-repos" "https://github.com/purarue/clone-repos"
+install_python_personal "mlength" "https://github.com/purarue/mlength"
 
 # clone-repos ~/.config/clone-repos.yaml
 
@@ -196,8 +196,8 @@ function install_go_package() {
 	}
 }
 
-if [[ ! -e "${HOME}/.local/share/go/src/github.com/seanbreckenridge" ]]; then
-	mkdir -p "${HOME}/.local/share/go/src/github.com/seanbreckenridge"
+if [[ ! -e "${HOME}/.local/share/go/src/github.com/purarue" ]]; then
+	mkdir -p "${HOME}/.local/share/go/src/github.com/purarue"
 fi
 
 echo "Installing global go packages..."
@@ -212,12 +212,12 @@ havecmd bpkg || curl -Lo- "https://raw.githubusercontent.com/bpkg/bpkg/master/se
 havecmd bpkg || exit $?
 
 set -e
-havecmd tttlog || bpkg install -g seanbreckenridge/ttt
-havecmd exists || bpkg install -g seanbreckenridge/exists
-havecmd genpasswd || bpkg install -g seanbreckenridge/genpasswd
+havecmd tttlog || bpkg install -g purarue/ttt
+havecmd exists || bpkg install -g purarue/exists
+havecmd genpasswd || bpkg install -g purarue/genpasswd
 set +e
 
-havecmd m3u-shuf || cargo install --git 'https://github.com/seanbreckenridge/m3u-shuf'
+havecmd m3u-shuf || cargo install --git 'https://github.com/purarue/m3u-shuf'
 
 echo 'Installing basher/shell scripts...'
 

@@ -1,6 +1,6 @@
 ; extends
 
-; https://github.com/seanbreckenridge/pmark
+; https://github.com/purarue/pmark
 (fenced_code_block
   (code_fence_content) @injection.content
   (#match? @injection.content "^...PMARK")

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # checks the bgproc (my background process manager) cachefile
 # to make no tasks are hanging
-# also reminds me to run housekeeping (https://sean.fish/d/.local/scripts/linux/housekeeping?redirect)
+# also reminds me to run housekeeping (https://purarue.xyz/d/.local/scripts/linux/housekeeping?redirect)
 # if it hasn't been run in the last day
 
 file-modified-within ~/.cache/bgproc.lastrun 1h || echo " bgproc"

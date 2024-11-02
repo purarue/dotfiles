@@ -5,7 +5,7 @@ set -o pipefail
 
 main() {
 	local chosen
-	# https://sean.fish/d/picker?dark
+	# https://purarue.xyz/d/picker?dark
 	chosen="$(flatpak list --columns=application | picker)"
 	[[ -z "$chosen" ]] && return 1
 	setsid -f flatpak run "${chosen}" >/dev/null 2>&1

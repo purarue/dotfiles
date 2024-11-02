@@ -1,4 +1,4 @@
-# enable this like 'sudo systemctl enable lockscreen@sean.service --now'
+# enable this like 'sudo systemctl enable lockscreen@$(whoami).service --now'
 
 [Unit]
 Description=Lock the screen on sleep
@@ -10,7 +10,7 @@ User=%i
 Type=simple
 Environment=DISPLAY=:0
 ExecStartPre=/usr/bin/xset dpms force suspend
-ExecStart=/home/sean/.local/scripts/cross-platform/lock-screen
+ExecStart=%h/.local/scripts/cross-platform/lock-screen
 TimeoutSec=infinity
 
 [Install]

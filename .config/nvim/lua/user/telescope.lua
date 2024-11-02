@@ -1,7 +1,7 @@
 local M = {}
 
 -- A lot of the commands here are wrapped with
--- https://github.com/seanbreckenridge/fzfcache
+-- https://github.com/purarue/fzfcache
 -- That is an external command which caches the results
 -- of the previous run, so it can prompt you with the choices faster
 

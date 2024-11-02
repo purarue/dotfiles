@@ -5,7 +5,7 @@ set -o pipefail
 
 touch /tmp/mpv-history-daemon.log
 
-# read the logfile which https://github.com/seanbreckenridge/mpv-history-daemon
+# read the logfile which https://github.com/purarue/mpv-history-daemon
 # writes to, filtering to lines which specify song has ended/started
 #
 # when that happens, refresh my i3blocks

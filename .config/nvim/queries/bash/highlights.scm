@@ -1,6 +1,6 @@
 ; extends
 
-; https://github.com/seanbreckenridge/evry
+; https://github.com/purarue/evry
 ; evry has syntax like:
 ; evry 1 day -do_some_job
 ;

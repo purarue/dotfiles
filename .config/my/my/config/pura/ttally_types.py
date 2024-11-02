@@ -1,5 +1,5 @@
 """
-Used for https://github.com/seanbreckenridge/ttally
+Used for https://github.com/purarue/ttally
 """
 
 import click

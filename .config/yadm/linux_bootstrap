@@ -118,6 +118,6 @@ yadm gitconfig delta.theme DarkNeon
 # Setup mariadb by following: https://wiki.archlinux.org/index.php/MariaDB
 # Check for manually installed binaries, installed at /usr/local/bin
 
-# make sure https://github.com/seanbreckenridge/bgproc is running
+# make sure https://github.com/purarue/bgproc is running
 # shellcheck disable=SC2009
 ps -ef | grep "bgproc" | grep -q bash || print_error "bgproc isn't running!"

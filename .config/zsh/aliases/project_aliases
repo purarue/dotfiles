@@ -1,11 +1,11 @@
 #!/bin/zsh
 # random aliases for some of my projects/unrelated shorthands
 
-# https://github.com/seanbreckenridge/shortcuts
+# https://github.com/purarue/shortcuts
 alias journal-render='render-notes'
 alias vlogs-render='render-notes'
 
-# https://github.com/seanbreckenridge/trakt-watch
+# https://github.com/purarue/trakt-watch
 export URL_OPENER='openurl'
 alias trk='trakt-watch'
 alias tp='trk progress'
@@ -20,7 +20,7 @@ android*)
 	;;
 esac
 
-# https://github.com/seanbreckenridge/HPI-personal/blob/master/scripts/trakt-urls
+# https://github.com/purarue/HPI-personal/blob/master/scripts/trakt-urls
 tu() {
 	trakt-urls | fzf
 }
@@ -28,8 +28,8 @@ lb() {
 	trk letterboxd --action open "$@"
 }
 
-# https://github.com/seanbreckenridge/plaintext-playlist
-source_if_exists -q "$REPOS/plaintext-playlist/functions.sh" || source_if_exists "${HOME}/.local/share/basher/cellar/packages/seanbreckenridge/plaintext-playlist/functions.sh"
+# https://github.com/purarue/plaintext-playlist
+source_if_exists -q "$REPOS/plaintext-playlist/functions.sh" || source_if_exists "${HOME}/.local/share/basher/cellar/packages/purarue/plaintext-playlist/functions.sh"
 # print cover images for a playlist
 covers-for-mp3s() {
 	cm
@@ -89,17 +89,17 @@ bz() {
 	cd "$(dirname "$chosen")"
 }
 
-# https://github.com/seanbreckenridge/offline_listens
+# https://github.com/purarue/offline_listens
 alias 'of=offline_listens listen'
 
-# https://github.com/seanbreckenridge/albums
+# https://github.com/purarue/albums
 alias 'discogs-update=nextalbums discogs-update'
 albums-add() {
 	nextalbums add-album "$@" && nextalbums discogs-update && nextalbums discogs-update
 }
 alias albums-rate='nextalbums mark-listened'
 
-# https://github.com/seanbreckenridge/HPI
+# https://github.com/purarue/HPI
 source_if_exists "${REPOS}/HPI/scripts/functions.sh"
 source_if_exists "${REPOS}/HPI-personal/scripts/functions.sh"
 source_if_exists "${REPOS}/my_feed/scripts/functions.sh"
@@ -108,7 +108,7 @@ sms-images-review() {
 	find "${HOME}/.cache/sms-images" -type f -mtime -"${1:-28}"
 }
 
-# https://github.com/seanbreckenridge/frinkconv
+# https://github.com/purarue/frinkconv
 conv() {
 	local args=()
 	for arg in "$@"; do
@@ -123,10 +123,10 @@ conv() {
 	frinkconv "${args[*]}"
 }
 
-# https://github.com/seanbreckenridge/oh-my-stars
+# https://github.com/purarue/oh-my-stars
 alias sz='mystarsfzf'
 
-# https://github.com/seanbreckenridge/reminder-sink
+# https://github.com/purarue/reminder-sink
 sr() {
 	case "${#@}" in
 	0) reminder-sink run ;;
@@ -148,31 +148,31 @@ reminder-toggle() {
 	reminder-sink toggle "$chosen"
 }
 
-# https://github.com/seanbreckenridge/calc_ans
+# https://github.com/purarue/calc_ans
 alias c=calc_ans_rlwrap
 
-# https://github.com/seanbreckenridge/calcurse-load
+# https://github.com/purarue/calcurse-load
 alias calcurse=calcursed
 
 # vps related
-# https://github.com/seanbreckenridge/vps
+# https://github.com/purarue/vps
 source_if_exists -q "$REPOS/vps/functions.sh"
 
 # Alt+Shift+L to print live twitch channels
-# https://github.com/seanbreckenridge/twitchlive
+# https://github.com/purarue/twitchlive
 alias twitchlive-table='twitchlive --output-format=table'
 bindkey -s '^[L' 'twitchlive-table\n'
 
-# https://github.com/seanbreckenridge/exobrain
+# https://github.com/purarue/exobrain
 exo() {
 	cd "$REPOS/exobrain" || return 1
 	./scripts/exo "$@"
 }
 
-# https://github.com/seanbreckenridge/greasyfork_repo_generator
+# https://github.com/purarue/greasyfork_repo_generator
 alias greasyfork_generate='cd ${REPOS}/greasyfork_repo_generator && mix escript.build && greasyfork_archive 96096 --output-file scraped_data.json && ./greasyfork_repo_generator -j scraped_data.json --output-dir ../greasyfork --ignore-ids 37826 && cd ../greasyfork && git status'
 
-# https://github.com/seanbreckenridge/ttally
+# https://github.com/purarue/ttally
 TTALLY_ALIASES="${HOME}/.cache/ttally_aliases"
 if [[ ! -e "${TTALLY_ALIASES}" ]]; then
 	if hash ttally; then
@@ -202,10 +202,10 @@ flf() {
 }
 alias flip-edit='editor "$HPIDATA/.flipflop.txt"'
 
-# https://github.com/seanbreckenridge/tts
+# https://github.com/purarue/tts
 alias tts-say='tts -d /tmp/tts.mpeg && plaympeg /tmp/tts.mpeg'
 
-# https://github.com/seanbreckenridge/mpv-sockets
+# https://github.com/purarue/mpv-sockets
 # cd to the directory where the current piece of media is playing from
 alias mpv-cd-currently-playing='cd "$(dirname "$(mpv-currently-playing)")"'
 alias mpv-currently-playing-image='rr "$(dirname "$(mpv-currently-playing)")"/cover.jpg'
@@ -221,12 +221,12 @@ mpv-currently-playing-mark-nsfw() {
 alias mpv-play-all='mpv-pause-all false'
 
 curplaying-text() {
-	python3 -m currently_listening_py print --server-url 'wss://sean.fish/currently_listening/ws' -o text
+	python3 -m currently_listening_py print --server-url 'wss://purarue.xyz/currently_listening/ws' -o text
 }
 
-# https://github.com/seanbreckenridge/currently_listening
+# https://github.com/purarue/currently_listening
 curplaying-image() {
-	python3 -m currently_listening_py print --server-url 'wss://sean.fish/currently_listening/ws' -o image 2>/dev/null &&
+	python3 -m currently_listening_py print --server-url 'wss://purarue.xyz/currently_listening/ws' -o image 2>/dev/null &&
 		kitty icat --align=left ~/.cache/currently-listening-py/currently_listening.jpg
 }
 
@@ -238,10 +238,10 @@ curplaying() {
 	fi
 }
 
-# https://github.com/seanbreckenridge/rifleman
+# https://github.com/purarue/rifleman
 alias optimg='rifleman -a image'
 
-# https://github.com/seanbreckenridge/malexport
+# https://github.com/purarue/malexport
 mal-manual-all() {
 	_filter() {
 		if [[ -n "$1" ]]; then
@@ -270,13 +270,13 @@ ma() {
 	mal-manual
 }
 
-# https://github.com/seanbreckenridge/clone-repos
-alias cr="python3 -m pip install --break-system-packages 'git+https://github.com/seanbreckenridge/clone-repos' && clone-repos -B"
+# https://github.com/purarue/clone-repos
+alias cr="python3 -m pip install --break-system-packages 'git+https://github.com/purarue/clone-repos' && clone-repos -B"
 alias cr-hpi='clone-repos -B ~/.config/clone-repos/hpi-clone-repos.yaml'
 alias uf=update-forks
 
-# https://github.com/seanbreckenridge/evry
-# https://github.com/seanbreckenridge/bgproc
+# https://github.com/purarue/evry
+# https://github.com/purarue/bgproc
 source "${REPOS}/evry/functions.sh"
 # reset a job with job-reset, then run all jobs
 job-run() {
@@ -296,16 +296,16 @@ job-edit() {
 }
 
 # search for cubing competitions near me
-# https://sean.fish/d/wca-comps?redirect
+# https://purarue.xyz/d/wca-comps?redirect
 wca-local() {
 	local state
 	# use my IP address to fetch what state/region I'm currently in
-	# https://sean.fish/d/ipinfo?dark
+	# https://purarue.xyz/d/ipinfo?dark
 	state="${1:-$(ipinfo | grep 'region' | cut -d":" -f2- | chomp | lower)}"
 	wca-comps | jq -r '.[] | "\(.date) - \(.name) - \(.location)"' | grep -i "${state}"
 }
 
-# https://github.com/seanbreckenridge/scramble-history
+# https://github.com/purarue/scramble-history
 cube-event-descriptions() {
 	scramble_history merge -a json | jq '.[].event_description' -r | unique
 }

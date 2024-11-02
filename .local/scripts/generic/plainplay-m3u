@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# https://github.com/seanbreckenridge/plaintext-playlist
+# https://github.com/purarue/plaintext-playlist
 # Create a m3u file for each file in my playlist
 
 set -u

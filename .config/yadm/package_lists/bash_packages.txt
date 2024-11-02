@@ -1,10 +1,10 @@
-seanbreckenridge/mpv-sockets
-seanbreckenridge/mpvf
-seanbreckenridge/bgproc
-seanbreckenridge/tts
-seanbreckenridge/plaintext-playlist
-seanbreckenridge/pmark
-seanbreckenridge/frinkconv
+purarue/mpv-sockets
+purarue/mpvf
+purarue/bgproc
+purarue/tts
+purarue/plaintext-playlist
+purarue/pmark
+purarue/frinkconv
 paulirish/git-open
 dylanaraps/neofetch
 kadwanev/retry

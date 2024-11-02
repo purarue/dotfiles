@@ -1,8 +1,8 @@
 #!/bin/sh
-# update https://github.com/seanbreckenridge/oh-my-stars
+# update https://github.com/purarue/oh-my-stars
 
 # this script internally has the evry call
 # it is like this so I can decouple it running
 # on my phone
-# https://sean.fish/d/update-my-stars?dark
+# https://purarue.xyz/d/update-my-stars?dark
 update-my-stars

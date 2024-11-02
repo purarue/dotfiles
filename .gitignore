@@ -52,7 +52,7 @@ Brewfile.lock.json
 .bash_logout
 .bashrc
 
-# private bgproc scripts https://github.com/seanbreckenridge/bgproc
+# private bgproc scripts https://github.com/purarue/bgproc
 *.priv.job
 
 # secret python config files
@@ -267,6 +267,7 @@ __pycache__
 /.config/gtk-*
 /.config/hub
 /.config/imgur_uploader
+/.config/tree-sitter/
 /.config/keepassxc/keepassxc.ini
 /.config/kid3rc
 /.config/kwalletrc

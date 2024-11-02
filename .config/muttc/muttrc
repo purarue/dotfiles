@@ -5,7 +5,7 @@
 
 set mailcap_path = ~/.config/muttc/mailcap
 
-# use my custom https://sean.fish/d/urlhandler script to open URLs
+# use my custom https://purarue.xyz/d/urlhandler script to open URLs
 # uses urlscan to extract/rofi to prompt me
 macro index,pager \cb "<pipe-message> urlhandler<Enter>" "call urlhandler to extract URLs out of a message"
 macro attach,compose \cb "<pipe-entry> urlhandler<Enter>" "call urlhandler to extract URLs out of a message"

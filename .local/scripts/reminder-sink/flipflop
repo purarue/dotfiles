@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# https://sean.fish/d/flipflop.py?redirect
+# https://purarue.xyz/d/flipflop.py?redirect
 
 set -o pipefail
 

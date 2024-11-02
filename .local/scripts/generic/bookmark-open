@@ -1,5 +1,5 @@
 #!/bin/sh
-# allow me to open a URL from https://github.com/seanbreckenridge/bookmark.txt
+# allow me to open a URL from https://github.com/purarue/bookmark.txt
 
 ENTRY_CHOICE="$(bookmark -p list | head -n -2 | picker -p "Open which bookmark? > ")"
 URL="$(echo "${ENTRY_CHOICE}" | urlextract | head -n 1)"

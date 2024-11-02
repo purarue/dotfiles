@@ -117,7 +117,7 @@ bindsym Shift+Print exec ttt screenshot --full
 # upload latest screenshot to my server
 bindsym $mod+Print exec ttt screenshot-upload
 
-# add to my self model from https://github.com/seanbreckenridge/ttally
+# add to my self model from https://github.com/purarue/ttally
 bindsym $alt+s exec self-picker
 # edit clipboard in vim
 bindsym $mod+Shift+c exec clipedit
@@ -125,7 +125,7 @@ bindsym $mod+Shift+c exec clipedit
 bindsym $mod+$alt+c exec clipreset
 
 # mpv commands
-# https://github.com/seanbreckenridge/mpv-sockets.git
+# https://github.com/purarue/mpv-sockets.git
 bindsym $mod+XF86AudioMute exec mpv-play-pause && i3blocks-refresh-mpv
 bindsym $mod+XF86AudioMicMute exec mpv-next-song && i3blocks-refresh-mpv
 bindsym $mod+Shift+XF86AudioMute exec mpv-quit-latest && i3blocks-refresh-mpv
@@ -307,7 +307,7 @@ assign [class="Google-chrome"] 9
 
 # background processes
 #
-# https://sean.fish/d/cstimer-server?dark
+# https://purarue.xyz/d/cstimer-server?dark
 exec cstimer-server
 # start supervisor background processes
 exec super --daemon

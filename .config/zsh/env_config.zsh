@@ -81,19 +81,19 @@ export JULIA_DEPOT_PATH="${XDG_DATA_HOME}/julia"
 # '-' is the default locations
 export PYFLYBY_PATH="${XDG_CONFIG_HOME}/pyflyby:-"
 
-# shortcuts: https://github.com/seanbreckenridge/shortcuts
+# shortcuts: https://github.com/purarue/shortcuts
 export SHORTCUTS_DIR="${XDG_DATA_HOME}/shortcuts"
 
 # here for mac/windows compatibility -- otherwise the defaults
 # are my path on linux (when resolved by the appdirs python package)
-# https://github.com/seanbreckenridge/HPI
+# https://github.com/purarue/HPI
 # https://github.com/karlicoss/promnesia
 export MY_CONFIG="${XDG_CONFIG_HOME}/my"
 export PROMNESIA_CONFIG="${XDG_CONFIG_HOME}/promnesia/config.py"
-export HPI_TESTS_SEANB='true'
+export HPI_TESTS_PURA='true'
 export CACHEW_DISABLE='my.browser.export:my.location.gpslogger:my.zsh:my.chess'
 
-# https://github.com/seanbreckenridge/autotui
+# https://github.com/purarue/autotui
 # options for enabling features for autotui
 export AUTOTUI_DATETIME_LIVE=1
 export AUTOTUI_ENUM_FZF=1

@@ -38,7 +38,7 @@ return {
     { "stevearc/dressing.nvim", opts = {}, event = "VeryLazy" },
     {
         "rcarriga/nvim-notify",
-        event = "VeryLazy",
+        -- event = "VeryLazy",
         config = function()
             vim.notify = require("notify")
         end,

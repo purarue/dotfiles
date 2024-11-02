@@ -3,7 +3,7 @@
 --- which just show the command/function name
 -- local wk = require("which-key")
 --
--- -- https://github.com/seanbreckenridge/vim-unimpaired-conversions
+-- -- https://github.com/purarue/vim-unimpaired-conversions
 -- local visualMaps = {
 --     { "[u", desc = "url encode" },
 --     { "[x", desc = "xml encode" },
