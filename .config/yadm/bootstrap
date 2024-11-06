@@ -276,6 +276,7 @@ linux_arch*)
 	echo -e 'set preview_images true\nset preview_images_method w3m' >"${TARGET}"
 	;;
 esac
+bash ~/.config/ranger/generate_filter
 
 # setup plugins
 mkdir -p "${HOME}/.config/ranger/plugins"

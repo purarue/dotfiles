@@ -1,0 +1,2 @@
+###SETTINGS###
+set hidden_filter ^\.|\.(?:pyc|vrb|pyo|class|lof|swp|aux|nav|out|snm|toc|bcf|run\.xml|synctex\.gz|blg|bbl|egg-info)$|^lost\+found$|^__(py)?cache__$|^tags(?:\.lock|\.temp)?$|^_build$|^build$|^dist$|^node_modules$|^target|{{ oname }}$
