@@ -97,15 +97,19 @@ for serv in "${USER_SERVICES[@]}"; do
 done
 
 # setup https://github.com/dandavison/delta
-git config --global core.pager "delta"
-git config --global interactive.diffFilter "delta --color-only"
-git config --global delta.navigate true
-git config --global delta.light false
-git config --global merge.conflictstyle diff3
-git config --global diff.colorMoved default
-git config --global delta.line-numbers true
-git config --global delta.theme DarkNeon
-git config --global delta.features "diff-so-fancy hyperlinks"
+for cmd in "git:config" "yadm:gitconfig"; do
+	fst=${cmd%:*}
+	arg=${cmd#*:}
+	"$fst" "$arg" --global core.pager "delta"
+	"$fst" "$arg" --global interactive.diffFilter "delta --color-only"
+	"$fst" "$arg" --global delta.navigate true
+	"$fst" "$arg" --global delta.light false
+	"$fst" "$arg" --global merge.conflictstyle diff3
+	"$fst" "$arg" --global diff.colorMoved default
+	"$fst" "$arg" --global delta.line-numbers true
+	"$fst" "$arg" --global delta.theme DarkNeon
+	"$fst" "$arg" --global delta.features "diff-so-fancy hyperlinks"
+done
 
 # Setup mariadb by following: https://wiki.archlinux.org/index.php/MariaDB
 # Check for manually installed binaries, installed at /usr/local/bin
