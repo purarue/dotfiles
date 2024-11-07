@@ -105,15 +105,7 @@ git config --global merge.conflictstyle diff3
 git config --global diff.colorMoved default
 git config --global delta.line-numbers true
 git config --global delta.theme DarkNeon
-
-yadm gitconfig core.pager "delta"
-yadm gitconfig interactive.diffFilter "delta --color-only"
-yadm gitconfig delta.navigate true
-yadm gitconfig delta.light false
-yadm gitconfig merge.conflictstyle diff3
-yadm gitconfig diff.colorMoved default
-yadm gitconfig delta.line-numbers true
-yadm gitconfig delta.theme DarkNeon
+git config --global delta.features "diff-so-fancy hyperlinks"
 
 # Setup mariadb by following: https://wiki.archlinux.org/index.php/MariaDB
 # Check for manually installed binaries, installed at /usr/local/bin
