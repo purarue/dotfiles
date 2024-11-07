@@ -8,4 +8,6 @@ fi
 THIS_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 cd "${THIS_DIR}" || exit $?
 
+set -x
+
 exec jinjanate ./hidden_template.rc >hidden_filter.rc
