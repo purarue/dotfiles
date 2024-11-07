@@ -7,6 +7,7 @@ giturlparse
 idna
 ipdb
 ipython
+jinjanator
 pip
 pipenv
 pipx
