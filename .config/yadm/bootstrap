@@ -251,32 +251,8 @@ if [[ -n "$NVIM_SPELLFILE" ]]; then
 	mkdir -p "$(dirname "$NVIM_SPELLFILE")"
 fi
 
-# setup directory for ranger
-dir-aliases-ranger
-
-# setup image previews for ranger
-TARGET="${XDG_CONFIG_HOME}/ranger/preview.rc"
-case "$ON_OS" in
-android*)
-	# dont think there's any way to do this right now
-	echo 'set preview_images false' >"${TARGET}"
-	;;
-linux_arch*)
-	echo 'set preview_images true' >"${TARGET}"
-	if [[ "$TERM" == xterm-kitty ]]; then
-		# use kitty to preview images
-		echo 'set preview_images_method kitty' >>"${TARGET}"
-	else
-		# use ueberzug to preview images
-		echo 'set preview_images_method ueberzug' >>"${TARGET}"
-	fi
-	;;
-*)
-	# fallback to w3m?
-	echo -e 'set preview_images true\nset preview_images_method w3m' >"${TARGET}"
-	;;
-esac
-bash ~/.config/ranger/generate_filter
+# setup OS-specific ranger configuration
+bash "${HOME}/.config/ranger/make"
 
 # setup plugins
 mkdir -p "${HOME}/.config/ranger/plugins"

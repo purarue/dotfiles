@@ -1,2 +1,4 @@
 #!/bin/sh
-bash -x "$(which "$1")"
+SCRIPT="${1?:No script provided}"
+shift || true
+bash -x "$(which "$SCRIPT")" "$@"
