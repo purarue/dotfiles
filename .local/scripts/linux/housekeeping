@@ -61,7 +61,7 @@ evry 6 hours -google-drive && {
 evry 2 months -twitch_cli && twitch token
 
 evry 2 hours -data-sync-conflicts && {
-	SYNC_CONFLICTS="$(find-sync-conflicts "$HPIDATA")"
+	SYNC_CONFLICTS="$(sync-conflicts "$HPIDATA")"
 	[[ -n "$SYNC_CONFLICTS" ]] && {
 		echo "Sync conflicts in ~/data:"
 		echo "$SYNC_CONFLICTS"
