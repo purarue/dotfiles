@@ -12,6 +12,10 @@ esac
 
 mkdir -p "$HOME/.cache/zsh_generated_completions"
 
+if havecmd timer; then
+	timer completion zsh >"$HOME/.cache/zsh_generated_completions/_timer"
+fi
+
 for cmd in hpi \
 	nextalbums \
 	browserexport \

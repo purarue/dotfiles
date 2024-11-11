@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# starts a timer which ends at a particular point in the future
+
+declare at now
+now="$(epoch)"
+at="$(epoch-from "$*")" || return $?
+[[ -z "$at" ]] && exit 1
+
+if [[ "$at" -le "$now" ]]; then
+	echo "Time must be in the future, parsed $(epochdisplay "$at"), now is $(epochdisplay "$now")" >&2
+	exit 1
+fi
+
+exec timer "$((at - now))s"
