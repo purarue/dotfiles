@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 # starts a timer which ends at a particular point in the future
+# e.g. timer-till 'today at 10pm'
+# I often use this with https://purarue.xyz/d/playping-loop?redirect,
+# as a sort of alarm/reminder to do something, like:
+# timer-till 'today at 4pm' && playping-loop
 
 declare at now
 now="$(epoch)"
