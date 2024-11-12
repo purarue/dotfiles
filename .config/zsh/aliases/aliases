@@ -133,6 +133,7 @@ alias d="kitty +kitten diff"
 # background jobs
 alias sctl='super --ctl'
 alias sc=sctl
+alias sclp=server_clipboard
 alias slogs='super --logs'
 
 # custom non-standard stuff

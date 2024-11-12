@@ -33,7 +33,6 @@ return {
             "javascript",
             "typescript",
             "yaml",
-            "toml",
             "css",
             "scss",
             "html",
@@ -59,6 +58,7 @@ return {
                 c = { "clang-format" },
                 cpp = { "clang-format" },
                 python = { "black" },
+                toml = { "taplo" },
                 sh = { "shfmt" },
                 bash = { "shfmt" },
                 -- run on all filetypes

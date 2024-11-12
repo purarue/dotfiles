@@ -20,7 +20,7 @@ shadow = []
 view = "default"
 # An array with a single value has the same effect as a simple value.
 primary = ["default"]
-secondary = "cyan" # secondary style is used for code highlighting
+secondary = "cyan"    # secondary style is used for code highlighting
 tertiary = "green"
 # Hex values can use lower or uppercase.
 # (base color MUST be lowercase)

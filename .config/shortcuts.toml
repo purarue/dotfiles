@@ -24,20 +24,20 @@ fzfcache list-config-no-hist | sed "s#^$HOME/##g" | fzf-edit
 '''
 
 [dotfiles]
-command='''
+command = '''
 # open the dotfiles git repository
 yadm open --print | openurl
 '''
 
 [i3binds]
-command='''
+command = '''
 # print i3 bindings
 # ignore volume and brightness bindings
 sed 's/^bindsym --release/bindsym/g' "${HOME}/.config/i3/config" | awk '/^bindsym/ {$1=""; print substr($0, 2)}'
 '''
 
 ["i3binds-prompt"]
-command='''
+command = '''
 # prompt i3 bindings w/ rofi and run one of the commands
 i3-msg "$(i3binds | rofi -dmenu -width 50 -lines 30 -location 5 -p "Pick a command to run > " | sed 's/--no-startup-id //g' | cut -d" " -f 2-)"'''
 
@@ -45,7 +45,7 @@ i3-msg "$(i3binds | rofi -dmenu -width 50 -lines 30 -location 5 -p "Pick a comma
 # the i is to enter insert mode in firefox (I use vimium)
 # \C is control, r is r, to refresh
 [reload-browser]
-command='''
+command = '''
 exec xvkbd -window Navigator -text "i\Cr"
 '''
 
@@ -56,7 +56,7 @@ exec date "+%m/%d/%y"
 '''
 
 [tstamp]
-command="exec date +'%Y%m%d%H%M%S'"
+command = "exec date +'%Y%m%d%H%M%S'"
 
 [gi]
 command = '''
@@ -69,7 +69,7 @@ printf "\n"
 '''
 
 [wfi]
-command='''
+command = '''
 # wait for internet connection and ping me
 command -v tttlog >/dev/null 2>&1 && tttlog "$(basename "$0")"
 wait-for-internet "$@" && {
@@ -79,7 +79,7 @@ wait-for-internet "$@" && {
 '''
 
 [wfib]
-command='''
+command = '''
 # wfi, and then reload the browser
 wfi
 exec reload-browser
@@ -141,19 +141,19 @@ exec openurl "https://www.discogs.com/search/?q=${SEARCH_STR}&type=all"
 '''
 
 [genpass-phrase]
-command='USE_DICEWARE=1 exec genpass "$@"'
+command = 'USE_DICEWARE=1 exec genpass "$@"'
 
 [list-images]
-command='''exec fd '.*\.(png|jpeg|jpg|heic)$' "$@"'''
+command = '''exec fd '.*\.(png|jpeg|jpg|heic)$' "$@"'''
 
 [play-music]
-command='''
+command = '''
 # play music in the current directory, recursively
 list-music | sort -n | mpv --playlist=- --no-audio-display
 '''
 
 [shuffle-music]
-command='''
+command = '''
 # Plays songs from this folder, recursively, randomly
 list-music | shuf | mpv --playlist=- --no-audio-display
 '''
@@ -175,17 +175,17 @@ link = 'edit-clipboard'
 
 # shorthand for clipcopy
 [cl]
-command='clipcopy'
+command = 'clipcopy'
 
 [clipreset]
-command='''
+command = '''
 # reset the clipboard formatting
 notify "resetting clipboard..."
 clippaste | clipcopy
 '''
 
 [lynx]
-shebang="#!/bin/zsh"
+shebang = "#!/bin/zsh"
 command = '''
 # override the lynx binary by
 # placing the lynx shortcut
@@ -202,23 +202,23 @@ printf "localhost:%d" "$PRINTER_PORT" | openurl
 '''
 
 [drive-mount]
-command= '''
+command = '''
 # start the ldm (light device mounter) daemon, to mount devices
 echo "use lsblk -f to view disk IDs"
 exec sudo ldm -u "$(whoami)"
 '''
 
 [ipinfo]
-command='''
+command = '''
 # get my ip information
 curl -s ipinfo.io | gron | grep -v 'json.readme' | gron -u | jq -r 'to_entries[] | "\(.key): \(.value)"'
 '''
 
 [webcam-test]
-command='exec /usr/bin/mpv /dev/video0'
+command = 'exec /usr/bin/mpv /dev/video0'
 
 [webcam-pic]
-command='''
+command = '''
 # open mpv to save a picture (using webcam) in ~/Pictures/pics
 
 declare pics
@@ -229,11 +229,11 @@ cd "$pics" || exit 1
 mpv /dev/video0
 exec launch ranger "$pics"
 '''
-shebang='#!/usr/bin/env bash'
-link='camera'
+shebang = '#!/usr/bin/env bash'
+link = 'camera'
 
 [to-icon]
-command='''
+command = '''
 # convert an image to a 16x16 icon - to favicon size
 FILEPATH=${1:?Must provide image to convert}
 NEW_FILEPATH="$(remove-extension "${FILEPATH}")-icon.png"
@@ -241,7 +241,7 @@ exec convert -resize x16 -gravity center -crop 16x16+0+0 -flatten -colors 256 "$
 '''
 
 [file-mime]
-command='''
+command = '''
 # get mime type for one or more files
 # this is the same as what rifle (ranger) does
 exec file --mime-type -Lb "$@"
@@ -249,17 +249,17 @@ exec file --mime-type -Lb "$@"
 
 # shorthand for sending lines from vim to pastebin
 [vix]
-command='exec ix -v'
+command = 'exec ix -v'
 
 [clp-args]
-command='''
+command = '''
 # clp, but accepts input as arguments
 echo "$*" | clp
 '''
 
 [lastpic]
 shebang = "#!/usr/bin/env bash"
-command='''
+command = '''
 case "$ON_OS" in
 linux*)
 	exec newest "$@" "${SCREENSHOTS:?No SCREENSHOTS environment variable set}"
@@ -271,27 +271,27 @@ esac
 '''
 
 [lastpicpreview]
-command='exec rifle "$(lastpic)"'
+command = 'exec rifle "$(lastpic)"'
 
 [lastpicdrag]
-command='dragon-drop -x "$(lastpic)"'
+command = 'dragon-drop -x "$(lastpic)"'
 link = "draglastpic"
 
 [urlpicpreview]
-command='''
+command = '''
 # preview a picture from a URL
 img-download "$@" || exit $?
 rifle "$(clippaste)"
 '''
 
 [mvlastpic]
-command='''
+command = '''
 FILE="$(lastpic)" || exit 1
 exec mv -v "${FILE}" "./$1"
 '''
 
 [vic]
-command='''
+command = '''
 EXECUTABLE="${1:?No Executable provided}"
 LOCATION="$(command -v "${EXECUTABLE}")" || exit $?
 cd "$(dirname "${LOCATION}")" || exit $?
@@ -299,36 +299,36 @@ exec editor "$(basename "${LOCATION}")"
 '''
 
 [list-config-no-hist]
-command='''
+command = '''
 list-config | grep -vE -e "zsh_history|compdump" -e "$SHORTCUTS_DIR"
 '''
 
 
 [grep-dotfiles]
-shebang="#!/usr/bin/env bash"
-command='''
+shebang = "#!/usr/bin/env bash"
+command = '''
 # searches all my configuration for a string
 # passes arguments received to grep
 list-config-no-hist | xargs grep -Hrin "$@"
 '''
 
 [cheat]
-command='''
+command = '''
 command -v tttlog >/dev/null 2>&1 && tttlog "$(basename "$0") $*"
 exec curl -s "https://cheat.sh/$*"
 '''
 
 [mpv-corner]
-command='''
+command = '''
 # mpv wrapper to open a video with mpv and put it in the bottom right corner
 setsid -f mpv --x11-name=mpv_stream_media "$@" >/dev/null 2>&1
 '''
 
 [youtube-dl]
-command='''exec python3 -m yt_dlp -o '%(title)s.%(ext)s' -ci "$@"'''
+command = '''exec python3 -m yt_dlp -o '%(title)s.%(ext)s' -ci "$@"'''
 
 [create-youtube-dl-resolution-str]
-command='''
+command = '''
 # defaults to about 480p
 # otherwise, grabs the format from the FORMAT environment variable
 # prints the format string for a particular resolution
@@ -337,7 +337,7 @@ exec printf 'bestvideo[height<=%d]+bestaudio/best[height<=%d]' "$FORMAT" "$FORMA
 '''
 
 [stream-corner]
-command='''
+command = '''
 # streams and sets the instance name on the mpv window
 # this is used with a for_window hook in i3 to put the
 # window in the bottom right
@@ -345,51 +345,51 @@ exec stream-media --x11-name=mpv_stream_media "$@"
 '''
 
 [stream-corner-at]
-command='''
+command = '''
 # set the FORMAT environment variable to specify maximum height/width
 # defaults to about 480p
 STREAM_MEDIA_CMD=mpv exec stream-corner --ytdl-format="$(create-youtube-dl-resolution-str)" "$@"
 '''
 
 [stream-corner-480]
-command='exec stream-corner-at "$@"'
+command = 'exec stream-corner-at "$@"'
 
 [stream-corner-720]
-command='''
+command = '''
 export FORMAT=850
 exec stream-corner-at "$@"
 '''
 
 [stream-corner-1080]
-command='''
+command = '''
 export FORMAT=1100
 exec stream-corner-at "$@"
 '''
 
 [stream-audio]
-command='STREAM_MEDIA_CMD=mpv exec stream-media --no-video "$@"'
+command = 'STREAM_MEDIA_CMD=mpv exec stream-media --no-video "$@"'
 
 [youtube-dl-at]
-command='''
+command = '''
 # set the FORMAT environment variable to control resolution
 exec youtube-dl -f "$(create-youtube-dl-resolution-str)" "$@"
 '''
 
 [youtube-dl-480]
-command='''
+command = '''
 # download at about 480p
 exec youtube-dl-at "$@"
 '''
 
 [youtube-dl-720]
-command='''
+command = '''
 # download at about 720p
 export FORMAT=850
 exec youtube-dl-at "$@"
 '''
 
 [stream-from-firefox]
-command='''
+command = '''
 # copies the current URL from firefox, and starts streaming it with stream-at-480
 # escape, then yy (yank the URL; using the vimium extension)
 xvkbd -window Navigator -text "\Eyy"
@@ -398,13 +398,13 @@ exec stream-corner-480
 '''
 
 [discord-browser]
-command="exec openurl 'https://discord.com/login'"
+command = "exec openurl 'https://discord.com/login'"
 
 [feed-open]
-command="exec openurl 'https://purarue.xyz/feed/'"
+command = "exec openurl 'https://purarue.xyz/feed/'"
 
 [newsboat-force]
-command='''
+command = '''
 # if another instance of newsboat is open, kill it and open one here
 # specifically useful in case newsboat -x reload is going on in the background
 pgrep -x newsboat && pkill -x newsboat
@@ -414,16 +414,16 @@ exec i3-msg exec update-rss # update rss afterwards, to update menu bar icon
 '''
 
 [neomuttr]
-command='''
+command = '''
 # neomutt and refresh my menu bar block
 neomutt && refresh-block mail
 '''
 
 [alacritty-tmux]
-command='exec alacritty -e tmux'
+command = 'exec alacritty -e tmux'
 
 [extracturls]
-command='''
+command = '''
 # receives text from STDIN, extracts unique URLs
 # pypi.org/project/urlextract
 urls="$(urlextract | sort -u)"
@@ -435,10 +435,10 @@ printf "%s\n" "${urls}"
 '''
 
 [ssh-keygen-good]
-command='exec ssh-keygen -t ed25519'
+command = 'exec ssh-keygen -t ed25519'
 
 [mystarsfzf]
-command='''
+command = '''
 update-my-stars
 # https://github.com/purarue/oh-my-stars
 PICKED="$(fzfcache mystars "$@" | fzf --ansi -0)" || exit $?
@@ -450,24 +450,24 @@ URL="$(echo "${PICKED}" | urlextract)"
 	printf '%s\n' "${URL}"
 }
 '''
-shebang="#!/usr/bin/env bash"
+shebang = "#!/usr/bin/env bash"
 
 [screenshots]
-command='''
+command = '''
 exec nsxiv -t "${SCREENSHOTS}"
 '''
 
 [up-live]
-command='TERM=xterm exec up --unsafe-full-throttle'
-shebang="#!/bin/zsh"
+command = 'TERM=xterm exec up --unsafe-full-throttle'
+shebang = "#!/bin/zsh"
 
 [watchtwitch]
-command='''
+command = '''
 twitchlive -output-format json | jq -r '.[] | .username' | picker -p "who to watch? " | xargs -r twitch
 '''
 
 [reshortcuts]
-command='''
+command = '''
 set -o pipefail
 cd || exit $?
 [[ -n "${SHORTCUTS_DIR}" ]] && [[ -d "${SHORTCUTS_DIR}" ]] && rm -rf "${SHORTCUTS_DIR}"
@@ -476,7 +476,7 @@ DEBUG_OUTPUT="$(shortcuts create --debug && fd . "${SHORTCUTS_DIR}" -X rifleman 
 	echo "$DEBUG_OUTPUT"
 }
 '''
-shebang="#!/usr/bin/env bash"
+shebang = "#!/usr/bin/env bash"
 
 [i3-jinja]
 command = '''
@@ -485,7 +485,7 @@ I3_DIR="${HOME}/.config/i3"
 cd "${I3_DIR}" || exit $?
 exec jinjanate config.j2 -o config -f yaml <config.yaml
 '''
-shebang="#!/usr/bin/env bash"
+shebang = "#!/usr/bin/env bash"
 
 [alarm]
 command = 'exec paplay /usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga'
@@ -500,7 +500,7 @@ moby "${word}" | grep , | tr , '\n' | chomp
 command = 'exec fzf --preview="${HOME}/.config/fzf_preview {}" "$@"'
 
 [largechar-clipboard]
-command='''
+command = '''
 CONTENTS="$(clippaste)"
 [ -z "${CONTENTS}" ] && exit 1
 printf '%s' "${CONTENTS}" | largechar -c
@@ -510,7 +510,7 @@ printf '%s' "${CONTENTS}" | largechar -c
 command = "exec openurl 'localhost:8384'"
 
 [sqlitebrowser-]
-command='''
+command = '''
 # on linux, call the binary directly
 havecmd 'sqlitebrowser' && exec sqlitebrowser "$@"
 # on mac, this is installed into /Applications/
@@ -578,30 +578,30 @@ exec dragon-drop -x "$(clippaste)"
 command = 'exec openurl "https://purarue.xyz/s/albums"'
 
 [boxes-python]
-command='''
+command = '''
 # create a comment box as a python comment, text piped from STDIN
 exec boxes -dshell -pv1h2 "$@"
 '''
 
 [boxes-vim]
-command="""boxes-python | tr '#' '\"'"""
+command = """boxes-python | tr '#' '\"'"""
 
 [boxes-nvim]
-command="exec boxes -dada-box -pv1h2"
+command = "exec boxes -dada-box -pv1h2"
 
 [flake8c]
-command='''
+command = '''
 # flake8 with my default config -- https://purarue.xyz/d/.config/flake8?dark
 exec flake8 --config ~/.config/flake8 "$@"
 '''
 
 [styluac]
-command='''
+command = '''
 exec stylua --config-path "$HOME/.config/nvim/stylua.toml" "$@"
 '''
 
 [yadm-format]
-command='''
+command = '''
 # autoformat all my dotfiles
 set -o pipefail
 cd
@@ -610,7 +610,7 @@ yadm list | exists | grep -v 'lazy-lock.json' | rifleman -
 shebang = "#!/usr/bin/env zsh"
 
 [yadm-lint]
-command='''
+command = '''
 # run linters on all my dotfiles
 set -o pipefail
 cd
@@ -619,19 +619,19 @@ yadm list | exists | rifleman - -a lint
 shebang = "#!/usr/bin/env zsh"
 
 [listens-desc]
-command='''
+command = '''
 # https://github.com/purarue/HPI-personal/blob/master/scripts/listens
 exec listens --desc "$@"
 '''
 
 [yh]
-command='''
+command = '''
 cd ~/.local/share/yadm/repo.git/ || exit $?
 exec gh "$@"
 '''
 
 [calcursed]
-command='''
+command = '''
 exec calcurse --datadir "$CALCURSE_DIR" --confdir "$XDG_CONFIG_HOME/calcurse" "$@"
 '''
 shebang = "#!/usr/bin/env bash"
@@ -658,7 +658,7 @@ exec nvim -q "$@" +copen
 command = 'exec less -i "$@"'
 
 [reminder-sink-notify]
-command='''
+command = '''
 SR="$(reminder-sink run)"
 exec notify "${SR:-No reminders}"
 '''
@@ -688,16 +688,16 @@ exec printf '%s\n' "$tmpf"
 '''
 
 [html-head-all]
-command='exec html-head -a css-dark-mode -a css-pre-wrap "$@"'
+command = 'exec html-head -a css-dark-mode -a css-pre-wrap "$@"'
 
 [pygmentize-styles]
-command="""
+command = """
 # shellcheck disable=SC2063
 pygmentize -L styles | grep '* ' | cut -c3- | sed -e 's/:$//'
 """
 
 [pygmentize-html-style]
-command='''
+command = '''
 style="$(pygmentize-styles | fzf)" || exit $?
 exec pygmentize -P style="$style" -O noclasses=True -f html "$@"
 '''
@@ -715,8 +715,8 @@ command = "exec google-chrome-stable 'http://clients3.google.com/generate_204'"
 [update-forks]
 command = 'exec clone-repos ~/.config/clone-repos/update-forks.yaml'
 
-[rj]  # 'run-jobs'
-command ='''
+[rj] # 'run-jobs'
+command = '''
 if [[ "$1" == "-o" ]]; then
 	: # skip internet check, just run the loop once
 elif wait-for-internet --quiet --timeout 0; then
@@ -802,7 +802,7 @@ exec awk "$@" '{ for (i = 2; i <= NF; i++) printf $i "\t" ; print $1 }'
 '''
 
 [longest-video]
-command='exec shortest-video -o max "$@"'
+command = 'exec shortest-video -o max "$@"'
 
 [img-download-drag]
 command = '''
@@ -860,7 +860,7 @@ command = 'exec rg --no-heading --with-filename --line-number "$@"'
 command = "ipinfo | grep -m1 city | cut -d':' -f2- | chomp"
 
 [core]
-command='''
+command = '''
 export BASE_URL='https://purarue.xyz/c/'
 exec give
 '''
@@ -952,12 +952,12 @@ exec kitty-set-theme Dark
 command = 'exec abook -C "$XDG_CONFIG_HOME/abook/abookrc" -f "$XDG_DOCUMENTS_DIR/addressbook" "$@"'
 
 [epoch-from]
-command='''
+command = '''
 exec dates-stdin -Fepoch <<<"$@"
 '''
-shebang='#!/usr/bin/env bash'
+shebang = '#!/usr/bin/env bash'
 
 [heart-cl]
-command='''
+command = '''
 heart | APP=heart clp
 '''

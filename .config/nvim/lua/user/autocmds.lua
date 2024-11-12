@@ -20,7 +20,7 @@ local user_autocompile = clear_group("UserAutocompile")
 vim.api.nvim_create_autocmd("BufWritePost", {
     command = "!reshortcuts",
     group = user_autocompile,
-    pattern = { ".config/shortcuts.toml", "shortcuts.toml" },
+    pattern = { "shortcuts.toml" },
     desc = "create shortcuts script when I save config file",
 })
 
