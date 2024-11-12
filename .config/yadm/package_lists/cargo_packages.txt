@@ -7,5 +7,6 @@ kondo         # removes node_module/build directories
 so            # stackoverflow
 readenv       # renv, for executing a command with a modified environment
 wait-for-internet
-hexyl				  # hexdump
-monolith
+hexyl         # hexdump
+monolith      # saves webpages as a single HTML file
+taplo-cli     # TOML library, for formatting

@@ -12,8 +12,11 @@ esac
 
 mkdir -p "$HOME/.cache/zsh_generated_completions"
 
+TIMER_OUTPUT="$HOME/.cache/zsh_generated_completions/_timer"
 if havecmd timer; then
-	timer completion zsh >"$HOME/.cache/zsh_generated_completions/_timer"
+	if [[ $RECREATE -eq 1 || ! -f "$TIMER_OUTPUT" ]]; then
+		timer completion zsh >"$TIMER_OUTPUT"
+	fi
 fi
 
 for cmd in hpi \

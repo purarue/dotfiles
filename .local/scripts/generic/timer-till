@@ -7,7 +7,7 @@
 
 declare at now
 now="$(epoch)"
-at="$(epoch-from "$*")" || return $?
+at="$(epoch-from "today at $*")" || return $?
 [[ -z "$at" ]] && exit 1
 
 if [[ "$at" -le "$now" ]]; then
@@ -15,4 +15,4 @@ if [[ "$at" -le "$now" ]]; then
 	exit 1
 fi
 
-exec timer "$((at - now))s"
+exec timer -f "$((at - now))s"

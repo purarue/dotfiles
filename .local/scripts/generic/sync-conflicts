@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
 DIR="${1:-.}"
-printf 'Searching in %s\n' "$(realpath "$DIR")" >&2
+printf 'sync-conflicts: Searching in %s\n' "$(realpath "$DIR")" >&2
 [[ -n "$1" ]] && shift
 exec find "$DIR" -name '*sync-conflict*' "$@"
