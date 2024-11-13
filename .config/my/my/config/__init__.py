@@ -264,7 +264,7 @@ class league:
     class export:
         """https://github.com/purarue/lolexport"""
 
-        export_path: Paths = data("league_of_legends/*.json")
+        export_path: Paths = data("league_of_legends/*.json.gz")
         username = "purplepinapples"
 
 
@@ -324,7 +324,7 @@ class piazza:
     class scraper:
         """https://github.com/purarue/piazza-scraper"""
 
-        export_path: Paths = data("piazza/*.json")
+        export_path: Paths = data("piazza")
 
 
 class blizzard:
@@ -413,8 +413,8 @@ class activitywatch:
     class active_window:
         export_path: Paths = (
             data("window_watcher/*.csv*"),
-            data("aw-window/phone/*.json"),
-            data("aw-window/windows/*.json"),
+            data("aw-window/phone/*.json*"),
+            data("aw-window/windows/*.json*"),
         )
         error_policy = "raise"
 
