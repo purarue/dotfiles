@@ -517,7 +517,7 @@ class location:
 class time:
     class tz:
         # force_abbreviations = ("PST", "PDT")
-        force_abbreviations = []
+        force_abbreviations: List[str] = []
         policy = "convert"
 
         class via_location:
