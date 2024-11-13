@@ -5,8 +5,8 @@ CACHE_FILE="$HOME/.cache/guestbook-comments"
 [[ ! -f $CACHE_FILE ]] && exit 0
 
 EXIT=0
-if FILE="$(is-integer "$(cat "$CACHE_FILE")")"; then
-	[[ $FILE -gt 0 ]] && exit 2
+if COMMENT_COUNT="$(is-integer "$(cat "$CACHE_FILE")")"; then
+	((COMMENT_COUNT > 0)) && EXIT=2
 fi
 
 exit "$EXIT"
