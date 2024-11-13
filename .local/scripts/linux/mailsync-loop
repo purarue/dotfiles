@@ -28,7 +28,7 @@ while true; do
 				# seems apple as always is doing something non-standard and flagging with a Junk
 				# Flag message attribute when one doesn't exist according to the IETF standard
 				# https://datatracker.ietf.org/doc/html/rfc3501#section-2.3.2
-				if mailsync; then
+				if ms; then
 					rm -f "${HOME}/.cache/mailsync_warn" # remove warning file -- mailsync has been run recently
 					refresh-block mail
 				else

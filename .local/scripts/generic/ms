@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# MailSync
+# this is a modified version of:
+# https://github.com/LukeSmithxyz/mutt-wizard/blob/master/bin/mailsync
+# which removes some of the credential management which I already do,
+# and removes notifications
+
+# Run only if user logged in (prevent cron errors)
+pgrep -u "${USER:=$LOGNAME}" >/dev/null || {
+	echo "$USER not logged in; sync will not run."
+	exit 0
+}
+# Run only if not already running in other instance
+pgrep mbsync >/dev/null && {
+	echo "mbsync is already running."
+	exit 0
+}
+
+GPG_TTY="$(tty)"
+export GPG_TTY
+
+MBSYNCRC="$HOME/.mbsyncrc"
+if [[ ! -f "$MBSYNCRC" ]]; then
+	echo "No $MBSYNCRC found." >&2
+	exit 1
+fi
+
+mbsync -a || exit $?
+notmuch new 2>/dev/null
+
+touch "${XDG_CONFIG_HOME:-$HOME/.config}/mutt/.mailsynclastrun"
