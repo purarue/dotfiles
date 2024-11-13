@@ -961,3 +961,8 @@ shebang = '#!/usr/bin/env bash'
 command = '''
 heart | APP=heart clp
 '''
+
+[timer-till-playping]
+command = '''
+timer-till "$*" && playping-loop
+'''
