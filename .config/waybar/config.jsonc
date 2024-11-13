@@ -14,7 +14,6 @@
 		"custom/reminders",
 		"idle_inhibitor",
 		"custom/reminder-sink",
-		// "custom/comments",
 		"custom/calcurse",
 		// "custom/todo",
 		"custom/mail",
@@ -200,15 +199,6 @@
 		"on-click": "launch neomutt",
 		"signal": 3
 	},
-	"custom/comments": {
-		"format": "{icon} {}",
-		"format-icons": {
-			"default": ""
-		},
-		"exec": "b-comments",
-		"interval": 600,
-		"signal": 1
-	},
 	"custom/reminder-sink": {
 		"format": " {}",
 		"exec": "b-reminder-sink",
@@ -227,9 +217,6 @@
 		"format": "{}",
 		"exec": "b-todo",
 		"interval": 600,
-		"signal": 6,
-		"format-icons": {
-			"default": ""
-		}
+		"signal": 6
 	}
 }
