@@ -50,6 +50,7 @@ export REMINDER_SINK_SILENT_FILE="${HPIDATA}/reminder-sink-silent.txt"
 # https://github.com/purarue/my_feed
 export TMDB_CACHE_DIR="${FILES_DIR}/feed_tmdb_cache"
 export GIANTBOMB_CACHE_DIR="${FILES_DIR}/feed_giantbomb_cache"
+export MAL_TMDB_MAPPING="${FILES_DIR}/mal_tmdb_mapping.json"
 # https://github.com/purarue/albums
 export DISCOGS_CACHE_DIR="${FILES_DIR}/discogs_cache"
 # https://github.com/purarue/offline_listens

@@ -61,7 +61,7 @@ evry 6 hours -google-drive && {
 evry 2 months -twitch_cli && twitch token
 
 evry 2 hours -data-sync-conflicts && {
-	SYNC_CONFLICTS="$(sync-conflicts "$HPIDATA")"
+	SYNC_CONFLICTS="$(sync-conflicts "$HPIDATA" 2>/dev/null)"
 	[[ -n "$SYNC_CONFLICTS" ]] && {
 		echo "Sync conflicts in ~/data:"
 		echo "$SYNC_CONFLICTS"
@@ -91,7 +91,7 @@ evry 1 day -check-scramble-history-formats && {
 
 # update https://github.com/purarue/mnu_gsheets
 evry 1 day -mnu && {
-	ssh vultr ~/vps/bin/mnu update && mnu sync
+	ssh vultr './vps/bin/mnu update' && mnu sync
 }
 
 if main-machine; then
