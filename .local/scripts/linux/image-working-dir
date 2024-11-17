@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# just a script that moves an image to
+# my downloads folder so I can work on it
+#
+# this is bound in ranger (my file manager)
+
+to_dir="$XDG_DOWNLOAD_DIR/images"
+mkdir -p "$to_dir"
+
+exec cp -p "$1" "$to_dir"
