@@ -10,7 +10,7 @@ light -S 100
 
 # create a 1x1 white pixel image
 FILE=/tmp/flashlight.png
-convert -size 1x1 xc:white "${FILE}"
+magick -size 1x1 xc:white "${FILE}"
 
 # and display it
 exec nsxiv "${FILE}"

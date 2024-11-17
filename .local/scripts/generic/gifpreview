@@ -16,7 +16,7 @@ esac
 [ -e /tmp/gifpreview ] && rm -rf /tmp/gifpreview
 mkdir /tmp/gifpreview
 # convert gif to images
-convert -coalesce "$path" /tmp/gifpreview/preview.png || exit 1
+magick -coalesce "$path" /tmp/gifpreview/preview.png || exit 1
 # get the middle image
 find /tmp/gifpreview >/tmp/gifpreview/images.log
 middleline="$(($(wc -l </tmp/gifpreview/images.log) / 2))"

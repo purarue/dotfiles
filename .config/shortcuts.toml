@@ -237,7 +237,7 @@ command = '''
 # convert an image to a 16x16 icon - to favicon size
 FILEPATH=${1:?Must provide image to convert}
 NEW_FILEPATH="$(remove-extension "${FILEPATH}")-icon.png"
-exec convert -resize x16 -gravity center -crop 16x16+0+0 -flatten -colors 256 "${FILEPATH}" "${NEW_FILEPATH}"
+exec magick -resize x16 -gravity center -crop 16x16+0+0 -flatten -colors 256 "${FILEPATH}" "${NEW_FILEPATH}"
 '''
 
 [file-mime]
