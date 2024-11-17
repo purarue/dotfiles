@@ -57,6 +57,15 @@ if [ "$preview_images" = "True" ]; then
 	image/svg+xml)
 		convert "$path" "$cached" && exit 6 || exit 1
 		;;
+	image/x-fuji-raf)
+		# remove extension and replace with 'JPG', try to preview
+		maybe_jpg="${path%.*}.JPG"
+		if [[ -f "$maybe_jpg" ]]; then
+			cp "$maybe_jpg" "$cached" && exit 6 || exit 1
+		else
+			pistol_or_exifinfo
+		fi
+		;;
 	image/*)
 		exit 7
 		;;
