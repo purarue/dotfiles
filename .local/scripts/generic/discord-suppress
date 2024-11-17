@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+
+import sys
+import urlextract
+
+extractor = urlextract.URLExtract()
+
+
+def main() -> None:
+    """
+    Add < > around URLs, meant to suppress links in markdown
+    """
+    for line in sys.stdin:
+        urls = extractor.find_urls(line, get_indices=True)
+        for u, (start, end) in urls:
+            line = line[:start] + f"<{u}>" + line[end:]
+            print(line, end="")
+
+
+if __name__ == "__main__":
+    main()

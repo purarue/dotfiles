@@ -663,9 +663,6 @@ SR="$(reminder-sink run)"
 exec notify "${SR:-No reminders}"
 '''
 
-[discord-suppress]
-command = "exec sed -e 's/^/</' -e 's/$/>/'"
-
 [primes]
 command = 'exec primesieve "$@" -p'
 
