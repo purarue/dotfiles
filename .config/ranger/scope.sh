@@ -138,6 +138,12 @@ application/gzip)
 			exit 5
 		}
 		;;
+	*.mjs)
+		try safepipe highlight --out-format=ansi --syntax=javascript "$path" && {
+			dump
+			exit 5
+		}
+		;;
 	*.1)
 		try safepipe man -P cat "$path" && {
 			dump
