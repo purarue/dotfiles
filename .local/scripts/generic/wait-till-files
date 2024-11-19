@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# wait till there are files in a directory
+# wait-till-files ~/Downloads 5
+
+declare dir count
+dir="${1?:directory missing}"
+if is-integer "$dir"; then
+	printf 'Pass a directory as first argument\n' >&2
+	exit 1
+fi
+count="${2:-1}"
+
+if [[ ! -d "$dir" ]]; then
+	printf 'Directory %s does not exist\n' "$dir" >&2
+	exit 1
+fi
+
+get_count() {
+	fd . "$dir" --type f --type d --max-depth=1 | wc -l
+}
+
+{
+	while true; do
+		cnt="$(get_count)"
+		if ((cnt >= count)); then
+			printf '%d >= %d | %s\n' "$cnt" "$count" "$dir"
+			break
+		fi
+		printf '%d < %d | %s\n' "$cnt" "$count" "$dir"
+		sleep "${SLEEP_TIME:-5}"
+	done
+} | uniq
+
+exit 0

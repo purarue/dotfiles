@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+URL='https://github.com/szimek/signature_pad'
+CACHE_DIR="$HOME/.cache/signature_pad"
+
+if [[ ! -d "$(dirname "$CACHE_DIR")" ]]; then
+	mkdir -p "$(dirname "$CACHE_DIR")"
+fi
+
+if [[ ! -d "$CACHE_DIR" ]]; then
+	git clone "$URL" "$CACHE_DIR" || exit $?
+fi
+
+cd "$CACHE_DIR/docs" || {
+	echo "Failed to cd to docs folder"
+	exit 1
+}
+setsid -f sh -c 'sleep 1 && openurl localhost:5059'
+exec serve -p 5059
