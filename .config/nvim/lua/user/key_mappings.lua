@@ -103,7 +103,7 @@ end
 nnoremap("<C-q>", function()
     toggle_list(true)
 end, "toggle quickfix list")
-wk.add({ "<leader>j", ":cnext<CR>", desc = "qf next" }, { "<leader>k", ":cprev<CR>", desc = "qf prev" })
+wk.add({ { "<leader>j", ":cnext<CR>", desc = "qf next" }, { "<leader>k", ":cprev<CR>", desc = "qf prev" } })
 
 wk.add({ "<leader>l", group = "loc list" })
 
