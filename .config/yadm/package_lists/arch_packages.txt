@@ -75,7 +75,6 @@ valgrind
 yarn
 
 # utilities
-
 aspell
 aspell-en
 at
@@ -130,6 +129,7 @@ lsb-release
 lynx
 maim
 man-db
+mediainfo
 mlocate
 moreutils
 neovim-git
