@@ -112,6 +112,7 @@ alias 'ml=mailsync-loop'
 alias 'confirm=fzf --multi'
 alias find-sync-conflicts=sync-conflicts
 alias rss='e "$HOME/.config/newsboat/urls"'
+alias nr='newsboat && setsid -f update-rss'
 alias 'up=TERM=xterm up'
 alias screens='cd $SCREENSHOTS'
 
