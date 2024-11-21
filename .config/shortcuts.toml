@@ -836,11 +836,14 @@ command = 'exec fd --type=file "$@"'
 [mypy-single-lines]
 command = 'exec mypy --show-column-numbers --hide-error-codes --hide-error-context --no-color-output --no-error-summary --no-pretty "$@"'
 
+[spell-fd]
+command = 'exec fd --type f --exclude package-lock.json --exclude yarn.lock "$@"'
+
 [spell-list]
-command = 'exec fd --type f "$@" --exec-batch codespell-conf'
+command = 'exec spell-fd "$@" --exec-batch codespell-conf'
 
 [spell-interactive]
-command = 'exec fd --type f "$@" --exec-batch codespell-conf --write-changes --interactive 3'
+command = 'exec spell-fd "$@" --exec-batch codespell-conf --write-changes --interactive 3'
 
 [spell]
 command = '''

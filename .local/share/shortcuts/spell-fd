@@ -1,0 +1,2 @@
+#!/bin/sh
+exec fd --type f --exclude package-lock.json --exclude yarn.lock "$@"

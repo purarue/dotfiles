@@ -1,2 +1,2 @@
 #!/bin/sh
-exec fd --type f "$@" --exec-batch codespell-conf --write-changes --interactive 3
+exec spell-fd "$@" --exec-batch codespell-conf --write-changes --interactive 3

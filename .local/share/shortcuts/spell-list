@@ -1,2 +1,2 @@
 #!/bin/sh
-exec fd --type f "$@" --exec-batch codespell-conf
+exec spell-fd "$@" --exec-batch codespell-conf

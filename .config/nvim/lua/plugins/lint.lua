@@ -55,16 +55,10 @@ return {
 
             -- parse the diagnostics to let me select one of the suggested
             -- codespell fixes interactively
-            local fix = function()
-                -- get current line, check if there are any diagnostics on that line
-                local bufnr = vim.api.nvim_get_current_buf()
-                local curline = vim.fn.line(".") - 1
-
+            local function fix()
+                --- codespell-related diagnostics
                 ---@type vim.Diagnostic[]
-                local diagnostics = vim.diagnostic.get(bufnr)
-
-                ---@type vim.Diagnostic[]
-                local misspellings = vim.iter(diagnostics)
+                local misspellings = vim.iter(vim.diagnostic.get(0))
                     :filter(function(d)
                         return d.source == "codespell"
                     end)
@@ -74,26 +68,23 @@ return {
                     return a.lnum < b.lnum
                 end)
 
+                -- helper function for easier to read control flow
+                --
                 -- if there's one on the current line, use that, otherwise
-                -- pick the next item
-                ---@type vim.Diagnostic|nil
-                local chosen = vim.iter(misspellings):find(function(d)
-                    return d.lnum == curline
-                end)
-                if chosen == nil then
-                    -- search going forwards, for the first item
+                -- pick the next item, otherwise use the first
+                ---@return vim.Diagnostic|nil
+                local function pick()
+                    local curline = vim.fn.line(".") - 1
                     for _, d in ipairs(misspellings) do
-                        if d.lnum > curline then
-                            chosen = d
-                            break
+                        if d.lnum >= curline then
+                            return d
                         end
                     end
-                    -- if still not found, just use the first; wrap around
-                    if chosen == nil then
-                        chosen = misspellings[1]
-                    end
+
+                    return misspellings[1]
                 end
 
+                local chosen = pick()
                 if chosen == nil then
                     return vim.notify("No misspelled words")
                 end
@@ -105,9 +96,9 @@ return {
                 if #parts ~= 2 then
                     return vim.notify("Could not split " .. chosen.message .. " into parts")
                 end
-                ---@desc Replace the word under the cursor with with 'choice'
-                ---@param choice string|nil
-                local replace = function(choice)
+                -- even if there's one option, I should confirm so it doesn't replace something
+                -- I was not expecting
+                vim.ui.select(vim.split(parts[2], ", "), { prompt = "Replace '" .. parts[1] .. "' with" }, function(choice)
                     if choice == nil then
                         return
                     end
@@ -116,10 +107,7 @@ return {
                     vim.fn.setline(chosen.lnum + 1, old:sub(1, chosen.col) .. choice .. old:sub(chosen.end_col + 1))
                     -- re-run codespell so I can spam this to fix all misspelled words
                     lint.try_lint("codespell")
-                end
-                -- even if there's one option, I should confirm so it doesn't replace something
-                -- I was not expecting
-                vim.ui.select(vim.split(parts[2], ", "), { prompt = "Replace '" .. parts[1] .. "' with" }, replace)
+                end)
             end
 
             vim.api.nvim_create_user_command("CodespellFix", fix, {
