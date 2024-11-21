@@ -53,68 +53,16 @@ return {
                 end
             end
 
-            -- parse the diagnostics to let me select one of the suggested
-            -- codespell fixes interactively
-            local function fix()
-                --- codespell-related diagnostics
-                ---@type vim.Diagnostic[]
-                local misspellings = vim.iter(vim.diagnostic.get(0))
-                    :filter(function(d)
-                        return d.source == "codespell"
-                    end)
-                    :totable()
-
-                table.sort(misspellings, function(a, b)
-                    return a.lnum < b.lnum
-                end)
-
-                -- helper function for easier to read control flow
-                --
-                -- if there's one on the current line, use that, otherwise
-                -- pick the next item, otherwise use the first
-                ---@return vim.Diagnostic|nil
-                local function pick()
-                    local curline = vim.fn.line(".") - 1
-                    for _, d in ipairs(misspellings) do
-                        if d.lnum >= curline then
-                            return d
-                        end
-                    end
-
-                    return misspellings[1]
-                end
-
-                local chosen = pick()
-                if chosen == nil then
-                    return vim.notify("No misspelled words")
-                end
-
-                -- jump to that location
-                vim.fn.cursor(chosen.lnum + 1, chosen.col + 1)
-                -- parse possible corrections from the message
-                local parts = vim.split(chosen.message, " ==> ")
-                if #parts ~= 2 then
-                    return vim.notify("Could not split " .. chosen.message .. " into parts")
-                end
-                -- even if there's one option, I should confirm so it doesn't replace something
-                -- I was not expecting
-                vim.ui.select(vim.split(parts[2], ", "), { prompt = "Replace '" .. parts[1] .. "' with" }, function(choice)
-                    if choice == nil then
-                        return
-                    end
-                    -- replace that word in the line
-                    local old = vim.fn.getline(chosen.lnum + 1)
-                    vim.fn.setline(chosen.lnum + 1, old:sub(1, chosen.col) .. choice .. old:sub(chosen.end_col + 1))
-                    -- re-run codespell so I can spam this to fix all misspelled words
-                    lint.try_lint("codespell")
-                end)
+            local function fix_and_rerun()
+                require("user.codespell").codespell_fix()
+                lint.try_lint("codespell")
             end
 
-            vim.api.nvim_create_user_command("CodespellFix", fix, {
+            vim.api.nvim_create_user_command("CodespellFix", fix_and_rerun, {
                 desc = "pick one of the codespell fixes and replace it in the line",
             })
             local mh = require("user.mapping_helpers")
-            mh.nnoremap("<leader>z", fix, "codespell fix")
+            mh.nnoremap("<leader>z", fix_and_rerun, "codespell fix")
         end
 
         -- Note: nvim-lint has an internal list of pre-enabled linters
