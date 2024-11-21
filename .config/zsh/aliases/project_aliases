@@ -195,7 +195,6 @@ alias self-edit='editor "$HPIDATA/.self_types.txt"'
 alias snl='while self-now; do; done'
 alias fl='flipflop.py'
 alias fls='fl status'
-alias fle
 flf() {
 	fl flip
 	fls

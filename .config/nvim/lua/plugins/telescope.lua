@@ -109,7 +109,7 @@ return {
                 desc = "git files",
             },
             {
-                "<leader>fo",
+                "<leader>fo", -- codespell:ignore
                 function()
                     require("telescope.builtin").oldfiles()
                 end,
