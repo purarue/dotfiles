@@ -53,16 +53,16 @@ return {
                 end
             end
 
-            local function fix_and_rerun()
+            local function fix_and_lint()
                 require("user.codespell").codespell_fix()
                 lint.try_lint("codespell")
             end
 
-            vim.api.nvim_create_user_command("CodespellFix", fix_and_rerun, {
+            vim.api.nvim_create_user_command("CodespellFix", fix_and_lint, {
                 desc = "pick one of the codespell fixes and replace it in the line",
             })
             local mh = require("user.mapping_helpers")
-            mh.nnoremap("<leader>z", fix_and_rerun, "codespell fix")
+            mh.nnoremap("<leader>z", fix_and_lint, "codespell fix")
         end
 
         -- Note: nvim-lint has an internal list of pre-enabled linters
