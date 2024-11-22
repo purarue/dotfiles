@@ -100,8 +100,6 @@ if main-machine; then
 		(cd "$REPOS/projects" && ./update && git status)
 	}
 
-	housekeeping-loop -o
-
 	# https://github.com/purarue/HPI-personal/blob/master/scripts/backup-cubing
 	backup-cubing
 
