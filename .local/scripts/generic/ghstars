@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+if ! has-git-remote; then
+	echo 'no git remote' >&2
+	exit 1
+fi
+declare url
+url="$(git open --print | cut -d'/' -f4-5)"
+if [[ -z "$url" ]]; then
+	echo 'no url' >&2
+	exit 1
+fi
+if resp="$(gh api --paginate "repos/${url}/stargazers")"; then
+	jq '.[].login' -r <<<"$resp"
+else
+	printf 'Could not fetch repos/%s/stargazers\n' "$url"
+	exit 1
+fi

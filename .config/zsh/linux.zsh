@@ -19,8 +19,10 @@ alias remove-orphans='sudo pacman -Rns $(list-orphans)'
 # clear paru tar.gz cache
 alias paru-clear-cache='paru -Syu && paru -Sc'
 alias rnm='sudo systemctl restart NetworkManager' # restart networkmanager
+alias rss='e "$HOME/.config/newsboat/urls"'
+alias newsboat='newsboat && setsid -f update-rss'
 
-clean-cache() {
+cache-clean() {
 	gem cleanup
 	pip cache purge
 	pipenv --clear
