@@ -19,6 +19,7 @@ if [[ -n "${WAYLAND_DISPLAY:-}" ]]; then
 	(find "${TTALLY_DATA_DIR}" "${HPIDATA}/flipflop/" -type f | entr -n pkill -RTMIN+2 waybar) &
 	(echo "${TODO_DIR}/todo.txt" | entr -n pkill -RTMIN+6 waybar) &
 	(find ~/.cache/bgproc.lastrun | entr -n pkill -RTMIN+4 waybar) &
+	(echo "${HOME}/.cache/rss-unread" | entr -n refresh-block reminder-sink) &
 else
 
 	# 'LINUX_TASK' isn't really an argument to i3blocks-refresh-mk, it ignores extra arguments
