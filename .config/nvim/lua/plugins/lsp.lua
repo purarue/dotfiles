@@ -42,7 +42,22 @@ return {
                         },
                     },
                 },
-                pyright = { flags = { debounce_text_changes = 100 } },
+                pyright = {
+                    flags = { debounce_text_changes = 100 },
+                    settings = {
+                        {
+                            pyright = { autoImportCompletions = true },
+                            python = {
+                                analysis = {
+                                    autoSearchPaths = true,
+                                    diagnosticMode = "openFilesOnly",
+                                    useLibraryCodeForTypes = true,
+                                    typeCheckingMode = "off",
+                                },
+                            },
+                        },
+                    },
+                },
                 yamlls = {
                     settings = {
                         yaml = {
