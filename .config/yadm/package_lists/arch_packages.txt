@@ -71,6 +71,7 @@ scalafmt
 shfmt
 stylua
 tidy
+tree-sitter-cli
 valgrind
 yarn
 

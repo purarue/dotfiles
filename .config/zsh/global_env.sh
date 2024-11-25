@@ -56,5 +56,6 @@ export DISCOGS_CACHE_DIR="${FILES_DIR}/discogs_cache"
 # https://github.com/purarue/offline_listens
 export OFFLINE_LISTENS_COMMANDS='offline-listens-source'
 export OFFLINE_LISTENS_FILE="${HPIDATA}/offline_listens/${ON_OS}.yaml"
+export ABOOK_FILE="${XDG_DOCUMENTS_DIR}/addressbook"
 
 export NVIM_SPELLFILE="${XDG_DOCUMENTS_DIR}/.nvim_spelldir/en.utf-8.add"
