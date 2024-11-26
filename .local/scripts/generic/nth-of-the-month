@@ -9,9 +9,9 @@ For example:
 4th Friday of the month
 """
 
-from collections.abc import Iterator
 from datetime import date, timedelta, datetime
 from enum import IntEnum
+from typing import Iterator
 
 import click
 
@@ -35,16 +35,19 @@ def iter_nth_date_of_the_month(
     nth: int,
     start_date: date,
 ) -> Iterator[date]:
-    assert nth > 0
     dy = start_date.replace(day=1)
     month = dy.month
     target_nth = nth
     while True:
         while month == dy.month:
             if day.is_day(dy):
-                target_nth -= 1
-                if target_nth == 0:
+                # special case, yield every week
+                if nth == 0:
                     yield dy
+                else:
+                    target_nth -= 1
+                    if target_nth == 0:
+                        yield dy
             dy += timedelta(days=1)
         month = dy.month
         target_nth = nth
@@ -67,7 +70,7 @@ def _date_coalesce(d: date | datetime) -> date:
 
 @click.command()
 @click.option("-d", "--day", type=click.Choice([d.name for d in Day]), required=True)
-@click.option("-n", "--nth", type=click.IntRange(min=1), default=1)
+@click.option("-n", "--nth", type=click.IntRange(min=0), default=1)
 @click.option("-s", "--start-date", type=click.DateTime(), default=None)
 @click.option("-e", "--end-date", type=click.DateTime(), default=None)
 def main(
