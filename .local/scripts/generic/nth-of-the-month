@@ -1,0 +1,92 @@
+#!/usr/bin/env python3
+
+"""
+Print the dates of the 'nth of the month'.
+
+For example:
+
+1st Sunday of the month
+4th Friday of the month
+"""
+
+from collections.abc import Iterator
+from datetime import date, timedelta, datetime
+from enum import IntEnum
+
+import click
+
+
+class Day(IntEnum):
+    Monday = 0
+    Tuesday = 1
+    Wednesday = 2
+    Thursday = 3
+    Friday = 4
+    Saturday = 5
+    Sunday = 6
+
+    def is_day(self, d: date) -> bool:
+        return self.value == d.weekday()
+
+
+def iter_nth_date_of_the_month(
+    *,
+    day: Day,
+    nth: int,
+    start_date: date,
+) -> Iterator[date]:
+    assert nth > 0
+    dy = start_date.replace(day=1)
+    month = dy.month
+    target_nth = nth
+    while True:
+        while month == dy.month:
+            if day.is_day(dy):
+                target_nth -= 1
+                if target_nth == 0:
+                    yield dy
+            dy += timedelta(days=1)
+        month = dy.month
+        target_nth = nth
+
+
+def iter_nth_of_the_month_till(
+    *, day: Day, nth: int, start_date: date, end_date: date
+) -> Iterator[date]:
+    for d in iter_nth_date_of_the_month(start_date=start_date, day=day, nth=nth):
+        if d > end_date:
+            break
+        yield d
+
+
+def _date_coalesce(d: date | datetime) -> date:
+    if isinstance(d, datetime):
+        return d.date()
+    return d
+
+
+@click.command()
+@click.option("-d", "--day", type=click.Choice([d.name for d in Day]), required=True)
+@click.option("-n", "--nth", type=click.IntRange(min=1), default=1)
+@click.option("-s", "--start-date", type=click.DateTime(), default=None)
+@click.option("-e", "--end-date", type=click.DateTime(), default=None)
+def main(
+    day: str, nth: int, start_date: datetime | date | None, end_date: date | date | None
+) -> None:
+    day_enum: Day = Day[day]
+    if start_date is None:
+        start_date = date.today()
+    if end_date is None:
+        end_date = start_date + timedelta(days=365)
+
+    for d in iter_nth_of_the_month_till(
+        day=day_enum,
+        nth=nth,
+        start_date=_date_coalesce(start_date),
+        end_date=_date_coalesce(end_date),
+    ):
+        click.echo(d)
+
+
+if __name__ == "__main__":
+    main()
