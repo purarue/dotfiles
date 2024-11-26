@@ -1,19 +1,25 @@
 #!/usr/bin/env bash
 
-calcurse_filter() {
-	local start end_format end
-	start="$(date "$1")"
-	end_format="${2:-+%m/%d/%Y}"
-	shift
-	shift
-	end="$(date "$end_format" "$@")"
+calcurse_filter_between() {
+	local start="$1"
+	local end="$2"
 	calcursed -G --filter-type=apt --filter-start-from="$start" --filter-end-to="$end"
+}
+
+dateoffset() {
+	local dt="$1"
+	local dt_offset="$2"
+	local -a args=("+$dt")
+	if [[ -n "$dt_offset" ]]; then
+		args+=(-d "$dt_offset")
+	fi
+	date "${args[@]}"
 }
 
 case "$BLOCK_BUTTON" in
 1)
 	# send a notification with todays appointments
-	notify "$(calcurse_filter +'%m/%d/%Y' +'%m/%d/%Y' -d '+1 day' | tr '|' '\n')"
+	notify "$(calcurse_filter_between "$(dateoffset '%m/%d/%Y %H:%M')" "$(dateoffset '%m/%d/%Y' '+1 day')" | tr '|' '\n')"
 	;;
 3)
 	# open calcurse in my terminal
@@ -25,15 +31,15 @@ esac
 calcurse_status() {
 	# Find things on my calendar that are starting after now, today
 	# and meetings that are on my calendar, at any time today
-	today_coming_up="$(calcurse_filter +'%m/%d/%Y %H:%M' | wc -l)"
-	today_or_tomorrow="$(calcurse_filter +'%m/%d/%Y' +'%m/%d/%Y' -d '+1 day' | wc -l)"
+	today_coming_up="$(calcurse_filter_between "$(dateoffset '%m/%d/%Y %H:%M')" "$(dateoffset '%m/%d/%Y')" | wc -l)"
+	tomorrow="$(calcurse_filter_between "$(dateoffset '%m/%d/%Y' '+1 day')" "$(dateoffset '%m/%d/%Y' '+1 day')" | wc -l)"
 
 	# if all are upcoming (later in the day), just print one
-	if ((today_or_tomorrow == today_coming_up)); then
+	if ((tomorrow == today_coming_up)); then
 		printf '%s\n' "$today_coming_up"
 	else
 		# print items upcoming / total items today
-		printf '%s/%s\n' "$today_coming_up" "$today_or_tomorrow"
+		printf '%s/%s\n' "$today_coming_up" "$tomorrow"
 	fi
 }
 
@@ -43,7 +49,7 @@ if [[ -z "$CALCURSE_DIR" ]]; then
 	exit 1
 fi
 
-SYNC_CONFLICTS="$(find-sync-conflicts "$CALCURSE_DIR" | wc -l)"
+SYNC_CONFLICTS="$(sync-conflicts "$CALCURSE_DIR" 2>/dev/null | wc -l)"
 if [ "$SYNC_CONFLICTS" -gt 0 ]; then
 	printf "%s \n" "$(calcurse_status)"
 else

@@ -91,6 +91,7 @@ croc
 cronie
 datamash
 dex
+dos2unix
 dragon-drop
 drive-bin
 dust
