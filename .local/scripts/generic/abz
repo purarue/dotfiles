@@ -4,8 +4,6 @@ import os
 from typing import Any
 import click
 
-from pura.clipboard import clipcopy
-
 pth = os.environ["ABOOK_FILE"]
 
 from abook_parser.parser import AbookFile, Fzf
@@ -37,10 +35,7 @@ def main() -> None:
         return
 
     print_items = [p.split("=", maxsplit=1)[1] for p in picked]
-    click.echo("Copying to clipboard...", err=True)
-    text = "\n".join(print_items)
-    clipcopy(text)
-    click.echo(text)
+    click.echo("\n".join(print_items))
 
 
 if __name__ == "__main__":
