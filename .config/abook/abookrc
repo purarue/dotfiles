@@ -22,9 +22,8 @@
 # with <type> being one of 'string' (default), 'emails', 'list', or 'date'
 #
 # Example of field definitions:
-field pager = Pager
-field address_lines = Address, list
 field birthday = Birthday, date
+field website = Website, string
 
 
 #  Defining a view/tab
@@ -45,10 +44,9 @@ field birthday = Birthday, date
 #       on the above standard fields.
 #
 # Example of views:
-view MAIN = name, email, mobile, nick, notes, birthday
+view MAIN = name, email, mobile, nick, website, notes, birthday
 view PHONE = phone, mobile, workphone
-view ADDRESS = address_lines, city, state, zip, country
-
+view ADDRESS = address, city, state, zip, country
 
 ##
 ##  Variables
@@ -66,7 +64,7 @@ set autosave=true
 #                 description of the 'view' command) and the legacy
 #                 'custom[1-5]' fields.
 #   * 'none': discards any unknown field.
-set preserve_fields=standard
+set preserve_fields=all
 
 # Show all email addresses in list
 set show_all_emails=true
@@ -93,7 +91,7 @@ set print_command=lpr
 set www_command=lynx
 
 # address style [eu|us|uk]
-set address_style=eu
+set address_style=us
 
 # use ASCII characters only
 set use_ascii_only=false

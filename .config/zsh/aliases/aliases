@@ -79,6 +79,7 @@ alias dr='dragon-drop'
 alias drx='dragon-drop --and-exit'
 alias du='du -h'
 alias df='df -h'
+alias ab='e "${XDG_DOCUMENTS_DIR}/addressbook"'
 alias abook=abookc
 alias history='history 0'
 alias free='free --human'

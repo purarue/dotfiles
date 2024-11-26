@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+
+import os
+from typing import Any
+import click
+
+from pura.clipboard import clipcopy
+
+pth = os.environ["ABOOK_FILE"]
+
+from abook_parser.parser import AbookFile, Fzf
+
+fzf = Fzf()
+
+
+@click.command()
+def main() -> None:
+    ab = AbookFile(path=pth)
+    mem: dict[str, Any] = {}
+    feed = []
+    for key, item in ab.items.items():
+        if "name" not in item:
+            continue
+        key = item["name"]
+        if "nick" in item:
+            key += f" ({item['nick']})"
+        mem[key] = item
+        feed.append(key)
+
+    chosen = fzf.prompt(feed, "--no-multi")
+    if not chosen:
+        return
+
+    item = mem[chosen[0]]
+    picked = fzf.prompt([f"{key}={val}" for key, val in item.items()], "--multi")
+    if not picked:
+        return
+
+    print_items = [p.split("=", maxsplit=1)[1] for p in picked]
+    click.echo("Copying to clipboard...", err=True)
+    text = "\n".join(print_items)
+    clipcopy(text)
+    click.echo(text)
+
+
+if __name__ == "__main__":
+    main()

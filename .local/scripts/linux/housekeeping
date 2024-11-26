@@ -94,6 +94,8 @@ evry 1 day -mnu && {
 	ssh vultr './vps/bin/mnu update' && mnu sync
 }
 
+evry 1 week -prompt-abook && abook-populate -f sms
+
 if main-machine; then
 
 	evry 1 day -update-projects && {
