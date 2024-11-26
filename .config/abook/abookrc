@@ -24,6 +24,7 @@
 # Example of field definitions:
 field birthday = Birthday, date
 field website = Website, string
+field social = Social, list
 
 
 #  Defining a view/tab
@@ -44,7 +45,7 @@ field website = Website, string
 #       on the above standard fields.
 #
 # Example of views:
-view MAIN = name, email, mobile, nick, website, notes, birthday
+view MAIN = name, email, mobile, nick, website, social, notes, birthday
 view PHONE = phone, mobile, workphone
 view ADDRESS = address, city, state, zip, country
 
@@ -76,7 +77,7 @@ set show_all_emails=true
 #  * the first of the 'phone', 'workphone' or 'mobile' fields
 #    happening not to be empty (right aligned within 12 characters)
 #  * the 'anniversary' field, with no length limit
-set index_format=" {name:20} {email:-15} {mobile:-15|phone:-15} {birthday}"
+set index_format=" {nick:-20|name} {email:-15} {mobile:-15|phone} {birthday}"
 
 # Command used to start mutt
 set mutt_command=neomutt

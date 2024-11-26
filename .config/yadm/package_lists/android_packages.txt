@@ -8,6 +8,7 @@ moreutils
 bat
 rust
 golang
+taplo
 elixir
 binutils
 luarocks
