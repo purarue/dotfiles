@@ -29,7 +29,7 @@ class Day(IntEnum):
         return self.value == d.weekday()
 
 
-def iter_nth_date_of_the_month(
+def iter_nth_of_the_month(
     *,
     day: Day,
     nth: int,
@@ -56,7 +56,7 @@ def iter_nth_date_of_the_month(
 def iter_nth_of_the_month_till(
     *, day: Day, nth: int, start_date: date, end_date: date
 ) -> Iterator[date]:
-    for d in iter_nth_date_of_the_month(start_date=start_date, day=day, nth=nth):
+    for d in iter_nth_of_the_month(start_date=start_date, day=day, nth=nth):
         if d > end_date:
             break
         yield d
