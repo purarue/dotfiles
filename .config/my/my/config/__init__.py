@@ -310,7 +310,7 @@ class nextalbums:
     https://github.com/purarue/albums
     """
 
-    export_path: Paths = data("albums.json")
+    export_path: Paths = data("albums/*.json")
 
 
 class steam:
