@@ -14,23 +14,23 @@ fzf = Fzf()
 @click.command()
 def main() -> None:
     ab = AbookFile(path=pth)
-    mem: dict[str, Any] = {}
+    mem: dict[str, dict[str, str]] = {}
     feed = []
-    for key, item in ab.items.items():
-        if "name" not in item:
+    for contact in ab.contacts:
+        if "name" not in contact:
             continue
-        key = item["name"]
-        if "nick" in item:
-            key += f" ({item['nick']})"
-        mem[key] = item
+        key = contact["name"]
+        if "nick" in contact:
+            key += f" ({contact['nick']})"
+        mem[key] = contact
         feed.append(key)
 
     chosen = fzf.prompt(feed, "--no-multi")
     if not chosen:
         return
 
-    item = mem[chosen[0]]
-    picked = fzf.prompt([f"{key}={val}" for key, val in item.items()], "--multi")
+    chosen = mem[chosen[0]]
+    picked = fzf.prompt([f"{key}={val}" for key, val in chosen.items()], "--multi")
     if not picked:
         return
 
