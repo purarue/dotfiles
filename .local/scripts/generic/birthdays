@@ -15,15 +15,15 @@ import click
 from abook_parser.parser import AbookFile
 
 abook_file = os.environ["ABOOK_FILE"]
-this_year = date.today().year
+today = date.today()
 
 
 class Info(NamedTuple):
     name: str
     birthday: date
 
-    def with_current_year(self) -> Info:
-        return Info(self.name, self.birthday.replace(year=this_year))
+    def with_current_year(self) -> date:
+        return self.birthday.replace(year=today.year)
 
     def dict(self, fmt: DateFormat) -> dict[str, str]:
         return {
@@ -38,7 +38,7 @@ class Info(NamedTuple):
 
 def iter_birthdays() -> Iterator[Info]:
     ab = AbookFile(abook_file)
-    for vv in ab.items.values():
+    for vv in ab.contacts:
         if birthday := vv.get("birthday"):
             dt = date.fromisoformat(birthday)
             yield Info(vv["name"], dt)
@@ -69,11 +69,13 @@ DateFormat = Literal["iso", "human"]
 )
 def main(output: OutputFormat, _format: DateFormat, upcoming: int) -> None:
     birthdays: Iterable[Info] = list(iter_birthdays())
-    birthdays.sort(key=lambda b: b.with_current_year().birthday)
+    birthdays.sort(key=lambda b: b.with_current_year())
     if upcoming is not None:
+        if upcoming > 365:
+            upcoming = 365
         upcoming_set: set[str] = set(
             d.strftime("%m-%d")
-            for d in (date.today() + timedelta(days=n) for n in range(upcoming + 1))
+            for d in (today + timedelta(days=n) for n in range(upcoming + 1))
         )
         birthdays = filter(
             lambda b: b.birthday.strftime("%m-%d") in upcoming_set, birthdays
