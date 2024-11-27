@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import os
-from typing import Any
 import click
 
 pth = os.environ["ABOOK_FILE"]
@@ -12,7 +11,8 @@ fzf = Fzf()
 
 
 @click.command()
-def main() -> None:
+@click.option("-c", "--clipboard", is_flag=True, help="Copy to clipboard")
+def main(clipboard: bool) -> None:
     ab = AbookFile(path=pth)
     mem: dict[str, dict[str, str]] = {}
     feed = []
@@ -35,7 +35,12 @@ def main() -> None:
         return
 
     print_items = [p.split("=", maxsplit=1)[1] for p in picked]
-    click.echo("\n".join(print_items))
+    text = "\n".join(print_items)
+    click.echo(text)
+    if clipboard:
+        from pura.clipboard import clipcopy
+
+        clipcopy(text)
 
 
 if __name__ == "__main__":
