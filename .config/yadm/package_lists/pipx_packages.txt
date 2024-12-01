@@ -1,4 +1,3 @@
-black
 cookiecutter
 csvkit
 cube-scramble-cli

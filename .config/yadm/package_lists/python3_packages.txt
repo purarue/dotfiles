@@ -1,4 +1,5 @@
 Pygments
+black
 codespell
 exifread
 flake8
