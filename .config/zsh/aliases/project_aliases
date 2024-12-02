@@ -217,6 +217,36 @@ mpv-currently-playing-mark-nsfw() {
 	touch "${playing_dir}/.nsfw"
 	echo "marked as NSFW: ${playing_dir}"
 }
+
+# e.g. I was watching an episode of some show
+# and I want to play the next one while the
+# credits are rolling
+mpv-next-ep() {
+	local dir index curplaying files
+	if curplaying="$(mpv-currently-playing)"; then
+		dir="$(dirname "$curplaying")"
+		# use fd to find the index of the currently playing file, then play the next
+		files="$(fd . "$dir" --type f)" || return $?
+		index="$(grep --line-number "$curplaying" <<<"$files" | cut -d: -f1)"
+		if [[ -z "$index" ]]; then
+			echo "Could not find $curplaying..." >&2
+			return 1
+		fi
+		# rifle launches the correct application
+		# https://github.com/ranger/ranger
+		rifle "$(sed -n "$((index + 1))p" <<<"$files")"
+	else
+		echo 'Nothing playing...' >&2
+		return 1
+	fi
+}
+
+# same as above but it quits the old episode
+mpv-next-ep-and-quit-last() {
+	mpv-next-ep || return $?
+	mpv-communicate "$(mpv-active-sockets --socket | head -n 1)" quit
+}
+
 alias mpv-play-all='mpv-pause-all false'
 
 curplaying-text() {

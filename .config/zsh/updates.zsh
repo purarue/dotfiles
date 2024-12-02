@@ -15,15 +15,15 @@ update_pip() {
 	echo "Updating python packages..."
 	python -m pip install --user -U --break-system-packages -r "${XDG_CONFIG_HOME}/yadm/package_lists/python3_packages.txt"
 	case "$ON_OS" in
-		linux_*)
-			python -m pip install --user -U --break-system-packages -r "${XDG_CONFIG_HOME}/yadm/package_lists/linux_python3_packages.txt"
-			;;
+	linux_*)
+		python -m pip install --user -U --break-system-packages -r "${XDG_CONFIG_HOME}/yadm/package_lists/linux_python3_packages.txt"
+		;;
 	esac
 	case "$ON_OS" in
-		android*) ;;
-		*)
-			python -m pip install --user -U --break-system-packages -r "${XDG_CONFIG_HOME}/yadm/package_lists/computer_python.txt"
-			;;
+	android*) ;;
+	*)
+		python -m pip install --user -U --break-system-packages -r "${XDG_CONFIG_HOME}/yadm/package_lists/computer_python.txt"
+		;;
 	esac
 }
 

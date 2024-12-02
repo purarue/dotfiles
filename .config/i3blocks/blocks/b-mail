@@ -9,7 +9,7 @@ MAILSYNC_WARN_FILE="${HOME}/.cache/mailsync_warn"
 [[ -n "$BLOCK_BUTTON" ]] && rm -f "${MAILSYNC_WARN_FILE}"
 
 case $BLOCK_BUTTON in
-3) setsid launch neomuttr;;
+3) setsid launch neomuttr ;;
 esac
 
 if [[ -f "${MAILSYNC_WARN_FILE}" ]]; then

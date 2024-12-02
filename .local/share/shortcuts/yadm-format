@@ -2,4 +2,4 @@
 # autoformat all my dotfiles
 set -o pipefail
 cd
-yadm list | exists | grep -v 'lazy-lock.json' | rifleman -
+yadm list | exists | grep -v 'lazy-lock.json' | rifleman - "$@"
