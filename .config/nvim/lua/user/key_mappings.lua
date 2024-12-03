@@ -69,6 +69,8 @@ nnoremap("<Esc>", "<Cmd>nohlsearch<CR>", "clear search highlight")
 local function reload_config()
     vim.cmd("source ~/.config/nvim/lua/user/settings.lua")
     vim.cmd("source ~/.config/nvim/lua/user/key_mappings.lua")
+    -- reload background color
+    vim.opt.background = require("terminal_colorscheme").dark_mode() and "dark" or "light"
     print("Reloaded config")
 end
 

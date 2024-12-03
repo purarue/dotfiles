@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-kitty +kitten themes --reload-in=all "${1:?Must provide theme as kwarg}" || exit $?
-echo "$1" >~/.cache/kitty-theme-name

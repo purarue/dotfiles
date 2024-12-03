@@ -931,21 +931,23 @@ command = 'exec make -f "$HOME/.local/scripts/notes_rendered/Makefile" "$@"'
 [todo]
 command = 'exec todo.sh "$@"'
 
-[kitty-set-theme]
+[terminal-set-theme]
 command = '''
-kitty +kitten themes --reload-in=all "${1:?Must provide theme as kwarg}" || exit $?
-echo "$1" >~/.cache/kitty-theme-name
+if [[ "$TERM" = "xterm-kitty" ]]; then
+  kitten themes --reload-in=all --config-file-name="${HOME}/.config/kitty/theme.conf" "${1:?Must provide theme as kwarg}"  || exit $?
+fi
+echo "$1" >~/.cache/terminal-theme
 '''
 shebang = "#!/usr/bin/env bash"
 
-[light-theme-kitty]
+[light-theme]
 command = '''
-exec kitty-set-theme Light
+exec terminal-set-theme Light
 '''
 
-[dark-theme-kitty]
+[dark-theme]
 command = '''
-exec kitty-set-theme Dark
+exec terminal-set-theme Dark
 '''
 
 [abookc]

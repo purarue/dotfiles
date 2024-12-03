@@ -24,6 +24,9 @@ export CDPATH=".:${REPOS}"
 export GOPATH="${XDG_DATA_HOME}/go"
 export GOBIN="${GOPATH}/bin"
 
+# Lua
+export LUA_PATH="${HOME}/.config/pura_lua/?.lua;;"
+
 # Rust
 export CARGO_HOME="${XDG_DATA_HOME}/cargo"
 
