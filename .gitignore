@@ -72,8 +72,6 @@ __pycache__
 /random.dat
 /.runelite
 
-# kitty
-.config/kitty/current-theme.conf
 
 # maybe idpb history could be configured with IPython to move it elsewhere?
 # https://github.com/michelesr/ipdb/blob/99fdd984e8b78676a69e62420832f3af6dfd1e8a/ipdb/__main__.py#L31
