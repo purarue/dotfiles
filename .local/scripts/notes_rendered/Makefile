@@ -8,6 +8,9 @@ ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 JOURNAL_TARGET := $(shell echo "${XDG_DOCUMENTS_DIR}/NotesRendered/journal.html")
 JOURNAL_FILES := $(shell find ${XDG_DOCUMENTS_DIR}/Notes/journal -name "*.md" | sort -r)
 
+JOURNAL_IDEAS_TARGET := $(shell echo "${XDG_DOCUMENTS_DIR}/NotesRendered/journal-ideas.html")
+JOURNAL_IDEAS_FILES := $(shell find ${XDG_DOCUMENTS_DIR}/Notes/journal_ideas -name "*.md" | sort -r)
+
 VLOGS_TARGET := $(shell echo "${XDG_DOCUMENTS_DIR}/NotesRendered/vlogs.html")
 VLOGS_FILES := $(shell find "${HOME}/Files/Vlogs/" -name '*.srt' | sort -r)
 
@@ -17,10 +20,13 @@ EVENTS_TARGET_DATE := $(shell echo "${XDG_DOCUMENTS_DIR}/NotesRendered/events.ht
 
 VLOG_TXT_FILES_DIR := $(shell echo "${XDG_CACHE_HOME}/vlog_txt_files")
 
-all: $(JOURNAL_TARGET) $(VLOGS_TARGET) $(EVENTS_TARGET_SCORE) $(EVENTS_TARGET_DATE)
+all: $(JOURNAL_TARGET) $(VLOGS_TARGET) $(EVENTS_TARGET_SCORE) $(EVENTS_TARGET_DATE) $(JOURNAL_IDEAS_TARGET)
 
 $(JOURNAL_TARGET): $(JOURNAL_FILES)
 	markdown_stew -dark-mode -title Journal $(JOURNAL_FILES) > $(JOURNAL_TARGET)
+
+$(JOURNAL_IDEAS_TARGET): $(JOURNAL_IDEAS_FILES)
+	markdown_stew -dark-mode -title 'Journal Ideas' $(JOURNAL_IDEAS_FILES) > $(JOURNAL_IDEAS_TARGET)
 
 $(VLOGS_TARGET): $(VLOGS_FILES)
 	mkdir -p $(VLOG_TXT_FILES_DIR)
@@ -35,7 +41,7 @@ $(EVENTS_TARGET_DATE): $(EVENTS)
 	events-generate | pandoc | html-head-all > $(EVENTS_TARGET_DATE)
 
 clean:
-	rm -f $(JOURNAL_TARGET) $(VLOGS_TARGET) $(EVENTS_TARGET) $(EVENTS_TARGET_SCORE)
+	rm -f $(JOURNAL_TARGET) $(VLOGS_TARGET) $(EVENTS_TARGET) $(EVENTS_TARGET_SCORE) $(JOURNAL_IDEAS_TARGET)
 	rm -rf $(VLOG_TXT_FILES_DIR)
 
 .PHONY: all clean

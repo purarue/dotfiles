@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# uses the auto-subtitle fork which removes a couple bugs
+# https://github.com/Irvingouj/auto-subtitle
+#
+# for whatever reason that doesn't install ffmpeg-python,
+# so this injects that into that venv
+set -ex
+pipx install --verbose git+https://github.com/Irvingouj/auto-subtitle
+pipx inject auto-subtitle ffmpeg-python
