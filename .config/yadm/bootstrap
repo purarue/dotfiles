@@ -242,7 +242,8 @@ havecmd basher && {
 }
 
 echo 'Setting up kitty theme...'
-printf '# BEGIN_KITTY_THEME\n# Light\ninclude current-theme.conf\n# END_KITTY_THEME\n' >"${XDG_CONFIG_HOME}/kitty/theme.conf"
+printf '# BEGIN_KITTY_THEME\n# Dark\ninclude current-theme.conf\n# END_KITTY_THEME\n' >"${XDG_CONFIG_HOME}/kitty/theme.conf"
+dark-theme # set shared terminal theme
 
 if havecmd reshortcuts; then
 	reshortcuts # shortcuts create and format all the created files
