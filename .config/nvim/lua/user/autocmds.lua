@@ -90,9 +90,8 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
         -- if file is empty, the result is { "" }
         if #buf == 1 and buf[1] == "" then
             local items = frontmatter({ title = unslugify(vim.fn.expand("%:t")) })
-            for line_no, content in ipairs(items) do
-                vim.fn.append(line_no - 1, content)
-            end
+            table.insert(items, "")
+            vim.api.nvim_buf_set_lines(e.buf, 0, #items, false, items)
             vim.cmd("normal! G")
             vim.cmd.startinsert()
         end
