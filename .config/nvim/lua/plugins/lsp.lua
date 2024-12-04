@@ -99,6 +99,7 @@ return {
             end
 
             lspconf.lua_ls.setup({
+                capabilities = capabilities,
                 on_init = function(client)
                     if client.workspace_folders then
                         local path = client.workspace_folders[1].name
