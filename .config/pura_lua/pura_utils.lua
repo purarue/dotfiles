@@ -2,11 +2,12 @@ local M = {}
 
 ---reads the entire file to a string
 ---@param filename string
+---@param readmode? readmode
 ---@return string?
-function M.read_to_string(filename)
+function M.read_to_string(filename, readmode)
     local f = io.open(filename, "r")
     if f then
-        local content = f:read("*a")
+        local content = f:read(readmode or "*a")
         f:close()
         return content
     end
