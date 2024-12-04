@@ -26,13 +26,8 @@ return {
                 },
             }
 
-            -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+            -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
             local lspconf = require("lspconfig")
-            -- lua config
-            local runtime_path = vim.split(package.path, ";")
-            table.insert(runtime_path, "lua/?.lua")
-            table.insert(runtime_path, "lua/?/init.lua")
-
             local servers = {
                 jsonls = {
                     settings = {
@@ -73,20 +68,6 @@ return {
                     },
                 },
                 bashls = true,
-                lua_ls = {
-                    settings = {
-                        Lua = {
-                            runtime = { version = "LuaJIT", path = runtime_path },
-                            diagnostics = { globals = { "vim" } },
-                            workspace = {
-                                -- Make the server aware of Neovim runtime files
-                                library = vim.api.nvim_get_runtime_file("", true),
-                                -- disable prompts for luv/luassert
-                                checkThirdParty = false,
-                            },
-                        },
-                    },
-                },
             }
             -- disable some LSPs on android
             if not vim.g.on_android then
@@ -116,6 +97,41 @@ return {
                     lspconf[server].setup(vim.tbl_extend("force", { capabilities = capabilities }, config))
                 end
             end
+
+            lspconf.lua_ls.setup({
+                on_init = function(client)
+                    if client.workspace_folders then
+                        local path = client.workspace_folders[1].name
+                        if vim.loop.fs_stat(path .. "/.luarc.json") or vim.loop.fs_stat(path .. "/.luarc.jsonc") then
+                            return
+                        end
+                    end
+
+                    client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
+                        runtime = {
+                            -- Tell the language server which version of Lua you're using
+                            -- (most likely LuaJIT in the case of Neovim)
+                            version = "LuaJIT",
+                        },
+                        diagnostics = { globals = { "vim" } },
+                        -- Make the server aware of Neovim runtime files
+                        workspace = {
+                            checkThirdParty = false,
+                            library = {
+                                vim.env.VIMRUNTIME,
+                                "~/.config/pura_lua/", -- personal shared lua code
+                                -- dont need to add everything here because lazydev.nvim will
+                                -- configure lua_ls as needed:
+                                -- https://github.com/folke/lazydev.nvim
+                            },
+                            -- or pull in all of 'runtimepath'. NOTE: this is a lot slower and will cause issues when working on your own configuration (see https://github.com/neovim/nvim-lspconfig/issues/3189)
+                        },
+                    })
+                end,
+                settings = {
+                    Lua = {},
+                },
+            })
 
             vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
                 group = vim.api.nvim_create_augroup("lsp_disable", { clear = true }),

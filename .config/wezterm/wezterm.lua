@@ -1,7 +1,7 @@
 local wezterm = require("wezterm")
 local config = {}
 
-local dark_theme = require("terminal_colorscheme").dark_mode() ---@type boolean
+local dark_theme = require("terminal_colorscheme").dark_mode()
 
 -- basic appearance
 local color_scheme_name = dark_theme and "Catppuccin Macchiato" or "Catppuccin Latte"

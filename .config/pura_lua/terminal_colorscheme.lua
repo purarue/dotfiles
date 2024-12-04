@@ -22,4 +22,9 @@ function M.dark_mode()
     return false
 end
 
+---@return boolean
+function M.light_mode()
+    return not M.dark_mode()
+end
+
 return M

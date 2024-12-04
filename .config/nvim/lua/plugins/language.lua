@@ -9,7 +9,7 @@ return {
                 -- Or relative, which means they will be resolved as a plugin
                 -- "LazyVim",
                 -- When relative, you can also provide a path to the library in the plugin dir
-                { path = "luvit-meta/library", words = { "vim%.uv", "vim%.loop" } },
+                { path = "${3rd}/luv/library", words = { "vim%.uv", "vim%.loop" } },
             },
         },
     }, -- update lua workspace libraries
