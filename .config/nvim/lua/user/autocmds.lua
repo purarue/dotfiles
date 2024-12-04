@@ -45,7 +45,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
     pattern = "*",
 })
 
-vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
     desc = "disable LLM-generation for .env files",
     group = clear_group("LlmGroup"),
     pattern = { ".env", ".env.*" },
@@ -81,7 +81,7 @@ end
 -- ---
 -- title: Filename
 -- ---
-vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
+vim.api.nvim_create_autocmd({ "BufNewFile" }, {
     desc = "Add metadata to new empty Markdown files",
     group = clear_group("NotesMarkdown"),
     pattern = { "*/Documents/Notes/exo/*.md", "*/Repos/exobrain/src/content/*.md" },
