@@ -85,10 +85,10 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
     desc = "Add metadata to new empty Markdown files",
     group = clear_group("NotesMarkdown"),
     pattern = { "*/Documents/Notes/exo/*.md", "*/Repos/exobrain/src/content/*.md" },
-    callback = function()
-        local file_size = vim.fn.getfsize(vim.fn.expand("%"))
-
-        if file_size <= 0 then
+    callback = function(e)
+        local buf = vim.api.nvim_buf_get_lines(e.buf, 0, -1, false) ---@type string[]
+        -- if file is empty, the result is { "" }
+        if #buf == 1 and buf[1] == "" then
             local items = frontmatter({ title = unslugify(vim.fn.expand("%:t")) })
             for line_no, content in ipairs(items) do
                 vim.fn.append(line_no - 1, content)
