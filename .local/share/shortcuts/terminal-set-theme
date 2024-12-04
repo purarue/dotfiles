@@ -2,4 +2,5 @@
 if [[ "$TERM" = "xterm-kitty" ]]; then
 	kitten themes --reload-in=all --config-file-name="${HOME}/.config/kitty/theme.conf" "${1:?Must provide theme as kwarg}" || exit $?
 fi
+printf '#!/usr/bin/env bash\nexport TERMINAL_THEME=%s\n' "$1" >~/.cache/terminal-theme.sh
 echo "$1" >~/.cache/terminal-theme

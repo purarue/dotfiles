@@ -18,7 +18,7 @@ return {
         priority = 1000,
         config = function()
             -- sets the vim 'background' property to dark/light
-            -- depending on what I have set in my terminal
+            -- depending on my terminal theme
             require("user.terminal").set_background()
             require("catppuccin").setup({
                 background = { light = "latte", dark = "macchiato" },

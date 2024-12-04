@@ -4,7 +4,7 @@ local terminal_theme_file = os.getenv("HOME") .. "/.cache/terminal-theme"
 
 ---@return string?
 function M.terminal_colorscheme()
-    return require("pura_utils").read_to_string(terminal_theme_file, "*l")
+    return os.getenv("TERMINAL_THEME") or require("pura_utils").read_to_string(terminal_theme_file, "*l")
 end
 
 ---@return boolean
