@@ -82,7 +82,7 @@ end
 -- title: Filename
 -- ---
 vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
-    desc = "Add metadata to new empty Markdown files in ~/Documents/Notes/exo/",
+    desc = "Add metadata to new empty Markdown files",
     group = clear_group("NotesMarkdown"),
     pattern = { "*/Documents/Notes/exo/*.md", "*/Repos/exobrain/src/content/*.md" },
     callback = function()
