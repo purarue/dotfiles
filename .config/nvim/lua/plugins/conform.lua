@@ -55,6 +55,7 @@ return {
                 dosini = { "setup_cfg" },
                 json = { "fixjson" },
                 elixir = { "mix" },
+                templ = { "templ" },
                 c = { "clang-format" },
                 cpp = { "clang-format" },
                 python = { "black" },
