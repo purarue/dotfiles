@@ -1,0 +1,174 @@
+#!/usr/bin/env python3
+
+from collections import defaultdict
+import os
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, NamedTuple, TypeVar
+
+import click
+
+prefix: Path = Path(os.environ.get("HPIDATA", os.path.expanduser("~/data")))
+
+
+cache_dir = os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache"))
+cdir = os.path.join(cache_dir, "weather-cli")
+os.makedirs(cdir, exist_ok=True)
+
+sqlite_file = os.path.join(cdir, "weather")
+cache_file = prefix / "weather.json"
+
+
+@click.group()
+def main() -> None:
+    pass
+
+
+def parse_lat_lon(
+    ctx: click.Context, param: click.Parameter, value: str
+) -> tuple[float, float]:
+    """Parse latitude and longitude from a string."""
+    try:
+        lat, lon = value.split(",")
+        return float(lat), float(lon)
+    except ValueError:
+        raise click.BadParameter("Must be in the format lat,lon")
+
+
+@click.argument("LATLON", callback=parse_lat_lon)
+@main.command()
+def save(latlon: tuple[float, float]) -> None:
+    import openmeteo_requests
+    import requests_cache
+    import pandas as pd
+    from retry_requests import retry
+
+    T = TypeVar("T")
+
+    def unwrap(x: T | None) -> T:
+        assert x is not None, f"unwrap failed on {x}"
+        return x
+
+    # Setup the Open-Meteo API client with cache and retry on error
+    cache_session = requests_cache.CachedSession(
+        os.path.join(sqlite_file, "request"), expire_after=3600
+    )
+    retry_session = retry(cache_session, retries=5, backoff_factor=0.2)
+    openmeteo = openmeteo_requests.Client(session=retry_session)
+
+    # Make sure all required weather variables are listed here
+    # The order of variables in hourly or daily is important to assign them correctly below
+    url = "https://api.open-meteo.com/v1/forecast"
+    params = {
+        "latitude": latlon[0],
+        "longitude": latlon[1],
+        "hourly": [
+            "temperature_2m",
+            "relative_humidity_2m",
+            "apparent_temperature",
+            "precipitation_probability",
+            "precipitation",
+            "rain",
+            "showers",
+            "snowfall",
+            "cloud_cover",
+            "visibility",
+            "wind_speed_10m",
+            "uv_index",
+        ],
+    }
+    responses = openmeteo.weather_api(url, params=params)
+
+    # Process first location. Add a for-loop for multiple locations or weather models
+    response = responses[0]
+
+    # Process hourly data. The order of variables needs to be the same as requested.
+    hourly = response.Hourly()
+    assert hourly is not None
+    hourly_temperature_2m = unwrap(hourly.Variables(0)).ValuesAsNumpy()
+    hourly_relative_humidity_2m = unwrap(hourly.Variables(1)).ValuesAsNumpy()
+    hourly_apparent_temperature = unwrap(hourly.Variables(2)).ValuesAsNumpy()
+    hourly_precipitation_probability = unwrap(hourly.Variables(3)).ValuesAsNumpy()
+    hourly_precipitation = unwrap(hourly.Variables(4)).ValuesAsNumpy()
+    hourly_rain = unwrap(hourly.Variables(5)).ValuesAsNumpy()
+    hourly_showers = unwrap(hourly.Variables(6)).ValuesAsNumpy()
+    hourly_snowfall = unwrap(hourly.Variables(7)).ValuesAsNumpy()
+    hourly_cloud_cover = unwrap(hourly.Variables(8)).ValuesAsNumpy()
+    hourly_visibility = unwrap(hourly.Variables(9)).ValuesAsNumpy()
+    hourly_wind_speed_10m = unwrap(hourly.Variables(10)).ValuesAsNumpy()
+    hourly_uv_index = unwrap(hourly.Variables(11)).ValuesAsNumpy()
+
+    hourly_data: dict[str, Any] = {
+        "date": pd.date_range(
+            start=pd.to_datetime(hourly.Time(), unit="s", utc=True),
+            end=pd.to_datetime(hourly.TimeEnd(), unit="s", utc=True),
+            freq=pd.Timedelta(seconds=hourly.Interval()),
+            inclusive="left",
+        )
+    }
+    hourly_data["temperature_2m"] = hourly_temperature_2m
+    hourly_data["relative_humidity_2m"] = hourly_relative_humidity_2m
+    hourly_data["apparent_temperature"] = hourly_apparent_temperature
+    hourly_data["precipitation_probability"] = hourly_precipitation_probability
+    hourly_data["precipitation"] = hourly_precipitation
+    hourly_data["rain"] = hourly_rain
+    hourly_data["showers"] = hourly_showers
+    hourly_data["snowfall"] = hourly_snowfall
+    hourly_data["cloud_cover"] = hourly_cloud_cover
+    hourly_data["visibility"] = hourly_visibility
+    hourly_data["wind_speed_10m"] = hourly_wind_speed_10m
+    hourly_data["uv_index"] = hourly_uv_index
+
+    hourly_dataframe = pd.DataFrame(data=hourly_data)
+    data = hourly_dataframe.to_json()
+
+    # add latlon
+    data_parsed = json.loads(data)
+    data_parsed["latlon"] = latlon
+
+    cache_file.write_text(json.dumps(data_parsed))
+
+
+class Data(NamedTuple):
+    dt: datetime
+    temperature_2m: float
+    relative_humidity_2m: float
+    apparent_temperature: float
+    precipitation_probability: float
+    precipitation: float
+    rain: float
+    showers: float
+    snowfall: float
+    cloud_cover: float
+    visibility: float
+    wind_speed_10m: float
+    uv_index: float
+
+
+# TODO: save weather for a few close by location/cities, or
+# places I visit often, and compute the distance from my
+# current location to the places Ive saved, picking the closest one
+@main.command()
+def display() -> None:
+    # reconstruct pandas-like data into object
+    assert cache_file.exists(), "No cache found"
+    data = json.loads(cache_file.read_text())
+    latlon: tuple[float, float] = data.pop("latlon")
+    info = defaultdict(dict)
+    for kd, timestamp in data["date"].items():
+        kd_int = int(kd)
+        info[kd_int]["dt"] = datetime.fromtimestamp(int(timestamp) / 1000)
+        for other_key, other_value in data.items():
+            if other_key != "date":
+                info[kd_int][other_key] = other_value[kd]
+
+    parsed = [Data(**v) for v in info.values()]
+    parsed.sort(key=lambda x: x.dt)
+
+    click.echo(parsed)
+    click.echo(latlon)
+
+
+if __name__ == "__main__":
+    main()

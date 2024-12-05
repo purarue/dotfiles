@@ -6,3 +6,6 @@ scipy
 orjson
 lxml[html_clean]
 jsonc-parser
+openmeteo-requests
+requests-cache
+retry-requests

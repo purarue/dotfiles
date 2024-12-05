@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 # helper to optionally source files
-# if -q is passed as an option, this doesnt complain if the file isnt readable
+# if -q is passed as an option, this doesn't complain if the file isn't readable
 # otherwise, this warns
 source_if_exists() {
 	local quiet

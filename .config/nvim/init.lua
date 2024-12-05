@@ -13,7 +13,7 @@ if not vim.uv.fs_stat(lazypath) then
         os.exit(1)
     end
 end
-vim.opt.rtp:prepend(lazypath)
+vim.opt.runtimepath:prepend(lazypath)
 
 -- lazy.nvim/which-key wants a leader to be set before setting up mappings
 vim.g.mapleader = " "
