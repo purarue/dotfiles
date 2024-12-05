@@ -18,7 +18,7 @@ case "$BLOCK_BUTTON" in
 esac
 
 COUNT="$(chomp <"${TODO_DIR}/todo.txt" | wc -l)"
-SYNC_CONFLICTS="$(find-sync-conflicts "$TODO_DIR" | wc -l)"
+SYNC_CONFLICTS="$(sync-conflicts "$TODO_DIR" | wc -l)"
 
 if [ "$SYNC_CONFLICTS" -gt 0 ]; then
 	echo "$COUNT "

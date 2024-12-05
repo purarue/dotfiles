@@ -1,6 +1,78 @@
-#!/usr/bin/env bash
-set -e
-DIR="${1:-.}"
-printf 'sync-conflicts: Searching in %s\n' "$(realpath "$DIR")" >&2
-[[ -n "$1" ]] && shift
-exec find "$DIR" -name '*sync-conflict*' "$@"
+#!/usr/bin/env python
+
+import os
+import shutil
+from typing import List, Literal, get_args
+import click
+
+
+FilterType = Literal["tmp", "conflict", "both"]
+
+
+def find_files(root: str, filters: FilterType) -> List[str]:
+    matching_files = []
+    for dirpath, _, filenames in os.walk(root):
+        for filename in filenames:
+            if (
+                (filters == "tmp" or filters == "both") and filename.endswith(".tmp")
+            ) or (
+                (filters == "conflict" or filters == "both")
+                and "sync-conflict" in filename
+            ):
+                matching_files.append(os.path.join(dirpath, filename))
+    return matching_files
+
+
+@click.command()
+@click.argument("root", type=click.Path(exists=True, file_okay=False))
+@click.option(
+    "--filters",
+    type=click.Choice(get_args(FilterType), case_sensitive=False),
+    default="conflict",
+    help="Filter files by 'tmp', 'conflict', or 'both'",
+    required=True,
+)
+@click.option(
+    "--move",
+    type=click.Choice(["cache", "tmp", "trash"], case_sensitive=False),
+    help="Move the selected files to 'cache' or '/tmp'.",
+)
+def main(root: str, filters: FilterType, move: Literal["cache", "tmp"]):
+    files = find_files(root, filters)
+
+    if not files:
+        click.secho("No matching files found.", fg="yellow", err=True)
+        return
+
+    click.secho(f"Found {len(files)} matching files:", fg="green", err=True)
+    for file in files:
+        click.echo(file)
+
+    if move:
+        if not click.confirm(f"Do you want to move {len(files)} files to {move}?"):
+            click.secho("Operation canceled.", fg="red", err=True)
+            return
+
+        dest = (
+            "/tmp/sync-conflicts"
+            if move == "tmp"
+            else os.path.expanduser("~/.cache/sync-conflicts")
+        )
+        os.makedirs(dest, exist_ok=True)
+
+        for file in files:
+            dir_dest = os.path.join(dest, os.path.dirname(file))
+            os.makedirs(dir_dest, exist_ok=True)
+            try:
+                shutil.move(file, dir_dest)
+                click.secho(
+                    f"Moved {file} to {os.path.join(dir_dest, os.path.basename(file))}.",
+                    fg="green",
+                    err=True,
+                )
+            except Exception as e:
+                click.secho(f"Failed to move {file}: {e}", fg="red", err=True)
+
+
+if __name__ == "__main__":
+    main()

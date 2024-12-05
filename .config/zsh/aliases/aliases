@@ -57,7 +57,7 @@ alias rgv='rg --vimgrep'
 
 conflicts() {
 	local chosen sourcefile
-	chosen="$(find-sync-conflicts "$1" -print -quit)"
+	chosen="$(sync-conflicts "$1" -print -quit)"
 	if [[ -z "$chosen" ]]; then
 		echo "No conflicts found" >&2
 		return 1
