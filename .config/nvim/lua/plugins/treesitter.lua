@@ -26,6 +26,13 @@ return {
                 },
             }
 
+            -- highlight ejs (embedded js) files by combining a few parsers
+            -- (this seems to work, I just actually dont use ejs files, so not point for me)
+            -- vim.filetype.add({ extension = { ejs = "ejs" } })
+            -- vim.treesitter.language.register("html", "ejs")
+            -- vim.treesitter.language.register("javascript", "ejs")
+            -- vim.treesitter.language.register("embedded_template", "ejs")
+
             require("nvim-treesitter.configs").setup({
                 modules = {},
                 ignore_install = {},
@@ -44,6 +51,7 @@ return {
                     "diff",
                     "dockerfile",
                     "eex",
+                    "embedded_template",
                     "elixir",
                     "erlang",
                     "git_config",
