@@ -16,6 +16,7 @@ pyYAML
 pyflyby
 pyperclip
 pysrt
+python-frontmatter
 reorder_editable
 rich
 rifleman
