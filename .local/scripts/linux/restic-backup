@@ -42,8 +42,9 @@ generate_include_files() {
 	sed -e "s|^~|$HOME|" <"$EXCLUDE_FILE_RAW" >"$EXCLUDE_FILE"
 }
 
+MACHINE_NAME="${ON_OS:-$(on_machine)}"
 backup_to() {
-	echo "${MOUNT_POINT}/$(on_machine)"
+	echo "${MOUNT_POINT}/${MACHINE_NAME}"
 }
 
 shell() {
