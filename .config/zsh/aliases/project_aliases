@@ -222,7 +222,7 @@ mpv-currently-playing-mark-nsfw() {
 # and I want to play the next one while the
 # credits are rolling
 mpv-next-ep() {
-	local dir index curplaying files
+	local dir index curplaying files next
 	if curplaying="$(mpv-currently-playing)"; then
 		dir="$(dirname "$curplaying")"
 		# use fd to find the index of the currently playing file, then play the next
@@ -232,9 +232,14 @@ mpv-next-ep() {
 			echo "Could not find $curplaying..." >&2
 			return 1
 		fi
+		next="$(sed -n "$((index + 1))p" <<<"$files")"
+		if [[ -z "$next" ]]; then
+			echo 'No next episode found' >&2
+			return 1
+		fi
 		# rifle launches the correct application
 		# https://github.com/ranger/ranger
-		rifle "$(sed -n "$((index + 1))p" <<<"$files")"
+		rifle "$next"
 	else
 		echo 'Nothing playing...' >&2
 		return 1
