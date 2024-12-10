@@ -7,6 +7,12 @@
 # I keep the include/exclude lists for backups
 # in ~/Documents/BackupManifest
 #
+# to initialize, do restic-backup restic init
+#
+# uses https://github.com/purarue/on_machine
+# internally to backup to a drive for this
+# machine
+#
 # to skip the cleanup process, I set SKIP_CLEANUP=1
 # kondo prompts me to removes a bunch of common
 # build/cache directories for programming languages,
@@ -26,13 +32,24 @@ if [[ ! -e "$UUID_FILE" ]]; then
 fi
 DISK="$(readlink -f "$UUID_FILE")"
 MOUNT_POINT="/run/media/$USER/$UUID"
-INCLUDE_FILE="$XDG_DOCUMENTS_DIR/BackupManifest/include.txt"
-EXCLUDE_FILE="$XDG_DOCUMENTS_DIR/BackupManifest/exclude.txt"
+INCLUDE_FILE_RAW="$XDG_DOCUMENTS_DIR/BackupManifest/include_rel.txt"
+EXCLUDE_FILE_RAW="$XDG_DOCUMENTS_DIR/BackupManifest/exclude_rel.txt"
+INCLUDE_FILE="$HOME/.cache/restic_include.txt"
+EXCLUDE_FILE="$HOME/.cache/restic_exclude.txt"
+
+generate_include_files() {
+	sed -e "s|^~|$HOME|" <"$INCLUDE_FILE_RAW" >"$INCLUDE_FILE"
+	sed -e "s|^~|$HOME|" <"$EXCLUDE_FILE_RAW" >"$EXCLUDE_FILE"
+}
+
+backup_to() {
+	echo "${MOUNT_POINT}/$(on_machine)"
+}
 
 shell() {
 	echo "DISK=$DISK"
 	echo "MOUNT_POINT=$MOUNT_POINT"
-	echo "RESTIC_REPOSITORY=$MOUNT_POINT/backup"
+	echo "RESTIC_REPOSITORY=$(backup_to)"
 	if [[ -n "$RESTIC_PRINT_PASSWORD" ]]; then
 		echo "RESTIC_PASSWORD=${RESTIC_PASSWORD?:'RESTIC_PASSWORD not set'}"
 	fi
@@ -40,6 +57,7 @@ shell() {
 
 run_backup() {
 	shell
+	generate_include_files
 	if [[ -z "$DRY" ]] && [[ -z "$SKIP_CLEANUP" ]]; then
 		kondo ~/Repos ~/Files
 		remove-broken-sms-files -v
@@ -48,9 +66,9 @@ run_backup() {
 		merge-mpv-history
 		merge-browser-history
 	fi
-	flags=(-r "$MOUNT_POINT/backup" backup --verbose --one-file-system
-		--files-from "$INCLUDE_FILE"
-		--exclude-file "$EXCLUDE_FILE" "$@")
+	flags=(-r "$(backup_to)" backup --verbose --one-file-system
+	--files-from "$INCLUDE_FILE"
+	--exclude-file "$EXCLUDE_FILE" "$@")
 	echo "Running: restic ${flags[*]}"
 	restic "${flags[@]}"
 	# update the timestamp on a cache file so we know when the last backup was
@@ -74,20 +92,20 @@ main() {
 	restic)
 		# run restic directly (useful for any other commands)
 		shift
-		exec restic -r "$MOUNT_POINT/backup" "$@"
+		exec restic -r "$(backup_to)" "$@"
 		;;
 	forget-latest)
 		local snapshot
-		snapshot="$(restic -r "$MOUNT_POINT/backup" list snapshots -q | head -n 1)"
+		snapshot="$(restic -r "$(backup_to)" list snapshots -q | head -n 1)"
 		[[ -n "$snapshot" ]] && echo "Forgetting $snapshot"
-		restic -r "$MOUNT_POINT/backup" forget "$snapshot"
+		restic -r "$(backup_to)" forget "$snapshot"
 		;;
 	diff-latest)
-		restic -r "$MOUNT_POINT/backup" list snapshots -q | head -n 2 | tac | xargs -n 2 restic -r "$MOUNT_POINT/backup" diff
+		restic -r "$(backup_to)" list snapshots -q | head -n 2 | tac | xargs -n 2 restic -r "$(backup_to)" diff
 		;;
 	last-snapshot)
 		local snapshot
-		restic -r "$MOUNT_POINT/backup" list snapshots -q | head -n 1
+		restic -r "$(backup_to)" list snapshots -q | head -n 1
 		;;
 	dry)
 		if [[ ! -d "$MOUNT_POINT" ]]; then
