@@ -46,9 +46,7 @@ Not a ton of application-specific setup yet, handles setting up `zsh`, installs 
 
 On Windows (in WSL):
 
-Similar to Termux, does an `apt`-based install. Installs a bunch of languages/programs manually if since the versions on `apt` are ancient. Should install `yadm` manually, using:
-
-`sh <(curl -sSL http://git.io/sinister) -u 'https://github.com/TheLocehiliosan/yadm/raw/master/yadm'`
+Similar to Termux, does an `apt`-based install. Installs a bunch of languages/programs manually if since the versions on `apt` are ancient. Should install `yadm` manually.
 
 ---
 
