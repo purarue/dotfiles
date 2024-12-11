@@ -931,15 +931,6 @@ command = 'exec make -f "$HOME/.local/scripts/notes_rendered/Makefile" "$@"'
 [todo]
 command = 'exec todo.sh "$@"'
 
-[terminal-set-theme]
-command = '''
-if [[ "$TERM" = "xterm-kitty" ]]; then
-  kitten themes --reload-in=all --config-file-name="${HOME}/.config/kitty/theme.conf" "${1:?Must provide theme as kwarg}"  || exit $?
-fi
-echo "$1" >~/.cache/terminal-theme
-'''
-shebang = "#!/usr/bin/env bash"
-
 [light-theme]
 command = '''
 exec terminal-set-theme Light
@@ -968,3 +959,8 @@ heart | APP=heart clp
 command = '''
 timer-till "$*" && playping-loop
 '''
+
+# often used like 'git-color diff | ansi2html'
+# to generate a html file with diff colors
+[git-color]
+command = 'exec git -c color.ui=always "$@"'
