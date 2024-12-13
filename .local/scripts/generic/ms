@@ -27,5 +27,6 @@ fi
 
 mbsync -a || exit $?
 notmuch new 2>/dev/null
+mail-process || true
 
 touch "${XDG_CONFIG_HOME:-$HOME/.config}/mutt/.mailsynclastrun"

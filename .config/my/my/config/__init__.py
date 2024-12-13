@@ -164,6 +164,9 @@ class mail:
         # filter function which filters the input paths
         filter_path: Optional[Callable[[Path], bool]] = filter_mail_path
 
+    class mbox:
+        pass
+
 
 # combines:
 class reddit:

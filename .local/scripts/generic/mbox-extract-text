@@ -1,0 +1,38 @@
+#!/usr/bin/env python3
+
+
+import shutil
+from tempfile import NamedTemporaryFile
+from pathlib import Path
+
+import click
+
+from my.mail.mbox import _iter_mailbox
+from my.mail.parse_parts import tag_message_subparts
+
+
+def html_to_text(html: str) -> str:
+    import bs4
+
+    soup = bs4.BeautifulSoup(html, "html.parser")
+    return soup.get_text()
+
+
+@click.command()
+@click.argument("FILE", type=click.Path(exists=True, dir_okay=False, path_type=Path))
+def main(file: Path) -> None:
+    with NamedTemporaryFile() as temp_file:
+        shutil.copy(file, temp_file.name)
+        msgs = list(_iter_mailbox(Path(temp_file.name)))
+        for msg in msgs:
+            for data, content_type in tag_message_subparts(msg.message):  # type: ignore
+                if content_type == "text":
+                    click.echo(data)
+                elif content_type == "html":
+                    click.echo(html_to_text(data))
+                else:
+                    pass
+
+
+if __name__ == "__main__":
+    main()

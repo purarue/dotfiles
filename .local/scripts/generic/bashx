@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 SCRIPT="${1?:No script provided}"
 shift || true
-declare PATH="$SCRIPT"
-if [[ ! -f "$PATH" ]]; then
-	PATH="$(which "$PATH")" || exit $?
+declare SCRIPT_PATH="$SCRIPT"
+if [[ ! -f "$SCRIPT_PATH" ]]; then
+	SCRIPT_PATH="$(which "$SCRIPT_PATH")"
 fi
-exec bash -x "$PATH" "$@"
+exec bash -x "$SCRIPT_PATH" "$@"
