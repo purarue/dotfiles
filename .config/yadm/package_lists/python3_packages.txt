@@ -1,4 +1,5 @@
 Pygments
+trash-cli
 black
 codespell
 exifread

@@ -14,5 +14,4 @@ supervisor
 termdown
 termgraph
 time-in
-trash-cli
 urlscan
