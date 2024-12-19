@@ -69,7 +69,6 @@ return {
                     "ini",
                     "java",
                     "javascript",
-                    "jinja2",
                     "jq",
                     "json",
                     "jsonc",
