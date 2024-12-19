@@ -129,6 +129,12 @@ gcp() {
 	fi
 }
 
+gcnmp() {
+	local args=()
+	[[ -n "$1" ]] && args+=(-m "$*")
+	git commit --no-verify "${args[@]}" && git push --no-verify
+}
+
 gdh() {
 	git diff HEAD~"${1:-1}" HEAD
 }
