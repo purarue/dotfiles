@@ -23,3 +23,5 @@ fi
 TARGET="${TARGET_DIR}/${PICKED}/${FILENAME}"
 ln "$INPUT_FILE" "${TARGET}"
 printf 'Copied to %s\n' "${TARGET}"
+
+rename-image-dt "${TARGET}"
