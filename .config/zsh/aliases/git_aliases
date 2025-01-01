@@ -42,7 +42,7 @@ function git_main_branch() {
 function git_develop_branch() {
 	command git rev-parse --git-dir &>/dev/null || return
 	local branch
-	for branch in dev devel development; do
+	for branch in staging dev devel development; do
 		if command git show-ref -q --verify refs/heads/$branch; then
 			echo $branch
 			return
@@ -127,6 +127,12 @@ gcp() {
 	else
 		git commit -m "$*" && git push
 	fi
+}
+
+gcnmp() {
+	local args=()
+	[[ -n "$1" ]] && args+=(-m "$*")
+	git commit --no-verify "${args[@]}" && git push --no-verify
 }
 
 gdh() {
@@ -311,9 +317,6 @@ alias gupv='git pull --rebase -v'
 alias gupa='git pull --rebase --autostash'
 alias gupav='git pull --rebase --autostash -v'
 alias glum='git pull upstream $(git_main_branch)'
-
-alias gwch='git whatchanged -p --abbrev-commit --pretty=medium'
-alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign -m "--wip-- [skip ci]"'
 
 alias gam='git am'
 alias gamc='git am --continue'

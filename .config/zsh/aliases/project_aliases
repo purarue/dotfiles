@@ -24,6 +24,14 @@ esac
 tu() {
 	trakt-urls | fzf
 }
+trakt-shows() {
+	trakt-urls | rg '/shows/' | cut -d'/' -f-5 | unique
+}
+tw-ep() {
+	local TRAKT_WATCH_SHOW
+	TRAKT_WATCH_SHOW="$(trakt-shows | fzf --no-multi)" || return $?
+	TRAKT_WATCH_SHOW="${TRAKT_WATCH_SHOW}" trk watch "$@"
+}
 lb() {
 	trk letterboxd --action open "$@"
 }
@@ -167,6 +175,15 @@ bindkey -s '^[L' 'twitchlive-table\n'
 exo() {
 	cd "$REPOS/exobrain" || return 1
 	./scripts/exo "$@"
+}
+exo-upload() {
+	local abspath
+	[[ -f "$1" ]] || {
+		echo 'not a file' >&2
+		return 1
+	}
+	abspath=$(realpath "$1")
+	(cd "$REPOS/exobrain" && ./scripts/exo-upload.py upload -t photography "$abspath")
 }
 
 # https://github.com/purarue/greasyfork_repo_generator

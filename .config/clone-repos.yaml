@@ -23,6 +23,9 @@
   postinstall: pip install --user --break-system-packages ./currently_listening_py
 "https://github.com/purarue/albums":
   pip: editable
+"https://github.com/purarue/trakt_watch":
+  dirname: "trakt-watch"
+  pip: install
 "https://github.com/purarue/bleanser-fork":
   pip: install
   postinstall: git remote add upstream "https://github.com/karlicoss/bleanser"

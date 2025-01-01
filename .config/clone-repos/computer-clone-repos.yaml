@@ -28,6 +28,9 @@
 "https://github.com/purarue/server_clipboard":
   base: ~/.local/share/go/src/github.com/purarue
   symlink_to: ~/Repos
+"https://github.com/purarue/markdown_stew":
+  base: ~/.local/share/go/src/github.com/purarue
+  symlink_to: ~/Repos
 "https://github.com/purarue/largechar":
   base: ~/.cache/
   postinstall: make install

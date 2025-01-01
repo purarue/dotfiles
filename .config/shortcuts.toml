@@ -549,7 +549,7 @@ echo "$chosen" | clipcopy
 [sync-neomutt]
 command = '''
 # wait for internet, sync my mail, then launch neomutt
-wait-for-internet && ms
+wait-for-internet && mailsync
 i3blocks-refresh-mk mail
 neomutt || return $?
 i3blocks-refresh-mk mail

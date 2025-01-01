@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -e
+set -o pipefail
+# prints any treesitter parsers that are not in ensure_installed in my config, in-case I want to add them to my configuration
+comm -23 <(fd -I '.so' ~/.local/share/nvim/lazy/nvim-treesitter/parser/ -x echo '{/.}' | sort) <(awk '/^.*ensure_installed/,/\}/' <~/.config/nvim/lua/plugins/treesitter.lua | sed -e '1d' -e '$d' | tr -d '", ' | sort) | grep -vx rifleconfig

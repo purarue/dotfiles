@@ -102,7 +102,9 @@ alias rr='rifle'
 alias optipng='optipng -o5'
 alias R=ranger
 alias nr='neomuttr'
-alias urban='udict'
+urban() {
+	udict "$@" | less
+}
 alias xxd='hexyl'
 alias calc='ipython3 --profile=calculator'
 alias XMODMAP-RESET='xmodmap-reset' # in case Im stuck in capslock

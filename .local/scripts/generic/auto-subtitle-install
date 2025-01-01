@@ -4,6 +4,19 @@
 #
 # for whatever reason that doesn't install ffmpeg-python,
 # so this injects that into that venv
+#
+# uses 3.11.9 since that is the last supported version by
+# openai-whisper
 set -ex
-pipx install --verbose git+https://github.com/Irvingouj/auto-subtitle
+if [[ -z "$PYENV_ROOT" ]]; then
+	echo "PYENV_ROOT not set" >&2
+	exit 1
+fi
+PYTHON_VER="3.11.9"
+PYTHON_311="$PYENV_ROOT/versions/$PYTHON_VER/bin/python"
+if [[ ! -f "$PYTHON_311" ]]; then
+	echo "python $PYTHON_VER not found, installing..." >&2
+	pyenv install "$PYTHON_VER" || exit $?
+fi
+pipx install --verbose git+https://github.com/Irvingouj/auto-subtitle --python "$PYTHON_311"
 pipx inject auto-subtitle ffmpeg-python

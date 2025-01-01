@@ -32,5 +32,5 @@ return {
         end,
     },
     { "nvim-lua/plenary.nvim", lazy = true },
-    { "chrisbra/vim_faq", event = "CmdlineEnter" },
+    -- { "chrisbra/vim_faq", event = "CmdlineEnter" },
 }

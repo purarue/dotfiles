@@ -23,6 +23,7 @@ function M.tohtml(opts)
         vim.opt.relativenumber = false
     end
     local html = require("tohtml").tohtml(nil, {
+        title = basename,
         number_lines = opts.number_lines,
         width = 100,
     })

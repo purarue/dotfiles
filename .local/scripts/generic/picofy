@@ -1,0 +1,134 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+from typing import Optional
+from pathlib import Path
+import contextlib
+
+import requests
+import click
+from bs4 import BeautifulSoup, Tag
+
+user_has_lxml = False
+try:
+    import lxml  # type: ignore[import] # noqa: F401
+
+    user_has_lxml = True
+except Exception:
+    pass
+
+CSS = "https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+
+local_cache_file = (
+    Path(os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache")))
+    / "picofy/pico.css"
+)
+
+
+def download_file(to_file: Path, css_url: str) -> None:
+    if not to_file.exists():
+        to_file.parent.mkdir(parents=True, exist_ok=True)
+        to_file.write_bytes(requests.get(css_url).content)
+
+
+def pico_href(cache: bool) -> str:
+    if cache is True:
+        download_file(local_cache_file, CSS)
+        return str(local_cache_file.absolute())
+
+    else:
+        return CSS
+
+
+@click.command()
+@click.option(
+    "--theme",
+    type=click.Choice(["light", "dark", "none"]),
+    default="none",
+    show_default=True,
+    help="Set the theme for the page",
+)
+@click.option(
+    "--local-css",
+    is_flag=True,
+    default=False,
+    help="Use cached local file for Pico.CSS text",
+)
+@click.argument(
+    "INPUT_FILE",
+    type=click.Path(exists=True, allow_dash=True, path_type=Path),
+    default=None,
+    required=False,
+)
+def main(input_file: Optional[Path], theme: str, local_css: bool) -> None:
+    """
+    A script to inject Pico.CSS into a file
+
+    \b
+    Usage:
+    cat index.html | picofy --theme dark
+    picofy index.html
+    """
+    text = (
+        sys.stdin.read()
+        if input_file is None or str(input_file) == "-"
+        else input_file.read_text()
+    )
+    soup = BeautifulSoup(text, "lxml" if user_has_lxml else "html.parser")
+
+    # Ensure a <head> exists
+    assert soup.body is not None
+    maybe_head = soup.head
+    head: Tag
+    if maybe_head is None:
+        head = soup.new_tag("head")
+        soup.body.insert_before(head)
+    else:
+        head = maybe_head
+
+    # add Pico.CSS link if not already present
+    links = head.find_all(
+        "link",
+        {
+            "rel": "stylesheet",
+        },
+    )
+    pico_link = None
+    for link in links:
+        if "pico" in link["href"]:
+            pico_link = link
+            break
+
+    if not pico_link:
+        head.append(
+            soup.new_tag(
+                "link",
+                rel="stylesheet",
+                href=pico_href(local_css),
+            )
+        )
+
+    # add theme attribute to <html>
+    html_tag = soup.find("html")
+    if not html_tag:
+        html_tag = soup.new_tag("html")
+        soup.insert(0, html_tag)
+    assert isinstance(html_tag, Tag)
+    if theme != "none":
+        html_tag["data-theme"] = theme
+
+    # wrap body content in <main class="container">
+    main_container = soup.body.find("main", {"class": "container"})
+    if soup.body and not main_container:
+        main_container = soup.new_tag("main", attrs={"class": "container"})
+        while soup.body.contents:
+            main_container.append(soup.body.contents[0])
+        soup.body.append(main_container)
+
+    click.echo(str(soup).strip())
+
+
+if __name__ == "__main__":
+    with contextlib.suppress(KeyboardInterrupt):
+        main()

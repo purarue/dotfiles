@@ -1,7 +1,11 @@
 local wezterm = require("wezterm")
 local config = {}
 
-local dark_theme = require("terminal_colorscheme").dark_mode()
+local dark_theme = true
+local ok, mod = pcall(require, "terminal_colorscheme")
+if ok then
+    dark_theme = mod.dark_mode()
+end
 
 -- basic appearance
 local color_scheme_name = dark_theme and "Catppuccin Macchiato" or "Catppuccin Latte"

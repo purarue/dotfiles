@@ -6,7 +6,6 @@ currencyconverter
 diceware
 eyeD3
 greasyfork-archive
-mat2
 pypyp
 setup-cfg-fmt
 speedtest-cli

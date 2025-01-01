@@ -1,5 +1,4 @@
 Pygments
-trash-cli
 black
 codespell
 exifread
@@ -10,6 +9,7 @@ idna
 ipdb
 ipython
 jinjanator
+phonenumbers
 pip
 pipenv
 pipx
@@ -26,5 +26,6 @@ selenium
 setuptools
 srt
 toml
+trash-cli
 watchfiles
 yt-dlp
