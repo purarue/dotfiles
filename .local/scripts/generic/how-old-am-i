@@ -1,31 +1,51 @@
 #!/usr/bin/env python3
 
-import os
-from datetime import datetime
+from datetime import datetime, date
 
-# Get birthdate from the environment variable
-birthdate_str = os.getenv("BIRTHDATE")
+import click
 
-if not birthdate_str:
-    print("Error: BIRTHDATE environment variable is not set.")
-else:
+
+def plural(n: int, s: str) -> str:
+    return f"{n} {s}{'s' if n != 1 else ''}"
+
+
+@click.command()
+@click.option(
+    "-b",
+    "--birthdate",
+    "birthdate_str",
+    type=str,
+    required=True,
+    show_envvar=True,
+    envvar="BIRTHDATE",
+    help="your date of birth in YYYY-MM-DD format",
+)
+def main(birthdate_str: str) -> None:
     try:
-        birthdate = datetime.strptime(birthdate_str, "%Y-%m-%d")
+        birthdate: date = datetime.strptime(birthdate_str, "%Y-%m-%d").date()
 
     except ValueError:
         print("Error: BIRTHDATE is not in the correct format (YYYY-MM-DD).")
     else:
-        today = datetime.today()
+        today: date = date.today()
         age_in_years = (
             today.year
             - birthdate.year
             - int((today.month, today.day) < (birthdate.month, birthdate.day))
         )
 
-        last_birthday = datetime(today.year, birthdate.month, birthdate.day)
+        last_birthday = date(today.year, birthdate.month, birthdate.day)
         if last_birthday > today:
-            last_birthday = datetime(today.year - 1, birthdate.month, birthdate.day)
+            last_birthday = date(today.year - 1, birthdate.month, birthdate.day)
 
         days_old = (today - last_birthday).days
 
-        print(f"{age_in_years} years, {days_old} days old")
+        click.echo(plural(age_in_years, "year"), nl=False)
+        if days_old == 0:
+            click.echo()
+        else:
+            click.echo(f", {plural(days_old, "day")}")
+
+
+if __name__ == "__main__":
+    main()
