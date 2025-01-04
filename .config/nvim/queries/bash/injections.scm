@@ -4,11 +4,24 @@
 ; some terse way to programmatically check if its first arg with exec..?
 
 ; Highlight awk strings in shell scripts using the AWK syntax
-; TODO: only do this when the raw_string is the last argument in the command
+; hmm, sadly this does have false positives and it highlights all raw_string
+; but that is not terrible, if you have a flag you can do -f'something' and
+; that prevents the highlighting
 (command
   name: (command_name
     (word) @cmd_name
     (#eq? @cmd_name "awk"))
+  argument: (raw_string) @injection.content
+  (#offset! @injection.content 0 1 0 -1)
+  (#set! injection.language "awk")) @sh_embedded_awk
+
+; example of 'exec awk' matcher, maybe can create these programmatically somehow
+(command
+  name: (command_name
+    (word) @cmd_name
+    (#eq? @cmd_name "exec"))
+  argument: (_) @first_arg
+    (#eq? @first_arg "awk")
   argument: (raw_string) @injection.content
   (#offset! @injection.content 0 1 0 -1)
   (#set! injection.language "awk")) @sh_embedded_awk
