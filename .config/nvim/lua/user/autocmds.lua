@@ -59,7 +59,7 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 ---@return string
 local function unslugify(name)
     name = name:gsub("_", " "):match("(.+)%..+")
-    name = name:sub(1, 1):upper() .. name:sub(2)
+    name = name:sub(1, 1):upper() .. name:sub(2):lower()
     return name
 end
 
