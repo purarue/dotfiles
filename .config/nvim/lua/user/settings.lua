@@ -91,19 +91,3 @@ vim.filetype.add({
 
 vim.filetype.add({ filename = { ["rifle.conf"] = "rifleconfig" } })
 vim.filetype.add({ extension = { mdx = "markdown" } })
-
--- if this is in a directory called 'tmp', this is probably me using the
--- zsh edit-command-line widget set it to bash so I get nice treesitter
--- highlighting, including for embedded languages (e.g. awk/jq)
--- (see queries/bash/injections.scm)
-vim.filetype.add({
-    extension = {
-        zsh = function(path, _)
-            local parent_dir = vim.fs.basename(vim.fs.dirname(path))
-            if parent_dir == "tmp" then
-                return "bash"
-            end
-            return "zsh"
-        end,
-    },
-})
