@@ -18,13 +18,13 @@ def _prompt_and_echo(prompt: str, **kwargs):
 
 def _parse_time(time_input: str) -> str:
     """
-    >>> "5PM"
+    >>> '5PM'
     '17:00'
-    >>> "5pm"
+    >>> '5pm'
     '17:00'
-    >>> "5am"
+    >>> '5am'
     '05:00'
-    >>> '21:00"
+    >>> '21:00'
     '21:00'
     """
     from datetime import datetime
