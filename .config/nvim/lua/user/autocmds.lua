@@ -46,9 +46,9 @@ vim.api.nvim_create_autocmd("TermOpen", {
 })
 
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
-    desc = "disable LLM-generation for .env files",
+    desc = "disable LLM for certain buffers",
     group = clear_group("LlmGroup"),
-    pattern = { ".env", ".env.*" },
+    pattern = { ".env", ".env.*", "addressbook" },
     callback = function()
         vim.b["codeium_enabled"] = false
     end,

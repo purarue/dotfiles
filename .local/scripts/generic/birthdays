@@ -36,12 +36,31 @@ class Info(NamedTuple):
         }
 
 
-def iter_birthdays() -> Iterator[Info]:
+def parse_birthday(val: str) -> date:
+    count = val.count("-") + 1
+    if count not in (2, 3):
+        raise ValueError(f"{val} is an invalid birthday")
+    elif count == 3:
+        return date.fromisoformat(val)
+    else:
+        return date.fromisoformat(f"{today.year + 1}-{val}")
+
+
+def iter_birthdays(check: bool = False) -> Iterator[Info]:
     ab = AbookFile(abook_file)
     for vv in ab.contacts:
         if birthday := vv.get("birthday"):
-            dt = date.fromisoformat(birthday)
-            yield Info(vv["name"], dt)
+            try:
+                dt = parse_birthday(birthday)
+            except ValueError as e:
+                err = f"Invalid birthday: {vv.get('name')} - {birthday}"
+                if check:
+                    raise ValueError(err) from e
+                else:
+                    click.echo(err)
+                    continue
+            else:
+                yield Info(vv["name"], dt)
 
 
 OutputFormat = Literal["plain", "json"]
@@ -49,6 +68,12 @@ DateFormat = Literal["iso", "human"]
 
 
 @click.command(help=__doc__)
+@click.option(
+    "--strict/--no-strict",
+    is_flag=True,
+    default=False,
+    help="Raise on invalid birthday",
+)
 @click.option(
     "-o",
     "--output",
@@ -67,8 +92,10 @@ DateFormat = Literal["iso", "human"]
 @click.option(
     "-u", "--upcoming", default=None, type=int, help="Only show upcoming N days"
 )
-def main(output: OutputFormat, _format: DateFormat, upcoming: int) -> None:
-    birthdays: Iterable[Info] = list(iter_birthdays())
+def main(
+    strict: bool, output: OutputFormat, _format: DateFormat, upcoming: int
+) -> None:
+    birthdays: Iterable[Info] = list(iter_birthdays(check=strict))
     birthdays.sort(key=lambda b: b.with_current_year())
     if upcoming is not None:
         if upcoming > 365:
