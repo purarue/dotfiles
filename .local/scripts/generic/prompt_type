@@ -16,6 +16,13 @@ def _prompt_and_echo(prompt: str, **kwargs):
     click.echo(str(click.prompt(prompt, **kwargs)).strip())
 
 
+def parse_time(time_input: str) -> str:
+    try:
+        return _parse_time(time_input)
+    except ValueError as e:
+        raise click.UsageError(message=str(e))
+
+
 def _parse_time(time_input: str) -> str:
     """
     >>> '5PM'
@@ -68,7 +75,7 @@ def main(prompt: str, coerce_type: str) -> None:
         _prompt_and_echo(prompt or "Enter Path", type=click.Path())
     elif coerce_type == "time":
         _prompt_and_echo(
-            prompt or "Enter Time (5PM, 17:00)", type=str, value_proc=_parse_time
+            prompt or "Enter Time (5PM, 17:00)", type=str, value_proc=parse_time
         )
     elif coerce_type == "path_exists":
         _prompt_and_echo(prompt or "Enter Path", type=click.Path(exists=True))
