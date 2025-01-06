@@ -68,7 +68,8 @@ def _date_coalesce(d: date | datetime) -> date:
     return d
 
 
-day_type = click.Choice([d.name for d in Day])
+day_mapping: dict[str, Day] = {d.name.lower(): d for d in Day}
+day_type = click.Choice(list(day_mapping))
 week_type = click.IntRange(min=0, max=5)
 
 
@@ -99,10 +100,10 @@ def main(
     assert day is not None, "day is None"
     if week_of_the_month is None:
         week_of_the_month = click.prompt(
-            "Week of the month (0 for every week)", type=week_type, err=True
+            "Week of the month (0 for every week)", type=week_type, err=True, default=0
         )
         assert week_of_the_month is not None, "week_of_the_month is None"
-    day_enum: Day = Day[day]
+    day_enum: Day = day_mapping[day]
     if start_date is None:
         start_date = date.today()
     if end_date is None:
