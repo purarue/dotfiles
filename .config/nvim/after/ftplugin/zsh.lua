@@ -4,7 +4,6 @@
 -- (see queries/bash/injections.scm)
 local dirname = vim.fn.expand("%:h")
 local parent_dir = vim.fs.basename(dirname)
-vim.notify(parent_dir)
 if parent_dir == "tmp" then
     vim.bo.filetype = "bash"
 end

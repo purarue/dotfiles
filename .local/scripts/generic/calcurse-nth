@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# create a recurring event in calcurse
+# this gets loaded by the JSON module from
+# https://github.com/purarue/calcurse-load
+#
+# uses nth-of-the-month script:
+# https://purarue.xyz/d/nth-of-the-month?redirect
+
+set -e
+
+slugify() {
+	local str="$1"
+	echo "$str" | tr -s ' ' | tr '[:space:]' '_'
+}
+
+start_time="$(prompt_type time -p 'Start time (e.g. 5PM, 16:30)' | chomp)"
+end_time="$(prompt_type time -p 'End time (e.g. 5PM, 16:30)' | chomp)"
+summary_title="$(gum input --prompt 'Event title: ' | chomp)" || exit $?
+printf 'Title %s\n' "$summary_title"
+
+output_file="$(tr -s '_' <<<"$HPIDATA/calcurse_load/json/$(slugify "$summary_title")_$(epoch).json")"
+nth-of-the-month | chomp | suffix "T${start_time}" | to-json-objects -k 'start_date' | jq --arg TITLE "$summary_title" '.+{"summary": $TITLE}' | jq -s --arg START "$start_time" --arg END "$end_time" 'map(.end_date = .start_date) | map(.end_date |= sub("T\( $START )"; "T\( $END )"))' | sponge "$output_file" || exit $?
+# make sure json file is valid, otherwise remove it
+if jq <"$output_file" >/dev/null; then
+	echo "Created $output_file"
+else
+	echo 'Failed to generate valid JSON'
+	rm -iv "$output_file"
+fi

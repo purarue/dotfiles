@@ -68,23 +68,51 @@ def _date_coalesce(d: date | datetime) -> date:
     return d
 
 
+day_type = click.Choice([d.name for d in Day])
+week_type = click.IntRange(min=0, max=5)
+
+
 @click.command()
-@click.option("-d", "--day", type=click.Choice([d.name for d in Day]), required=True)
-@click.option("-n", "--nth", type=click.IntRange(min=0), default=1)
+@click.option(
+    "-d",
+    "--day",
+    type=day_type,
+    required=False,
+)
+@click.option(
+    "-n",
+    "--week-of-the-month",
+    help="The nth week of the month. 0 means every week.",
+    type=week_type,
+    required=False,
+)
 @click.option("-s", "--start-date", type=click.DateTime(), default=None)
 @click.option("-e", "--end-date", type=click.DateTime(), default=None)
 def main(
-    day: str, nth: int, start_date: datetime | date | None, end_date: date | date | None
+    day: str | None,
+    week_of_the_month: int | None,
+    start_date: datetime | date | None,
+    end_date: date | date | None,
 ) -> None:
+    if day is None:
+        day = click.prompt("Day", type=day_type, err=True)
+    assert day is not None, "day is None"
+    if week_of_the_month is None:
+        week_of_the_month = click.prompt(
+            "Week of the month (0 for every week)", type=week_type, err=True
+        )
+        assert week_of_the_month is not None, "week_of_the_month is None"
     day_enum: Day = Day[day]
     if start_date is None:
         start_date = date.today()
     if end_date is None:
         end_date = start_date + timedelta(days=365)
 
+    assert start_date < end_date
+
     for d in iter_nth_of_the_month_till(
         day=day_enum,
-        nth=nth,
+        nth=week_of_the_month,
         start_date=_date_coalesce(start_date),
         end_date=_date_coalesce(end_date),
     ):

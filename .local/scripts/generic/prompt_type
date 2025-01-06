@@ -8,17 +8,55 @@ Made to be used in ranger, to prompt for text https://purarue.xyz/d/rc.conf?dark
 
 import click
 
+PROMPTS = {":", ">"}
+
 
 def _prompt_and_echo(prompt: str, **kwargs):
     kwargs["err"] = True
-    click.echo(click.prompt(prompt, **kwargs))
+    click.echo(str(click.prompt(prompt, **kwargs)).strip())
+
+
+def _parse_time(time_input: str) -> str:
+    """
+    >>> "5PM"
+    '17:00'
+    >>> "5pm"
+    '17:00'
+    >>> "5am"
+    '05:00'
+    >>> '21:00"
+    '21:00'
+    """
+    from datetime import datetime
+
+    time_input = time_input.strip().lower()
+    if time_input == "now":
+        now = datetime.now()
+        return f"{now.hour:02}:{now.minute:02}"
+    else:
+        obj: datetime
+        if time_input.endswith("am") or time_input.endswith("pm"):
+            ending: str = time_input[-2:]
+            time_number = time_input[:-2]
+            if not time_number.isnumeric():
+                raise ValueError(f"Invalid time {time_number}")
+            offset = 12 if ending == "pm" else 0
+            obj = datetime.strptime(f"{int(time_number) + offset}:00", "%H:%M")
+        else:
+            if ":" not in time_input:
+                if len(time_input) == 4:
+                    time_input = f"{time_input[:2]}:{time_input[2:]}"
+                else:
+                    time_input = f"{time_input}:00"
+            obj = datetime.strptime(time_input, "%H:%M")
+        return f"{obj.hour:02}:{obj.minute:02}"
 
 
 @click.command(help=__doc__)
 @click.option("-p", "--prompt", help="Text to prompt with", default=None)
 @click.argument(
     "COERCE_TYPE",
-    type=click.Choice(["str", "int", "float", "path", "path_exists"]),
+    type=click.Choice(["str", "int", "float", "path", "time", "path_exists"]),
     default="str",
 )
 def main(prompt: str, coerce_type: str) -> None:
@@ -28,6 +66,10 @@ def main(prompt: str, coerce_type: str) -> None:
         _prompt_and_echo(prompt or "Enter Float", type=float)
     elif coerce_type == "path":
         _prompt_and_echo(prompt or "Enter Path", type=click.Path())
+    elif coerce_type == "time":
+        _prompt_and_echo(
+            prompt or "Enter Time (5PM, 17:00)", type=str, value_proc=_parse_time
+        )
     elif coerce_type == "path_exists":
         _prompt_and_echo(prompt or "Enter Path", type=click.Path(exists=True))
     else:
