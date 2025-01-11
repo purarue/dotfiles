@@ -31,7 +31,7 @@
 "https://github.com/purarue/markdown_stew":
   base: ~/.local/share/go/src/github.com/purarue
   symlink_to: ~/Repos
-"git@github.com/purarue/ttally_server.git":
+"git@github.com:purarue/ttally_server.git":
   base: ~/.local/share/go/src/github.com/purarue
   symlink_to: ~/Repos
   dirname: "ttally_server"
