@@ -137,7 +137,10 @@ alias sz='mystarsfzf'
 # https://github.com/purarue/reminder-sink
 sr() {
 	case "${#@}" in
-	0) reminder-sink run ;;
+	0)
+		reminder-sink run
+		ttally-sync
+		;;
 	*) reminder-sink "$@" ;;
 	esac
 }
