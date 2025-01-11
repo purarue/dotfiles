@@ -210,7 +210,10 @@ b-() {
 	echo -n "water: "
 	b-water "$@"
 }
-alias sn='self-now'
+sn() {
+	self-now
+	ttally-sync
+}
 alias self-edit='editor "$HPIDATA/.self_types.txt"'
 alias snl='while self-now; do; done'
 alias fl='flipflop.py'
