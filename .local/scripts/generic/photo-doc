@@ -5,7 +5,7 @@
 STORAGE="${HOME}/storage/"
 IMAGE_DIR="${STORAGE}/dcim/Camera/"
 
-FILE="$(newest "${IMAGE_DIR}")"
+FILE="$(newest -ignore-hidden "${IMAGE_DIR}")"
 if [[ -z "$FILE" ]]; then
 	echo "No new photos"
 	exit 1
