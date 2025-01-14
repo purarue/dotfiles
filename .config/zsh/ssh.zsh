@@ -1,9 +1,10 @@
 # add both my SSH keys to an agent
 # this is so that I can use multiple Github accounts
-if [[ ! -S "${HOME}/.ssh/ssh_auth_sock" ]]; then
+SHARED_AUTH_SOCK="/tmp/zsh_shared_socket"
+if [[ ! -S "$SHARED_AUTH_SOCK" ]]; then
 	eval "$(ssh-agent)"
 	# link socket to a shared location
-	ln -sf "$SSH_AUTH_SOCK" "${HOME}/.ssh/ssh_auth_sock"
+	ln -sf "$SSH_AUTH_SOCK" "$SHARED_AUTH_SOCK"
 	ssh-add -l >/dev/null || {
 		for ssh_key in "${HOME}/.ssh/id_rsa" "${HOME}/.ssh/id_ed25519"; do
 			if [[ -e "$ssh_key" ]]; then
@@ -14,4 +15,4 @@ if [[ ! -S "${HOME}/.ssh/ssh_auth_sock" ]]; then
 		done
 	}
 fi
-export SSH_AUTH_SOCK="${HOME}/.ssh/ssh_auth_sock"
+export SSH_AUTH_SOCK="$SHARED_AUTH_SOCK"
