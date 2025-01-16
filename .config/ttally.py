@@ -43,8 +43,15 @@ class Event(NamedTuple):
 import os
 from enum import Enum
 
+if "HPIDATA" in os.environ:
+    self_types_file = os.path.join(os.environ["HPIDATA"], ".self_types.txt")
+elif "SELF_TYPES_FILE" in os.environ:
+    self_types_file = os.environ["SELF_TYPES_FILE"]
+else:
+    raise ValueError("unable to determine self_types_file")
+
 # dynamically create an enum using each line of the file as an option
-with open(os.path.join(os.environ["HPIDATA"], ".self_types.txt")) as f:
+with open(self_types_file) as f:
     SelfT = Enum("SelfT", [s.rstrip().upper() for s in f])
 
 

@@ -139,7 +139,6 @@ sr() {
 	case "${#@}" in
 	0)
 		reminder-sink run
-		ttally-sync
 		;;
 	*) reminder-sink "$@" ;;
 	esac
@@ -212,7 +211,6 @@ b-() {
 }
 sn() {
 	self-now
-	ttally-sync
 }
 alias self-edit='editor "$HPIDATA/.self_types.txt"'
 alias snl='while self-now; do; done'
