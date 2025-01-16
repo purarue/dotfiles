@@ -1,6 +1,6 @@
 # add both my SSH keys to an agent
 # this is so that I can use multiple Github accounts
-SHARED_AUTH_SOCK="/tmp/zsh_shared_socket"
+SHARED_AUTH_SOCK="${TMPDIR:-/tmp}/zsh_shared_socket"
 if [[ ! -S "$SHARED_AUTH_SOCK" ]]; then
 	eval "$(ssh-agent)"
 	# link socket to a shared location

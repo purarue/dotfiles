@@ -1,3 +1,4 @@
+# vim: ft=bash
 # vendorized/modified from bootstrap https://github.com/purarue/bootstrap/
 # basic bash configuration for freenas/freebsd
 export EDITOR=vi
