@@ -220,6 +220,7 @@ __pycache__
 /.config/BraveSoftware/
 /.config/Code - OSS/
 /.config/ranger/plugins
+/.config/konsole*
 /.config/digikam*
 /.config/CrossCode
 /.config/Electron
