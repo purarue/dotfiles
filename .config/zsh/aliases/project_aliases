@@ -211,6 +211,7 @@ b-() {
 }
 sn() {
 	self-now
+	vps_sync_ttally
 }
 alias self-edit='editor "$HPIDATA/.self_types.txt"'
 alias snl='while self-now; do; done'
