@@ -3,18 +3,24 @@
 # installed in a pipx venv:
 # https://purarue.xyz/d/auto-subtitle-install?redirect
 
-file="$1"
-if [[ ! -f "$file" ]]; then
-	echo "Usage: $0 <file>"
+if [[ ! -f "$1" ]]; then
+	echo "Usage: $0 <FILE...>"
 	exit 1
 fi
 
-full_path="$(realpath "$file")"
-srt_path="${full_path%.*}.srt"
-if [[ ! -f "$srt_path" ]]; then
-	echo "Generating subtitles for $full_path" >&2
-	auto_subtitle --srt_only true "$full_path" --model medium.en || {
-		echo "Failed to generate subtitles for $file" >&2
-		rm -f "$srt_path"
-	}
-fi
+process_file() {
+	file="$1"
+	full_path="$(realpath "$file")"
+	srt_path="${full_path%.*}.srt"
+	if [[ ! -f "$srt_path" ]]; then
+		echo "Generating subtitles for $full_path" >&2
+		auto_subtitle --srt_only true "$full_path" --model medium.en || {
+			echo "Failed to generate subtitles for $file" >&2
+			rm -f "$srt_path"
+		}
+	fi
+}
+
+for file in "$@"; do
+	process_file "$file"
+done
