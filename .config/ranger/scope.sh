@@ -47,6 +47,11 @@ safepipe() {
 	test $? = 0 -o $? = 141
 }
 
+# dont preview items in private folders
+if [[ "$path" =~ (^|/)\.priv(ate)?(/|$) ]]; then
+	exifinfo "$path" && exit 0
+fi
+
 # Image previews, if enabled in ranger.
 if [ "$preview_images" = "True" ]; then
 	case "$mimetype" in
