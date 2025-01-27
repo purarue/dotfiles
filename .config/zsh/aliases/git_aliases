@@ -119,6 +119,7 @@ alias gds='git diff --staged'
 alias gdt='git diff-tree --no-commit-id --name-only -r'
 alias gdup='git diff @{upstream}'
 alias gdw='git diff --word-diff'
+alias gdm='git diff "$(git_main_branch)" HEAD'
 
 # git commit and push; provide positional arguments as commit message
 gcp() {
