@@ -95,7 +95,6 @@ dos2unix
 dragon-drop
 drive-bin
 dust
-emacs
 entr
 eza
 fd

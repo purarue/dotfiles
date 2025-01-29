@@ -210,7 +210,13 @@ b-() {
 	b-water "$@"
 }
 sn() {
-	self-now && vps_sync_ttally
+	self-now && {
+		if [[ -n "$TTALLY_FILTERS" ]]; then
+			self-recent 1 | grep -qiE "$TTALLY_FILTERS" && vps_sync_ttally || true
+		else
+			vps_sync_ttally || true
+		fi
+	}
 }
 alias self-edit='editor "$HPIDATA/.self_types.txt"'
 alias snl='while self-now; do; done'
