@@ -1,2 +1,2 @@
 #!/bin/sh
-exec flatpak run com.github.PintaProject.Pinta
+exec flatpak run com.github.PintaProject.Pinta "$@"

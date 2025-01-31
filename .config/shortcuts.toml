@@ -891,7 +891,7 @@ shebang = "#!/usr/bin/env bash"
 
 # shortcut for flatpak pinta
 [pinta]
-command = 'exec flatpak run com.github.PintaProject.Pinta'
+command = 'exec flatpak run com.github.PintaProject.Pinta "$@"'
 
 [unicode]
 command = '''
