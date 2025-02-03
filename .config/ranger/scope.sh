@@ -48,7 +48,7 @@ safepipe() {
 }
 
 # dont preview items in private folders
-if [[ "$path" =~ (^|/)\.priv(ate)?(/|$) ]]; then
+if [[ "$path" =~ (^|/)\.priv(ate)?([/_]|$) ]]; then
 	exifinfo "$path" && exit 0
 fi
 
