@@ -15,7 +15,14 @@ from .common import repo
 # https://github.com/purarue/reorder_editable
 
 
+# while Im figuring out how to reorder, see
+# https://github.com/karlicoss/HPI/pull/414
+DISABLED = True
+
+
 def purarue_reorder_path():
+    if DISABLED:
+        return
     try:
         # https://github.com/purarue/reorder_editable
         # if my easy-install.pth file was ordered wrong, fix it and exit!
