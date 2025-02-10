@@ -55,10 +55,9 @@ linux*)
 	source_if_exists /usr/share/fzf/completion.zsh
 	# other plugins
 	source_if_exists /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-	asdf-enable() {
-		source_if_exists /opt/asdf-vm/asdf.sh
-	}
 	source "${ZDOTDIR}/linux.zsh"
+	export ASDF_DATA_DIR="/home/myuser/.asdf"
+	export PATH="$ASDF_DATA_DIR/shims:$PATH"
 	function linux_updates() {
 		housekeeping-offline
 		rj

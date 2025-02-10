@@ -137,6 +137,8 @@ if main-machine; then
 	fi
 fi
 
+evry 1 hour -vlog-process && vlog-process
+
 evry 1 day -review-removed-dir && review-removed-dir
 
 # https://github.com/purarue/my_feed

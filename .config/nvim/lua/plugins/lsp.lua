@@ -82,6 +82,7 @@ return {
                 servers.rust_analyzer = true
                 servers.cssls = true
                 servers.html = true
+                servers.gdscript = true
                 servers.templ = true
                 servers.eslint = true
                 servers.cssmodules_ls = true
