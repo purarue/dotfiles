@@ -1,2 +1,0 @@
-#!/bin/sh
-[ "$(on_machine)" = "$(cat "$HPIDATA/main_machine_name.txt")" ]
