@@ -7,7 +7,5 @@
 ttally_warnings
 file-modified-within ~/.cache/bgproc.lastrun 1h || echo " bgproc"
 file-modified-within ~/.cache/housekeeping.lastrun 1d || echo " housekeeping"
-if main-machine; then
-	file-modified-within ~/.cache/restic-backup.lastrun 7d || echo " restic-backup"
-fi
+file-modified-within ~/.cache/restic-backup.lastrun 7d || echo " restic-backup"
 true
