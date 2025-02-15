@@ -153,6 +153,7 @@ evry 1 week -discogs-update && {
 evry 3 days -auto-mal-update && {
 	auto-mal-update && rm -rvf "$(evry location -malexport_partial_update)"
 }
+evry 1 week -mal-feed-tmdb && mal-feed-tmdb --above-episodes 3
 # run malexport update https://github.com/purarue/malexport/
 bash "${HPIDATA}/malexport.job"
 evry 1 day -malexport_partial_update && {

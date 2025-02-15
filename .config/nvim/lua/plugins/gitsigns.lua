@@ -1,8 +1,7 @@
 return {
     {
         "purarue/gitsigns-yadm.nvim",
-        -- dir = "~/Repos/gitsigns-yadm.nvim",
-        -- opts = { yadm_repo_git = "~/.config/yadm/repo.git", shell_timeout_ms = 1000 },
+        dir = "~/Repos/gitsigns-yadm.nvim",
         lazy = true,
     },
     {
@@ -17,11 +16,9 @@ return {
                 changedelete = { text = "~" },
                 untracked = { text = "┆" },
             },
-            _on_attach_pre = function(_, callback)
+            _on_attach_pre = function(bufnr, callback)
                 if vim.fn.executable("yadm") == 1 then
-                    require("gitsigns-yadm").yadm_signs(callback)
-                else
-                    callback()
+                    require("gitsigns-yadm").yadm_signs(callback, { bufnr = bufnr })
                 end
             end,
             on_attach = function(bufnr)
