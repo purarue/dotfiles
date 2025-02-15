@@ -1,7 +1,7 @@
 return {
     {
         "purarue/gitsigns-yadm.nvim",
-        dir = "~/Repos/gitsigns-yadm.nvim",
+        -- dir = "~/Repos/gitsigns-yadm.nvim",
         lazy = true,
     },
     {
