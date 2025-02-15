@@ -19,8 +19,11 @@ return {
             _on_attach_pre = function(bufnr, callback)
                 if vim.fn.executable("yadm") == 1 then
                     require("gitsigns-yadm").yadm_signs(callback, { bufnr = bufnr })
+                else
+                    callback()
                 end
             end,
+            -- debug_mode = true,
             on_attach = function(bufnr)
                 local wk = require("which-key")
 
