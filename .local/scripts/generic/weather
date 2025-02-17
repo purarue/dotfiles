@@ -3,7 +3,7 @@
 from collections import defaultdict
 import os
 import json
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 from typing import Any, NamedTuple, TypeVar
 
