@@ -1,0 +1,19 @@
+#!/usr/bin/env python3
+
+import os
+import json
+import fileinput
+import contextlib
+
+from jsonc_parser.parser import JsoncParser
+
+
+def main() -> None:
+    lines = list(fileinput.input())
+    data = JsoncParser.parse_str("\n".join(lines))
+    print(json.dumps(data, indent=4))
+
+
+if __name__ == "__main__":
+    with contextlib.suppress(KeyboardInterrupt):
+        main()

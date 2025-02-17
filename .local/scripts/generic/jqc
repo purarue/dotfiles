@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# pipe data into this, pass any jq filters as arguments
+
+set -o pipefail
+set -e
+
+jsonc-to-json | jq "$@"

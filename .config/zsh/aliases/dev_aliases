@@ -39,6 +39,12 @@ gh-pr-fzf() {
 	gh-item-fzf
 }
 
+gh-pr-checkout() {
+	local id
+	id="$(PRINT_URL=1 gh-pr-fzf | rcut -d'/' -f1)" || return $?
+	[[ -n "$id" ]] && gh pr checkout "$id"
+}
+
 gh-issue-fzf() {
 	gh-item-fzf 'issue'
 }

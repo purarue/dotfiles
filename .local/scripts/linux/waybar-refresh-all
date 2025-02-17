@@ -4,4 +4,4 @@ waybar-signals | cut -d'=' -f2 | while read -r signal; do
 	pkill "-RTMIN+${signal}" waybar &
 done
 wait
-notify "Refreshed all blocks"
+[[ "$1" == "no-notify" ]] || notify "Refreshed all blocks"

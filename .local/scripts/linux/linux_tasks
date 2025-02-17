@@ -16,7 +16,7 @@ trap 'kill_hanging_background_tasks' EXIT
 if [[ -n "${WAYLAND_DISPLAY:-}" ]]; then
 	echo ~/.cache/guestbook-comments | entr -n pkill -RTMIN+1 waybar &
 	(find "${TTALLY_DATA_DIR}" -type f | entr -n ttally update-cache) &
-	(find "${TTALLY_DATA_DIR}" "${HPIDATA}/flipflop/" -type f | entr -n pkill -RTMIN+2 waybar) &
+	(find "${TTALLY_DATA_DIR}" "${HPIDATA}/flipflop/" -type f | entr -n waybar-refresh-all no-notify) &
 	(echo "${TODO_DIR}/todo.txt" | entr -n pkill -RTMIN+6 waybar) &
 	(find ~/.cache/bgproc.lastrun | entr -n pkill -RTMIN+4 waybar) &
 	(echo "${HOME}/.cache/rss-unread" | entr -n refresh-block reminder-sink) &
