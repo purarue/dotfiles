@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+items="$(reminder-sink run)"
+jq -rcn --arg text " $(awk 'NF > 0 { count++ } END { print count }' <<<"$items")" --arg items "$items" '{"text": $text, "tooltip": $items}'

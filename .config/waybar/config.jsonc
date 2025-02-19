@@ -200,8 +200,9 @@
 		"signal": 3
 	},
 	"custom/reminder-sink": {
-		"format": " {}",
-		"exec": "b-reminder-sink",
+		"format": "{}",
+		"exec": "b-reminder-sink-json",
+		"return-type": "json",
 		"on-click": "reminder-sink-notify",
 		"on-click-right": "launch reminder-sink-silence",
 		"interval": 60,
