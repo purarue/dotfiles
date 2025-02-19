@@ -1,7 +1,6 @@
 purarue/mpv-sockets
 purarue/mpvf
 purarue/bgproc
-purarue/tts
 purarue/plaintext-playlist
 purarue/pmark
 purarue/frinkconv
