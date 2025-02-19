@@ -1,59 +1,19 @@
-#!/usr/bin/env python3
-"""
-Parses the upcoming WCA competitions page into JSON
-"""
-
-import json
-import dataclasses
-from typing import Iterator, Any, Union
-
-import click
-import requests
-from bs4 import BeautifulSoup, Tag, NavigableString
-
-
-def _default(obj: Any) -> Any:
-    if dataclasses.is_dataclass(obj):
-        return dataclasses.asdict(obj)
-    raise TypeError(f"{type(obj)}: {obj}")
-
-
-@dataclasses.dataclass
-class Competition:
-    date: str
-    name: str
-    location: str
-
-
-Element = Union[Tag, NavigableString, None]
-
-
-def find_one(item: Element, *args, **kwargs) -> str:
-    assert item is not None, f"find_one: received none as input {item} {args} {kwargs}"
-    res: Union[Element, int] = item.find(*args, **kwargs)
-    assert not isinstance(res, int)
-    assert res is not None, f"could not find {args} {kwargs} on {item}"
-    return res.text.strip()
-
-
-def fetch_upcoming_competitions() -> Iterator[Competition]:
-    r = requests.get("https://www.worldcubeassociation.org/competitions")
-    r.raise_for_status()
-    soup = BeautifulSoup(r.text, "html.parser")
-    item_rows = list(soup.select(".list-group-item.not-past"))
-    for item in item_rows:
-        comp_info = item.find(class_="competition-info")
-        yield Competition(
-            date=find_one(item, class_="date"),
-            name=find_one(comp_info, "a"),
-            location=find_one(comp_info, class_="location"),
-        )
-
-
-@click.command(help=__doc__)
-def main() -> None:
-    print(json.dumps(list(fetch_upcoming_competitions()), default=_default))
-
-
-if __name__ == "__main__":
-    main()
+#!/usr/bin/env bash
+# fetches all the upcoming wca competitions
+current_date="$(date +%Y-%m-%d)"
+pagination_size=''
+page=1
+while true; do
+	data="$(curl -sL "https://www.worldcubeassociation.org/api/v0/competition_index?include_cancelled=false&sort=start_date%2Cend_date%2Cname&ongoing_and_future=$current_date&page=$page")"
+	count=$(echo "$data" | jq 'length')
+	jq '.[]' <<<"$data"
+	if [[ -z "$pagination_size" ]]; then
+		pagination_size="$count"
+	else
+		# if we hit something without the default pagination size, then were done
+		if [[ "$count" != "$pagination_size" ]]; then
+			break
+		fi
+	fi
+	((page++))
+done

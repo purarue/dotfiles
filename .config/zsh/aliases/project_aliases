@@ -360,7 +360,7 @@ wca-local() {
 	# use my IP address to fetch what state/region I'm currently in
 	# https://purarue.xyz/d/ipinfo?dark
 	state="${1:-$(ipinfo | grep 'region' | cut -d":" -f2- | chomp | lower)}"
-	wca-comps | jq -r '.[] | "\(.date) - \(.name) - \(.location)"' | grep -i "${state}"
+	wca-comps | jq -sr '.[] | "\(.start_date) - \(.name) - \(.city)"' | grep -i "${state}"
 }
 
 # https://github.com/purarue/scramble-history
