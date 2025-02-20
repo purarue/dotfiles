@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 # updates my rss feed, if I don't already have it open
-# If newsboat is not open, this reloads all items and
+# If newsraft is not open, this reloads all items and
 # saves how many items are unread to ~/.cache/rss-unread
 # If it fails, does not write
 
 readonly CACHE_FILE="${XDG_CACHE_HOME:-${HOME}/.cache}/rss-unread"
 
-if pgrep -x newsboat >/dev/null; then
-	echo "Newsboat is active, skipping update..." >&2
+if pgrep -x newsraft >/dev/null; then
+	echo "Newsraft is active, skipping update..." >&2
 	exit 1
 else
-	newsboat -x reload
-	unread="$(newsboat -x print-unread)" || exit $?
+	newsraft -e reload-all >/dev/null
+	unread="$(newsraft -e print-unread-items-count)" || exit $?
 	if [[ -z "$unread" ]]; then
 		echo '0' >"${CACHE_FILE}"
 	else

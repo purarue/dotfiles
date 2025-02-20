@@ -15,8 +15,8 @@ case "$BLOCK_BUTTON" in
 	;;
 3)
 	# https://purarue.xyz/d/cross-platform/launch?dark
-	# https://purarue.xyz/d/newsboat-force?dark
-	launch newsboat-force
+	# https://purarue.xyz/d/newsraft-force?dark
+	launch newsraft-force
 	;;
 esac
 

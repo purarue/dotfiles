@@ -14,6 +14,7 @@
 		"custom/reminders",
 		"idle_inhibitor",
 		"custom/reminder-sink",
+		"custom/rss",
 		"custom/calcurse",
 		// "custom/todo",
 		"custom/mail",
@@ -213,6 +214,13 @@
 		"exec": "b-reminders",
 		"interval": 600,
 		"signal": 4
+	},
+	"custom/rss": {
+		"format": "📰 {}",
+		"exec": "b-rss",
+		"interval": 600,
+		"on-click": "launch newsraft",
+		"signal": 1
 	},
 	"custom/todo": {
 		"format": "{}",

@@ -81,6 +81,7 @@ button:hover {
 #pulseaudio,
 #wireplumber,
 #custom-mail,
+#custom-rss,
 #custom-calcurse,
 #custom-todo,
 #custom-reminder-sink,
@@ -157,6 +158,10 @@ label:focus {
   /* increase kerning*/
   letter-spacing: 3px;
   padding: 0 8px;
+}
+
+#custom-rss {
+  padding: 0 6px;
 }
 
 #tray {

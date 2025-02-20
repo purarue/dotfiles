@@ -1,0 +1,32 @@
+# This is an example of valid config file for Newsraft.
+# Note that config file is not required for Newsraft to work!
+# It's used only for overriding default settings and expanding functionality.
+
+# Lines with # character at the beginning are comments - they are ignored.
+
+# Here we set some settings.
+scrolloff 5
+feeds-menu-paramount-explore true
+color-list-item-important bold red default
+
+
+# That's how you bind a regular action.
+bind ^P mark-unread-all
+
+# Command binding for opening links with feh image viewer.
+bind f exec feh "%l"
+
+# This will launch mpv in the background.
+bind m exec mpv --no-terminal "%l" &
+
+# This will launch mpv interactively.
+# e.g. do '1M' to play link 1 with mpv
+bind M exec mpv "%l"
+
+# need to restart newsboat to actually load new changes
+bind E exec $EDITOR ~/.config/newsraft/feeds
+
+bind y copy-to-clipboard
+bind Y exec yt-dlp "%l"
+# 1, uses my linkhandler wrapper script
+bind , exec linkhandler "%l"

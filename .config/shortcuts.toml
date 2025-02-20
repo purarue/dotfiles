@@ -403,16 +403,6 @@ command = "exec openurl 'https://discord.com/login'"
 [feed-open]
 command = "exec openurl 'https://purarue.xyz/feed/'"
 
-[newsboat-force]
-command = '''
-# if another instance of newsboat is open, kill it and open one here
-# specifically useful in case newsboat -x reload is going on in the background
-pgrep -x newsboat && pkill -x newsboat
-cd "${XDG_DOWNLOAD_DIR:-${HOME}/Downloads}" || exit 1
-newsboat
-exec i3-msg exec update-rss # update rss afterwards, to update menu bar icon
-'''
-
 [neomuttr]
 command = '''
 # neomutt and refresh my menu bar block

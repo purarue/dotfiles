@@ -3,12 +3,4 @@
 # Could be a link to their channel or a video
 # Searches the <meta> tags for a channelId value
 
-declare URL MATCHES
-
-readonly URL="${1:?Pass the URL as the first argument}"
-MATCHES="$(curl -s "${URL}" | pup 'meta[itemprop="channelId"] attr{content}')" || exit $?
-if [[ -z "${MATCHES}" ]]; then
-	echo "Could not find a meta tag with the channelId" >&2
-	exit 1
-fi
-printf '%s\n' "${MATCHES}"
+yt-dlp --print channel_url --playlist-items 1 "${1:?Pass the URL as the first argument}" | awk -F/ '{print $NF}'

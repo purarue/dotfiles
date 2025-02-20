@@ -284,6 +284,7 @@ __pycache__
 /.config/netrc
 /.config/newsboat/cache.db
 /.config/newsboat/urls
+/.config/newsraft/feeds
 /.config/nextjs-nodejs
 /.config/nvim/.netrwhist
 /.config/nvim/spell
