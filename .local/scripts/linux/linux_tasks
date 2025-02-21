@@ -19,6 +19,7 @@ if [[ -n "${WAYLAND_DISPLAY:-}" ]]; then
 	(find "${TTALLY_DATA_DIR}" "${HPIDATA}/flipflop/" -type f | entr -n waybar-refresh-all no-notify) &
 	(echo "${TODO_DIR}/todo.txt" | entr -n pkill -RTMIN+6 waybar) &
 	(find ~/.cache/bgproc.lastrun | entr -n pkill -RTMIN+4 waybar) &
+	(echo ~/.cache/rss-unread | entr -n pkill -RTMIN+7 waybar) &
 	(echo "${HOME}/.cache/rss-unread" | entr -n refresh-block reminder-sink) &
 else
 

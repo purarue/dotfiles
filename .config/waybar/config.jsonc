@@ -220,7 +220,7 @@
 		"exec": "b-rss",
 		"interval": 600,
 		"on-click": "launch newsraft",
-		"signal": 1
+		"signal": 7
 	},
 	"custom/todo": {
 		"format": "{}",
