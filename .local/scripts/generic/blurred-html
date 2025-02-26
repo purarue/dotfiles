@@ -1,0 +1,102 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+import contextlib
+from typing import Sequence, NamedTuple
+import click
+from bs4 import BeautifulSoup, Doctype
+
+
+def create_html_skeleton() -> BeautifulSoup:
+    soup = BeautifulSoup("", "html.parser")
+    doctype = Doctype("html")
+    html = soup.new_tag("html")
+    head = soup.new_tag("head")
+
+    head.append(soup.new_tag("meta", charset="utf-8"))
+
+    style = soup.new_tag("style")
+    style.string = """
+    .spoiler-container { cursor: pointer; }
+    .spoiler-checkbox { display: none; }
+    .spoiler-label { filter: blur(5px); transition: filter 0.3s ease; cursor: pointer; padding-left: 1rem; }
+    .spoiler-checkbox:checked + .spoiler-label { filter: blur(0); }
+    """
+    head.append(style)
+
+    soup.append(doctype)
+    soup.append(html)
+    html.append(head)
+    html.append(soup.new_tag("body"))
+
+    return soup
+
+
+def add_spoiler(
+    soup: BeautifulSoup, /, *, label_text: str | None, content: str, index: int
+):
+    body = soup.body
+    spoiler_id = f"spoiler{index}"
+
+    spoiler_container = soup.new_tag("p", attrs={"class": "spoiler-container"})
+    checkbox = soup.new_tag(
+        "input",
+        attrs={"type": "checkbox", "id": spoiler_id, "class": "spoiler-checkbox"},
+    )
+    label = soup.new_tag("label", attrs={"for": spoiler_id, "class": "spoiler-label"})
+    label.string = content
+
+    assert body is not None
+    if label_text is not None:
+        spoiler_container.append(soup.new_string(label_text))
+    spoiler_container.append(checkbox)
+    spoiler_container.append(label)
+    body.append(spoiler_container)
+
+
+class Item(NamedTuple):
+    label: str | None
+    content: str
+
+
+def parse_into_tuple(item: str) -> Item:
+    left, _, right = item.rstrip(os.linesep).partition("|")
+    if left.strip() == "":
+        left = None
+    if right.strip() == "":
+        raise click.BadArgumentUsage(f"Empty content in {item!r}")
+    return Item(left, right)
+
+
+@click.command()
+@click.argument("inputs", nargs=-1, metavar="ITEM")
+def main(inputs: Sequence[str]):
+    """
+    Generates an HTML file containing multiple dynamically created spoiler components.
+
+    Each hidden item is provided via command-line arguments or stdin.
+    """
+    items: list[Item] = []
+    for arg in inputs:
+        if arg == "-":
+            for line in sys.stdin:
+                items.append(parse_into_tuple(line))
+        else:
+            items.append(parse_into_tuple(arg))
+
+    if not items:
+        raise click.BadArgumentUsage(
+            "No content provided, provide '-' if piping data to STDIN"
+        )
+
+    soup = create_html_skeleton()
+    for index, item in enumerate(items, start=1):
+        add_spoiler(soup, label_text=item.label, content=item.content, index=index)
+
+    click.echo(str(soup))
+
+
+if __name__ == "__main__":
+    with contextlib.suppress(KeyboardInterrupt):
+        main()
