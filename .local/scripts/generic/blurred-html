@@ -73,9 +73,12 @@ def parse_into_tuple(item: str) -> Item:
 @click.argument("inputs", nargs=-1, metavar="ITEM")
 def main(inputs: Sequence[str]):
     """
-    Generates an HTML file containing multiple dynamically created spoiler components.
+    Generates an HTML file that has labels/spoiler text
 
-    Each hidden item is provided via command-line arguments or stdin.
+    E.g. pass this 'Hello | World' and it generates:
+    Hello (Visible) World (Blurred/Hidden)
+
+    Each hidden item is provided via command-line arguments or STDIN
     """
     items: list[Item] = []
     for arg in inputs:
