@@ -150,15 +150,17 @@ evry 2 months -grouvee-export && python3 -m grouvee_export export
 evry 1 week -discogs-update && {
 	(cd "$REPOS/albums" && ./update -r)
 }
-evry 3 days -auto-mal-update && {
-	auto-mal-update && rm -rvf "$(evry location -malexport_partial_update)"
-}
-evry 1 week -mal-feed-tmdb && mal-feed-tmdb --above-episodes 2
-# run malexport update https://github.com/purarue/malexport/
-bash "${HPIDATA}/malexport.job"
-evry 1 day -malexport_partial_update && {
-	malexport update export
-	MALEXPORT_EPISODE_LIMIT=0 malexport update history
+at-home || {
+	evry 3 days -auto-mal-update && {
+		auto-mal-update && rm -rvf "$(evry location -malexport_partial_update)"
+	}
+	evry 1 week -mal-feed-tmdb && mal-feed-tmdb --above-episodes 2
+	# run malexport update https://github.com/purarue/malexport/
+	bash "${HPIDATA}/malexport.job"
+	evry 1 day -malexport_partial_update && {
+		malexport update export
+		MALEXPORT_EPISODE_LIMIT=0 malexport update history
+	}
 }
 
 evry 1 hour -vlog-process && vlog-process
