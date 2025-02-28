@@ -129,6 +129,7 @@ gcp() {
 		git commit -m "$*" && git push
 	fi
 }
+alias gpn='git push --no-verify'
 
 gcnmp() {
 	local args=()
