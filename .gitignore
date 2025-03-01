@@ -81,6 +81,7 @@ __pycache__
 # application config files to ignore
 /.3T
 /.Motorola Mobility/
+/.SteamCloud/
 /.Xauthority
 /.abook
 /.android/
@@ -95,19 +96,20 @@ __pycache__
 /.cache
 /.cargo
 /.cdk
-/.openshot_qt/
 /.clojure_history
-/.dart-tool/
+/.codeium
 /.cookiecutter_replay
 /.cookiecutters/
 /.credentials
-/.codeium
 /.cups
 /.dart
+/.dart-tool/
+/.degit
 /.dmrc
 /.electron-gyp
 /.elvish
 /.emacs.d/
+/.floorp
 /.gem
 /.ghc/ghci_history
 /.giget
@@ -122,11 +124,10 @@ __pycache__
 /.java
 /.jupyter
 /.keras
-/.mono
-/.opam
 /.keynav_macros
 /.lesshst
 /.lftp
+/.librewolf
 /.lldb
 /.local/opt/tor-browser
 /.m2
@@ -136,10 +137,9 @@ __pycache__
 /.megaCmd
 /.minecraft
 /.mongodb
+/.mono
 /.moonchild productions/
 /.mozilla
-/.librewolf
-/.floorp
 /.mupdf.history
 /.netrc
 /.node-gyp
@@ -148,7 +148,8 @@ __pycache__
 /.nuget
 /.nvm
 /.oh-my-stars
-/.yarnrc.yml
+/.opam
+/.openshot_qt/
 /.oracle_jre_usage/
 /.parallel
 /.pki/nssdb
@@ -169,9 +170,7 @@ __pycache__
 /.ssh
 /.ssr
 /.stack
-/.degit
 /.steam
-/.SteamCloud/
 /.steampath
 /.steampid
 /.subversion
@@ -198,35 +197,18 @@ __pycache__
 /.xsession-errors*
 /.yarn
 /.yarnrc
+/.yarnrc.yml
 /.z
 /.zoom
 
 # Top level config/local files to ignore
+.config/git/gitk
 /.config/*/zoom.conf
 /.config/3T
-/.config/kdiff3rc
-/.config/inkscape/
-/.config/kconf_updaterc
-/.config/create-next-app-nodejs/
-/.config/digikam*
-.config/git/gitk
-/.config/kdeglobals
-/.config/lazygit
-# /.config/nvim/lazy-lock.json
-/.config/audacity
-/.config/syncplay*
-/.config/age
-/.config/sops
-/.config/flameshot
-/.config/Vampire_Survivors*
 /.config/BraveSoftware/
 /.config/Code - OSS/
-/.config/ranger/plugins
-/.config/konsole*
-/.config/digikam*
 /.config/CrossCode
 /.config/Electron
-/.config/krita*
 /.config/GIMP
 /.config/Microsoft Teams - Preview/
 /.config/Microsoft/
@@ -234,14 +216,16 @@ __pycache__
 /.config/Pinta
 /.config/Postman/
 /.config/QtProject.conf
-/.config/opera
 /.config/Slack
 /.config/StardewValley
-/.config/astro
 /.config/Thunar
+/.config/UNDERTALE/
+/.config/Vampire_Survivors*
 /.config/VirtualBox/
+/.config/age
 /.config/asciinema/
-/.config/gpxsee/
+/.config/astro
+/.config/audacity
 /.config/autostart
 /.config/balena-etcher
 /.config/bookmark.txt/*
@@ -251,14 +235,17 @@ __pycache__
 /.config/clojure
 /.config/coc/
 /.config/composer/.htaccess
-/.config/UNDERTALE/
 /.config/configstore
+/.config/create-next-app-nodejs/
 /.config/czkawka
 /.config/dconf
+/.config/digikam*
+/.config/digikam*
 /.config/discord
 /.config/discordcanary/
 /.config/enchant
 /.config/filezilla
+/.config/flameshot
 /.config/fontforge
 /.config/gh/hosts.yml
 /.config/gh/state.yml
@@ -267,14 +254,21 @@ __pycache__
 /.config/go/
 /.config/godot/
 /.config/google-chrome*
+/.config/gpxsee/
 /.config/gtk-*
 /.config/hub
 /.config/imgur_uploader
-/.config/tree-sitter/
+/.config/inkscape/
+/.config/kconf_updaterc
+/.config/kdeglobals
+/.config/kdiff3rc
 /.config/keepassxc/keepassxc.ini
 /.config/kid3rc
+/.config/konsole*
+/.config/krita*
 /.config/kwalletrc
 /.config/largechar
+/.config/lazygit
 /.config/libreoffice
 /.config/light
 /.config/malexport
@@ -293,22 +287,27 @@ __pycache__
 /.config/obs-studio
 /.config/okularpartrc
 /.config/okularrc
+/.config/opera
 /.config/planetscale/
 /.config/pulse
+/.config/ranger/plugins
 /.config/rncbc.org
 /.config/slack-term/
 /.config/snes9x
-/.config/systemd/
 /.config/snes9x
 /.config/so/config.yml
 /.config/sonic-pi.net/
+/.config/sops
 /.config/sqlitebrowser
+/.config/syncplay*
 /.config/syncthing
+/.config/systemd/
 /.config/teams/
 /.config/todo/*
 /.config/trackma
 /.config/transmission/
 /.config/trashrc
+/.config/tree-sitter/
 /.config/twitch-cli/
 /.config/twitchlive
 /.config/visualboyadvance-m/
@@ -328,52 +327,52 @@ __pycache__
 
 # stuff to ignore in ~/.local
 /.local/*.md
+/.local/*.py
+/.local/*.toml
+/.local/*.txt
+/.local/*lock
+/.local/LICENSE
 /.local/bin
 /.local/etc
-/.local/*.txt
-/.local/LICENSE
-/.local/*.toml
-/.local/*.py
-/.local/makefile
-/.local/requirements*
-/.local/libexec
-/.local/src
-/.local/*lock
 /.local/etc/bash_completion.d
 /.local/include
 /.local/lib
+/.local/libexec
+/.local/makefile
 /.local/man
 /.local/pipx
+/.local/requirements*
 /.local/share/*
 /.local/share/yadm
+/.local/src
 /.local/state
 
 # exclusions to the .local ignores
 !.local/share/firefox_addons.txt
+!.local/share/gpg_autoclick/
 !.local/share/shortcuts/
 !.local/system-config
-!.local/share/gpg_autoclick/
 
 # default user directories
-/Repos
+/.Trash
+/Applications
+/Desktop
 /Documents
+/Downloads
 /Files
 /Games
-/Postman
-/Shared
-/shared
-/phonedata
-/Sync
-/Desktop
-/Applications
-/VirtualBox VMs
-/data
-/.Trash
+/GoogleDrive
 /Library
-/Public
-/Downloads
-/Pictures
 /Movies
 /Music
-/GoogleDrive
+/Pictures
+/Postman
+/Public
+/Repos
+/Shared
+/Sync
+/VirtualBox VMs
+/data
+/phonedata
+/shared
 /tmp
