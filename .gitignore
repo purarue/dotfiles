@@ -148,6 +148,7 @@ __pycache__
 /.nuget
 /.nvm
 /.oh-my-stars
+/.yarnrc.yml
 /.oracle_jre_usage/
 /.parallel
 /.pki/nssdb
@@ -208,6 +209,7 @@ __pycache__
 /.config/kconf_updaterc
 /.config/create-next-app-nodejs/
 /.config/digikam*
+.config/git/gitk
 /.config/kdeglobals
 /.config/lazygit
 # /.config/nvim/lazy-lock.json
