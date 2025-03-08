@@ -327,6 +327,15 @@ ma() {
 	malexport manual-history "${args[@]}" || return $?
 	mal-manual
 }
+ma-next() {
+	local id_ep id ep at
+	at="$(epoch)"
+	id_ep="$(mal-latest-episode)"
+	# split by | into id and episode, e.g. '1|10'
+	id="${id_ep%%|*}"
+	ep="${id_ep#*|}"
+	ma -i "$id" -n "$((ep + 1))" --at "$at" || return $?
+}
 
 # https://github.com/purarue/clone-repos
 alias cr="python3 -m pip install --break-system-packages 'git+https://github.com/purarue/clone-repos' && clone-repos -B"

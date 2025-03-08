@@ -1,4 +1,2 @@
-#!/usr/bin/env bash
-
-set -e
+#!/bin/sh
 exec ttt nvim "$@"
