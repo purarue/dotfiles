@@ -1,3 +1,5 @@
+# vim: ft=conf
+
 cargo-license # list licenses
 cargo-update  # to update these packages
 evry          # my task scheduler

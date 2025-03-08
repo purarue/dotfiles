@@ -1,5 +1,6 @@
-# os
+# vim: ft=conf
 
+# os
 gammastep
 hyprland
 hyprlock

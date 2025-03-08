@@ -1,3 +1,5 @@
+# vim: ft=conf
+
 python  # installs as python3
 python-pip
 openssh

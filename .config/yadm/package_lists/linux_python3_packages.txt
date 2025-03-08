@@ -1,3 +1,5 @@
+# vim: ft=conf
+
 beets
 beets-filetote
 cython

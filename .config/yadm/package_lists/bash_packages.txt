@@ -1,3 +1,5 @@
+# vim: ft=conf
+
 purarue/mpv-sockets
 purarue/mpvf
 purarue/bgproc

@@ -1,3 +1,5 @@
+# vim: ft=conf
+
 dune
 merlin
 ocaml-lsp-server

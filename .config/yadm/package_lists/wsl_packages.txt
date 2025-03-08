@@ -1,3 +1,5 @@
+# vim: ft=conf
+
 python3-pip
 tree
 npm

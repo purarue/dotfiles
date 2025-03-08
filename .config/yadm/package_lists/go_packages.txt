@@ -1,3 +1,5 @@
+# vim: ft=conf
+
 # lsp support
 gomodifytags github.com/fatih/gomodifytags
 gore github.com/x-motemen/gore/cmd/gore

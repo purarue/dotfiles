@@ -1,3 +1,5 @@
+# vim: ft=requirements
+
 ansi2html
 cookiecutter
 csvkit

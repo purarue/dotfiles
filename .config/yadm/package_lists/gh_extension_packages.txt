@@ -1,3 +1,5 @@
+# vim: ft=conf
+
 gennaro-tedesco/gh-i
 gennaro-tedesco/gh-s
 dlvhdr/gh-dash

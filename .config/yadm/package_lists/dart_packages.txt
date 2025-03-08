@@ -1,1 +1,3 @@
+# vim: ft=conf
+
 linkcheck

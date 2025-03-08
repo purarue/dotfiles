@@ -1,2 +1,4 @@
+# vim: ft=conf
+
 # lsp/linting
 rubocop

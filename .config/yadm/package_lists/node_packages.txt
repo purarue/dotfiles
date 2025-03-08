@@ -1,3 +1,5 @@
+# vim: ft=conf
+
 # language support
 @elm-tooling/elm-language-server
 @prettier/plugin-php

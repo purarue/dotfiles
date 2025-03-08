@@ -1,3 +1,5 @@
+# vim: ft=requirements
+
 # things I would only want to install on a computer
 pandas
 matplotlib
