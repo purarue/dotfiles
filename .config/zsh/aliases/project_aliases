@@ -251,7 +251,7 @@ mpv-next-ep() {
 		dir="$(dirname "$curplaying")"
 		# use fd to find the index of the currently playing file, then play the next
 		files="$(fd . "$dir" --type f)" || return $?
-		index="$(grep --line-number "$curplaying" <<<"$files" | cut -d: -f1)"
+		index="$(grep --fixed-strings --line-number "$curplaying" <<<"$files" | cut -d: -f1)"
 		if [[ -z "$index" ]]; then
 			echo "Could not find $curplaying..." >&2
 			return 1
