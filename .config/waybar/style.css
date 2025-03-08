@@ -56,6 +56,11 @@ button:hover {
   background: rgba(0, 0, 0, 0.2);
 }
 
+#submap  {
+  background: red;
+  padding: 0 10px;
+}
+
 #workspaces button.active {
   background-color: #64727d;
   box-shadow: inset 0 -3px #ffffff;

@@ -19,3 +19,7 @@ xorg-xwayland
 
 auto-cpufreq  # for battery life
 otf-font-awesome  # for waybar
+
+# for clicking without my trackpad
+wlrctl
+wl-kbptr

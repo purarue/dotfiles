@@ -7,7 +7,8 @@
 	"spacing": 0, // Gaps between modules (4px)
 	// Choose the order of the modules
 	"modules-left": [
-		"hyprland/workspaces"
+		"hyprland/workspaces",
+		"hyprland/submap"
 	],
 	"modules-center": [],
 	"modules-right": [
@@ -31,6 +32,11 @@
 		"on-scroll-up": "hyprctl dispatch workspace e+1",
 		"on-scroll-down": "hyprctl dispatch workspace e-1",
 		"format": "{name}"
+	},
+	"hyprland/submap": {
+		"format": "{}",
+		"max-length": 30,
+		"tooltip": false
 	},
 	"sway/scratchpad": {
 		"format": "{icon} {count}",
