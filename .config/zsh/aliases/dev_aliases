@@ -20,7 +20,7 @@ gh-item-fzf() {
 		echo 'No issues for this repository...' >&2
 		;;
 	*)
-		if picked="$(fzf <<<"$urls")"; then
+		if picked="$(fzf --exit-0 --select-1 <<<"$urls")"; then
 			picked="$(echo "$picked" | cut -d"|" -f1)"
 			if [[ -n "$PRINT_ID" ]]; then
 				rcut -d'/' -f1 <<<"$picked"
