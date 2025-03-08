@@ -4,8 +4,14 @@
 # also reminds me to run housekeeping (https://purarue.xyz/d/.local/scripts/linux/housekeeping?redirect)
 # if it hasn't been run in the last day
 
-ttally_warnings
-file-modified-within ~/.cache/bgproc.lastrun 1h || echo " bgproc"
-file-modified-within ~/.cache/housekeeping.lastrun 1d || echo " housekeeping"
-file-modified-within ~/.cache/restic-backup.lastrun 7d || echo " restic-backup"
-true
+declare OUT=''
+OUT="$({
+	ttally_warnings
+	file-modified-within ~/.cache/bgproc.lastrun 1h || echo " bgproc"
+	file-modified-within ~/.cache/housekeeping.lastrun 1d || echo " housekeeping"
+	file-modified-within ~/.cache/restic-backup.lastrun 7d || echo " restic-backup"
+} | paste -sd' ')"
+
+if [[ -n "$OUT" ]]; then
+	printf "%s\n" "$OUT"
+fi
