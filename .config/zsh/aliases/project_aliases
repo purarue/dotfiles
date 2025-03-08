@@ -330,7 +330,7 @@ ma() {
 ma-next() {
 	local id_ep id ep at
 	at="$(epoch)"
-	id_ep="$(mal-latest-episode)"
+	id_ep="$(mal-latest-episode-for-id)" || return $?
 	# split by | into id and episode, e.g. '1|10'
 	id="${id_ep%%|*}"
 	ep="${id_ep#*|}"
