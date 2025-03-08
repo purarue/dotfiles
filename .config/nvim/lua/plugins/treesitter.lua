@@ -14,7 +14,7 @@ return {
         dependencies = {
             "nvim-treesitter/nvim-treesitter-textobjects",
         },
-        build = ":TSUpdate",
+        build = ":TSUpdateSync",
         config = function()
             require("nvim-treesitter.parsers").get_parser_configs()["rifleconfig"] = {
                 install_info = {
