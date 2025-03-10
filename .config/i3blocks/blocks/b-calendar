@@ -16,10 +16,14 @@ dateoffset() {
 	date "${args[@]}"
 }
 
+notify_text() {
+	calcurse_filter_between "$(dateoffset '%m/%d/%Y %H:%M')" "$(dateoffset '%m/%d/%Y' '+1 day')" | tr '|' '\n'
+}
+
 case "$BLOCK_BUTTON" in
 1)
 	# send a notification with todays appointments
-	notify "$(calcurse_filter_between "$(dateoffset '%m/%d/%Y %H:%M')" "$(dateoffset '%m/%d/%Y' '+1 day')" | tr '|' '\n')"
+	notify "$(notify_text)"
 	;;
 3)
 	# open calcurse in my terminal
@@ -34,12 +38,19 @@ calcurse_status() {
 	today_coming_up="$(calcurse_filter_between "$(dateoffset '%m/%d/%Y %H:%M')" "$(dateoffset '%m/%d/%Y')" | wc -l)"
 	tomorrow="$(calcurse_filter_between "$(dateoffset '%m/%d/%Y' '+1 day')" "$(dateoffset '%m/%d/%Y' '+1 day')" | wc -l)"
 
-	# if all are upcoming (later in the day), just print one
-	if ((tomorrow == today_coming_up)); then
-		printf '%s\n' "$today_coming_up"
+	if ((today_coming_up == 0 && tomorrow == 0)); then
+		echo 0
+		# if today is zero, just 0/tomorrow
+	elif ((today_coming_up == 0)); then
+		printf '0/%s\n' "$tomorrow"
 	else
-		# print items upcoming / total items today
-		printf '%s/%s\n' "$today_coming_up" "$tomorrow"
+		# today_coming_up > 0 in this case
+		if ((tomorrow > 0)); then
+			# print items upcoming / total items today
+			printf '%s/%s\n' "$today_coming_up" "$tomorrow"
+		else
+			printf '%s\n' "$today_coming_up"
+		fi
 	fi
 }
 
@@ -49,9 +60,17 @@ if [[ -z "$CALCURSE_DIR" ]]; then
 	exit 1
 fi
 
-SYNC_CONFLICTS="$(sync-conflicts "$CALCURSE_DIR" 2>/dev/null | wc -l)"
-if [ "$SYNC_CONFLICTS" -gt 0 ]; then
-	printf "%s \n" "$(calcurse_status)"
+caltext() {
+	SYNC_CONFLICTS="$(sync-conflicts "$CALCURSE_DIR" 2>/dev/null | wc -l)"
+	if [[ "$SYNC_CONFLICTS" -gt 0 ]]; then
+		printf "%s \n" "$(calcurse_status)"
+	else
+		calcurse_status
+	fi
+}
+
+if [[ -n "${STATUS_JSON:-}" ]]; then
+	jq -rcn --arg text "$(caltext)" --arg hover "$(notify_text)" '{"text": $text, "tooltip": $hover}'
 else
-	calcurse_status
+	caltext
 fi

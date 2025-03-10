@@ -192,8 +192,9 @@
 	"custom/calcurse": {
 		// run by b-calendar script
 		"format": " {}",
-		"exec": "b-calendar",
+		"exec": "STATUS_JSON=1 b-calendar",
 		"interval": 600,
+		"return-type": "json",
 		"on-click-right": "launch calcursed",
 		"on-click": "BLOCK_BUTTON=1 b-calendar",
 		"signal": 5
