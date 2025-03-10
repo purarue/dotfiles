@@ -9,16 +9,7 @@ alias vlogs-render='render-notes'
 export URL_OPENER='openurl'
 alias trk='trakt-watch'
 alias tp='trk progress'
-case "$ON_OS" in
-android*)
-	# just print the URL on android, dont swap applications
-	alias tw='trk watch --letterboxd print'
-	;;
-*)
-	# ask me if I want to open the URL on desktop
-	alias tw='trk watch --letterboxd prompt'
-	;;
-esac
+alias tw='trk watch --letterboxd prompt'
 
 # https://github.com/purarue/HPI-personal/blob/master/scripts/trakt-urls
 tu() {
