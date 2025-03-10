@@ -255,7 +255,7 @@ mpv-next-ep() {
 		fi
 		# rifle launches the correct application
 		# https://github.com/ranger/ranger
-		(cd "$dir" && ranger "$(basename "$next")")
+		(cd "$dir" && rifle "$(basename "$next")")
 	else
 		echo 'Nothing playing...' >&2
 		return 1
@@ -320,12 +320,11 @@ ma() {
 	mal-manual
 }
 ma-next() {
-	local id_ep id ep at
+	local id ep at
 	at="$(epoch)"
-	id_ep="$(mal-latest-episode-for-id)" || return $?
+	id="$(pickentry)" || return $?
+	ep="$(mal-latest-episode-for-id "$id")" || return $?
 	# split by | into id and episode, e.g. '1|10'
-	id="${id_ep%%|*}"
-	ep="${id_ep#*|}"
 	ma -i "$id" -n "$((ep + 1))" --at "$at" || return $?
 }
 
