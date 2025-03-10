@@ -254,7 +254,7 @@ mpv-next-ep() {
 		fi
 		# rifle launches the correct application
 		# https://github.com/ranger/ranger
-		rifle "$next"
+		(cd "$dir" && ranger "$(basename "$next")")
 	else
 		echo 'Nothing playing...' >&2
 		return 1
