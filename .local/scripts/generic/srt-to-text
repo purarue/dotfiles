@@ -8,6 +8,11 @@
 input="${1?:No input file specified}"
 shift
 
+if [[ ! -f "$input" ]]; then
+	echo "File not found: $input"
+	exit 1
+fi
+
 tmpdir="$(mktemp -d -t srt-to-text.XXXXXX)" || exit 1
 
 ext="$(get-extension "$input")"
