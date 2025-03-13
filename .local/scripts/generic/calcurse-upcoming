@@ -4,7 +4,6 @@ from typing import Literal, NamedTuple, Iterator, get_args, assert_never
 from datetime import datetime, date, timedelta
 
 import click
-import arrow
 import re
 from calcurse_load.calcurse import get_configuration
 from calcurse_load.ext.utils import yield_lines
@@ -73,11 +72,16 @@ class Apt(NamedTuple):
         if strip_datasource and re.search(DATASOURCE_REGEX, summary):
             summary = summary[: summary.rindex("[")]
 
+        if note_hash is not None:
+            note_hash = note_hash.strip()
+            if note_hash == "":
+                note_hash = None
+
         return cls(
-            start,
-            to,
-            summary.strip(),
-            note_hash.strip() if note_hash and note_hash.strip() else None,
+            start=start,
+            to=to,
+            summary=summary.strip(),
+            note_hash=note_hash,
             raw=line,
         )
 
@@ -85,9 +89,6 @@ class Apt(NamedTuple):
 def parse_events(strip_datasource: bool) -> Iterator[Apt]:
     for apt in yield_lines(config.calcurse_dir / "apts"):
         yield Apt.from_calcurse_line(apt, strip_datasource=strip_datasource)
-
-
-from datetime import datetime, timedelta
 
 
 def format_future_datetime(now: date, future_dt: datetime):
