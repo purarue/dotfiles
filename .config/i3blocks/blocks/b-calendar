@@ -70,7 +70,7 @@ caltext() {
 }
 
 if [[ -n "${STATUS_JSON:-}" ]]; then
-	jq -rcn --arg text "$(caltext)" --arg hover "$(notify_text)" '{"text": $text, "tooltip": $hover}'
+	jq -rcn --arg text "$(caltext)" --arg hover "$(calcurse-upcoming -d 2)" '{"text": $text, "tooltip": $hover}'
 else
 	caltext
 fi

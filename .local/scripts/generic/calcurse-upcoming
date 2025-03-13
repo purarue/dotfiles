@@ -1,0 +1,154 @@
+#!/usr/bin/env python3
+
+from typing import Literal, NamedTuple, Iterator, get_args, assert_never
+from datetime import datetime, date, timedelta
+
+import click
+import arrow
+import re
+from calcurse_load.calcurse import get_configuration
+from calcurse_load.ext.utils import yield_lines
+from my.core.serialize import dumps
+
+
+config = get_configuration()
+
+
+def parse_date(date: str) -> datetime | date:
+    if "@" in date:
+        try:
+            return datetime.strptime(date.strip(), "%m/%d/%Y @ %H:%M")
+        except ValueError as ve:
+            raise ValueError(f"Could not parse {date}") from ve
+    else:
+        # parse without the @ %H:%M part
+        try:
+            return datetime.strptime(date.strip(), "%m/%d/%Y").date()
+        except ValueError as ve:
+            raise ValueError(f"Could not parse {date}") from ve
+
+
+DATASOURCE_REGEX = re.compile(r"\[\w+\]$")
+
+
+class Apt(NamedTuple):
+    start: datetime | date
+    to: datetime | date | None
+    summary: str
+    note_hash: str | None
+    raw: str
+
+    @property
+    def start_dt(self) -> datetime:
+        if isinstance(self.start, datetime):
+            return self.start
+        return datetime.combine(self.start, datetime.min.time())
+
+    @classmethod
+    def from_calcurse_line(cls, line: str, strip_datasource: bool) -> "Apt":
+        if "|" not in line:
+            raise ValueError("line is not a calcurse event")
+        metadata, summary = line.split("|", maxsplit=1)
+        note_hash = None
+
+        # if the last index of the '>' is not the '->', and is
+        # the note hash, only then split this data
+        if ">" in metadata:
+            index = metadata.rindex(">")
+            possible_arrow = metadata[index - 1 : index + 1]
+            if possible_arrow != "->":
+                metadata, _, note_hash = metadata.rpartition(">")
+
+        if "->" in metadata:
+            # has a start and end date
+            start_str, _, to_str = metadata.partition("->")
+            start = parse_date(start_str)
+            to = parse_date(to_str)
+        else:
+            start = parse_date(metadata)
+            to = None
+
+        # if there's something like [json] or [gcal] at the end of the
+        # summary, and we were asked to remove it, do so
+        if strip_datasource and re.search(DATASOURCE_REGEX, summary):
+            summary = summary[: summary.rindex("[")]
+
+        return cls(
+            start,
+            to,
+            summary.strip(),
+            note_hash.strip() if note_hash and note_hash.strip() else None,
+            raw=line,
+        )
+
+
+def parse_events(strip_datasource: bool) -> Iterator[Apt]:
+    for apt in yield_lines(config.calcurse_dir / "apts"):
+        yield Apt.from_calcurse_line(apt, strip_datasource=strip_datasource)
+
+
+from datetime import datetime, timedelta
+
+
+def format_future_datetime(now: date, future_dt: datetime):
+    delta_days = (future_dt.date() - now).days
+
+    if delta_days == 0:
+        return f"today at {future_dt.strftime('%I:%M %p')}"
+    elif delta_days == 1:
+        return f"tomorrow at {future_dt.strftime('%I:%M %p')}"
+    elif delta_days < 7:
+        return future_dt.strftime("%A at %I:%M %p")
+    elif delta_days < 14:
+        return f"next {future_dt.strftime('%A')} at {future_dt.strftime('%I:%M %p')}"
+    elif future_dt.year == now.year:
+        return future_dt.strftime("%B %d at %I:%M %p")
+    else:
+        return future_dt.strftime("%B %d, %Y at %I:%M %p")
+
+
+OutputFormat = Literal["json", "raw", "human"]
+
+
+@click.command()
+@click.option("-d", "--days", type=int, default=7, help="Number of days to show")
+@click.option(
+    "-f",
+    "--format",
+    type=click.Choice(get_args(OutputFormat)),
+    default="human",
+    help="Output format",
+)
+@click.option(
+    "--strip-datasource/--no-strip-datasource",
+    is_flag=True,
+    default=True,
+    help="Remove sources from summary",
+)
+def main(days: int, format: OutputFormat, strip_datasource: bool) -> None:
+    events = list(parse_events(strip_datasource=strip_datasource))
+    # filter to items that start in the next week
+    now = datetime.now()
+    events = [
+        e
+        for e in events
+        if e.start_dt > now and e.start_dt < now + timedelta(days=days)
+    ]
+
+    match format:
+        case "json":
+            print(dumps(events))
+        case "raw":
+            for e in events:
+                print(e.raw)
+        case "human":
+            now_d = now.date()
+            for e in events:
+                describe_date = format_future_datetime(now_d, e.start_dt)
+                print(f"{describe_date.lower()} | {e.summary}")
+        case _:
+            assert_never(format)
+
+
+if __name__ == "__main__":
+    main()
