@@ -76,7 +76,9 @@ alias 'less=less --ignore-case'
 alias 'lessansi=less --RAW-CONTROL-CHARS'
 alias 'taill=tail --lines 50'
 alias dr='dragon-drop'
-alias events='calcurse-upcoming'
+function events() {
+	calcurse-upcoming "$@" | lower
+}
 alias drx='dragon-drop --and-exit'
 alias du='du -h'
 alias df='df -h'
