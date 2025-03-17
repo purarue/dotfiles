@@ -199,6 +199,7 @@ __pycache__
 /.yarnrc
 /.yarnrc.yml
 /.z
+/.z.*
 /.zoom
 
 # Top level config/local files to ignore
