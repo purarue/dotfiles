@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
+import re
 from typing import Literal, NamedTuple, Iterator, get_args, assert_never
 from datetime import datetime, date, timedelta
 
 import click
-import re
 from calcurse_load.calcurse import get_configuration
 from calcurse_load.ext.utils import yield_lines
 from my.core.serialize import dumps
@@ -27,7 +27,7 @@ def parse_date(date: str) -> datetime | date:
             raise ValueError(f"Could not parse {date}") from ve
 
 
-DATASOURCE_REGEX = re.compile(r"\[\w+\]$")
+DATASOURCE_REGEX = re.compile(r"\[\w+\]\s*$")
 
 
 class Apt(NamedTuple):
