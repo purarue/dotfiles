@@ -6,4 +6,4 @@ if [[ -n "$BLOCK_BUTTON" ]]; then
 fi
 
 today="$(date +'%Y-%m-%d')"
-jq <"$XDG_CACHE_HOME/recent_page_hits.json" '.epochs.[]' -r | epochguess | grep -c "$today"
+jq <"$XDG_CACHE_HOME/recent_page_hits.json" '.epochs.[]' -r | dateq parse - | grep -c "$today"

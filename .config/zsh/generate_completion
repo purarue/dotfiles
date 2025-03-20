@@ -31,6 +31,7 @@ for cmd in hpi \
 	lolexport \
 	malexport \
 	mal-order \
+	dateq \
 	mpv-history-daemon \
 	my_feed \
 	reorder_editable \
@@ -45,8 +46,6 @@ for cmd in hpi \
 	ttally \
 	cookiecutter \
 	black \
-	epochdisplay \
-	epochguess \
 	img-download \
 	html-head \
 	openurls \

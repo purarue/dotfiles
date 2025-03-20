@@ -7,11 +7,11 @@
 
 declare at now
 now="$(epoch)"
-at="$(epoch-from "today at $*")" || return $?
+at="$(dateq parse -Fepoch "today at $*")" || return $?
 [[ -z "$at" ]] && exit 1
 
 if [[ "$at" -le "$now" ]]; then
-	echo "Time must be in the future, parsed $(epochdisplay "$at"), now is $(epochdisplay "$now")" >&2
+	echo "Time must be in the future, parsed $(dateq parse -Ftime "$at"), now is $(dateq parse -Ftime "$now")" >&2
 	exit 1
 fi
 

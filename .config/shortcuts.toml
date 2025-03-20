@@ -934,12 +934,6 @@ exec terminal-set-theme Dark
 [abookc]
 command = 'exec abook -C "$XDG_CONFIG_HOME/abook/abookrc" -f "$XDG_DOCUMENTS_DIR/addressbook" "$@"'
 
-[epoch-from]
-command = '''
-exec dates-stdin -Fepoch <<<"$@"
-'''
-shebang = '#!/usr/bin/env bash'
-
 [heart-cl]
 command = '''
 heart | APP=heart clp
