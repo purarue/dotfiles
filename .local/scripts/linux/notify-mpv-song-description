@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if desc="$(mpv-song-description-py)"; then
+	notify-send "$desc"
+else
+	notify-send 'nothing playing'''
+fi
