@@ -47,6 +47,20 @@ safepipe() {
 	test $? = 0 -o $? = 141
 }
 
+pistol_or_exifinfo() {
+	# if pistol takes way too long (0.3s) to calculate this
+	# its probably a huge textfile and its having issues determining
+	# how to preview it
+	if try timeout 0.3 pistol "$path"; then
+		dump
+		exit 5
+	else
+		# default to just showing some metadata about the file
+		exifinfo "$path"
+		exit 5
+	fi
+}
+
 # dont preview items in private folders
 if [[ "$path" =~ (^|/)\.priv(ate)?([/_]|$) ]]; then
 	exifinfo "$path" && exit 0
@@ -162,20 +176,6 @@ application/gzip)
 	}
 	;;
 esac
-
-pistol_or_exifinfo() {
-	# if pistol takes way too long (0.3s) to calculate this
-	# its probably a huge textfile and its having issues determining
-	# how to preview it
-	if try timeout 0.3 pistol "$path"; then
-		dump
-		exit 5
-	else
-		# default to just showing some metadata about the file
-		exifinfo "$path"
-		exit 5
-	fi
-}
 
 pistol_or_exifinfo
 exit 1
