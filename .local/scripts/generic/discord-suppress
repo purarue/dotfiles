@@ -1,9 +1,19 @@
 #!/usr/bin/env python3
 
 import sys
+from typing import TypeGuard
+
 import urlextract
 
 extractor = urlextract.URLExtract()
+
+
+def is_tuple_type(
+    val: list[str | tuple[str, tuple[int, int]]],
+) -> TypeGuard[list[tuple[str, tuple[int, int]]]]:
+    if val:
+        return type(val[0]) is tuple
+    return True
 
 
 def main() -> None:
@@ -11,11 +21,14 @@ def main() -> None:
     Add < > around URLs, meant to suppress links in markdown/discord message text
     """
     for line in sys.stdin:
-        urls = extractor.find_urls(line, get_indices=True)
+        us = extractor.find_urls(line, get_indices=True)
+        if not is_tuple_type(us):
+            raise ValueError("Expected a tuple of URLs")
+        urls: list[tuple[str, tuple[int, int]]] = us
         # this handles the case when there are multiple URLs per line
         if urls:
-            with_supressed = ""
-            last_end = 0
+            with_supressed: str = ""
+            last_end: int = 0
             for u, (start, end) in urls:
                 with_supressed += line[last_end:start] + f"<{u}>"
                 last_end = end  # move past the last replaced URL
