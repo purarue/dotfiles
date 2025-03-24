@@ -10,6 +10,8 @@ linux_arch*)
 	if [[ "$TERM" == xterm-kitty ]]; then
 		# use kitty to preview images
 		echo 'set preview_images_method kitty' >>"${TARGET}"
+	elif [[ "$TERM" == foot ]]; then
+		echo 'set preview_images_method sixel' >>"${TARGET}"
 	else
 		# use ueberzug to preview images
 		echo 'set preview_images_method ueberzug' >>"${TARGET}"
