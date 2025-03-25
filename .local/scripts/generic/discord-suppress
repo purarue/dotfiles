@@ -21,10 +21,9 @@ def main() -> None:
     Add < > around URLs, meant to suppress links in markdown/discord message text
     """
     for line in sys.stdin:
-        us = extractor.find_urls(line, get_indices=True)
-        if not is_tuple_type(us):
+        urls = extractor.find_urls(line, get_indices=True)
+        if not is_tuple_type(urls):
             raise ValueError("Expected a tuple of URLs")
-        urls: list[tuple[str, tuple[int, int]]] = us
         # this handles the case when there are multiple URLs per line
         if urls:
             with_supressed: str = ""
