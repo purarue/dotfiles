@@ -210,7 +210,7 @@ zsh-syntax-highlighting
 
 chromedriver
 digikam
-firefox-developer-edition
+floorp
 gimp
 google-chrome
 gpxsee

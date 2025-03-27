@@ -14,7 +14,7 @@ set $up k
 set $right l
 
 set $term wezterm
-set $browser firefox-developer-edition
+set $browser floorp
 
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -255,7 +255,7 @@ bindsym $mod+Shift+d exec notify-send -t 15000 "$(i3-launcher)"; mode "launcher"
 
 mode "launcher" {
     bindsym a exec ttt wezterm; mode "default"
-    bindsym f exec ttt firefox-developer-edition; mode "default"
+    bindsym f exec ttt floorp; mode "default"
     bindsym g exec feed-open; mode "default"
     bindsym t exec trakt-progress; mode "default"
     bindsym y exec mal-recent; mode "default"

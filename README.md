@@ -11,7 +11,7 @@ In general:
 - [`zsh`](http://zsh.sourceforge.net/), plugins/configuration handled manually in [`.config/zsh`](.config/zsh) (split across multiple files)
 - [`yadm`](https://yadm.io) to manage dotfiles, see [`yadm-with-README.md`](.config/yadm/yadm-with-README.md)
 - [`wezterm`](https://wezfurlong.org/wezterm/index.html) as terminal, [`alacritty`](https://github.com/alacritty/alacritty) on windows
-- [`firefox-developer-edition`](https://www.archlinux.org/packages/community/x86_64/firefox-developer-edition/) - browser, addons listed in [`firefox_addons.txt`](./.local/share/firefox_addons.txt)
+- [`floorp`](https://floorp.app/en) - browser, addons listed in [`firefox_addons.txt`](./.local/share/firefox_addons.txt)
 - [`neomutt`](https://github.com/neomutt/neomutt) for email
 - [`nvim`](https://neovim.io/) (with LSP, completion, the typical modern plugins, see [`.config/nvim`](.config/nvim))
 - [`todotxt`](http://todotxt.org/) for todos, with a [`rofi-interface`](.local/scripts/generic/todo-prompt) as GUI
