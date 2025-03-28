@@ -157,6 +157,7 @@ __pycache__
 /.pulse-cookie
 /.putty
 /.pylint.d/*
+/.dotnet
 /.python_history
 /.rbenv
 /.rnd
