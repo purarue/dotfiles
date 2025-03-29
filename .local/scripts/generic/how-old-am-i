@@ -40,7 +40,7 @@ def main(birthdate_str: str) -> None:
 
         days_old = (today - last_birthday).days
 
-        parts = []
+        parts: list[str] = []
         if age_in_years > 0:
             parts.append(plural(age_in_years, "year"))
         if days_old > 0:
