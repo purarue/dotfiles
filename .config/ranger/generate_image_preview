@@ -6,7 +6,11 @@ android*)
 	echo 'set preview_images false' >"${TARGET}"
 	;;
 linux_arch*)
-	echo 'set preview_images true' >"${TARGET}"
+	generate_image_preview='true'
+	if [[ -n "$RANGER_GENERATE_IMAGE_PREVIEW" ]]; then
+		generate_image_preview="$RANGER_GENERATE_IMAGE_PREVIEW"
+	fi
+	printf 'set preview_images %s\n' "$generate_image_preview" >"${TARGET}"
 	if [[ "$TERM" == xterm-kitty ]]; then
 		# use kitty to preview images
 		echo 'set preview_images_method kitty' >>"${TARGET}"
