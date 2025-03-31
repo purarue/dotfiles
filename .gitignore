@@ -158,6 +158,7 @@ __pycache__
 /.putty
 /.pylint.d/*
 /.dotnet
+/.templateengine
 /.python_history
 /.rbenv
 /.rnd
