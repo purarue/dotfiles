@@ -33,7 +33,7 @@ exec --no-startup-id udiskie -t
 exec_always --no-startup-id autotiling
 
 # warn battery daemon
-exec --no-startup-id warn-battery BAT0
+exec --no-startup-id warn-battery BAT1
 
 # hide mouse after 2 seconds
 exec --no-startup-id unclutter --timeout 2

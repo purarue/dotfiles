@@ -22,6 +22,7 @@ xorg-xev
 xorg-xinput
 xorg-xmodmap
 xorg-xwininfo
+xorg-xinit
 
 # utilities
 
@@ -37,22 +38,12 @@ xorg-xwininfo
 xterm
 xvkbd
 
-# battery performance
-
-tlp
-tp_smapi
-acpi_call
-
 # applications
 
 gparted
 mupdf-gl
-robo3t-bin
-simplescreenrecorder
 snes9x-gtk
 thunar
-vbam-wx
-zoom
 
 # fonts
 xorg-font-util

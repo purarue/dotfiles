@@ -1,20 +1,5 @@
 #!/usr/bin/env bash
-
-# Parses the i3 config file for binding modes
-# From block in i3-config:
-#
-# mode "launcher" {
-#    bindsym f exec firefox-developer-edition "default"
-#    bindsym t exec thunderbird; mode "default"
-#    bindsym d exec discord; mode "default"
-#    bindsym s exec slack; mode "default"
-#    bindsym k exec launch htop; mode "default"
-#    bindsym Shift+k exec launch keyvol; mode "default"
-#    bindsym Escape mode "default"
-#    bindsym Return mode "default"
-# }
-#
-# sends a notification to the user:
+# sends a notification to the user like:
 #
 # $ i3-notify-launcher
 # K | keyvol

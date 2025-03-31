@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # source keymap configuration
-# move xmodmap somewhere else so it doesnt pollute my home directory
+# move xmodmap somewhere else so it doesn't pollute my home directory
 usermodmap="$HOME/.config/X11/Xmodmap"
 
 if [ -f "$usermodmap" ]; then

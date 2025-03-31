@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-if havecmd swaybg; then
+if [[ -n "${WAYLAND_DISPLAY:-}" ]]; then
 	random_wallpaper="$(find "$FILES_DIR/wallpapers" -type f | shuf -n 1)"
 	oldid="$(pgrep swaybg)"
 	setsid -f swaybg -i "$random_wallpaper" -m fill
