@@ -298,7 +298,7 @@ mode "launcher" {
     bindsym g exec --no-startup-id feed-open; mode "default"
     bindsym t exec --no-startup-id trakt-progress; mode "default"
     bindsym y exec --no-startup-id mal-recent; mode "default"
-    bindsym d exec --no-startup-id ttt discord; mode "default"
+    bindsym d exec --no-startup-id ttt discord-browser; mode "default"
     bindsym k exec --no-startup-id ttt keepassxc; mode "default"
     bindsym b exec --no-startup-id bookmark-open; mode "default"
     bindsym l exec --no-startup-id largechar-clipboard; mode "default"

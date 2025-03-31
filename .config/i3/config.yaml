@@ -5,7 +5,7 @@ launcher:
   g: "feed-open"
   t: "trakt-progress"
   y: "mal-recent"
-  d: "ttt discord"
+  d: "ttt discord-browser"
   k: "ttt keepassxc"
   b: "bookmark-open"
   l: "largechar-clipboard"

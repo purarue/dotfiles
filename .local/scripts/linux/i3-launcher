@@ -21,6 +21,7 @@ s/\s*$//;
 s/;\s*mode "default"$//;
 s/launch //;
 s/-developer-edition//;
+s/-browser//;
 s/-force$//;
 s/neomuttr/neomutt/;
 s/SKIP_RECENT=1 //;
