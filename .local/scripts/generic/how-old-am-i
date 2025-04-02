@@ -20,7 +20,16 @@ def plural(n: int, s: str) -> str:
     envvar="BIRTHDATE",
     help="your date of birth in YYYY-MM-DD format",
 )
-def main(birthdate_str: str) -> None:
+@click.option(
+    "-t",
+    "--till-next",
+    "till_next",
+    type=bool,
+    default=False,
+    is_flag=True,
+    help="show number of days till next birthday",
+)
+def main(birthdate_str: str, till_next: bool) -> None:
     try:
         birthdate: date = datetime.strptime(birthdate_str, "%Y-%m-%d").date()
 
@@ -39,11 +48,13 @@ def main(birthdate_str: str) -> None:
             last_birthday = date(today.year - 1, birthdate.month, birthdate.day)
 
         days_old = (today - last_birthday).days
+        if till_next:
+            days_old = (365 - days_old) % 365
 
         parts: list[str] = []
-        if age_in_years > 0:
+        if age_in_years > 0 and till_next is False:
             parts.append(plural(age_in_years, "year"))
-        if days_old > 0:
+        if days_old > 0 or till_next is True:
             parts.append(plural(days_old, "day"))
 
         print(", ".join(parts))
