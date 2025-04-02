@@ -34,7 +34,9 @@ def main(birthdate_str: str, till_next: bool) -> None:
         birthdate: date = datetime.strptime(birthdate_str, "%Y-%m-%d").date()
 
     except ValueError:
-        print("Error: BIRTHDATE is not in the correct format (YYYY-MM-DD).")
+        click.echo(
+            "Error: BIRTHDATE is not in the correct format (YYYY-MM-DD).", err=True
+        )
     else:
         today: date = date.today()
         age_in_years = (
@@ -57,7 +59,7 @@ def main(birthdate_str: str, till_next: bool) -> None:
         if days_old > 0 or till_next is True:
             parts.append(plural(days_old, "day"))
 
-        print(", ".join(parts))
+        click.echo(", ".join(parts))
 
 
 if __name__ == "__main__":
