@@ -51,7 +51,8 @@ def main(birthdate_str: str, till_next: bool) -> None:
 
         days_old = (today - last_birthday).days
         if till_next:
-            days_old = (365 - days_old) % 365
+            assert days_old <= 365
+            days_old = 365 - days_old
 
         parts: list[str] = []
         if age_in_years > 0 and till_next is False:
