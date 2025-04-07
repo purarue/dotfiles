@@ -16,14 +16,10 @@ dateoffset() {
 	date "${args[@]}"
 }
 
-notify_text() {
-	calcurse_filter_between "$(dateoffset '%m/%d/%Y %H:%M')" "$(dateoffset '%m/%d/%Y' '+1 day')" | tr '|' '\n'
-}
-
 case "$BLOCK_BUTTON" in
 1)
 	# send a notification with todays appointments
-	notify "$(notify_text)"
+	notify "$(calcurse-upcoming -d 2)"
 	;;
 3)
 	# open calcurse in my terminal
