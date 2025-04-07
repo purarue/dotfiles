@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import re
+import string
 from typing import Literal, NamedTuple, Iterator, get_args, assert_never
 from datetime import datetime, date, timedelta
 
@@ -27,7 +27,7 @@ def parse_date(date: str) -> datetime | date:
             raise ValueError(f"Could not parse {date}") from ve
 
 
-DATASOURCE_REGEX = re.compile(r"\[\w+\]\s*$")
+ALLOWED = set(string.ascii_letters)
 
 
 class Apt(NamedTuple):
@@ -35,6 +35,7 @@ class Apt(NamedTuple):
     to: datetime | date | None
     summary: str
     note_hash: str | None
+    datasource: str | None
     raw: str
 
     @property
@@ -43,8 +44,18 @@ class Apt(NamedTuple):
             return self.start
         return datetime.combine(self.start, datetime.min.time())
 
+    @staticmethod
+    def datasource_pattern(line: str) -> str | None:
+        if not line.endswith("]"):
+            return
+        last_left = line.rfind("[")
+        between = line[last_left + 1 : -1]
+        if not all(c in ALLOWED for c in between):
+            return None
+        return between
+
     @classmethod
-    def from_calcurse_line(cls, line: str, strip_datasource: bool) -> "Apt":
+    def from_calcurse_line(cls, line: str) -> "Apt":
         if "|" not in line:
             raise ValueError("line is not a calcurse event")
         metadata, summary = line.split("|", maxsplit=1)
@@ -69,7 +80,8 @@ class Apt(NamedTuple):
 
         # if there's something like [json] or [gcal] at the end of the
         # summary, and we were asked to remove it, do so
-        if strip_datasource and re.search(DATASOURCE_REGEX, summary):
+        datasource = cls.datasource_pattern(summary)
+        if datasource is not None:
             summary = summary[: summary.rindex("[")]
 
         if note_hash is not None:
@@ -83,12 +95,13 @@ class Apt(NamedTuple):
             summary=summary.strip(),
             note_hash=note_hash,
             raw=line,
+            datasource=datasource,
         )
 
 
-def parse_events(strip_datasource: bool) -> Iterator[Apt]:
+def parse_events() -> Iterator[Apt]:
     for apt in yield_lines(config.calcurse_dir / "apts"):
-        yield Apt.from_calcurse_line(apt, strip_datasource=strip_datasource)
+        yield Apt.from_calcurse_line(apt)
 
 
 def format_future_datetime(now: date, future_dt: datetime):
@@ -127,7 +140,7 @@ OutputFormat = Literal["json", "raw", "human"]
     help="Remove sources from summary",
 )
 def main(days: int, format: OutputFormat, strip_datasource: bool) -> None:
-    events = list(parse_events(strip_datasource=strip_datasource))
+    events = list(parse_events())
     # filter to items that start in the next week
     now = datetime.now()
     events = [
@@ -146,7 +159,9 @@ def main(days: int, format: OutputFormat, strip_datasource: bool) -> None:
             now_d = now.date()
             for e in events:
                 describe_date = format_future_datetime(now_d, e.start_dt)
-                print(f"{describe_date.lower()} | {e.summary}")
+                print(
+                    f"{describe_date.lower()} | {e.summary} {f'[{e.datasource}]' if not strip_datasource and e.datasource is not None else ''}"
+                )
         case _:
             assert_never(format)
 
