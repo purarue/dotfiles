@@ -140,6 +140,9 @@ bindsym $mod+$alt+c {{ ex }} clipreset
 bindsym $mod+XF86AudioMute {{ ex }} mpv-play-pause && i3blocks-refresh-mpv
 bindsym $mod+XF86AudioMicMute {{ ex }} mpv-next-song && i3blocks-refresh-mpv
 bindsym $mod+Shift+XF86AudioMute {{ ex }} mpv-quit-latest && i3blocks-refresh-mpv
+bindsym XF86AudioPlay {{ ex }} mpv-play-pause && i3blocks-refresh-mpv
+bindsym XF86AudioNext {{ ex }} mpv-next-song && i3blocks-refresh-mpv
+
 bindsym $mod+m {{ ex }} notify-send "$(mpv-song-description-py)"
 bindsym $alt+m {{ ex }} mpv-play-pause && i3blocks-refresh-mpv
 bindsym $mod+Shift+m {{ ex }} mpv-next-song && i3blocks-refresh-mpv

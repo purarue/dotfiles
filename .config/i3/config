@@ -140,6 +140,9 @@ bindsym $mod+$alt+c exec --no-startup-id clipreset
 bindsym $mod+XF86AudioMute exec --no-startup-id mpv-play-pause && i3blocks-refresh-mpv
 bindsym $mod+XF86AudioMicMute exec --no-startup-id mpv-next-song && i3blocks-refresh-mpv
 bindsym $mod+Shift+XF86AudioMute exec --no-startup-id mpv-quit-latest && i3blocks-refresh-mpv
+bindsym XF86AudioPlay exec --no-startup-id mpv-play-pause && i3blocks-refresh-mpv
+bindsym XF86AudioNext exec --no-startup-id mpv-next-song && i3blocks-refresh-mpv
+
 bindsym $mod+m exec --no-startup-id notify-send "$(mpv-song-description-py)"
 bindsym $alt+m exec --no-startup-id mpv-play-pause && i3blocks-refresh-mpv
 bindsym $mod+Shift+m exec --no-startup-id mpv-next-song && i3blocks-refresh-mpv
