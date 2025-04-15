@@ -79,7 +79,7 @@ def glob_for_vid(video_dir, startswith: str) -> Path:
     return local_file[0]
 
 
-def prune_old_files(name: str, prune_older_than_days: float) -> None:
+def prune_old_files(name: str, prune_older_than_days: float, debug: bool) -> None:
     datafile = userinfo_file(name)
     if not datafile.exists():
         return
@@ -95,14 +95,28 @@ def prune_old_files(name: str, prune_older_than_days: float) -> None:
     videos = dict(sorted(videos.items(), key=lambda x: x[1], reverse=True))
     for i, (name, timestamp) in enumerate(videos.items()):
         file = glob_for_vid(video_dir, name)
-        if (
-            timestamp
-            < datetime.now(tz=timezone.utc) - timedelta(days=prune_older_than_days)
-            and i > DOWNLOAD_RECENT
-        ):
-            click.echo(f"pruning {file}", err=True)
+        if i <= DOWNLOAD_RECENT:
+            if debug:
+                click.echo(
+                    f"skipping: latest downloaded files ({i}/{DOWNLOAD_RECENT}) | {file}, ",
+                    err=True,
+                )
+            continue
+
+        days_ago = (datetime.now(tz=timezone.utc) - timestamp).total_seconds() / 86400
+        if days_ago > prune_older_than_days:
+            click.echo(
+                f"pruning: released {days_ago:.2f}>{prune_older_than_days} days ago | {file}",
+                err=True,
+            )
             file.unlink()
             del data[name]
+        else:
+            if debug:
+                click.echo(
+                    f"keeping: less than {days_ago:.2f}<{prune_older_than_days} | {file}",
+                    err=True,
+                )
 
     datafile.write_text(json.dumps(data, indent=2))
 
@@ -179,13 +193,14 @@ def rss() -> None:
 
 
 @main.command(short_help="prune videos older than x days")
+@click.option("-d", "--debug", is_flag=True, default=False)
 @click.argument("COUNT", type=int, default=30)
-def prune(count: int) -> None:
+def prune(count: int, debug: bool) -> None:
     """
     Prune videos older than x days
     """
     for user in USERS:
-        prune_old_files(user, count)
+        prune_old_files(user, count, debug=debug)
 
 
 @main.command(short_help="download videos")
