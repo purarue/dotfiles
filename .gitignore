@@ -219,6 +219,7 @@ __pycache__
 /.config/Pinta
 /.config/Postman/
 /.config/QtProject.conf
+/.config/balenaEtcher/
 /.config/Slack
 /.config/StardewValley
 /.config/Thunar

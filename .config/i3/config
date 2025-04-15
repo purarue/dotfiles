@@ -107,7 +107,7 @@ bindsym $mod+t exec --no-startup-id todo interactive
 bindsym $mod+Shift+t exec --no-startup-id launch 'todo full'
 
 # bookmark list - add/open with rofi
-bindsym $mod+b exec --no-startup-id todo-prompt bookmark list
+bindsym $mod+b exec --no-startup-id bookmark-open
 bindsym $mod+Shift+b exec --no-startup-id todo-prompt bookmark add
 
 # Use Mouse+$mod to drag floating windows to their wanted position

@@ -21,7 +21,7 @@ bind m exec mpv --no-terminal "%l" &
 
 # This will launch mpv interactively.
 # e.g. do '1M' to play link 1 with mpv
-bind M exec mpv "%l"
+bind M exec rifle "%l"
 
 # need to restart newsboat to actually load new changes
 bind E exec $EDITOR ~/.config/newsraft/feeds

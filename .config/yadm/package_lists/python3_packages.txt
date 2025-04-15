@@ -4,6 +4,7 @@ Pygments
 black
 codespell
 exifread
+feedgen
 flake8
 geopy
 giturlparse
@@ -11,10 +12,12 @@ idna
 ipdb
 ipython
 jinjanator
+mlength
 phonenumbers
 pip
 pipenv
 pipx
+platformdirs
 pyYAML
 pyflyby
 pyperclip

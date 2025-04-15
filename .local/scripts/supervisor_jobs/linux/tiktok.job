@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+wait-for-internet -q --timeout "${WFI_TIMEOUT:-10}" || exit 0
+
+evry 4 hours -tiktok-update-rss && {
+	printlog 'tiktok-update-rss:downloading new videos...'
+	tiktok-local-rss download
+	tiktok-local-rss rss
+}

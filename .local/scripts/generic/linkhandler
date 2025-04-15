@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Feed script a url or file location.
 # If an image, it will view in nsxiv,
@@ -7,7 +7,7 @@
 # otherwise it opens link in browser.
 
 # If no url given. Opens browser. For using script as $BROWSER.
-[ -z "$1" ] && {
+[[ -z "$1" ]] && {
 	setsid -f "$BROWSER"
 	exit
 }
@@ -20,6 +20,9 @@ command -v tttlog >/dev/null 2>&1 && tttlog "linkhandler $1"
 # stops playing before to start new ones
 
 case "$1" in
+file://*)
+	rifle "${1#file://}"
+	;;
 *mkv | *webm | *mp4 | *youtube.com/watch* | *youtube.com/playlist* | *youtu.be*)
 	# a mpv, wrapper that plays videos picture-in-picture
 	# set the CLIPBOARD_CONTENTS envvar, else stream-corner grabs it from my clipboard
@@ -39,7 +42,7 @@ case "$1" in
 	setsid -f stream-audio "$@" >/dev/null 2>&1
 	;;
 *)
-	if [ -f "$1" ]; then
+	if [[ -f "$1" ]]; then
 		"$TERMINAL" -e "$EDITOR" "$1"
 	else openurl "$1" >/dev/null 2>&1; fi
 	;;

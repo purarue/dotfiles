@@ -1,0 +1,201 @@
+#!/usr/bin/env python3
+# uses yt-dlp to download recent tiktoks from
+# specific users
+#
+# creates RSS feeds for each user
+#
+# allows you to prune old videos after they're
+# some days old
+
+import os
+import json
+from datetime import datetime, timezone, timedelta
+from pathlib import Path
+from typing import Any
+
+import click
+import platformdirs
+from yt_dlp import YoutubeDL
+from feedgen.feed import FeedGenerator
+from mlength import MediaFile, display_duration
+
+
+filedir = Path(platformdirs.user_cache_dir("tiktok-local-rss"))
+
+if not filedir.exists():
+    mkdir = filedir.mkdir()
+
+
+def userinfo_file(name: str) -> Path:
+    return filedir / name / "info.json"
+
+
+DOWNLOAD_RECENT = 20
+
+
+def download_user(name: str) -> None:
+    assert name != "rss"
+    userfile = userinfo_file(name)
+    if not userfile.parent.exists():
+        userfile.parent.mkdir()
+    data: dict[str, Any] = {}
+    if userfile.exists():
+        data = json.loads(userfile.read_text())
+
+    assert isinstance(data, dict)
+
+    ydl_opts = {
+        "quiet": False,
+        "no_warnings": False,
+        "outtmpl": os.path.join(userfile.parent, "%(id)s-%(title)s.mp4"),
+        "playlistend": DOWNLOAD_RECENT,
+        "download_archive": userfile.parent / "downloaded.txt",
+        "lazy_playlist": True,
+    }
+
+    with YoutubeDL(ydl_opts) as ydl:
+        info = ydl.extract_info(f"https://www.tiktok.com/@{name}")
+        assert isinstance(info, dict)
+
+        for entry in info["entries"]:
+            assert isinstance(entry["id"], str)
+            data[entry["id"]] = {
+                k: v
+                for k, v in entry.items()
+                if k not in {"id", "formats", "cookies", "requested_downloads"}
+            }
+
+    with open(userfile, "w") as f:
+        json.dump(data, f, indent=2)
+
+
+def glob_for_vid(video_dir, startswith: str) -> Path:
+    local_file = list(video_dir.glob(f"{startswith}-*"))
+
+    assert len(local_file) == 1
+    assert local_file[0].exists()
+    assert local_file[0].suffix == ".mp4", f"file ext is {local_file[0].suffix}"
+
+    return local_file[0]
+
+
+def prune_old_files(name: str, prune_older_than_days: float) -> None:
+    datafile = userinfo_file(name)
+    if not datafile.exists():
+        return
+    video_dir = datafile.parent
+
+    data = json.loads(datafile.read_text())
+
+    videos: dict[str, datetime] = {
+        k: datetime.fromtimestamp(v["timestamp"], tz=timezone.utc)
+        for k, v in data.items()
+    }
+
+    videos = dict(sorted(videos.items(), key=lambda x: x[1], reverse=True))
+    for i, (name, timestamp) in enumerate(videos.items()):
+        file = glob_for_vid(video_dir, name)
+        if (
+            timestamp
+            < datetime.now(tz=timezone.utc) - timedelta(days=prune_older_than_days)
+            and i > DOWNLOAD_RECENT
+        ):
+            click.echo(f"pruning {file}", err=True)
+            file.unlink()
+            del data[name]
+
+    datafile.write_text(json.dumps(data, indent=2))
+
+
+@click.group()
+def main() -> None:
+    pass
+
+
+users_file = (
+    Path(os.environ.get("XDG_DOCUMENTS_DIR", os.path.expanduser("~/Documents")))
+    / "tiktok.txt"
+)
+assert (
+    users_file.exists()
+), f"cannot find tiktok user file {users_file}, should have one username per line"
+USERS = [
+    s.strip().lstrip("@") for s in users_file.read_text().splitlines() if s.strip()
+]
+
+
+def generate_rss_file(user: str, rss_dir: Path) -> None:
+    assert (filedir / user / "downloaded.txt").exists()
+    feed = FeedGenerator()
+    feed.id(user)
+    feed.title(f"TikTok Local: {user}")
+    feed.link(href=f"https://www.tiktok.com/@{user}")
+    feed.description(user)
+
+    datafile = userinfo_file(user)
+    if not datafile.exists():
+        return
+    video_dir = datafile.parent
+    for id, info in json.loads(datafile.read_text()).items():
+        if "url" in info:
+            entry = feed.add_entry()
+            entry.id(id)
+            entry.author({"name": info["channel"]})
+            entry.title(info["title"])
+            entry.link(href=info["webpage_url"])
+            entry.published(datetime.fromtimestamp(info["timestamp"], tz=timezone.utc))
+            video_file = glob_for_vid(video_dir, id)
+
+            entry.enclosure(
+                url=f"file://{video_file}",
+                type="video/mp4",
+                length=video_file.stat().st_size,
+            )
+
+            mf = MediaFile(video_file, Path("~/.cache/mlength").expanduser())
+            duration = mf.cached_duration("ffprobe")
+            disp = display_duration(duration, display="human", path=None)
+
+            # remove hours/minutes if its not that long
+            while disp.startswith("00:"):
+                disp = disp[3:]
+
+            entry.description(f"[{disp}] {info["description"]}")
+
+    feed.rss_file(rss_dir / f"{user}.xml")
+
+
+@main.command(short_help="generate RSS files")
+def rss() -> None:
+    """
+    Generate RSS files for each users
+    """
+    rss_files = filedir / "rss"
+    if not rss_files.exists():
+        rss_files.mkdir()
+
+    for user in USERS:
+        generate_rss_file(user, rss_files)
+
+
+@main.command(short_help="prune videos older than x days")
+@click.argument("COUNT", type=int, default=30)
+def prune(count: int) -> None:
+    """
+    Prune videos older than x days
+    """
+    for user in USERS:
+        prune_old_files(user, count)
+
+
+@main.command(short_help="download videos")
+def download() -> None:
+    """
+    Download recent videos for all users
+    """
+    for user in USERS:
+        download_user(user)
+
+
+if __name__ == "__main__":
+    main()
