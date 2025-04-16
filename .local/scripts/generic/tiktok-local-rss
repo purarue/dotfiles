@@ -73,7 +73,6 @@ def glob_for_vid(video_dir, startswith: str) -> Path:
     local_file = list(video_dir.glob(f"{startswith}-*"))
 
     assert len(local_file) == 1
-    assert local_file[0].exists()
     assert local_file[0].suffix == ".mp4", f"file ext is {local_file[0].suffix}"
 
     return local_file[0]
