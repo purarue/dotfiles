@@ -150,6 +150,7 @@ def main(days: int, format: OutputFormat, strip_datasource: bool) -> None:
         for e in events
         if e.start_dt > now and e.start_dt < now + timedelta(days=days)
     ]
+    events.sort(key=lambda e: e.start_dt)
 
     match format:
         case "json":
