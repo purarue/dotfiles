@@ -124,7 +124,9 @@ def format_future_datetime(now: date, future_dt: datetime):
 OutputFormat = Literal["json", "raw", "human"]
 
 
-@click.command()
+@click.command(
+    context_settings={"help_option_names": ["-h", "--help"], "max_content_width": 120}
+)
 @click.option("-d", "--days", type=int, default=7, help="Number of days to show")
 @click.option(
     "-f",

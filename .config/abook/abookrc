@@ -25,6 +25,7 @@
 field birthday = Birthday, date
 field website = Website, string
 field social = Social, list
+field sign = Sign, string
 
 
 #  Defining a view/tab
@@ -45,7 +46,7 @@ field social = Social, list
 #       on the above standard fields.
 #
 # Example of views:
-view MAIN = name, email, mobile, nick, website, social, notes, birthday
+view MAIN = name, email, mobile, nick, website, social, notes, birthday, sign
 view PHONE = phone, mobile, workphone
 view ADDRESS = address, city, state, zip, country
 

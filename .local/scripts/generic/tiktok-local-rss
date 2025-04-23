@@ -154,7 +154,7 @@ def generate_rss_file(user: str, rss_dir: Path) -> None:
             entry = feed.add_entry()
             entry.id(id)
             entry.author({"name": info["channel"]})
-            entry.title(info["title"])
+            entry.title(f"{user} | {info["title"]}")
             entry.link(href=info["webpage_url"])
             entry.published(datetime.fromtimestamp(info["timestamp"], tz=timezone.utc))
             video_file = glob_for_vid(video_dir, id)

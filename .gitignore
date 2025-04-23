@@ -217,6 +217,7 @@ __pycache__
 /.config/Microsoft/
 /.config/MongoDB Compass/
 /.config/Pinta
+/.config/bandcamp-dl.json
 /.config/Postman/
 /.config/QtProject.conf
 /.config/balenaEtcher/
