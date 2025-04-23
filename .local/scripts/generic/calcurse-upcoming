@@ -45,7 +45,7 @@ class Apt(NamedTuple):
         return datetime.combine(self.start, datetime.min.time())
 
     @staticmethod
-    def datasource_pattern(line: str) -> str | None:
+    def extract_datasource(line: str) -> str | None:
         if not line.endswith("]"):
             return
         last_left = line.rfind("[")
@@ -80,7 +80,7 @@ class Apt(NamedTuple):
 
         # if there's something like [json] or [gcal] at the end of the
         # summary, and we were asked to remove it, do so
-        datasource = cls.datasource_pattern(summary)
+        datasource = cls.extract_datasource(summary)
         if datasource is not None:
             summary = summary[: summary.rindex("[")]
 
