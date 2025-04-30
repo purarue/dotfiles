@@ -111,6 +111,13 @@ def list_locations(include_locations: bool) -> None:
             click.echo(f"{loc.id} | {loc.name}")
 
 
+def load_locations() -> tuple[list[Location], dict[int, Location]]:
+    locations = load_from(Location, location_file)
+    id_to_location = {loc.id: loc for loc in locations}
+    assert len(locations) > 0, "no locations saved, run 'location add' first"
+    return locations, id_to_location
+
+
 @click.argument("ITEM", required=True)
 @main.command(short_help="update saved weather for today")
 def update(item: str) -> None:
@@ -122,9 +129,7 @@ def update(item: str) -> None:
     import pandas as pd
     from retry_requests import retry
 
-    locations = load_from(Location, location_file)
-    id_to_location = {loc.id: loc for loc in locations}
-    assert len(locations) > 0, "no locations saved, run 'location add' first"
+    locations, id_to_location = load_locations()
 
     if item.isnumeric():
         fetch_ids = [int(item)]
@@ -248,9 +253,7 @@ def display(hours: int, item: str, output_fmt: OutputFormat) -> None:
     """
     Display weather data
     """
-    locations = load_from(Location, location_file)
-    id_to_location = {loc.id: loc for loc in locations}
-    assert len(locations) > 0, "No locations found. Add some with 'location add."
+    locations, id_to_location = load_locations()
 
     if item == "all":
         use_ids = [loc.id for loc in locations]
@@ -272,7 +275,11 @@ def display(hours: int, item: str, output_fmt: OutputFormat) -> None:
             use_ids = [closest.id]
 
         except ValueError:
-            raise click.BadArgumentUsage("argument must be 'all', and ID or lat,lon")
+            use_ids = [loc.id for loc in locations if item.lower() in loc.name.lower()]
+            if not use_ids:
+                raise click.BadArgumentUsage(
+                    "argument must be 'all', and ID/name or lat,lon"
+                )
 
     for loc_id in use_ids:
         loc = id_to_location[loc_id]
@@ -296,12 +303,24 @@ def display(hours: int, item: str, output_fmt: OutputFormat) -> None:
         after_now = list(filter(lambda x: x.dt >= now, parsed))
 
         name = loc.name
-        headers = ["Temperature", "Rain Prob", "Rain", "Cloud Cover", "UV Index"]
+        headers = [
+            "Time",
+            "Temperature",
+            "Rain Prob",
+            "Rain",
+            "Cloud Cover",
+            "UV Index",
+        ]
         items = []
         assert hours >= 1
         for data in after_now[:hours]:
             items.append(
                 [
+                    (
+                        data.dt.strftime("%H:%M")
+                        if output_fmt == "table"
+                        else data.dt.isoformat()
+                    ),
                     data.temperature_2m,
                     data.precipitation_probability,
                     data.precipitation,
@@ -321,17 +340,14 @@ def display(hours: int, item: str, output_fmt: OutputFormat) -> None:
             name = name.center(width)
             click.echo(f"{name}\n{tbl}")
         else:
-            raise NotImplementedError("json output not implemented")
-            # d = {
-            #     "name": name,
-            #     "forecast": []
-            # }
-            # slugified_headers = ["_".join(s.lower().split()) for s in headers]
-            # for item in items:
-            #     for keys, vals in zip(slugified_headers, item):
-            #         for k in keys:
-            #             d["forecast"][k]
-            # click.echo(json.dumps(items))
+            d = {"name": name, "forecast": []}
+            slugified_headers = ["_".join(s.lower().split()) for s in headers]
+            for item in items:
+                combined = {}
+                for k, v in zip(slugified_headers, item):
+                    combined[k] = v
+                d["forecast"].append(combined)
+            click.echo(json.dumps(d))
 
 
 if __name__ == "__main__":
