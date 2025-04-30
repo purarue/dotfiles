@@ -62,7 +62,7 @@ else
 fi
 
 # copy 'man gawk' -> 'man awk'
-man -w awk 1>&2 2>/dev/null || {
+man -w awk 2>/dev/null 1>&2 || {
 	if gawk_path="$(man -w gawk 2>/dev/null)"; then
 		echo 'Copying gawk path...'
 		sudo cp "${gawk_path}" "${gawk_path/gawk/awk}"

@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+
+import os
+from pathlib import Path
+from PIL import Image
+import click
+
+
+def shrink_image(input_path, output_dir, target_size_mb=10, shrink_factor=0.95):
+    if not input_path.is_file():
+        raise FileNotFoundError(f"Input file {input_path} does not exist.")
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    target_size_bytes = target_size_mb * 1024 * 1024
+
+    img = Image.open(input_path)
+    filename = input_path.name
+    name, ext = os.path.splitext(filename)
+
+    output_path = output_dir / filename
+
+    counter = 1
+    while output_path.exists():
+        output_path = output_dir / f"{name}_{counter}{ext}"
+        counter += 1
+
+    img.save(output_path, optimize=True)
+
+    while output_path.stat().st_size > target_size_bytes:
+        width, height = img.size
+        new_width = int(width * shrink_factor)
+        new_height = int(height * shrink_factor)
+
+        if new_width < 1 or new_height < 1:
+            raise ValueError(
+                f"Image {input_path} became too small before reaching target size."
+            )
+
+        img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+        img.save(output_path, optimize=True)
+
+    click.echo(
+        f"Saved resized image to {output_path} ({output_path.stat().st_size / (1024 * 1024):.2f} MB)"
+    )
+
+
+@click.command()
+@click.argument("input_images", type=click.Path(exists=True, path_type=Path), nargs=-1)
+@click.option(
+    "--output-dir",
+    "-o",
+    type=click.Path(file_okay=False, path_type=Path),
+    default=Path.home() / "Downloads" / "resized",
+    help="Directory to save resized images.",
+)
+@click.option(
+    "--target-size",
+    "-s",
+    default=10,
+    type=float,
+    help="Target file size in megabytes (default 10MB).",
+)
+def main(input_images, output_dir, target_size):
+    """Resize images to be under a target size."""
+    if not input_images:
+        click.echo("No input images provided.")
+        raise click.Abort()
+
+    for input_path in input_images:
+        try:
+            shrink_image(input_path, output_dir, target_size_mb=target_size)
+        except Exception as e:
+            click.echo(f"Error processing {input_path}: {e}")
+
+
+if __name__ == "__main__":
+    main()
