@@ -5,19 +5,38 @@ import os
 import json
 from datetime import datetime
 from pathlib import Path
-from typing import Any, NamedTuple, TypeVar
+from typing import Any, NamedTuple, TypeVar, get_args, Literal
 
 import click
+from autotui.shortcuts import load_from, prompt_namedtuple, dump_to
 
 prefix: Path = Path(os.environ.get("HPIDATA", os.path.expanduser("~/data")))
 
 
-cache_dir = os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache"))
-cdir = os.path.join(cache_dir, "weather-cli")
+user_cache_dir = os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache"))
+cdir = os.path.join(user_cache_dir, "weather-cli")
 os.makedirs(cdir, exist_ok=True)
 
 sqlite_file = os.path.join(cdir, "weather")
-cache_file = prefix / "weather.json"
+cache_dir = prefix / "weather"
+cache_dir.mkdir(parents=True, exist_ok=True)
+
+location_file = cache_dir / "locations.yaml"
+
+
+class Location(NamedTuple):
+    id: int
+    lat: float
+    lon: float
+    name: str
+
+    @property
+    def latlon(self) -> tuple[float, float]:
+        return self.lat, self.lon
+
+    @property
+    def latlon_str(self) -> str:
+        return f"{self.lat},{self.lon}"
 
 
 @click.group()
@@ -25,24 +44,94 @@ def main() -> None:
     pass
 
 
-def parse_lat_lon(
-    ctx: click.Context, param: click.Parameter, value: str
-) -> tuple[float, float]:
+def parse_lat_lon(data: str) -> tuple[float, float]:
     """Parse latitude and longitude from a string."""
+    lat, lon = data.split(",")
+    if lat.strip() == "" or lon.strip() == "":
+        raise ValueError("Invalid lat/lon")
+    return float(lat), float(lon)
+
+
+def parse_lat_lon_ctx(
+    ctx: click.Context, param: click.Parameter, value: str | None
+) -> tuple[float, float] | None:
+    """Parse latitude and longitude from a string."""
+    if value is None:
+        return None
     try:
-        lat, lon = value.split(",")
-        return float(lat), float(lon)
+        return parse_lat_lon(value)
     except ValueError:
         raise click.BadParameter("Must be in the format lat,lon")
 
 
-@click.argument("LATLON", callback=parse_lat_lon)
-@main.command()
-def save(latlon: tuple[float, float]) -> None:
+@main.group(name="location", short_help="manage locations")
+def loc_group() -> None:
+    """
+    Manage locations
+    """
+    pass
+
+
+@click.option("--latlon", callback=parse_lat_lon_ctx, required=False)
+@loc_group.command(name="add", short_help="add new location")
+def add_location(latlon: tuple[float, float] | None) -> None:
+    """
+    Adds a new location with a name/ID
+
+    That ID can be used to update when running 'update'
+    """
+    click.secho("Adding new location...")
+    locations = load_from(Location, location_file, allow_empty=True)
+    if locations:
+        max_id = locations[-1].id
+    else:
+        max_id = 0
+    data: dict[str, Any] = {"id": max_id + 1}
+    if latlon is not None:
+        data.update({"lat": latlon[0], "lon": latlon[1]})
+    new = prompt_namedtuple(
+        Location,
+        attr_use_values=data,
+    )
+    locations.append(new)
+    dump_to(locations, location_file)
+
+
+@loc_group.command(name="list", short_help="list locations")
+@click.option("-l", "--include-locations", is_flag=True)
+def list_locations(include_locations: bool) -> None:
+    """
+    List saved locations
+    """
+    locations = load_from(Location, location_file)
+    for loc in locations:
+        if include_locations:
+            click.echo(f"{loc.id} | {loc.latlon_str} | {loc.name}")
+        else:
+            click.echo(f"{loc.id} | {loc.name}")
+
+
+@click.argument("ITEM", required=True)
+@main.command(short_help="update saved weather for today")
+def update(item: str) -> None:
+    """
+    Update weather for one or more saved locations for the next week
+    """
     import openmeteo_requests
     import requests_cache
     import pandas as pd
     from retry_requests import retry
+
+    locations = load_from(Location, location_file)
+    id_to_location = {loc.id: loc for loc in locations}
+    assert len(locations) > 0, "no locations saved, run 'location add' first"
+
+    if item.isnumeric():
+        fetch_ids = [int(item)]
+    elif item == "all":
+        fetch_ids = [loc.id for loc in locations]
+    else:
+        raise click.BadArgumentUsage("Pass a location id or 'all'")
 
     T = TypeVar("T")
 
@@ -57,77 +146,73 @@ def save(latlon: tuple[float, float]) -> None:
     retry_session = retry(cache_session, retries=5, backoff_factor=0.2)
     openmeteo = openmeteo_requests.Client(session=retry_session)
 
-    # Make sure all required weather variables are listed here
-    # The order of variables in hourly or daily is important to assign them correctly below
-    url = "https://api.open-meteo.com/v1/forecast"
-    params = {
-        "latitude": latlon[0],
-        "longitude": latlon[1],
-        "hourly": [
-            "temperature_2m",
-            "relative_humidity_2m",
-            "apparent_temperature",
-            "precipitation_probability",
-            "precipitation",
-            "rain",
-            "showers",
-            "snowfall",
-            "cloud_cover",
-            "visibility",
-            "wind_speed_10m",
-            "uv_index",
-        ],
-    }
-    responses = openmeteo.weather_api(url, params=params)
+    for fetch_id in fetch_ids:
+        loc = id_to_location[fetch_id]
+        # Make sure all required weather variables are listed here
+        # The order of variables in hourly or daily is important to assign them correctly below
+        url = "https://api.open-meteo.com/v1/forecast"
+        params = {
+            "latitude": loc.lat,
+            "longitude": loc.lon,
+            "hourly": [
+                "temperature_2m",
+                "relative_humidity_2m",
+                "apparent_temperature",
+                "precipitation_probability",
+                "precipitation",
+                "rain",
+                "showers",
+                "snowfall",
+                "cloud_cover",
+                "visibility",
+                "wind_speed_10m",
+                "uv_index",
+            ],
+        }
+        responses = openmeteo.weather_api(url, params=params)
 
-    # Process first location. Add a for-loop for multiple locations or weather models
-    response = responses[0]
+        # Process first location. Add a for-loop for multiple locations or weather models
+        response = responses[0]
 
-    # Process hourly data. The order of variables needs to be the same as requested.
-    hourly = response.Hourly()
-    assert hourly is not None
-    hourly_temperature_2m = unwrap(hourly.Variables(0)).ValuesAsNumpy()
-    hourly_relative_humidity_2m = unwrap(hourly.Variables(1)).ValuesAsNumpy()
-    hourly_apparent_temperature = unwrap(hourly.Variables(2)).ValuesAsNumpy()
-    hourly_precipitation_probability = unwrap(hourly.Variables(3)).ValuesAsNumpy()
-    hourly_precipitation = unwrap(hourly.Variables(4)).ValuesAsNumpy()
-    hourly_rain = unwrap(hourly.Variables(5)).ValuesAsNumpy()
-    hourly_showers = unwrap(hourly.Variables(6)).ValuesAsNumpy()
-    hourly_snowfall = unwrap(hourly.Variables(7)).ValuesAsNumpy()
-    hourly_cloud_cover = unwrap(hourly.Variables(8)).ValuesAsNumpy()
-    hourly_visibility = unwrap(hourly.Variables(9)).ValuesAsNumpy()
-    hourly_wind_speed_10m = unwrap(hourly.Variables(10)).ValuesAsNumpy()
-    hourly_uv_index = unwrap(hourly.Variables(11)).ValuesAsNumpy()
+        # Process hourly data. The order of variables needs to be the same as requested.
+        hourly = response.Hourly()
+        assert hourly is not None
+        hourly_temperature_2m = unwrap(hourly.Variables(0)).ValuesAsNumpy()
+        hourly_relative_humidity_2m = unwrap(hourly.Variables(1)).ValuesAsNumpy()
+        hourly_apparent_temperature = unwrap(hourly.Variables(2)).ValuesAsNumpy()
+        hourly_precipitation_probability = unwrap(hourly.Variables(3)).ValuesAsNumpy()
+        hourly_precipitation = unwrap(hourly.Variables(4)).ValuesAsNumpy()
+        hourly_rain = unwrap(hourly.Variables(5)).ValuesAsNumpy()
+        hourly_showers = unwrap(hourly.Variables(6)).ValuesAsNumpy()
+        hourly_snowfall = unwrap(hourly.Variables(7)).ValuesAsNumpy()
+        hourly_cloud_cover = unwrap(hourly.Variables(8)).ValuesAsNumpy()
+        hourly_visibility = unwrap(hourly.Variables(9)).ValuesAsNumpy()
+        hourly_wind_speed_10m = unwrap(hourly.Variables(10)).ValuesAsNumpy()
+        hourly_uv_index = unwrap(hourly.Variables(11)).ValuesAsNumpy()
 
-    hourly_data: dict[str, Any] = {
-        "date": pd.date_range(
-            start=pd.to_datetime(hourly.Time(), unit="s", utc=True),
-            end=pd.to_datetime(hourly.TimeEnd(), unit="s", utc=True),
-            freq=pd.Timedelta(seconds=hourly.Interval()),
-            inclusive="left",
-        )
-    }
-    hourly_data["temperature_2m"] = hourly_temperature_2m
-    hourly_data["relative_humidity_2m"] = hourly_relative_humidity_2m
-    hourly_data["apparent_temperature"] = hourly_apparent_temperature
-    hourly_data["precipitation_probability"] = hourly_precipitation_probability
-    hourly_data["precipitation"] = hourly_precipitation
-    hourly_data["rain"] = hourly_rain
-    hourly_data["showers"] = hourly_showers
-    hourly_data["snowfall"] = hourly_snowfall
-    hourly_data["cloud_cover"] = hourly_cloud_cover
-    hourly_data["visibility"] = hourly_visibility
-    hourly_data["wind_speed_10m"] = hourly_wind_speed_10m
-    hourly_data["uv_index"] = hourly_uv_index
+        hourly_data: dict[str, Any] = {
+            "date": pd.date_range(
+                start=pd.to_datetime(hourly.Time(), unit="s", utc=True),
+                end=pd.to_datetime(hourly.TimeEnd(), unit="s", utc=True),
+                freq=pd.Timedelta(seconds=hourly.Interval()),
+                inclusive="left",
+            )
+        }
+        hourly_data["temperature_2m"] = hourly_temperature_2m
+        hourly_data["relative_humidity_2m"] = hourly_relative_humidity_2m
+        hourly_data["apparent_temperature"] = hourly_apparent_temperature
+        hourly_data["precipitation_probability"] = hourly_precipitation_probability
+        hourly_data["precipitation"] = hourly_precipitation
+        hourly_data["rain"] = hourly_rain
+        hourly_data["showers"] = hourly_showers
+        hourly_data["snowfall"] = hourly_snowfall
+        hourly_data["cloud_cover"] = hourly_cloud_cover
+        hourly_data["visibility"] = hourly_visibility
+        hourly_data["wind_speed_10m"] = hourly_wind_speed_10m
+        hourly_data["uv_index"] = hourly_uv_index
 
-    hourly_dataframe = pd.DataFrame(data=hourly_data)
-    data = hourly_dataframe.to_json()
-
-    # add latlon
-    data_parsed = json.loads(data)
-    data_parsed["latlon"] = latlon
-
-    cache_file.write_text(json.dumps(data_parsed))
+        hourly_dataframe = pd.DataFrame(data=hourly_data)
+        (cache_dir / f"{loc.id}.json").write_text(hourly_dataframe.to_json())
 
 
 class Data(NamedTuple):
@@ -146,28 +231,107 @@ class Data(NamedTuple):
     uv_index: float
 
 
-# TODO: save weather for a few close by location/cities, or
-# places I visit often, and compute the distance from my
-# current location to the places Ive saved, picking the closest one
-@main.command()
-def display() -> None:
-    # reconstruct pandas-like data into object
-    assert cache_file.exists(), "No cache found"
-    data = json.loads(cache_file.read_text())
-    latlon: tuple[float, float] = data.pop("latlon")
-    info = defaultdict(dict)
-    for kd, timestamp in data["date"].items():
-        kd_int = int(kd)
-        info[kd_int]["dt"] = datetime.fromtimestamp(int(timestamp) / 1000)
-        for other_key, other_value in data.items():
-            if other_key != "date":
-                info[kd_int][other_key] = other_value[kd]
+OutputFormat = Literal["table", "json"]
 
-    parsed = [Data(**v) for v in info.values()]
-    parsed.sort(key=lambda x: x.dt)
 
-    click.echo(parsed)
-    click.echo(latlon)
+@click.argument("ITEM")
+@click.option("-h", "--hours", default=12, type=click.IntRange(1))
+@click.option(
+    "-o",
+    "--output-fmt",
+    type=click.Choice(get_args(OutputFormat)),
+    help="Output format",
+    default="table",
+)
+@main.command(short_help="display weather data")
+def display(hours: int, item: str, output_fmt: OutputFormat) -> None:
+    """
+    Display weather data
+    """
+    locations = load_from(Location, location_file)
+    id_to_location = {loc.id: loc for loc in locations}
+    assert len(locations) > 0, "No locations found. Add some with 'location add."
+
+    if item == "all":
+        use_ids = [loc.id for loc in locations]
+    elif item.isnumeric():
+        use_ids = [int(item)]
+        assert use_ids[0] in id_to_location, f"Invalid ID, known IDs: {use_ids}"
+    else:
+        from geopy.distance import distance
+
+        try:
+            loc = parse_lat_lon(item)
+            closest = min(
+                locations,
+                key=lambda x: distance(
+                    x.latlon,
+                    loc,
+                ).km,
+            )
+            use_ids = [closest.id]
+
+        except ValueError:
+            raise click.BadArgumentUsage("argument must be 'all', and ID or lat,lon")
+
+    for loc_id in use_ids:
+        loc = id_to_location[loc_id]
+        data_file = cache_dir / f"{loc_id}.json"
+        # reconstruct pandas-like data into object
+        assert data_file.exists(), "No cache found"
+        data = json.loads(data_file.read_text())
+        info = defaultdict(dict)
+        for kd, timestamp in data["date"].items():
+            kd_int = int(kd)
+            info[kd_int]["dt"] = datetime.fromtimestamp(int(timestamp) / 1000)
+            for other_key, other_value in data.items():
+                if other_key != "date":
+                    assert kd in other_value, f"missing {kd}"
+                    info[kd_int][other_key] = other_value[kd]
+
+        parsed = [Data(**v) for v in info.values()]
+        parsed.sort(key=lambda x: x.dt)
+
+        now = datetime.now().replace(microsecond=0, second=0, minute=0)
+        after_now = list(filter(lambda x: x.dt >= now, parsed))
+
+        name = loc.name
+        headers = ["Temperature", "Rain Prob", "Rain", "Cloud Cover", "UV Index"]
+        items = []
+        assert hours >= 1
+        for data in after_now[:hours]:
+            items.append(
+                [
+                    data.temperature_2m,
+                    data.precipitation_probability,
+                    data.precipitation,
+                    data.cloud_cover,
+                    data.uv_index,
+                ]
+            )
+
+        if output_fmt == "table":
+            from tabulate import tabulate
+
+            tbl = tabulate(
+                items, headers=headers, tablefmt="plain", disable_numparse=False
+            )
+            width = len(tbl.splitlines()[0])
+            # center name above top row
+            name = name.center(width)
+            click.echo(f"{name}\n{tbl}")
+        else:
+            raise NotImplementedError("json output not implemented")
+            # d = {
+            #     "name": name,
+            #     "forecast": []
+            # }
+            # slugified_headers = ["_".join(s.lower().split()) for s in headers]
+            # for item in items:
+            #     for keys, vals in zip(slugified_headers, item):
+            #         for k in keys:
+            #             d["forecast"][k]
+            # click.echo(json.dumps(items))
 
 
 if __name__ == "__main__":

@@ -290,6 +290,7 @@ __pycache__
 /.config/nvim/.netrwhist
 /.config/nvim/spell
 /.config/obs-studio
+/.config/darktable
 /.config/okularpartrc
 /.config/okularrc
 /.config/opera
