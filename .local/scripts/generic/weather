@@ -306,14 +306,23 @@ def display(hours: int, item: str, output_fmt: OutputFormat) -> None:
         headers = [
             "Time",
             "Temperature",
-            "Rain Prob",
             "Rain",
             "Cloud Cover",
             "UV Index",
         ]
         items = []
         assert hours >= 1
+
         for data in after_now[:hours]:
+
+            rain_prob = data.precipitation_probability
+            rainfall = data.precipitation
+
+            rain = rain_prob
+            if rain_prob > 1.5:
+                rain = f"{rain}% - {rainfall}mm"
+            else:
+                rain = f"{rain}%"
             items.append(
                 [
                     (
@@ -322,8 +331,7 @@ def display(hours: int, item: str, output_fmt: OutputFormat) -> None:
                         else data.dt.isoformat()
                     ),
                     data.temperature_2m,
-                    data.precipitation_probability,
-                    data.precipitation,
+                    rain,
                     data.cloud_cover,
                     data.uv_index,
                 ]
