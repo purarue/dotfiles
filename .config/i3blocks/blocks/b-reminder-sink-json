@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
 items="$(reminder-sink run)"
-count="$(awk 'NF > 0 { count++ } END { print count }' <<<"$items")"
+if [[ -z "$items" ]]; then
+	count=0
+else
+	count="$(awk 'NF > 0 { count++ } END { print count }' <<<"$items")"
+fi
 text="$(colorize_number "$count")"
 jq -rcn --arg text " $text" --arg items "$items" '{"text": $text, "tooltip": $items}'
