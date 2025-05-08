@@ -6,4 +6,4 @@ INPUT="${1:-$(cat)}"                          # if no URL was passed, read from 
 TEMP="$(mktemp -p /tmp -d 'qr-XXXX')/img.png" # temporary dir
 
 qrencode "${INPUT}" -o "${TEMP}" || exit $?
-exec feh -Z "${TEMP}"
+exec openurl "${TEMP}"

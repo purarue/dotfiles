@@ -5,7 +5,7 @@ import os
 import json
 from datetime import datetime
 from pathlib import Path
-from typing import Any, NamedTuple, TypeVar, get_args, Literal
+from typing import Any, NamedTuple, TypeVar, get_args, Literal, Iterator, Sequence
 
 import click
 from autotui.shortcuts import load_from, prompt_namedtuple, dump_to
@@ -39,7 +39,7 @@ class Location(NamedTuple):
         return f"{self.lat},{self.lon}"
 
 
-@click.group()
+@click.group(context_settings={"help_option_names": ["-h", "--help"]})
 def main() -> None:
     pass
 
@@ -239,20 +239,7 @@ class Data(NamedTuple):
 OutputFormat = Literal["table", "json"]
 
 
-@click.argument("ITEM")
-@click.option("-h", "--hours", default=12, type=click.IntRange(1))
-@click.option(
-    "-o",
-    "--output-fmt",
-    type=click.Choice(get_args(OutputFormat)),
-    help="Output format",
-    default="table",
-)
-@main.command(short_help="display weather data")
-def display(hours: int, item: str, output_fmt: OutputFormat) -> None:
-    """
-    Display weather data
-    """
+def iter_locations(item: str) -> Iterator[tuple[str, list[Data]]]:
     locations, id_to_location = load_locations()
 
     if item == "all":
@@ -302,7 +289,25 @@ def display(hours: int, item: str, output_fmt: OutputFormat) -> None:
         now = datetime.now().replace(microsecond=0, second=0, minute=0)
         after_now = list(filter(lambda x: x.dt >= now, parsed))
 
-        name = loc.name
+        yield loc.name, after_now
+
+
+@click.argument("WHERE")
+@click.option("-h", "--hours", default=12, type=click.IntRange(1))
+@click.option(
+    "-o",
+    "--output-fmt",
+    type=click.Choice(get_args(OutputFormat)),
+    help="Output format",
+    default="table",
+)
+@main.command(short_help="display weather data")
+def display(hours: int, where: str, output_fmt: OutputFormat) -> None:
+    """
+    Display weather data
+    """
+    for name, locations in iter_locations(where):
+
         headers = [
             "Time",
             "Temperature",
@@ -313,7 +318,7 @@ def display(hours: int, item: str, output_fmt: OutputFormat) -> None:
         items = []
         assert hours >= 1
 
-        for data in after_now[:hours]:
+        for data in locations[:hours]:
 
             rain_prob = data.precipitation_probability
             rainfall = data.precipitation
@@ -345,17 +350,34 @@ def display(hours: int, item: str, output_fmt: OutputFormat) -> None:
             )
             width = len(tbl.splitlines()[0])
             # center name above top row
-            name = name.center(width)
-            click.echo(f"{name}\n{tbl}")
+            cname = name.center(width)
+            click.echo(f"{cname}\n{tbl}")
         else:
             d = {"name": name, "forecast": []}
             slugified_headers = ["_".join(s.lower().split()) for s in headers]
-            for item in items:
+            for where in items:
                 combined = {}
-                for k, v in zip(slugified_headers, item):
+                for k, v in zip(slugified_headers, where):
                     combined[k] = v
                 d["forecast"].append(combined)
             click.echo(json.dumps(d))
+
+
+@click.option(
+    "-n",
+    "--next",
+    multiple=True,
+    is_flag=True,
+    help="Show next day, can pass multiple times",
+)
+@click.argument("WHERE")
+@main.command(short_help="display custom weather info", name="forecast")
+def forecast(where: str, next: Sequence[bool]) -> None:
+    offset_days = len(next)
+
+    # if offsetting, it should show the whole day, not timedelta+1
+    for name, locations in iter_locations(where):
+        pass
 
 
 if __name__ == "__main__":
