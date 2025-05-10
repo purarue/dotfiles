@@ -51,6 +51,16 @@
   (#offset! @injection.content 0 1 0 -1)
   (#set! injection.language "jq")) @sh_embedded_jq
 
+(command
+  name: (command_name
+    (word) @cmd_name
+    (#eq? @cmd_name "exec"))
+  argument: (_) @first_arg
+    (#eq? @first_arg "jq")
+  argument: (raw_string) @injection.content
+  (#offset! @injection.content 0 1 0 -1)
+  (#set! injection.language "jq")) @sh_embedded_awk
+
 ; https://github.com/purarue/fzfcache
 (command
   name: (command_name
