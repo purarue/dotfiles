@@ -7,4 +7,4 @@ else
 	count="$(awk 'NF > 0 { count++ } END { print count }' <<<"$items")"
 fi
 text="$(colorize_number "$count")"
-jq -rcn --arg text " $text" --arg items "$items" '{"text": $text, "tooltip": $items}'
+exec jq --null-input --compact-output --raw-output --monochrome-output --arg text " $text" --arg items "$items" '{"text": $text, "tooltip": $items}'
