@@ -48,7 +48,7 @@ OutputFormat = Literal["json", "raw", "human"]
 def main(days: int, format: OutputFormat, strip_datasource: bool) -> None:
     # filter to items that start in the next week
     now = datetime.now()
-    events = [
+    events: list[Apt] = [
         e
         for e in parse_events()
         if e.start_dt > now and e.start_dt < now + timedelta(days=days)
