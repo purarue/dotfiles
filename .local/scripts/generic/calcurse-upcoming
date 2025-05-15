@@ -4,7 +4,7 @@ from typing import Literal, get_args, assert_never
 from datetime import datetime, date, timedelta
 
 import click
-from calcurse_load.parse import Apt, parse_events
+from calcurse_load.parse import Apt, iter_events
 from my.core.serialize import dumps
 
 
@@ -50,7 +50,7 @@ def main(days: int, format: OutputFormat, strip_datasource: bool) -> None:
     now = datetime.now()
     events: list[Apt] = [
         e
-        for e in parse_events()
+        for e in iter_events()
         if e.start_dt > now and e.start_dt < now + timedelta(days=days)
     ]
     events.sort(key=lambda e: e.start_dt)
