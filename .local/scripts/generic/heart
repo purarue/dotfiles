@@ -16,17 +16,17 @@ HEARTS = [
 
 
 @click.command()
-@click.option("-a", "--all", "all", is_flag=True, help="Print all hearts")
-def main(all: bool) -> None:
+@click.option("-a", "--all", "_all", is_flag=True, help="Print all hearts")
+def main(_all: bool) -> None:
     chosen: str
-    if all:
+    if _all:
         chosen = "".join(HEARTS)
     else:
 
         import random
 
         chosen = random.choice(HEARTS)
-    print(chosen)
+    click.echo(chosen)
 
 
 if __name__ == "__main__":

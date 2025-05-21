@@ -231,6 +231,7 @@ __pycache__
 /.config/asciinema/
 /.config/astro
 /.config/audacity
+/.config/bolt-launcher/
 /.config/autostart
 /.config/balena-etcher
 /.config/bookmark.txt/*

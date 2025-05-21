@@ -936,7 +936,7 @@ command = 'exec abook -C "$XDG_CONFIG_HOME/abook/abookrc" -f "$XDG_DOCUMENTS_DIR
 
 [heart-cl]
 command = '''
-heart | APP=heart clp
+heart "$@" | APP=heart clp
 '''
 
 [timer-till-playping]

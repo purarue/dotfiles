@@ -1,2 +1,2 @@
 #!/bin/sh
-heart | APP=heart clp
+heart "$@" | APP=heart clp
