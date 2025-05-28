@@ -80,6 +80,8 @@ def download_user(name: str) -> None:
 def glob_for_vid(video_dir, startswith: str) -> Path:
     local_file = list(video_dir.glob(f"{startswith}-*"))
 
+    if len(local_file) == 0:
+        raise RuntimeError(f"no files found for {startswith}")
     assert len(local_file) == 1
     assert local_file[0].suffix == ".mp4", f"file ext is {local_file[0].suffix}"
 
@@ -101,7 +103,10 @@ def prune_old_files(name: str, prune_older_than_days: float, debug: bool) -> Non
 
     videos = dict(sorted(videos.items(), key=lambda x: x[1], reverse=True))
     for i, (name, timestamp) in enumerate(videos.items()):
-        file = glob_for_vid(video_dir, name)
+        try:
+            file = glob_for_vid(video_dir, name)
+        except RuntimeError:
+            continue
         if i <= DOWNLOAD_RECENT:
             if debug:
                 click.echo(
@@ -165,7 +170,10 @@ def generate_rss_file(user: str, rss_dir: Path) -> None:
             entry.title(f"{user} | {info["title"]}")
             entry.link(href=info["webpage_url"])
             entry.published(datetime.fromtimestamp(info["timestamp"], tz=timezone.utc))
-            video_file = glob_for_vid(video_dir, id)
+            try:
+                video_file = glob_for_vid(video_dir, id)
+            except RuntimeError:
+                continue
 
             entry.enclosure(
                 url=f"file://{video_file}",
