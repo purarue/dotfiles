@@ -68,7 +68,7 @@ return {
                     format = lspkind.cmp_format({
                         with_text = true,
                         menu = {
-                            codeium = "[ai]",
+                            -- codeium = "[ai]",
                             buffer = "[buf]",
                             nvim_lsp = "[lsp]",
                             nvim_lua = "[lua]",

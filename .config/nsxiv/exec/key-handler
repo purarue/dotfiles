@@ -25,13 +25,13 @@ notify "$desc"
 
 while read -r file; do
 	case "$1" in
-	"C-f") realpath "$file" | clipcopy ;;                                 # copy full path
-	"C-i") setsid -f pinta "$file" ;;                                     # edit image
-	"C-d") mkdir -p ~/.cache/removed && mv "$file" ~/.cache/removed ;;    # delete
-	"C-c") xclip -selection clipboard -target image/png "$file" ;;        # copy image to clipboard
-	"C-w") feh --bg-fill --no-fehbg "$file" ;;                            # set as background
-	"C-n") touch "$(dirname "$file")/.nsfw" && notify "Marked as NSFW" ;; # mark as NSFW
-	"C-r") dragon-drop -x "$file" ;;                                      # drag and drop
-	"C-v") launch 'favorite-picture "$file"' ;;                           # copy favorite to documents dir
+	"C-f") realpath "$file" | clipcopy ;;                                        # copy full path
+	"C-i") setsid -f pinta "$file" ;;                                            # edit image
+	"C-d") mkdir -p ~/.cache/removed && mv "$file" ~/.cache/removed ;;           # delete
+	"C-c") xclip -selection clipboard -target image/png "$file" ;;               # copy image to clipboard
+	"C-n") touch "$(dirname "$file")/.nsfw" && notify "Marked as NSFW" ;;        # mark as NSFW
+	"C-r") dragon-drop -x "$file" ;;                                             # drag and drop
+	"C-v") launch 'favorite-picture "$file"' ;;                                  # copy favorite to documents dir
+	"C-w") image-working-dir "$file" && notify "Copied to ~/Downloads/images" ;; # copy to working dir
 	esac
 done

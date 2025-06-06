@@ -236,6 +236,11 @@ __pycache__
 /.config/balena-etcher
 /.config/bookmark.txt/*
 /.config/brittany
+/.config/dolphinrc
+/.config/kde.org/
+/.config/hyfetch.json
+/.config/ksnip/
+/.config/session/
 /.config/cef_user_data
 /.config/chromium
 /.config/clojure
