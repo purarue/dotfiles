@@ -101,6 +101,7 @@ entr
 eza
 fd
 feh
+fastfetch
 ffmpeg
 ffmpegthumbnailer
 figlet

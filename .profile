@@ -84,6 +84,7 @@ android*)
 	XDG_PICTURES_DIR="${HOME}/storage/pictures"
 	XDG_VIDEOS_DIR="${HOME}/storage/shared/Movies"
 	SCREENSHOTS="${XDG_PICTURES_DIR}/Screenshots"
+	BROWSER='termux-open-url'
 	;;
 windows*)
 	BROWSER='/mnt/c/Program Files/Mozilla Firefox/firefox.exe'

@@ -20,12 +20,22 @@ neovim
 yarn
 glow
 parallel
+termux-api
+croc
+eza
+yarn
+python
+rust
+unar
+zsh
 nodejs
 htop
 boxes
 rlwrap
 openjdk-17
 perl
+calcurse
+golang
 datamash
 termux-services # sv-enable sshd
 entr

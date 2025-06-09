@@ -116,9 +116,9 @@ def prune_old_files(name: str, prune_older_than_days: float, debug: bool) -> Non
             continue
 
         days_ago = (datetime.now(tz=timezone.utc) - timestamp).days
-        if days_ago >= prune_older_than_days:
+        if days_ago > prune_older_than_days:
             click.echo(
-                f"pruning: released {days_ago}>={prune_older_than_days} days ago | {file}",
+                f"pruning: released {days_ago}>{prune_older_than_days} days ago | {file}",
                 err=True,
             )
             file.unlink()
@@ -126,7 +126,7 @@ def prune_old_files(name: str, prune_older_than_days: float, debug: bool) -> Non
         else:
             if debug:
                 click.echo(
-                    f"keeping: released {days_ago}<{prune_older_than_days} days ago | {file}",
+                    f"keeping: released {days_ago}<={prune_older_than_days} days ago | {file}",
                     err=True,
                 )
 
