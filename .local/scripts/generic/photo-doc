@@ -3,7 +3,7 @@
 # to ~/shared/Shared
 
 STORAGE="${HOME}/storage/"
-IMAGE_DIR="${STORAGE}/dcim/Camera/"
+IMAGE_DIR="${STORAGE}/dcim/OpenCamera/"
 
 FILE="$(newest -ignore-hidden "${IMAGE_DIR}")"
 if [[ -z "$FILE" ]]; then

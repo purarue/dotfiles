@@ -1,0 +1,22 @@
+#!/usr/bin/env python3
+
+"""
+Replace instances of the users home directory with the character '~'
+
+Useful for sharing stacktraces online
+"""
+
+import re
+import fileinput
+import pathlib
+
+
+def main() -> None:
+    home = str(pathlib.Path.home())
+
+    for line in fileinput.input():
+        print(re.sub(home, "~", line), end="")
+
+
+if __name__ == "__main__":
+    main()

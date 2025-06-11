@@ -52,7 +52,7 @@ export CARGO_BUILD_TARGET=aarch64-linux-android
 # for building some python libs with C-extensions
 export SODIUM_INSTALL=system
 
-alias dcim='R ~/storage/dcim/Camera'
+alias dcim='R ~/storage/dcim/'
 alias d=dcim
 alias sd='sf; dcim'
 alias sc='server_clipboard'

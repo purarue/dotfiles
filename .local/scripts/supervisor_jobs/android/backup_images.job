@@ -4,6 +4,7 @@ STORAGE="${HOME}/storage/"
 
 IMAGE_DIRS=(
 	"${STORAGE}/dcim/Camera/"
+	"${STORAGE}/dcim/OpenCamera/"
 	"${STORAGE}/pictures/Screenshots/"
 )
 
