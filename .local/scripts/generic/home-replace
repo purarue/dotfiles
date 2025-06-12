@@ -14,7 +14,7 @@ import pathlib
 def main() -> None:
     home = str(pathlib.Path.home())
 
-    for line in fileinput.input():
+    for line in fileinput.input(encoding="utf-8"):
         print(re.sub(home, "~", line), end="")
 
 
