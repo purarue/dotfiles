@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+
+"""
+Parse GET arguments from a URL
+"""
+
+import sys
+from urllib.parse import urlsplit, parse_qs
+
+import click
+
+
+@click.command(help=__doc__)
+@click.option("-d", "--delim", default=":", help="printed delimiter between key,value")
+@click.argument("URL", required=False)
+def main(url: str | None, delim: str) -> None:
+    if url is None:
+        url = sys.stdin.read().strip()
+    assert isinstance(url, str)
+    parts = urlsplit(url)
+    if not parts:
+        exit(1)
+    parts_str = parts.query if isinstance(parts.query, str) else parts.query.decode()
+    parts_d = parse_qs(parts_str)
+    for k, v in parts_d.items():
+        assert isinstance(v, list)
+        for vv in v:
+            click.echo(f"{k}{delim}{vv}")
+
+
+if __name__ == "__main__":
+    main()

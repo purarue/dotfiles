@@ -208,6 +208,7 @@ __pycache__
 .config/git/gitk
 /.config/*/zoom.conf
 /.config/3T
+/.config/Signal/
 /.config/BraveSoftware/
 /.config/Code - OSS/
 /.config/CrossCode

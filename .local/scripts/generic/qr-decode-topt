@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# given a raw QR code image as STDIN, extracts the first QR code
+# if its a google offline export, decodes, else just prints the URL if
+# it has the typical 'secret' key
+
+otpauth_str="$(zbarimg - --quiet 2>&1 | grep -m1 'QR-Code' | cut -d':' -f2-)"
+if [[ -z "$otpauth_str" ]]; then
+	echo 'No auth string extracted from latest screenshot'
+	exit 1
+fi
+if grep 'offline' -q <<<"$otpauth_str"; then
+	echo "Evaluating: $otpauth_str" >&2
+	exec otpauth -link "$otpauth_str"
+elif grep 'secret' -iq <<<"$otpauth_str"; then
+	echo "$otpauth_str"
+else
+	echo "Unsure how to process: $otpauth_str" >&2
+	exit 1
+fi
