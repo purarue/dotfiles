@@ -6,7 +6,7 @@
 # the synced folder that are less than
 # 3 days old.
 
-from="$(backup_to phone_pictures)/Camera" || exit 1
+from="$(backup_to phone_pictures)/OpenCamera" || exit 1
 
 days='-3'
 [[ -n "$1" ]] && days="-$1"
