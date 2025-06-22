@@ -55,18 +55,18 @@ alias e=editor
 alias t=rg-nvim
 alias rgv='rg --vimgrep'
 
-conflicts() {
-	local chosen sourcefile
-	chosen="$(sync-conflicts "$1" -print -quit)"
-	if [[ -z "$chosen" ]]; then
-		echo "No conflicts found" >&2
-		return 1
-	fi
-
-	# get the source file and run script on it to open in vimdiff
-	sourcefile="$(echo "$chosen" | awk -F '.sync-conflict' '{print $1}')"
-	vimdiff-syncthing-conflict "$sourcefile"
-}
+# conflicts() {
+# 	local chosen sourcefile
+# 	chosen="$(sync-conflicts "$1" -print -quit)"
+# 	if [[ -z "$chosen" ]]; then
+# 		echo "No conflicts found" >&2
+# 		return 1
+# 	fi
+#
+# 	# get the source file and run script on it to open in vimdiff
+# 	sourcefile="$(echo "$chosen" | awk -F '.sync-conflict' '{print $1}')"
+# 	vimdiff-syncthing-conflict "$sourcefile"
+# }
 
 # Shorthands, or adding some default flags to utilities
 alias 'xargsl=xargs -I {} sh -c' # line-based xargs
@@ -144,10 +144,6 @@ alias slogs='super --logs'
 # shorthand for reverse of https://purarue.xyz/d/star?dark
 unstar() {
 	star "$1" DELETE
-}
-rt() {
-	# search rotten tomatoes
-	rotten search "$*"
 }
 # create a notes file in the current directory
 alias create-note='touch "$(daystamp_).md"'
