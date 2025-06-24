@@ -2,6 +2,6 @@
 # change modification for a file, interactively
 file="${1:-$(gum file)}" || exit $?
 [[ -n "$1" ]] && shift
-time="${1:-(gum input --prompt="Date> ")}" || exit $?
+time="${*:-(gum input --prompt="Date> ")}" || exit $?
 dt="$(dateq parse -F '%Y%m%d%H%M' "$time")" || exit $?
 exec touch -amt "$dt" "$file"
