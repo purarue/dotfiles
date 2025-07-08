@@ -4,4 +4,3 @@ vim.opt_local.spell = true
 -- I set 72 here for the description
 vim.opt_local.textwidth = 72
 vim.opt_local.colorcolumn = "+1"
-vim.b.codeium_enabled = false

@@ -6,13 +6,13 @@ usernames="$(cat "$XDG_DOCUMENTS_DIR/tiktok.txt")"
 while read -r line; do
 	if grep -q "rss/${line}.xml " <<<"$contents"; then
 		echo "Skipping @$line, already present" >&2
-	else
-		echo "Adding @$line" >&2
-		file="${HOME}/.cache/tiktok-local-rss/rss/${line}.xml"
-		if [[ ! -f "$file" ]]; then
-			echo "While adding $line, $file not found" >&2
-			continue
-		fi
-		printf 'file://%s "%s"\n' "$file" "$line" >>"$HOME/.config/newsraft/feeds"
+		continue
 	fi
+	echo "Adding @$line" >&2
+	file="${HOME}/.cache/tiktok-local-rss/rss/${line}.xml"
+	if [[ ! -f "$file" ]]; then
+		echo "While adding $line, $file not found" >&2
+		continue
+	fi
+	printf 'file://%s "%s"\n' "$file" "$line" >>"$HOME/.config/newsraft/feeds"
 done <<<"$usernames"

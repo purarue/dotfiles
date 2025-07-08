@@ -45,15 +45,6 @@ vim.api.nvim_create_autocmd("TermOpen", {
     pattern = "*",
 })
 
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-    desc = "disable LLM for certain buffers",
-    group = clear_group("LlmGroup"),
-    pattern = { ".env", ".env.*", "addressbook" },
-    callback = function()
-        vim.b["codeium_enabled"] = false
-    end,
-})
-
 --- converts a filename to a title
 ---@param name string
 ---@return string

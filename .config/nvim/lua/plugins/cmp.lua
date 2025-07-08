@@ -19,7 +19,7 @@ return {
         config = function()
             local cmp = require("cmp")
             local lspkind = require("lspkind")
-            lspkind.init({ symbol_map = { Codeium = "" } })
+            lspkind.init()
             cmp.setup({
                 mapping = {
                     ["<C-u>"] = cmp.mapping.scroll_docs(-4),
@@ -52,7 +52,6 @@ return {
                 },
                 -- order ranks priority in completion drop-down -- higher has more priority
                 sources = {
-                    { name = "codeium" }, -- codeium completion
                     { name = "nvim_lsp" }, -- update neovim lsp capabilities https://github.com/hrsh7th/cmp-nvim-lsp
                     { name = "nvim_lua", keyword_length = 2 }, -- lua completion for nvim-specific stuff
                     { name = "lazydev", group_index = 0, keyword_length = 2 }, -- https://github.com/folke/lazydev.nvim
@@ -68,7 +67,6 @@ return {
                     format = lspkind.cmp_format({
                         with_text = true,
                         menu = {
-                            -- codeium = "[ai]",
                             buffer = "[buf]",
                             nvim_lsp = "[lsp]",
                             nvim_lua = "[lua]",
