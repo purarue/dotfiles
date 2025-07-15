@@ -674,6 +674,15 @@ cat >"$tmpf"
 exec printf '%s\n' "$tmpf"
 '''
 
+[clipboard-image]
+command = '''
+# take image from clipboard, put it in a tmpfile, print path
+tmpf="$(tmpfile png "$1")"
+clippaste >"$tmpf" || exit $?
+exec printf '%s\n' "$tmpf"
+'''
+link = "img-clipboard"
+
 [html-head-all]
 command = 'exec html-head -a css-dark-mode -a css-pre-wrap "$@"'
 

@@ -15,6 +15,9 @@ vim.opt.wrap = true
 vim.opt.textwidth = 0 -- stop line wrapping
 vim.opt.formatoptions = "tcqrn1"
 
+-- disable folding
+vim.opt.foldenable = false
+
 -- set tab config local to buffer
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2

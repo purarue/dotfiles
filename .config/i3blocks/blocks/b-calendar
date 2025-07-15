@@ -3,7 +3,7 @@
 calcurse_filter_between() {
 	local start="$1"
 	local end="$2"
-	calcursed -G --filter-type=apt --filter-start-from="$start" --filter-end-to="$end"
+	timeout 5 calcursed -G --filter-type=apt --filter-start-from="$start" --filter-end-to="$end"
 }
 
 dateoffset() {

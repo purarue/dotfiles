@@ -1,0 +1,5 @@
+#!/bin/sh
+# take image from clipboard, put it in a tmpfile, print path
+tmpf="$(tmpfile png "$1")"
+clippaste >"$tmpf" || exit $?
+exec printf '%s\n' "$tmpf"

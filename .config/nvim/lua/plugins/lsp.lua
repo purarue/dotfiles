@@ -9,6 +9,7 @@ return {
     },
     {
         "neovim/nvim-lspconfig",
+        enable = false,
         event = { "BufReadPost", "BufNewFile" },
         cmd = { "LspInfo", "LspInstall", "LspUninstall" },
         config = function()

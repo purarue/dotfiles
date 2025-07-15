@@ -152,6 +152,7 @@ __pycache__
 /.openshot_qt/
 /.oracle_jre_usage/
 /.parallel
+/.ollama
 /.pki/nssdb
 /.psql_history
 /.pulse-cookie
@@ -210,6 +211,7 @@ __pycache__
 /.config/3T
 /.config/Signal/
 /.config/BraveSoftware/
+/.config/gh-copilot/
 /.config/Code - OSS/
 /.config/CrossCode
 /.config/Electron
