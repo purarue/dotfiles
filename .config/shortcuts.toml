@@ -957,3 +957,9 @@ timer-till "$*" && playping-loop
 # to generate a html file with diff colors
 [git-color]
 command = 'exec git -c color.ui=always "$@"'
+
+[exif-clear-tags]
+command = 'exec exiftool -all:all= -r "$@"'
+
+[img-auto-orient]
+command = 'exec mogrify -auto-orient "$@"'
