@@ -9,6 +9,8 @@ function which-cat() {
 		if [[ -r "${COMMAND_OUTPUT}" ]]; then
 			if iconv --from-code="utf-8" --to-code="utf-8" "${COMMAND_OUTPUT}" >/dev/null 2>&1; then
 				command cat "${COMMAND_OUTPUT}"
+			elif gzip -t "${COMMAND_OUTPUT}" >/dev/null 2>&1; then
+				zcat "${COMMAND_OUTPUT}"
 			else
 				file "${COMMAND_OUTPUT}"
 			fi

@@ -41,13 +41,11 @@ ${REPOS}/my_feed/scripts:\
 ${REPOS}/ttally/bin:\
 ${XDG_DATA_HOME}/shortcuts:\
 ${HOME}/.local/bin:\
-${HOME}/.local/scripts/mac:\
 ${HOME}/.local/scripts/cross-platform:\
 ${HOME}/.local/scripts/generic:\
 ${XDG_DATA_HOME}/go/bin:\
 ${XDG_DATA_HOME}/cargo/bin:\
 ${XDG_DATA_HOME}/pubcache/bin:\
-${HOME}/.cabal/bin:\
 ${HOME}/.config/i3blocks/blocks:\
 ${PATH}"
 
@@ -67,10 +65,12 @@ export ON_OS
 case "$ON_OS" in
 linux*)
 	# add linux stuff to $PATH
-	PATH="\
-${HOME}/.local/share/gem/ruby/3.0.0/bin:\
-${HOME}/.local/scripts/linux:\
-${PATH}"
+	PATH="${HOME}/.local/scripts/linux:${PATH}"
+	if [ -d "$HOME/.local/share/gem/" ]; then
+		for dir in "${HOME}"/.local/share/gem/ruby/3.*; do
+			PATH="$dir/bin:$PATH"
+		done
+	fi
 	export ARCHFLAGS="-arch x86_64" # Compilation flags
 	;;
 mac*)
