@@ -20,11 +20,6 @@ alias remove-orphans='sudo pacman -Rns $(list-orphans)'
 alias paru-clear-cache='paru -Syu && paru -Sc'
 alias rnm='sudo systemctl restart NetworkManager' # restart networkmanager
 alias rss='e "$HOME/.config/newsraft/feeds"'
-newsraft() {
-	command newsraft "$@"
-	[[ -z "$*" ]] && setsid -f update-rss
-}
-alias newsboat=newsraft
 
 cache-clean() {
 	gem cleanup
