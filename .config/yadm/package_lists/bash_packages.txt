@@ -10,6 +10,6 @@ paulirish/git-open
 dylanaraps/neofetch
 kadwanev/retry
 kdheepak/panvimdoc
-reinefjord/wayshot
+codeberg.org/svartstare/wayshot
 eschulte/lisp-format
 rupa/z

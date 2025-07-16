@@ -234,7 +234,10 @@ havecmd basher || ln -s "${BASHER_ROOT}/bin/basher" "${HOME}/.local/bin"
 havecmd basher && {
 	BASHER_INSTALLED="$(basher list)"
 	while read -r bash_pkg; do
-		if ! grep -xq "${bash_pkg}" <<<"${BASHER_INSTALLED}"; then
+		# if there's something like codeberg.org/svartstare/wayshot, then
+		# remove the codeberg.org part, keep the last two parts split by '/'
+		pkg_query="$(rcut -d'/' -f-2 <<<"${bash_pkg}")"
+		if ! grep -xq "${pkg_query}" <<<"${BASHER_INSTALLED}"; then
 			echo "Installing ${bash_pkg}" 1>&2
 			basher install "${bash_pkg}"
 		fi
