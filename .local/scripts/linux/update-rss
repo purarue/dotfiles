@@ -10,7 +10,7 @@ if pgrep -x newsraft >/dev/null; then
 	echo "Newsraft is active, skipping update..." >&2
 	exit 1
 else
-	newsraft -e reload-all >/dev/null
+	[[ -z "$SKIP_RELOAD" ]] && newsraft -e reload-all >/dev/null
 	unread="$(newsraft -e print-unread-items-count)" || exit $?
 	if [[ -z "$unread" ]]; then
 		echo '0' >"${CACHE_FILE}"
