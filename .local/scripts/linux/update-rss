@@ -12,10 +12,5 @@ if pgrep -x newsraft >/dev/null; then
 else
 	[[ -z "$SKIP_RELOAD" ]] && newsraft -e reload-all >/dev/null
 	unread="$(newsraft -e print-unread-items-count)" || exit $?
-	if [[ -z "$unread" ]]; then
-		echo '0' >"${CACHE_FILE}"
-	else
-		# delete a space followed by anything
-		echo "${unread%% *}" >"${CACHE_FILE}"
-	fi
+	is-integer "$unread" >/dev/null && echo "$unread" >"${CACHE_FILE}"
 fi
