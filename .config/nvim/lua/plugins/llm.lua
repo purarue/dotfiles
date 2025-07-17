@@ -4,6 +4,8 @@ return {
         dependencies = { "copilot.lua" },
         cmd = "Copilot",
         event = "InsertEnter",
+        -- if on one of my local machines (I'm on a known OS)
+        enabled = os.getenv("ON_OS") ~= nil,
         config = function()
             require("copilot_cmp").setup({
                 suggestion = { enabled = false },
