@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# use exiftool to grab if an image has a orientation tag, and
+# use mogrify -auto-orient to fix the orientation
+
+for f in "$@"; do
+	if exiftool "$f" | grep -i "orientation" | grep -iq rotate; then
+		echo "Rotating $f"
+		mogrify -auto-orient "$f"
+	else
+		echo "No rotation needed for $f"
+	fi
+done

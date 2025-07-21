@@ -18,5 +18,3 @@ read -r answer
 to_folder="${HOME}/shared/Shared/photo-doc"
 mkdir -p "$to_folder"
 mv -vn "$FILE" "$to_folder"
-
-photos-unsync-recent 1

@@ -1,0 +1,3 @@
+#!/bin/sh
+# pass a duration for fd as the first argument, otherwise defaults to 2 weeks
+exec fd jpg "$HOME/.local/share/PhoneCamera" --changed-within "${1:-2weeks}" -X image-auto-rotate
