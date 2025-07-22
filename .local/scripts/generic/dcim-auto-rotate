@@ -1,3 +1,9 @@
 #!/bin/sh
 # pass a duration for fd as the first argument, otherwise defaults to 2 weeks
-exec fd jpg "$HOME/.local/share/PhoneCamera" --changed-within "${1:-2weeks}" -x image-auto-rotate
+dir="$HOME/.local/share/PhoneCamera"
+case "$ON_OS" in
+android_termux*)
+	dir="$HOME/storage/dcim"
+	;;
+esac
+exec fd jpg "$dir" --changed-within "${1:-2weeks}" -x image-auto-rotate
