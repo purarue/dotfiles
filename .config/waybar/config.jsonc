@@ -16,7 +16,7 @@
 		"idle_inhibitor",
 		"custom/reminder-sink",
 		"custom/rss",
-		"custom/calcurse",
+		// "custom/calcurse",
 		// "custom/todo",
 		"custom/mail",
 		"network",
