@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-# sync photos from my data directory to my XDG_PICTURES_DIR
-# on my phone, this is synced from the underlying dcim/Camera folder:
-# https://purarue.xyz/d/backup_images.job?dark
+# sync photos from the syncthing directory to my $XDG_PICTURES_DIR
+# dcim-auto-rotate is a script that rotates images based on EXIF data
 
 evry 5 minutes -copy_images && {
 	dcim-auto-rotate # bake in rotations for images taken in the last 2 weeks
