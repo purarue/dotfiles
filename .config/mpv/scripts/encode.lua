@@ -306,7 +306,7 @@ function set_timestamp(profile)
             preserve_filters = true,
             append_filter = "",
             codec = "-an -sn -c:v libvpx -crf 10 -b:v 1000k",
-            output_format = "$f_$n.webm",
+            output_format = "$f_$n.$x", -- $x means reuse input format
             output_directory = "",
             ffmpeg_command = "ffmpeg",
             print = true,
