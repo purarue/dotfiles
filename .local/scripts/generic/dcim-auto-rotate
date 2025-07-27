@@ -1,9 +1,23 @@
-#!/bin/sh
-# pass a duration for fd as the first argument, otherwise defaults to 2 weeks
-dir="$HOME/.local/share/PhoneCamera"
-case "$ON_OS" in
-android_termux*)
-	dir="$HOME/storage/dcim"
-	;;
-esac
-exec fd jpg "$dir" --changed-within "${1:-2weeks}" -x image-auto-rotate
+#!/usr/bin/env bash
+set -xeo pipefail
+if [[ -n "$1" ]]; then
+	dir="$1"
+else
+	dir="$HOME/.local/share/PhoneCamera"
+	case "$ON_OS" in
+	android_termux*)
+		dir="$HOME/storage/dcim"
+		;;
+	esac
+fi
+if [[ ! -d "$dir" ]]; then
+	echo "Directory $dir does not exist."
+	exit 1
+fi
+dir="$(realpath "$dir")"
+declare -a args=()
+if [[ -z "$1" ]]; then
+	args+=("--changed-within" "2weeks")
+fi
+args+=("-x" "image-auto-rotate")
+exec fd jpg "$dir" "${args[@]}"
