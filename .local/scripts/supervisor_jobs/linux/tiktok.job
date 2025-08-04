@@ -7,4 +7,5 @@ evry 6 hours -tiktok-update-rss && {
 	tiktok-local-rss download
 	tiktok-local-rss rss
 	tiktok-update-rss-feeds
+	update-rss
 }

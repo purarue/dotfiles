@@ -7,10 +7,11 @@ TARGET_DIR="${XDG_DOCUMENTS_DIR}/PicturesFavorites"
 if [[ ! -d "${TARGET_DIR}" ]]; then
 	printf 'Target directory %s does not exist\n' "${TARGET_DIR}" >&2
 fi
-MATCHES="$(find "${TARGET_DIR}" -name "${FILENAME}" -type f | wc -l)"
+MATCHES="$(find "${TARGET_DIR}" -name "${FILENAME}" -type f)"
 
-if ((MATCHES)); then
+if [[ -n "$MATCHES" ]]; then
 	echo "File already exists in target directory" >&2
+	echo "$MATCHES"
 	exit 1
 fi
 
