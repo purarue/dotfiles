@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# take png or pdf and convert it to a png
+# then tile it into a 2x2 grid so I can pass out flyers
+
+set -eux
+
+input="${1?:no input file}"
+tdir="$(mktemp -d 'handbill.XXXXXX')"
+magick convert "$input" "$tdir/page.png"
+
+montage -border 5x5 -tile 2x2 -geometry +0+0 "$tdir/page.png" "$tdir/page.png" "$tdir/page.png" "$tdir/page.png" \
+	-background white -gravity center -page A4 -quality 100 "$tdir/output.png"
+
+echo "Output written to $tdir/output.png"
