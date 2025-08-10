@@ -6,6 +6,10 @@ set -eux
 
 input="${1?:no input file}"
 tdir="$(mktemp -d 'handbill.XXXXXX')"
+if [[ ! -r "$input" ]]; then
+	echo "Input file $input does not exist or is not readable"
+	exit 1
+fi
 magick convert "$input" "$tdir/page.png"
 
 montage -border 5x5 -tile 2x2 -geometry +0+0 "$tdir/page.png" "$tdir/page.png" "$tdir/page.png" "$tdir/page.png" \
