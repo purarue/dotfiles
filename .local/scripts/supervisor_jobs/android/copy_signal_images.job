@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+evry 1 day -copy_signal && {
+	printlog 'copy_signal:copying signal images...'
+	FROM="$HOME/shared/Pictures/Signal"
+	TO="$HOME/storage/dcim"
+	if [[ ! -d "$TO" ]]; then
+		printlog "copy_signal:Destination directory $TO does not exist, exiting." >&2
+		exit 0
+	fi
+	if [[ -d "$FROM" ]]; then
+		rsync -Pavh --exclude='*.tmp' --exclude='*.log' "$FROM" "$TO/"
+	else
+		printlog 'copy_signal:source directory does not exist, nothing to copy.'
+	fi
+
+}
