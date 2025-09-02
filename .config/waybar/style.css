@@ -90,13 +90,18 @@ button:hover {
 #custom-rss,
 #custom-calcurse,
 #custom-todo,
-#custom-reminder-sink,
 #tray,
 #mode,
 #idle_inhibitor,
 #scratchpad {
   padding: 0 8px;
   border-right: 1px solid rgba(100, 114, 125, 0.5);
+  color: #ffffff;
+}
+
+#custom-reminder-sink {
+  border-right: 1px solid rgba(100, 114, 125, 0.5);
+  padding: 0 5px;
   color: #ffffff;
 }
 
@@ -158,6 +163,11 @@ label:focus {
 
 #custom-reminders {
   padding: 0 6px;
+}
+
+#custom-reminder-sink {
+  /* add padding between the emoji and the text */
+  letter-spacing: 3px;
 }
 
 #custom-mail {

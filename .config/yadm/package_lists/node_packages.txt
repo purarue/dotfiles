@@ -20,7 +20,6 @@ npm
 prettier
 prettier-plugin-prisma
 prettier-plugin-toml
-pyright
 stylelint
 typescript
 typescript-language-server

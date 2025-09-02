@@ -3,6 +3,7 @@
 # things I would only want to install on a computer
 pandas
 matplotlib
+basedpyright
 numpy
 scipy
 orjson

@@ -8,6 +8,14 @@ return {
         lazy = true,
     },
     {
+        "MysticalDevil/inlay-hints.nvim",
+        event = "LspAttach",
+        dependencies = { "neovim/nvim-lspconfig" },
+        config = function()
+            require("inlay-hints").setup()
+        end,
+    },
+    {
         "neovim/nvim-lspconfig",
         enable = false,
         event = { "BufReadPost", "BufNewFile" },
@@ -38,17 +46,16 @@ return {
                         },
                     },
                 },
-                pyright = {
-                    flags = { debounce_text_changes = 100 },
+                basedpyright = {
                     settings = {
-                        {
-                            pyright = { autoImportCompletions = true },
-                            python = {
-                                analysis = {
-                                    autoSearchPaths = true,
-                                    diagnosticMode = "openFilesOnly",
-                                    useLibraryCodeForTypes = true,
-                                    typeCheckingMode = "off",
+                        basedpyright = {
+                            analysis = {
+                                autoSearchPaths = true,
+                                typeCheckingMode = "off",
+                                useLibraryCodeForTypes = true,
+                                diagnosticMode = "openFilesOnly",
+                                inlayHints = {
+                                    callArgumentNames = true,
                                 },
                             },
                         },
@@ -151,7 +158,7 @@ return {
             -- run on any client connecting
             vim.api.nvim_create_autocmd("LspAttach", {
                 group = vim.api.nvim_create_augroup("custom-lsp-attach", { clear = true }),
-                callback = function()
+                callback = function(event)
                     -- set omnifunc to lsp omnifunc
                     vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
                     -- when the client attaches, add keybindings
@@ -168,23 +175,6 @@ return {
                         { "gr", vim.lsp.buf.references, desc = "goto references" },
                         { "D", vim.diagnostic.open_float, desc = "diagnostic hover" },
                     })
-                    -- BUG: hmm... doesn't actually seem to display for me
-                    -- may have to enable these for each language server
-                    --
-                    -- local client = vim.lsp.get_client_by_id(event.data.client_id)
-                    -- if client and vim.lsp.inlay_hint and
-                    --     client.supports_method('textDocument/inlayHint') then
-                    --     wk.add({
-                    --         ['ft'] = {
-                    --             function()
-                    --                 vim.lsp.inlay_hint.enable(
-                    --                     not vim.lsp.inlay_hint.is_enabled({}))
-                    --             end, desc = "toggle inlay hints"
-                    --         }
-                    --     })
-                    --     -- toggle on by default, for now
-                    --     vim.lsp.inlay_hint.enable(true)
-                    -- end
                 end,
                 desc = "lsp keybindings",
             })
