@@ -3,13 +3,14 @@
 import json
 import fileinput
 import contextlib
+from typing import Any
 
 from jsonc_parser.parser import JsoncParser
 
 
 def main() -> None:
-    lines = list(fileinput.input())
-    data = JsoncParser.parse_str("\n".join(lines))
+    lines: list[str] = list(fileinput.input())
+    data: Any = JsoncParser.parse_str("\n".join(lines))
     print(json.dumps(data, indent=4))
 
 
