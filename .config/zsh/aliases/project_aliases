@@ -135,7 +135,6 @@ sr() {
 	esac
 }
 alias srd='REMINDER_SINK_DEBUG=1 sr'
-alias rs='reminder-sink-silence'
 reminder-list() {
 	tr ':' '\n' <<<"$REMINDER_SINK_PATH" | parallel --keep-order fd . '{}' --type f
 }
@@ -192,15 +191,6 @@ if [[ ! -e "${TTALLY_ALIASES}" ]]; then
 fi
 [[ -e "${TTALLY_ALIASES}" ]] && source "${TTALLY_ALIASES}"
 alias 'czd=PROMPT_DATETIME=1 cz'
-alias 'czl=while cz; do; done'
-alias 'cze=ttally edit-recent food -l'
-alias 'ca=food-now'
-b-() {
-	echo -n "cals: "
-	b-calories "$@"
-	echo -n "water: "
-	b-water "$@"
-}
 sn() {
 	self-now && {
 		if [[ -n "$TTALLY_FILTERS" ]]; then
@@ -210,8 +200,15 @@ sn() {
 		fi
 	}
 }
+rs() {
+	reminder-sink-silence && {
+		tail -n1 "$(reminder-sink silence file)" | grep -qiE "$TTALLY_FILTERS" && vps_sync_ttally || true
+	}
+}
 alias self-edit='editor "$HPIDATA/.self_types.txt"'
-alias snl='while self-now; do; done'
+snl() {
+	while sn; do; done
+}
 alias fl='flipflop.py'
 alias fls='fl status'
 flf() {
