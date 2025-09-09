@@ -23,6 +23,10 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
 
+-- can use :grep "something" to search with rg recursively to populate the quickfix list
+-- to include hidden files, pass rg flags like :grep -uu "something"
+vim.opt.grepprg = "rg --vimgrep"
+
 -- cursor motion
 vim.opt.scrolloff = 8
 vim.opt.matchpairs:append("<:>")
