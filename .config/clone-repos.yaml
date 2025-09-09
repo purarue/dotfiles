@@ -32,7 +32,7 @@
 "https://github.com/purarue/bleanser":
   pip: install
 "https://github.com/purarue/promnesia-fork":
-  pip: editable
+  pip: install
   postinstall: git remote add upstream "https://github.com/karlicoss/promnesia"
 "https://github.com/purarue/promnesia":
-  pip: editable
+  pip: install

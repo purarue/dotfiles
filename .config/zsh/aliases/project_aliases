@@ -102,6 +102,9 @@ alias albums-rate='nextalbums mark-listened'
 source_if_exists "${REPOS}/HPI/scripts/functions.sh"
 source_if_exists "${REPOS}/HPI-personal/scripts/functions.sh"
 source_if_exists "${REPOS}/my_feed/scripts/functions.sh"
+hpi-create-custom-editable() {
+	reorder_editable reorder --create-custom -e "$(python3 -m site --user-site)/_00_hpi_force_order.pth" ~/Repos/HPI-personal ~/Repos/HPI ~/Repos/HPI-karlicoss
+}
 
 sms-images-review() {
 	find "${HOME}/.cache/sms-images" -type f -mtime -"${1:-28}"

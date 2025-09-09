@@ -15,9 +15,6 @@ from datetime import datetime, date, timedelta
 from my.core.common import PathIsh, Paths
 
 from .common import repo
-from .reorder_path import purarue_reorder_path
-
-purarue_reorder_path()  # type: ignore[no-untyped-call]
 
 #############
 #           #
