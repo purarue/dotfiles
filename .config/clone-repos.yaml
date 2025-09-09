@@ -21,11 +21,11 @@
   base: ~/.local/share/go/src/github.com/purarue
   symlink_to: ~/Repos
   postinstall: pip install --user --break-system-packages ./currently_listening_py
-"https://github.com/purarue/albums":
-  pip: editable
 "https://github.com/purarue/trakt_watch":
   dirname: "trakt-watch"
   pip: install
+"https://github.com/purarue/albums":
+  postinstall: pip install --user --editable .
 "https://github.com/purarue/bleanser-fork":
   pip: install
   postinstall: git remote add upstream "https://github.com/karlicoss/bleanser"
