@@ -93,13 +93,13 @@ vim.opt.wildignore:append({
 
 -- enable treesitter highlighting
 vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "*" },
     callback = function(e)
         local ft = e.match
-        local has_parser = pcall(vim.treesitter.start, e.buf, ft)
-        if not has_parser then
-            -- vim.notify("No treesitter parser for " .. ft, vim.log.levels.DEBUG)
-            return
-        end
+        pcall(vim.treesitter.start, e.buf)
+        -- if not succeeded then
+        --     print("treesitter failed to start for " .. ft)
+        -- end
     end,
 })
 vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
