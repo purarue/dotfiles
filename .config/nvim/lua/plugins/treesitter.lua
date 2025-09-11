@@ -1,18 +1,3 @@
--- custom parser for rifleconfig files
-vim.api.nvim_create_autocmd("User", {
-    pattern = "TSUpdate",
-    callback = function()
-        require("nvim-treesitter.parsers").rifleconfig = {
-            install_info = {
-                url = "https://github.com/purarue/tree-sitter-rifleconfig",
-                revision = "f236f9becb1b9d035eb510233c9ec75c3873c92b",
-                queries = "queries/rifleconfig",
-            },
-            tier = 2,
-        }
-    end,
-})
-
 return {
     {
         "windwp/nvim-ts-autotag",
@@ -21,6 +6,110 @@ return {
     {
         "nvim-treesitter/nvim-treesitter-context",
         lazy = true,
+    },
+    {
+        "nvim-treesitter/nvim-treesitter",
+        branch = "main",
+        lazy = false,
+        dir = "~/Repos/nvim-treesitter",
+        build = ":TSUpdate",
+        config = function()
+            require("nvim-treesitter").setup({
+                -- Directory to install parsers and queries to
+                install_dir = vim.fn.stdpath("data") .. "/site",
+            })
+
+            require("nvim-treesitter").install({
+                "astro",
+                "awk",
+                "bash",
+                "c",
+                "commonlisp",
+                "cpp",
+                "css",
+                "csv",
+                "dart",
+                "diff",
+                "dockerfile",
+                "eex",
+                "elixir",
+                "elm",
+                "embedded_template",
+                "erlang",
+                "git_config",
+                "git_rebase",
+                "gitcommit",
+                "gitignore",
+                "go",
+                "gomod",
+                "gosum",
+                "graphql",
+                "haskell",
+                "heex",
+                "html",
+                "hyprlang",
+                "ini",
+                "java",
+                "javascript",
+                "jq",
+                "json",
+                "jsonc",
+                "lua",
+                "make",
+                "markdown",
+                "markdown_inline",
+                "muttrc",
+                "nginx",
+                "perl",
+                "php",
+                "po",
+                "prisma",
+                "python",
+                "query",
+                "regex",
+                "requirements",
+                "rifleconf",
+                "robots",
+                "ruby",
+                "rust",
+                "scss",
+                "sql",
+                "ssh_config",
+                "templ",
+                "todotxt",
+                "toml",
+                "tsx",
+                "typescript",
+                "vim",
+                "vimdoc",
+                "xml",
+                "yaml",
+            })
+            require("treesitter-context").setup({
+                enable = true,
+                max_lines = 10,
+                multiline_threshold = 5,
+            })
+            require("nvim-ts-autotag").setup()
+
+            vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
+                group = vim.api.nvim_create_augroup("disable-ts-context", { clear = true }),
+                callback = function(e)
+                    local ft ---@type string
+                    if e.event == "FileType" then
+                        ft = e.match
+                    else
+                        ft = vim.bo.filetype
+                    end
+                    if ft == "markdown" then
+                        require("treesitter-context").disable()
+                    else
+                        require("treesitter-context").enable()
+                    end
+                end,
+                desc = "disable treesitter context for markdown files, re-enable it when attaching other buffers",
+            })
+        end,
     },
     {
         "nvim-treesitter/nvim-treesitter-textobjects",
@@ -122,115 +211,6 @@ return {
             vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F_expr, { expr = true })
             vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t_expr, { expr = true })
             vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = true })
-        end,
-    },
-    {
-        "nvim-treesitter/nvim-treesitter",
-        branch = "main",
-        lazy = false,
-        build = ":TSUpdate",
-        config = function()
-            require("nvim-treesitter").setup({
-                -- Directory to install parsers and queries to
-                install_dir = vim.fn.stdpath("data") .. "/site",
-            })
-
-            -- highlight ejs (embedded js) files by combining a few parsers
-            -- (this seems to work, I just actually dont use ejs files, so not point for me)
-            -- vim.filetype.add({ extension = { ejs = "ejs" } })
-            -- vim.treesitter.language.register("html", "ejs")
-            -- vim.treesitter.language.register("javascript", "ejs")
-            -- vim.treesitter.language.register("embedded_template", "ejs")
-
-            require("nvim-treesitter").install({
-                "astro",
-                "awk",
-                "bash",
-                "c",
-                "commonlisp",
-                "cpp",
-                "css",
-                "csv",
-                "dart",
-                "diff",
-                "dockerfile",
-                "eex",
-                "elixir",
-                "elm",
-                "embedded_template",
-                "erlang",
-                "git_config",
-                "git_rebase",
-                "gitcommit",
-                "gitignore",
-                "go",
-                "gomod",
-                "gosum",
-                "graphql",
-                "haskell",
-                "heex",
-                "html",
-                "hyprlang",
-                "ini",
-                "java",
-                "javascript",
-                "jq",
-                "json",
-                "jsonc",
-                "lua",
-                "make",
-                "markdown",
-                "markdown_inline",
-                "muttrc",
-                "nginx",
-                "perl",
-                "php",
-                "po",
-                "prisma",
-                "python",
-                "query",
-                "regex",
-                "requirements",
-                "robots",
-                "ruby",
-                "rust",
-                "scss",
-                "sql",
-                "ssh_config",
-                "templ",
-                "todotxt",
-                "toml",
-                "tsx",
-                "typescript",
-                "vim",
-                "vimdoc",
-                "xml",
-                "yaml",
-            })
-            require("treesitter-context").setup({
-                enable = true,
-                max_lines = 10,
-                multiline_threshold = 5,
-            })
-            require("nvim-ts-autotag").setup()
-
-            vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
-                group = vim.api.nvim_create_augroup("disable-ts-context", { clear = true }),
-                callback = function(e)
-                    local ft ---@type string
-                    if e.event == "FileType" then
-                        ft = e.match
-                    else
-                        ft = vim.bo.filetype
-                    end
-                    if ft == "markdown" then
-                        require("treesitter-context").disable()
-                    else
-                        require("treesitter-context").enable()
-                    end
-                end,
-                desc = "disable treesitter context for markdown files, re-enable it when attaching other buffers",
-            })
         end,
     },
 }
