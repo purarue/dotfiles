@@ -1,3 +1,18 @@
+-- custom parser for rifleconfig files
+vim.api.nvim_create_autocmd("User", {
+    pattern = "TSUpdate",
+    callback = function()
+        require("nvim-treesitter.parsers").rifleconfig = {
+            install_info = {
+                url = "https://github.com/purarue/tree-sitter-rifleconfig",
+                revision = "f236f9becb1b9d035eb510233c9ec75c3873c92b",
+                queries = "queries/rifleconfig",
+            },
+            tier = 2,
+        }
+    end,
+})
+
 return {
     {
         "windwp/nvim-ts-autotag",
@@ -8,23 +23,117 @@ return {
         lazy = true,
     },
     {
-        "nvim-treesitter/nvim-treesitter",
-        cmd = { "TSUpdate", "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
-        event = { "BufRead", "BufNewFile" },
-        dependencies = {
-            "nvim-treesitter/nvim-treesitter-textobjects",
-        },
-        build = ":TSUpdateSync",
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        after = "nvim-treesitter",
+        branch = "main",
         config = function()
-            require("nvim-treesitter.parsers").get_parser_configs()["rifleconfig"] = {
-                install_info = {
-                    -- url = "~/Repos/tree-sitter-rifleconfig",
-                    url = "https://github.com/purarue/tree-sitter-rifleconfig",
-                    files = { "src/parser.c" },
-                    requires_generate_from_grammar = false,
-                    branch = "main",
+            require("nvim-treesitter-textobjects").setup({
+                select = {
+                    lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+                    selection_modes = {
+                        ["@parameter.outer"] = "v", -- charwise
+                        ["@function.outer"] = "V", -- linewise
+                        ["@class.outer"] = "<c-v>", -- blockwise
+                    },
+                    include_surrounding_whitespace = false,
                 },
-            }
+                move = {
+                    set_jumps = true, -- whether to set jumps in the jumplist
+                },
+            })
+
+            -- selecting
+            vim.keymap.set({ "x", "o" }, "af", function()
+                require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
+            end)
+            vim.keymap.set({ "x", "o" }, "if", function()
+                require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
+            end)
+            vim.keymap.set({ "x", "o" }, "ac", function()
+                require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects")
+            end)
+            vim.keymap.set({ "x", "o" }, "ic", function()
+                require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
+            end)
+            vim.keymap.set({ "x", "o" }, "co", function()
+                require("nvim-treesitter-textobjects.select").select_textobject("@comment.outer", "textobjects")
+            end)
+
+            -- swaps
+            vim.keymap.set("n", "<leader>a", function()
+                require("nvim-treesitter-textobjects.swap").swap_next("@parameter.inner")
+            end)
+            vim.keymap.set("n", "<leader>A", function()
+                require("nvim-treesitter-textobjects.swap").swap_previous("@parameter.outer")
+            end)
+
+            -- move
+            -- You can use the capture groups defined in `textobjects.scm`
+            vim.keymap.set({ "n", "x", "o" }, "]m", function()
+                require("nvim-treesitter-textobjects.move").goto_next_start("@function.outer", "textobjects")
+            end)
+            vim.keymap.set({ "n", "x", "o" }, "]]", function()
+                require("nvim-treesitter-textobjects.move").goto_next_start("@class.outer", "textobjects")
+            end)
+            -- You can also pass a list to group multiple queries.
+            vim.keymap.set({ "n", "x", "o" }, "]o", function()
+                require("nvim-treesitter-textobjects.move").goto_next_start({ "@loop.inner", "@loop.outer" }, "textobjects")
+            end)
+
+            vim.keymap.set({ "n", "x", "o" }, "]M", function()
+                require("nvim-treesitter-textobjects.move").goto_next_end("@function.outer", "textobjects")
+            end)
+            vim.keymap.set({ "n", "x", "o" }, "][", function()
+                require("nvim-treesitter-textobjects.move").goto_next_end("@class.outer", "textobjects")
+            end)
+
+            vim.keymap.set({ "n", "x", "o" }, "[m", function()
+                require("nvim-treesitter-textobjects.move").goto_previous_start("@function.outer", "textobjects")
+            end)
+            vim.keymap.set({ "n", "x", "o" }, "[[", function()
+                require("nvim-treesitter-textobjects.move").goto_previous_start("@class.outer", "textobjects")
+            end)
+
+            vim.keymap.set({ "n", "x", "o" }, "[M", function()
+                require("nvim-treesitter-textobjects.move").goto_previous_end("@function.outer", "textobjects")
+            end)
+            vim.keymap.set({ "n", "x", "o" }, "[]", function()
+                require("nvim-treesitter-textobjects.move").goto_previous_end("@class.outer", "textobjects")
+            end)
+
+            -- Go to either the start or the end, whichever is closer.
+            -- Use if you want more granular movements
+            vim.keymap.set({ "n", "x", "o" }, "]d", function()
+                require("nvim-treesitter-textobjects.move").goto_next("@conditional.outer", "textobjects")
+            end)
+            vim.keymap.set({ "n", "x", "o" }, "[d", function()
+                require("nvim-treesitter-textobjects.move").goto_previous("@conditional.outer", "textobjects")
+            end)
+
+            local ts_repeat_move = require("nvim-treesitter-textobjects.repeatable_move")
+
+            -- Repeat movement with ; and ,
+            -- ensure ; goes forward and , goes backward regardless of the last direction
+            vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
+            vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
+
+            -- Optionally, make builtin f, F, t, T also repeatable with ; and ,
+            vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f_expr, { expr = true })
+            vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F_expr, { expr = true })
+            vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t_expr, { expr = true })
+            vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = true })
+        end,
+    },
+    {
+        "nvim-treesitter/nvim-treesitter",
+        branch = "main",
+        lazy = false,
+        build = ":TSUpdate",
+        config = function()
+            require("nvim-treesitter").setup({
+                -- Directory to install parsers and queries to
+                install_dir = vim.fn.stdpath("data") .. "/site",
+            })
 
             -- highlight ejs (embedded js) files by combining a few parsers
             -- (this seems to work, I just actually dont use ejs files, so not point for me)
@@ -33,139 +142,76 @@ return {
             -- vim.treesitter.language.register("javascript", "ejs")
             -- vim.treesitter.language.register("embedded_template", "ejs")
 
-            require("nvim-treesitter.configs").setup({
-                modules = {},
-                ignore_install = {},
-                sync_install = false,
-                auto_install = true,
-                ensure_installed = {
-                    "astro",
-                    "awk",
-                    "bash",
-                    "c",
-                    "commonlisp",
-                    "cpp",
-                    "css",
-                    "csv",
-                    "dart",
-                    "diff",
-                    "dockerfile",
-                    "eex",
-                    "elixir",
-                    "elm",
-                    "embedded_template",
-                    "erlang",
-                    "git_config",
-                    "git_rebase",
-                    "gitcommit",
-                    "gitignore",
-                    "go",
-                    "gomod",
-                    "gosum",
-                    "graphql",
-                    "haskell",
-                    "heex",
-                    "html",
-                    "hyprlang",
-                    "ini",
-                    "java",
-                    "javascript",
-                    "jq",
-                    "json",
-                    "jsonc",
-                    "lua",
-                    "make",
-                    "markdown",
-                    "markdown_inline",
-                    "muttrc",
-                    "nginx",
-                    "perl",
-                    "php",
-                    "po",
-                    "prisma",
-                    "python",
-                    "query",
-                    "regex",
-                    "requirements",
-                    "robots",
-                    "ruby",
-                    "rust",
-                    "scss",
-                    "sql",
-                    "ssh_config",
-                    "templ",
-                    "todotxt",
-                    "toml",
-                    "tsx",
-                    "typescript",
-                    "vim",
-                    "vimdoc",
-                    "xml",
-                    "yaml",
-                },
-                highlight = {
-                    enable = true, -- false will disable the whole extension
-                },
-                indent = { enable = true },
-                incremental_selection = {
-                    enable = true,
-                    -- if you have some text visually selected, can use these keymaps to expand/reduce the selection
-                    keymaps = {
-                        init_selection = "gnn",
-                        node_incremental = "grn",
-                        scope_incremental = "grc",
-                        node_decremental = "grm",
-                    },
-                },
-                textobjects = {
-                    select = {
-                        enable = true,
-                        lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-                        keymaps = {
-                            -- You can use the capture groups defined in textobjects.scm
-                            ["aa"] = "@parameter.outer",
-                            ["ia"] = "@parameter.inner",
-                            ["af"] = "@function.outer",
-                            ["if"] = "@function.inner",
-                            ["ac"] = "@class.outer",
-                            ["ic"] = "@class.inner",
-                            ["co"] = "@comment.outer",
-                        },
-                    },
-                    move = {
-                        enable = true,
-                        set_jumps = true, -- whether to set jumps in the jumplist
-                        goto_next_start = {
-                            ["]m"] = "@function.outer",
-                            ["]]"] = "@class.outer",
-                        },
-                        goto_next_end = {
-                            ["]M"] = "@function.outer",
-                            ["]["] = "@class.outer",
-                        },
-                        goto_previous_start = {
-                            ["[m"] = "@function.outer",
-                            ["[["] = "@class.outer",
-                        },
-                        goto_previous_end = {
-                            ["[M"] = "@function.outer",
-                            ["[]"] = "@class.outer",
-                        },
-                    },
-                    swap = {
-                        enable = true,
-                        swap_next = { ["<leader>a"] = "@parameter.inner" },
-                        swap_previous = { ["<leader>A"] = "@parameter.inner" },
-                    },
-                },
+            require("nvim-treesitter").install({
+                "astro",
+                "awk",
+                "bash",
+                "c",
+                "commonlisp",
+                "cpp",
+                "css",
+                "csv",
+                "dart",
+                "diff",
+                "dockerfile",
+                "eex",
+                "elixir",
+                "elm",
+                "embedded_template",
+                "erlang",
+                "git_config",
+                "git_rebase",
+                "gitcommit",
+                "gitignore",
+                "go",
+                "gomod",
+                "gosum",
+                "graphql",
+                "haskell",
+                "heex",
+                "html",
+                "hyprlang",
+                "ini",
+                "java",
+                "javascript",
+                "jq",
+                "json",
+                "jsonc",
+                "lua",
+                "make",
+                "markdown",
+                "markdown_inline",
+                "muttrc",
+                "nginx",
+                "perl",
+                "php",
+                "po",
+                "prisma",
+                "python",
+                "query",
+                "regex",
+                "requirements",
+                "robots",
+                "ruby",
+                "rust",
+                "scss",
+                "sql",
+                "ssh_config",
+                "templ",
+                "todotxt",
+                "toml",
+                "tsx",
+                "typescript",
+                "vim",
+                "vimdoc",
+                "xml",
+                "yaml",
             })
-
             require("treesitter-context").setup({
                 enable = true,
                 max_lines = 10,
                 multiline_threshold = 5,
             })
-
             require("nvim-ts-autotag").setup()
 
             vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
