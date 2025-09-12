@@ -69,11 +69,11 @@ return {
     {
         "windwp/nvim-ts-autotag",
         opts = {},
-        events = { "BufReadPre", "BufNewFile" },
+        event = { "BufReadPre", "BufNewFile" },
     },
     {
         "nvim-treesitter/nvim-treesitter-context",
-        events = { "BufReadPre", "BufNewFile" },
+        event = { "BufReadPre", "BufNewFile" },
         opts = {
             enable = true,
             max_lines = 10,
@@ -98,7 +98,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter-textobjects",
         after = "nvim-treesitter",
-        events = { "VeryLazy" },
+        event = { "VeryLazy" },
         branch = "main",
         opts = {
             select = {
