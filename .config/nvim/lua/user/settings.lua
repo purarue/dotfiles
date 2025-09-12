@@ -91,7 +91,8 @@ vim.opt.wildignore:append({
     "**/.git/*",
 })
 
-vim.g.treesitter_ignored = { "cmp_menu", "TelescopePrompt", "TelescopeResults", "TelescopePreview", "fidget", "notify" }
+vim.g.treesitter_ignored =
+    { "cmp_menu", "TelescopePrompt", "TelescopeResults", "TelescopePreview", "fidget", "notify", "lazy", "lazy_backdrop", "DressingInput" }
 -- enable treesitter highlighting
 vim.api.nvim_create_autocmd("FileType", {
     pattern = { "*" },
