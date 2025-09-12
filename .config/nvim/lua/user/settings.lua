@@ -91,15 +91,22 @@ vim.opt.wildignore:append({
     "**/.git/*",
 })
 
+vim.g.treesitter_ignored = { "cmp_menu", "TelescopePrompt", "TelescopeResults", "TelescopePreview", "fidget", "notify" }
 -- enable treesitter highlighting
 vim.api.nvim_create_autocmd("FileType", {
     pattern = { "*" },
     callback = function(e)
         local ft = e.match
-        pcall(vim.treesitter.start, e.buf)
-        -- if not succeeded then
-        --     print("treesitter failed to start for " .. ft)
-        -- end
+        if vim.list_contains(vim.g.treesitter_ignored, ft) then
+            return
+        end
+        local succeeded = pcall(vim.treesitter.start, e.buf)
+        if not succeeded then
+            vim.notify("treesitter failed to start for " .. ft, vim.log.levels.WARN, {
+                title = "nvim-treesitter",
+                timeout = 3000,
+            })
+        end
     end,
 })
 vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
