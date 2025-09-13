@@ -87,11 +87,7 @@ return {
         dir = "~/Repos/nvim-treesitter",
         build = ":TSUpdate",
         config = function()
-            require("nvim-treesitter").setup({
-                -- Directory to install parsers and queries to
-                install_dir = vim.fn.stdpath("data") .. "/site",
-            })
-
+            require("nvim-treesitter").setup() -- use the defaults
             require("nvim-treesitter").install(install_languages)
         end,
     },
@@ -263,60 +259,6 @@ return {
                 end,
                 mode = { "n", "x", "o" },
                 desc = "previous conditional (nearest)",
-            },
-
-            -- repeatable movement
-            {
-                ";",
-                function()
-                    require("nvim-treesitter-textobjects.repeatable_move").repeat_last_move_next()
-                end,
-                mode = { "n", "x", "o" },
-                desc = "repeat last move forward",
-            },
-            {
-                ",",
-                function()
-                    require("nvim-treesitter-textobjects.repeatable_move").repeat_last_move_previous()
-                end,
-                mode = { "n", "x", "o" },
-                desc = "repeat last move backward",
-            },
-            {
-                "f",
-                function()
-                    return require("nvim-treesitter-textobjects.repeatable_move").builtin_f_expr
-                end,
-                mode = { "n", "x", "o" },
-                desc = "find next character (repeatable)",
-                expr = true,
-            },
-            {
-                "F",
-                function()
-                    return require("nvim-treesitter-textobjects.repeatable_move").builtin_F_expr
-                end,
-                mode = { "n", "x", "o" },
-                desc = "find previous character (repeatable)",
-                expr = true,
-            },
-            {
-                "t",
-                function()
-                    return require("nvim-treesitter-textobjects.repeatable_move").builtin_t_expr
-                end,
-                mode = { "n", "x", "o" },
-                desc = "till next character (repeatable)",
-                expr = true,
-            },
-            {
-                "T",
-                function()
-                    return require("nvim-treesitter-textobjects.repeatable_move").builtin_T_expr
-                end,
-                mode = { "n", "x", "o" },
-                desc = "till previous character (repeatable)",
-                expr = true,
             },
         },
     },
