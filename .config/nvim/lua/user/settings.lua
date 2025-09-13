@@ -93,7 +93,10 @@ vim.opt.wildignore:append({
 
 vim.g.treesitter_ignored = {
     "cmp_menu",
+    "qf",
+    "text",
     "cmp_docs",
+    "conf",
     "TelescopePrompt",
     "TelescopeResults",
     "TelescopePreview",

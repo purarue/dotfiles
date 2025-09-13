@@ -259,6 +259,7 @@ __pycache__
 /.config/discord
 /.config/discordcanary/
 /.config/enchant
+/.config/starter
 /.config/filezilla
 /.config/flameshot
 /.config/fontforge
