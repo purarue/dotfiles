@@ -22,6 +22,10 @@ return {
             require("user.terminal").set_background()
             require("catppuccin").setup({
                 background = { light = "latte", dark = "macchiato" },
+                float = {
+                    transparent = false,
+                    solid = false,
+                },
                 -- change background colors to match terminal
                 color_overrides = {
                     macchiato = { base = "#282828" },
@@ -52,23 +56,18 @@ return {
         opts = {},
     },
     {
-        "toppair/peek.nvim",
+        "MeanderingProgrammer/render-markdown.nvim",
         ft = "markdown",
         cond = not vim.g.on_android,
-        build = "deno task --quiet build:fast",
         keys = {
             {
                 "<leader>p",
                 function()
-                    vim.notify("launching preview...")
-                    require("peek").open()
+                    require("render-markdown").toggle()
                 end,
-                desc = "preview markdown",
+                desc = "preview markdown toggle",
             },
         },
-        config = function()
-            require("peek").setup()
-        end,
     },
     {
         -- g? : show help
