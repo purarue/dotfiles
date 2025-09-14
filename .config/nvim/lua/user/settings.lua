@@ -91,42 +91,6 @@ vim.opt.wildignore:append({
     "**/.git/*",
 })
 
-vim.g.treesitter_ignored = {
-    "blink-cmp-menu",
-    "blink-cmp-documentation",
-    "blink-cmp-signature",
-    "qf",
-    "text",
-    "snippets",
-    "gitattributes",
-    "conf",
-    "TelescopePrompt",
-    "TelescopeResults",
-    "TelescopePreview",
-    "fidget",
-    "notify",
-    "lazy",
-    "lazy_backdrop",
-    "DressingInput",
-}
--- enable treesitter highlighting
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "*" },
-    callback = function(e)
-        local ft = e.match
-        if vim.list_contains(vim.g.treesitter_ignored, ft) then
-            return
-        end
-        local succeeded = pcall(vim.treesitter.start, e.buf)
-        if not succeeded then
-            vim.notify("treesitter failed to start for " .. ft, vim.log.levels.WARN, {
-                title = "nvim-treesitter",
-                timeout = 3000,
-            })
-        end
-    end,
-})
-vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 
 -- set filetype for todo.txt files
 vim.filetype.add({

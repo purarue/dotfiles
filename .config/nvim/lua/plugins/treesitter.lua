@@ -1,3 +1,22 @@
+local treesitter_ignore_filetypes = {
+    "blink-cmp-menu",
+    "blink-cmp-documentation",
+    "blink-cmp-signature",
+    "qf",
+    "text",
+    "snippets",
+    "gitattributes",
+    "conf",
+    "TelescopePrompt",
+    "TelescopeResults",
+    "TelescopePreview",
+    "fidget",
+    "notify",
+    "lazy",
+    "lazy_backdrop",
+    "DressingInput",
+}
+
 local install_languages = {
     "astro",
     "awk",
@@ -89,6 +108,25 @@ return {
         config = function()
             require("nvim-treesitter").setup() -- use the defaults
             require("nvim-treesitter").install(install_languages)
+
+            -- enable treesitter highlighting
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = { "*" },
+                callback = function(e)
+                    local ft = e.match
+                    if vim.list_contains(treesitter_ignore_filetypes, ft) then
+                        return
+                    end
+                    local succeeded = pcall(vim.treesitter.start, e.buf)
+                    if not succeeded then
+                        vim.notify("treesitter failed to start for " .. ft, vim.log.levels.WARN, {
+                            title = "nvim-treesitter",
+                            timeout = 3000,
+                        })
+                    end
+                end,
+            })
+            vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         end,
     },
     {
