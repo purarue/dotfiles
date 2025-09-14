@@ -13,8 +13,6 @@ return {
             enable_autosnippets = true,
         })
 
-        require("user.snippets")
-
         -- <c-k> is my expansion key
         -- this will expand the current item or jump to the next item within the snippet.
         vim.keymap.set({ "i", "s" }, "<c-k>", function()

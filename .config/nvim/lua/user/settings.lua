@@ -92,11 +92,13 @@ vim.opt.wildignore:append({
 })
 
 vim.g.treesitter_ignored = {
-    "cmp_menu",
+    "blink-cmp-menu",
+    "blink-cmp-documentation",
+    "blink-cmp-signature",
     "qf",
     "text",
+    "snippets",
     "gitattributes",
-    "cmp_docs",
     "conf",
     "TelescopePrompt",
     "TelescopeResults",

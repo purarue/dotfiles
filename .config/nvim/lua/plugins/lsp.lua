@@ -4,29 +4,23 @@ return {
         lazy = true,
     },
     {
-        "hrsh7th/cmp-nvim-lsp",
-        lazy = true,
-    },
-    {
         "MysticalDevil/inlay-hints.nvim",
         event = "LspAttach",
-        dependencies = { "neovim/nvim-lspconfig" },
-        config = function()
-            require("inlay-hints").setup()
-        end,
+        after = { "nvim-lspconfig" },
+        opts = {},
     },
     {
         "neovim/nvim-lspconfig",
+        dependencies = { "saghen/blink.cmp" },
         enable = false,
         event = { "BufReadPost", "BufNewFile" },
         cmd = { "LspInfo", "LspInstall", "LspUninstall" },
         config = function()
-            -- https://github.com/hrsh7th/cmp-nvim-lsp
-            local capabilities = vim.lsp.protocol.make_client_capabilities()
-            capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+            local blink_cmp = require("blink.cmp")
+            local default_capabilities = blink_cmp.get_lsp_capabilities()
 
-            capabilities.textDocument.completion.completionItem.snippetSupport = true
-            capabilities.workspace = {
+            default_capabilities.textDocument.completion.completionItem.snippetSupport = true
+            default_capabilities.workspace = {
                 didChangeWatchedFiles = {
                     -- https://github.com/neovim/neovim/issues/23725#issuecomment-1561364086
                     -- https://github.com/neovim/neovim/issues/23291
@@ -102,14 +96,14 @@ return {
 
             for server, config in pairs(servers) do
                 if config == true then
-                    lspconf[server].setup({ capabilities = capabilities })
+                    lspconf[server].setup({ capabilities = default_capabilities })
                 else
-                    lspconf[server].setup(vim.tbl_extend("force", { capabilities = capabilities }, config))
+                    lspconf[server].setup(vim.tbl_extend("force", { capabilities = default_capabilities }, config))
                 end
             end
 
             lspconf.lua_ls.setup({
-                capabilities = capabilities,
+                capabilities = default_capabilities,
                 on_init = function(client)
                     if client.workspace_folders then
                         local path = client.workspace_folders[1].name

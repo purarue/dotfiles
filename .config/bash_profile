@@ -11,9 +11,9 @@ export HISTFILESIZE=-1
 export HISTSIZE=-1
 export HISTCONTROL=ignoredups
 export HISTIGNORE=?:??
-shopt -s histappend  # dont overwrite history
-shopt -s cmdhist   # save al-lines of multi-line commands in the same entry
-shopt -s lithist  # embedded newlines for multi-line commands
+shopt -s histappend # dont overwrite history
+shopt -s cmdhist    # save al-lines of multi-line commands in the same entry
+shopt -s lithist    # embedded newlines for multi-line commands
 alias ls='ls -h'
 alias ll='ls -l'
 alias la='la -a'
