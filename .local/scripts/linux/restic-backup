@@ -102,7 +102,7 @@ main() {
 		restic -r "$(backup_to)" forget "$snapshot"
 		;;
 	diff-latest)
-		restic -r "$(backup_to)" list snapshots -q | head -n 2 | tac | xargs -n 2 restic -r "$(backup_to)" diff
+		restic -r "$(backup_to)" list snapshots -q | head -n 2 | xargs -n 2 restic -r "$(backup_to)" diff
 		;;
 	last-snapshot)
 		local snapshot
