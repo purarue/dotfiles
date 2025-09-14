@@ -95,6 +95,7 @@ vim.g.treesitter_ignored = {
     "cmp_menu",
     "qf",
     "text",
+    "gitattributes",
     "cmp_docs",
     "conf",
     "TelescopePrompt",

@@ -84,7 +84,7 @@ return {
         "nvim-treesitter/nvim-treesitter",
         branch = "main",
         lazy = false,
-        dir = "~/Repos/nvim-treesitter",
+        -- dir = "~/Files/OldRepos/nvim-treesitter",
         build = ":TSUpdate",
         config = function()
             require("nvim-treesitter").setup() -- use the defaults
