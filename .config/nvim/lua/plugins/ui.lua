@@ -88,11 +88,4 @@ return {
             delete_to_trash = true,
         },
     },
-    {
-        "2KAbhishek/nerdy.nvim",
-        dependencies = {
-            "stevearc/dressing.nvim",
-        },
-        cmd = "Nerdy",
-    },
 }

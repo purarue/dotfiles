@@ -28,7 +28,6 @@
   "luvit-meta": { "branch": "main", "commit": "1df30b60b1b4aecfebc785aa98943db6c6989716" },
   "mini.nvim": { "branch": "main", "commit": "48b924e4f3b37f62246873d237a4a89704d88948" },
   "neogit": { "branch": "master", "commit": "df08cb97f126c546a5ec265bafab2d78cc7399fa" },
-  "nerdy.nvim": { "branch": "main", "commit": "a8e3f70dc0232e956adfb12c647b7e9e2b2e6c89" },
   "nvim-colorizer.lua": { "branch": "master", "commit": "a065833f35a3a7cc3ef137ac88b5381da2ba302e" },
   "nvim-lint": { "branch": "master", "commit": "0864f81c681e15d9bdc1156fe3a17bd07db5a3ed" },
   "nvim-lspconfig": { "branch": "master", "commit": "d9879110d0422a566fa01d732556f4d5515e1738" },
