@@ -91,7 +91,6 @@ vim.opt.wildignore:append({
     "**/.git/*",
 })
 
-
 -- set filetype for todo.txt files
 vim.filetype.add({
     filename = { ["todo.txt"] = "todotxt", ["done.txt"] = "todotxt" },
