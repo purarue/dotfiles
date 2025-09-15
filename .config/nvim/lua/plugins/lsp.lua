@@ -16,21 +16,6 @@ return {
                 { path = "${3rd}/luv/library", words = { "vim%.uv", "vim%.loop" } },
             },
         },
-        config = function(_, opts)
-            -- Monkeypatch in a PR to remove a call to the deprecated `client.notify`
-            -- function.
-            -- See: https://github.com/folke/lazydev.nvim/pull/106
-            local lsp = require("lazydev.lsp")
-            ---@diagnostic disable-next-line: duplicate-set-field
-            lsp.update = function(client)
-                lsp.assert(client)
-                client:notify("workspace/didChangeConfiguration", {
-                    settings = { Lua = {} },
-                })
-            end
-
-            require("lazydev").setup(opts)
-        end,
     }, -- update lua workspace libraries
     { "Bilal2453/luvit-meta", lazy = true },
     {
