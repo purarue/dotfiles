@@ -3,6 +3,8 @@ local treesitter_ignore_filetypes = {
     "blink-cmp-documentation",
     "i3config",
     "rasi",
+    "mailcap",
+    "readline",
     "abook",
     "abookrc",
     "blink-cmp-signature",
