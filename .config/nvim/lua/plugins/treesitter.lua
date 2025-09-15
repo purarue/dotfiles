@@ -1,6 +1,8 @@
 local treesitter_ignore_filetypes = {
     "blink-cmp-menu",
     "blink-cmp-documentation",
+    "i3config",
+    "rasi",
     "blink-cmp-signature",
     "qf",
     "text",
