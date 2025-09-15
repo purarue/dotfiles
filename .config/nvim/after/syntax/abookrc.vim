@@ -1,2 +1,2 @@
 " add custom fields to the abookrc syntax highlighting
-syn keyword abookFields birthday website social sign
+syn keyword abookField birthday website social sign
