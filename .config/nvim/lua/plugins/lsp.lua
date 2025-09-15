@@ -19,12 +19,6 @@ return {
     }, -- update lua workspace libraries
     { "Bilal2453/luvit-meta", lazy = true },
     {
-        "MysticalDevil/inlay-hints.nvim",
-        event = "LspAttach",
-        after = { "nvim-lspconfig" },
-        opts = {},
-    },
-    {
         "neovim/nvim-lspconfig",
         event = { "BufReadPost", "BufNewFile" },
         cmd = { "LspInfo", "LspInstall", "LspUninstall" },
@@ -43,7 +37,6 @@ return {
             }
 
             -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
-            local lspconf = require("lspconfig")
             local servers = {
                 jsonls = {
                     settings = {
@@ -109,13 +102,14 @@ return {
 
             for server, config in pairs(servers) do
                 if config == true then
-                    lspconf[server].setup({ capabilities = default_capabilities })
+                    vim.lsp.config(server, { capabilities = default_capabilities })
                 else
-                    lspconf[server].setup(vim.tbl_extend("force", { capabilities = default_capabilities }, config))
+                    vim.lsp.config(server, vim.tbl_extend("force", { capabilities = default_capabilities }, config))
                 end
+                vim.lsp.enable(server)
             end
 
-            lspconf.lua_ls.setup({
+            vim.lsp.config("lua_ls", {
                 capabilities = default_capabilities,
                 on_init = function(client)
                     if client.workspace_folders then
@@ -155,6 +149,7 @@ return {
                     Lua = {},
                 },
             })
+            vim.lsp.enable("lua_ls")
 
             vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
                 group = vim.api.nvim_create_augroup("lsp_disable", { clear = true }),
@@ -170,7 +165,6 @@ return {
             -- run on any client connecting
             vim.api.nvim_create_autocmd("LspAttach", {
                 group = vim.api.nvim_create_augroup("custom-lsp-attach", { clear = true }),
-                ---@diagnostic disable-next-line: unused-local
                 callback = function(event)
                     -- set omnifunc to lsp omnifunc
                     vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
@@ -179,7 +173,7 @@ return {
                     wk.add({
                         { "<leader>T", vim.lsp.buf.code_action, desc = "lsp code action" },
                         { "<leader>r", vim.lsp.buf.rename, desc = "lsp rename" },
-                    })
+                    }, { bufnr = event.buf })
 
                     -- lsp commands in normal mode
                     wk.add({
@@ -187,8 +181,19 @@ return {
                         { "gt", vim.lsp.buf.type_definition, desc = "goto type definition" },
                         { "gr", vim.lsp.buf.references, desc = "goto references" },
                         { "D", vim.diagnostic.open_float, desc = "diagnostic hover" },
-                    })
+                    }, { bufnr = event.buf })
+
+                    -- setup inlay hints
+                    if not (event.data and event.data.client_id) then
+                        return
+                    end
+                    local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+                    if client and (client:supports_method("textDocument/inlayHint") or client.server_capabilities.inlayHintProvider) then
+                        vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+                    end
                 end,
+
                 desc = "lsp keybindings",
             })
         end,

@@ -125,6 +125,9 @@ return {
                 pattern = { "*" },
                 callback = function(e)
                     local ft = e.match
+                    -- TODO: can I query the vim.treesitter internals instead to only start
+                    -- treesitter for registered languages?
+                    -- see: https://github.com/LazyVim/LazyVim/commit/2f309fc8b5bf93af25293c1e4688d409de718a36
                     if vim.list_contains(treesitter_ignore_filetypes, ft) then
                         return
                     end
