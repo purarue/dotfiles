@@ -1,31 +1,4 @@
-local treesitter_ignore_filetypes = {
-    "blink-cmp-menu",
-    "blink-cmp-documentation",
-    "i3config",
-    "rasi",
-    "mailcap",
-    "readline",
-    "abook",
-    "oil",
-    "abookrc",
-    "blink-cmp-signature",
-    "zenmode-bg",
-    "qf",
-    "text",
-    "snippets",
-    "gitattributes",
-    "conf",
-    "TelescopePrompt",
-    "TelescopeResults",
-    "TelescopePreview",
-    "fidget",
-    "notify",
-    "lazy",
-    "lazy_backdrop",
-    "DressingInput",
-}
-
-local install_languages = {
+local ensure_installed = {
     "astro",
     "awk",
     "bash",
@@ -114,30 +87,33 @@ return {
         -- dir = "~/Files/OldRepos/nvim-treesitter",
         build = ":TSUpdate",
         config = function()
-            require("nvim-treesitter").setup() -- use the defaults
-            require("nvim-treesitter").install(install_languages)
+            local TS = require("nvim-treesitter")
+            TS.setup()
+
+            -- From: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/extras/ui/treesitter-main.lua
+            -- maintain a list of installed languages
+            local installed = TS.get_installed("parsers")
+            local install = vim.tbl_filter(function(lang)
+                return not vim.tbl_contains(installed, lang)
+            end, ensure_installed)
+
+            -- if there are any missing parsers, install them
+            if #install > 0 then
+                TS.install(install, { summary = true })
+                vim.list_extend(installed, install)
+            end
 
             -- use bash treesitter highlighting for zsh files
             vim.treesitter.language.register("bash", "zsh")
 
             -- enable treesitter highlighting
             vim.api.nvim_create_autocmd("FileType", {
-                pattern = { "*" },
-                callback = function(e)
-                    local ft = e.match
-                    -- TODO: can I query the vim.treesitter internals instead to only start
-                    -- treesitter for registered languages?
-                    -- see: https://github.com/LazyVim/LazyVim/commit/2f309fc8b5bf93af25293c1e4688d409de718a36
-                    if vim.list_contains(treesitter_ignore_filetypes, ft) then
-                        return
-                    end
-
-                    local succeeded = pcall(vim.treesitter.start, e.buf)
-                    if not succeeded then
-                        vim.notify_once("treesitter failed to start for " .. ft, vim.log.levels.WARN, {
-                            title = "treesitter",
-                            timeout = 3000,
-                        })
+                -- no pattern, run on all files
+                callback = function(event)
+                    local lang = vim.treesitter.language.get_lang(event.match)
+                    if vim.tbl_contains(installed, lang) then
+                        -- ignore errors
+                        pcall(vim.treesitter.start)
                     end
                 end,
             })

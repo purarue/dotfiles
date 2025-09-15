@@ -214,6 +214,9 @@ return {
                             -- fzf-like up/down (remember, can also switch to normal mode and use j/k)
                             ["<C-j>"] = actions.move_selection_next,
                             ["<C-k>"] = actions.move_selection_previous,
+                            -- scroll previewerer horizontally
+                            ["<C-h>"] = actions.preview_scrolling_left,
+                            ["<C-l>"] = actions.preview_scrolling_right,
                         },
                     },
                     -- ignore some directory caches with lots of file results

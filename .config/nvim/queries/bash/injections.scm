@@ -1,8 +1,5 @@
 ; extends
 ;
-; TODO: these dont work when the cmd_name is exec, is there
-; some terse way to programmatically check if its first arg with exec..?
-
 ; Highlight awk strings in shell scripts using the AWK syntax
 ; hmm, sadly this does have false positives and it highlights all raw_string
 ; but that is not terrible, if you have a flag you can do -f'something' and

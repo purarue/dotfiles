@@ -91,10 +91,19 @@ vim.opt.wildignore:append({
     "**/.git/*",
 })
 
--- set filetype for todo.txt files
-vim.filetype.add({
-    filename = { ["todo.txt"] = "todotxt", ["done.txt"] = "todotxt" },
+-- create binding for my remsync code
+vim.api.nvim_create_user_command("Remsync", function(opts)
+    local remsync = require("user.remsync")
+    remsync.tohtml({
+        sync = vim.list_contains(opts.fargs, "sync"),
+        number_lines = vim.list_contains(opts.fargs, "lines"),
+        no_relative_lines = vim.list_contains(opts.fargs, "norelativenumber"),
+    })
+end, {
+    desc = "Convert buffer to HTML and sync to a tempfile on my website",
+    nargs = "*",
+    -- defer loading the module
+    complete = function(...)
+        return require("user.remsync").complete_no_duplicates({ "lines", "sync", "norelativenumber" })(...)
+    end,
 })
-
-vim.filetype.add({ filename = { ["rifle.conf"] = "rifleconf" } })
-vim.filetype.add({ extension = { mdx = "markdown" } })

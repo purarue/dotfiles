@@ -77,7 +77,7 @@ return {
                 },
                 bashls = true,
             }
-            -- disable some LSPs on android
+            -- disable most LSPs on android
             if not vim.g.on_android then
                 -- find elixir-ls binary
                 local elixir_ls_bin = vim.fn.exepath("elixir-ls")
@@ -101,14 +101,15 @@ return {
             end
 
             for server, config in pairs(servers) do
-                if config == true then
-                    vim.lsp.config(server, { capabilities = default_capabilities })
-                else
-                    vim.lsp.config(server, vim.tbl_extend("force", { capabilities = default_capabilities }, config))
+                local use_capabilities = default_capabilities
+                if not config == true then
+                    use_capabilities = vim.tbl_extend("force", { capabilities = default_capabilities }, config)
                 end
+                vim.lsp.config(server, { capabilities = use_capabilities })
                 vim.lsp.enable(server)
             end
 
+            -- this needs to be separate, I think because of the on_init function/vim.tbl_extend
             vim.lsp.config("lua_ls", {
                 capabilities = default_capabilities,
                 on_init = function(client)
@@ -154,8 +155,8 @@ return {
             vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
                 group = vim.api.nvim_create_augroup("lsp_disable", { clear = true }),
                 pattern = { ".env", ".env.*" },
-                callback = function()
-                    vim.diagnostic.enable(false)
+                callback = function(event)
+                    vim.diagnostic.enable(false, { filter = { bufnr = event.buf } })
                 end,
                 desc = "disable lsp diagnostics for .env files",
             })

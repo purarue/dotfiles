@@ -65,16 +65,5 @@ function M.complete_no_duplicates(flags)
     end
 end
 
-vim.api.nvim_create_user_command("Remsync", function(opts)
-    M.tohtml({
-        sync = vim.list_contains(opts.fargs, "sync"),
-        number_lines = vim.list_contains(opts.fargs, "lines"),
-        no_relative_lines = vim.list_contains(opts.fargs, "norelativenumber"),
-    })
-end, {
-    desc = "Convert buffer to HTML and sync to a tempfile on my website",
-    nargs = "*",
-    complete = M.complete_no_duplicates({ "lines", "sync", "norelativenumber" }),
-})
-
+-- binding set in ./settings.lua
 return M

@@ -64,6 +64,12 @@ return {
             },
 
             completion = {
+                accept = {
+                    -- experimental auto_brackets support
+                    auto_brackets = {
+                        enabled = true,
+                    },
+                },
                 -- only show the documentation popup when manually triggered <C-space>,
                 -- or after 500ms
                 documentation = { auto_show = true, auto_show_delay_ms = 500 },

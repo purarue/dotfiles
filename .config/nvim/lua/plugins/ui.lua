@@ -86,4 +86,5 @@ return {
             delete_to_trash = true,
         },
     },
+    { "sindrets/diffview.nvim", cmd = "DiffviewOpen", config = true, lazy = true },
 }

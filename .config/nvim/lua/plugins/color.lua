@@ -22,10 +22,4 @@ return {
             html = { names = false }, -- Disable parsing "names" like Blue or Gray
         },
     },
-    {
-        "uga-rosa/ccc.nvim",
-        keys = { { "<leader>HH", "<Cmd>CccPick<CR>", desc = "pick color" } },
-        cmd = "CccPick",
-        opts = { highlighter = { auto_enable = false, lsp = false } },
-    },
 }
