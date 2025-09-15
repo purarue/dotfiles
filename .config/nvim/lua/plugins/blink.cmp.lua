@@ -49,7 +49,8 @@ return {
                         },
                     },
                     menu = {
-                        auto_show = function(_ctx)
+                        ---@diagnostic disable-next-line: unused-local
+                        auto_show = function(ctx)
                             return vim.fn.getcmdtype() == ":"
                             -- enable for inputs as well, with:
                             -- or vim.fn.getcmdtype() == '@'

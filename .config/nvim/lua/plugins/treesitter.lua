@@ -6,6 +6,7 @@ local treesitter_ignore_filetypes = {
     "mailcap",
     "readline",
     "abook",
+    "oil",
     "abookrc",
     "blink-cmp-signature",
     "zenmode-bg",
@@ -130,8 +131,8 @@ return {
 
                     local succeeded = pcall(vim.treesitter.start, e.buf)
                     if not succeeded then
-                        vim.notify("treesitter failed to start for " .. ft, vim.log.levels.WARN, {
-                            title = "nvim-treesitter",
+                        vim.notify_once("treesitter failed to start for " .. ft, vim.log.levels.WARN, {
+                            title = "treesitter",
                             timeout = 3000,
                         })
                     end

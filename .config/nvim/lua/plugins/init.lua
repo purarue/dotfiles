@@ -1,5 +1,4 @@
 return {
-    -- keybindings
     {
         "folke/which-key.nvim",
         lazy = true,
@@ -9,11 +8,11 @@ return {
         end,
         opts = {},
     },
+    -- while in visual mode
     -- []x to encode/decode HTML, []u to encode/decode URLs, []y to do C-style escaping
     {
         "purarue/vim-unimpaired-conversions",
-        keys = { { "[", mode = { "n", "v" } }, { "]", mode = { "n", "v" } } },
-        -- dir = "~/Files/OldRepos/vim-unimpaired-conversions"
+        keys = { { "[", mode = "v" }, { "]", mode = { "v" } } },
     },
     {
         "airblade/vim-rooter",
@@ -26,11 +25,11 @@ return {
                 ".git",
                 "Makefile",
                 "setup.py",
+                "pyproject.toml",
                 "package.json",
                 "stylua.toml",
             }
         end,
     },
     { "nvim-lua/plenary.nvim", lazy = true },
-    -- { "chrisbra/vim_faq", event = "CmdlineEnter" },
 }

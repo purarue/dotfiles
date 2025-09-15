@@ -4,7 +4,7 @@ return {
         cmd = "UndotreeToggle",
         keys = { { "<leader>u", "<Cmd>UndotreeToggle<CR>", desc = "undotree" } },
     },
-    { "folke/twilight.nvim", lazy = true },
+    { "folke/twilight.nvim", lazy = true }, -- used for zen-mode.nvim
     {
         "folke/zen-mode.nvim",
         cmd = "ZenMode",
@@ -35,7 +35,6 @@ return {
             vim.cmd.colorscheme("catppuccin")
         end,
     },
-    { "nvim-tree/nvim-web-devicons", lazy = true },
     {
         "nvim-lualine/lualine.nvim",
         priority = 1000,
@@ -58,7 +57,6 @@ return {
     {
         "MeanderingProgrammer/render-markdown.nvim",
         ft = "markdown",
-        cond = not vim.g.on_android,
         keys = {
             {
                 "<leader>p",
