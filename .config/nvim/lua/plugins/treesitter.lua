@@ -111,6 +111,7 @@ return {
         build = ":TSUpdate",
         config = function()
             local TS = require("nvim-treesitter")
+            -- NOTE: no setup() call required
 
             -- From: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/extras/ui/treesitter-main.lua
             -- maintain a list of installed languages

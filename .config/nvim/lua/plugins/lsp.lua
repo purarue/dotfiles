@@ -27,6 +27,7 @@ return {
         event = { "BufReadPost", "BufNewFile" },
         cmd = { "LspInfo", "LspInstall", "LspUninstall" },
         config = function()
+            -- NOTE: no setup() required v0.11+
             local blink_cmp = require("blink.cmp")
             local default_capabilities = blink_cmp.get_lsp_capabilities()
 
