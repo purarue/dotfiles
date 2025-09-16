@@ -157,3 +157,10 @@ alias httpbin='docker run -p 80:80 kennethreitz/httpbin'
 
 # stop import from crashing my system for some reason
 alias 'import=printf "Use /usr/bin/import instead\n"'
+_set_theme() {
+	terminal-set-theme "$1"
+	export TERMINAL_THEME="$1"
+}
+
+alias light-theme='_set_theme Light'
+alias dark-theme='_set_theme Dark'
