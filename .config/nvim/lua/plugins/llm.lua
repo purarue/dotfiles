@@ -9,14 +9,18 @@ return {
             suggestion = {
                 enabled = false,
             },
-            panel = {
-                enabled = false,
-            },
             filetypes = {
                 markdown = false,
                 env = false,
                 gitcommit = false,
             },
+            should_attach = function(_, bufname)
+                -- disable for .env files and markdown files
+                if string.match(bufname, "^.env") then
+                    return false
+                end
+                return true
+            end,
         },
         keys = {
             {
@@ -30,16 +34,8 @@ return {
                 desc = "copilot panel",
             },
         },
-        config = function()
-            require("copilot").setup({
-                should_attach = function(_, bufname)
-                    -- disable for .env files and markdown files
-                    if string.match(bufname, "^.env") then
-                        return false
-                    end
-                    return true
-                end,
-            })
+        config = function(_, opts)
+            require("copilot").setup(opts)
         end,
     },
 }

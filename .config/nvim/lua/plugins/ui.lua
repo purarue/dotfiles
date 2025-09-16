@@ -4,13 +4,7 @@ return {
     {
         "mbbill/undotree",
         cmd = "UndotreeToggle",
-        keys = { { "<leader>u", "<Cmd>UndotreeToggle<CR>", desc = "undotree" } },
-    },
-    { "folke/twilight.nvim", lazy = true }, -- used for zen-mode.nvim
-    {
-        "folke/zen-mode.nvim",
-        cmd = "ZenMode",
-        keys = { { "<leader>Z", "<Cmd>ZenMode<CR>", desc = "zen mode" } },
+        keys = { { "<leader>ut", "<Cmd>UndotreeToggle<CR>", desc = "undotree" } },
     },
     {
         "catppuccin/nvim",
@@ -42,17 +36,11 @@ return {
         priority = 1000,
         opts = { options = { theme = "catppuccin" } },
     },
-    { "j-hui/fidget.nvim", event = "LspAttach" },
-    { "stevearc/dressing.nvim", event = "VeryLazy" },
-    {
-        "rcarriga/nvim-notify",
-        config = function()
-            vim.notify = require("notify")
-        end,
-    },
+    { "j-hui/fidget.nvim", opts = {}, event = "LspAttach" },
     {
         "folke/todo-comments.nvim",
         event = "VeryLazy",
+        opts = {},
     },
     {
         "MeanderingProgrammer/render-markdown.nvim",
@@ -87,6 +75,17 @@ return {
             columns = { "icon" },
             delete_to_trash = true,
         },
+        config = function(_, opts)
+            require("oil").setup(opts)
+            vim.api.nvim_create_autocmd("User", {
+                pattern = "OilActionsPost",
+                callback = function(event)
+                    if event.data.actions.type == "move" then
+                        Snacks.rename.on_rename_file(event.data.actions.src_url, event.data.actions.dest_url)
+                    end
+                end,
+            })
+        end,
     },
     { "sindrets/diffview.nvim", cmd = "DiffviewOpen", config = true, lazy = true },
 }

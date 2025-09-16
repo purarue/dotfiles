@@ -76,7 +76,6 @@ end
 
 -- misc
 wk.add({
-    { "<leader>s", ":setlocal spell!<CR>", desc = "toggle spell" },
     { "<leader>X", ":w<CR>:!chmod +x %<CR>:edit<CR>", desc = "chmod +x" },
     { "<leader><CR>", ":split<CR>:term<CR>", desc = "open terminal" },
     { "<leader>S", reload_config, desc = "reload config" },
@@ -89,31 +88,13 @@ nnoremap("<leader>w", function()
     wk.show("<C-w>")
 end, "window")
 nnoremap("<leader><C-n>", "<Cmd>enew<CR>", "new file")
-nnoremap("<leader>d", function()
-    require("notify").dismiss({ pending = true, silent = true })
-end, "dismiss notifications")
 
----@param is_quickfix boolean?
-local function toggle_list(is_quickfix)
-    if is_quickfix then
-        require("trouble").toggle("quickfix")
-    else
-        require("trouble").toggle("loclist")
-    end
-end
-
-nnoremap("<C-q>", function()
-    toggle_list(true)
-end, "toggle quickfix list")
 wk.add({ { "<leader>j", ":cnext<CR>", desc = "qf next" }, { "<leader>k", ":cprev<CR>", desc = "qf prev" } })
 
 wk.add({ "<leader>l", group = "loc list" })
-
-nnoremap("<C-l>", toggle_list, "toggle loc list")
 wk.add({
     { "<leader>lj", "<Cmd>:lnext<CR>", desc = "next" },
     { "<leader>lk", "<Cmd>:lprev<CR>", desc = "prev" },
-    { "<leader>ll", toggle_list, desc = "toggle loc list" },
 })
 
 wk.add({

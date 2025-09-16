@@ -19,8 +19,6 @@ return {
     },
     {
         "nvim-telescope/telescope.nvim",
-        cmd = "Telescope",
-        event = { "BufReadPre", "BufNewFile" },
         keys = {
             {
                 "<leader>ce",
@@ -53,140 +51,6 @@ return {
                     vim.notify("cd " .. filename)
                 end,
                 desc = "cd to curdir",
-            },
-            {
-                "<leader>ff",
-                function()
-                    require("telescope.builtin").find_files()
-                end,
-                desc = "find files",
-            },
-            {
-                "<leader>fg",
-                function()
-                    require("telescope.builtin").live_grep()
-                end,
-                desc = "grep",
-            },
-            {
-                "<leader>fr",
-                function()
-                    require("telescope.builtin").lsp_references()
-                end,
-                desc = "references",
-            },
-            {
-                "<leader>fb",
-                function()
-                    require("telescope.builtin").buffers()
-                end,
-                desc = "buffers",
-            },
-            {
-                "<leader>fH",
-                function()
-                    require("user.telescope").grep_help()
-                end,
-                desc = "help",
-            },
-            {
-                "<leader>fq",
-                function()
-                    require("telescope.builtin").quickfix()
-                end,
-                desc = "quickfix",
-            },
-            {
-                "<leader>fl",
-                function()
-                    require("telescope.builtin").loclist()
-                end,
-                desc = "loclist",
-            },
-            {
-                "<leader>fp",
-                function()
-                    require("telescope.builtin").git_files()
-                end,
-                desc = "git files",
-            },
-            {
-                "<leader>fo", -- codespell:ignore
-                function()
-                    require("telescope.builtin").oldfiles()
-                end,
-                desc = "old files",
-            },
-            {
-                "<leader>fc",
-                function()
-                    require("telescope.builtin").commands()
-                end,
-                desc = "commands",
-            },
-            {
-                "<leader>fs",
-                function()
-                    require("telescope.builtin").spell_suggest()
-                end,
-                desc = "spell suggest",
-            },
-            {
-                "<leader>fm",
-                function()
-                    require("telescope.builtin").marks()
-                end,
-                desc = "marks",
-            },
-            {
-                "<leader>fM",
-                function()
-                    require("telescope.builtin").man_pages()
-                end,
-                desc = "man pages",
-            },
-            {
-                "<leader>fn",
-                function()
-                    require("telescope").extensions.notify.notify()
-                end,
-                desc = "notify",
-            },
-            {
-                "<leader>fh",
-                function()
-                    require("telescope.builtin").command_history()
-                end,
-                desc = "command history",
-            },
-            {
-                "<leader>fk",
-                function()
-                    require("telescope.builtin").keymaps()
-                end,
-                desc = "keymaps",
-            },
-            {
-                "<leader>fd",
-                function()
-                    require("telescope.builtin").diagnostics()
-                end,
-                desc = "diagnostics",
-            },
-            { "<leader>ft", ":Telescope<CR>", desc = "telescope" },
-            {
-                "<leader>fL",
-                function()
-                    require("user.telescope").find_lazy_plugins()
-                end,
-                desc = "lazy files",
-            },
-            {
-                "<leader>f ",
-                function()
-                    require("telescope.builtin").resume()
-                end,
-                desc = "resume",
             },
         },
         opts = function()
@@ -258,7 +122,6 @@ return {
             telescope.setup(opts)
 
             telescope.load_extension("fzf") -- native fzf
-            telescope.load_extension("notify")
             telescope.load_extension("ui-select")
         end,
     },
