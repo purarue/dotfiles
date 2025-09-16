@@ -108,46 +108,14 @@ wk.add({
     { "<leader>lk", "<Cmd>:lprev<CR>", desc = "prev" },
 })
 
+-- stylua: ignore start
 wk.add({
-    {
-        "]w",
-        function()
-            vim.diagnostic.jump({ count = 1 })
-            vim.api.nvim_feedkeys("zz", "n", false)
-        end,
-        desc = "next diagnostic",
-    },
-    {
-        "[w",
-        function()
-            vim.diagnostic.jump({ count = -1 })
-            vim.api.nvim_feedkeys("zz", "n", false)
-        end,
-        desc = "prev diagnostic",
-    },
-    {
-        "]e",
-        function()
-            vim.diagnostic.jump({
-                count = 1,
-                severity = vim.diagnostic.severity.ERROR,
-            })
-            vim.api.nvim_feedkeys("zz", "n", false)
-        end,
-        desc = "next error",
-    },
-    {
-        "[e",
-        function()
-            vim.diagnostic.jump({
-                count = -1,
-                severity = vim.diagnostic.severity.ERROR,
-            })
-            vim.api.nvim_feedkeys("zz", "n", false)
-        end,
-        desc = "prev error",
-    },
+    { "]w", function() vim.diagnostic.jump({ count = 1 }) vim.api.nvim_feedkeys("zz", "n", false) end, desc = "next diagnostic", },
+    { "[w", function() vim.diagnostic.jump({ count = -1 }) vim.api.nvim_feedkeys("zz", "n", false) end, desc = "prev diagnostic", },
+    { "]e", function() vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR, }) vim.api.nvim_feedkeys("zz", "n", false) end, desc = "next error", },
+    { "[e", function() vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR, }) vim.api.nvim_feedkeys("zz", "n", false) end, desc = "prev error", },
 })
+-- stylua: ignore end
 
 -- vim-unimpaired-like for basic stuff
 nnoremap("[q", "<Cmd>:cprev<CR>", "qf prev")
@@ -156,20 +124,3 @@ nnoremap("[l", "<Cmd>:lprev<CR>", "ll prev")
 nnoremap("]l", "<Cmd>:lnext<CR>", "ll next")
 nnoremap("[n", "<Cmd>:prev<CR>", "file prev")
 nnoremap("]n", "<Cmd>:next<CR>", "file next")
-
--- for picking which files to merge from while resolving merge conflicts
--- middle is what the final merged file is
--- gj to pick hunk from the right (under right index)
--- gf to pick hunk form the left (under left index)
--- wk.add({
---     name = "git merge",
---     -- ]c goes to the next conflict
---     -- just the current file
---     i = { ":diffput<CR>]c", desc = "use current file" },
---     -- if Im merging two files in a split where one is a syncthing conflict
---     -- grab from the other file
---     s = { ":diffget sync-conflict<CR>]c", desc = "diffget sync-conflict" },
---     -- //2 and //3 are set by fugitive for when doing git merges
---     j = { ":diffget //3<CR>", desc = "diffget //3" },
---     f = { ":diffget //2<CR>", desc = "diffget //2" },
--- }, { prefix = "<leader>i" })

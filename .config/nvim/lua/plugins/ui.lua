@@ -1,3 +1,4 @@
+---@module 'snacks'
 ---@module 'lazy'
 ---@type LazyPluginSpec[]
 return {
@@ -33,14 +34,36 @@ return {
     },
     {
         "nvim-lualine/lualine.nvim",
-        priority = 1000,
-        opts = { options = { theme = "catppuccin" } },
+        dependencies = {
+            "meuter/lualine-so-fancy.nvim",
+        },
+        priority = 500,
+        opts = {
+            options = { theme = "catppuccin" },
+            sections = {
+                lualine_a = { "fancy_mode" }, -- fixed width
+                lualine_b = { "branch", "diff", "diagnostics" },
+                lualine_c = { { "fancy_cwd", substitute_home = true }, "filename" },
+                lualine_x = { "filesize", "fancy_searchcount" },
+                -- ts_icon is present if treesitter is attached
+                lualine_y = { { "fancy_filetype", ts_icon = { "󱁉", color = { fg = "lightblue" } } }, "progress" },
+                lualine_z = { "location" },
+            },
+        },
     },
     { "j-hui/fidget.nvim", opts = {}, event = "LspAttach" },
     {
         "folke/todo-comments.nvim",
         event = "VeryLazy",
         opts = {},
+        keys = {
+            -- stylua: ignore start
+            ---@diagnostic disable-next-line: undefined-field
+            { "<leader>ft", function() Snacks.picker.todo_comments() end, desc = "todo" },
+            ---@diagnostic disable-next-line: undefined-field
+            { "<leader>fT", function() Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME", "BUG" } }) end, desc = "todo/fix/fixme" },
+            -- stylua: ignore end
+        },
     },
     {
         "MeanderingProgrammer/render-markdown.nvim",

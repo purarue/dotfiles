@@ -20,42 +20,12 @@ end
 return {
     "monaqa/dial.nvim",
     keys = {
-        {
-            "<C-a>",
-            function()
-                return M.dial(true)
-            end,
-            expr = true,
-            desc = "Increment",
-            mode = { "n", "v" },
-        },
-        {
-            "<C-x>",
-            function()
-                return M.dial(false)
-            end,
-            expr = true,
-            desc = "Decrement",
-            mode = { "n", "v" },
-        },
-        {
-            "g<C-a>",
-            function()
-                return M.dial(true, true)
-            end,
-            expr = true,
-            desc = "Increment",
-            mode = { "n", "v" },
-        },
-        {
-            "g<C-x>",
-            function()
-                return M.dial(false, true)
-            end,
-            expr = true,
-            desc = "Decrement",
-            mode = { "n", "v" },
-        },
+        -- stylua: ignore start
+        { "<C-a>", function() return M.dial(true) end, expr = true, desc = "Increment", mode = { "n", "v" } },
+        { "<C-x>", function() return M.dial(false) end, expr = true, desc = "Decrement", mode = { "n", "v" } },
+        { "g<C-a>", function() return M.dial(true, true) end, expr = true, desc = "Increment", mode = { "n", "v" } },
+        { "g<C-x>", function() return M.dial(false, true) end, expr = true, desc = "Decrement", mode = { "n", "v" } },
+        -- stylua: ignore end
     },
     opts = function()
         local augend = require("dial.augend")

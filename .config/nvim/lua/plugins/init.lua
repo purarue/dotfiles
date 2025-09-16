@@ -13,7 +13,7 @@ return {
     -- []x to encode/decode HTML, []u to encode/decode URLs, []y to do C-style escaping
     {
         "purarue/vim-unimpaired-conversions",
-        keys = { { "[", mode = "v" }, { "]", mode = { "v" } } },
+        keys = { { "[", mode = "x" }, { "]", mode = { "x" } } },
     },
     {
         "airblade/vim-rooter",
