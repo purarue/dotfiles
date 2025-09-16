@@ -1,7 +1,7 @@
 ---@module 'lazy'
 ---@type LazyPluginSpec
 return {
-    "saghen/blink.cmp",
+    "Saghen/blink.cmp",
     dependencies = {
         {
             "fang2hou/blink-copilot",
