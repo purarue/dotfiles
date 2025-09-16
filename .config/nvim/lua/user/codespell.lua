@@ -53,6 +53,11 @@ function M.codespell_fix()
         end
         -- replace that word in the file
         local old = vim.fn.getline(chosen.lnum + 1)
+        -- if its no longer there, skip it (%f[%a] is a frontier pattern to match word boundaries)
+        if not old:match("%f[%a]" .. parts[1] .. "%f[%A]") then
+            vim.notify("Could not find '" .. parts[1] .. "' in line, skipping")
+            return
+        end
         vim.fn.setline(chosen.lnum + 1, old:sub(1, chosen.col) .. choice .. old:sub(chosen.end_col + 1))
     end)
 end
