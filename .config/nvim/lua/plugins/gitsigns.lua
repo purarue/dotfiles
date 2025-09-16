@@ -1,3 +1,5 @@
+---@module 'lazy'
+---@type LazyPluginSpec[]
 return {
     {
         "purarue/gitsigns-yadm.nvim",
@@ -6,6 +8,7 @@ return {
     },
     {
         "lewis6991/gitsigns.nvim",
+        --- can't use type config validation here because it expects an exact class with non nullable fields?
         opts = {
             signs = {
                 add = { text = "│" },

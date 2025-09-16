@@ -1,3 +1,5 @@
+---@module 'lazy'
+---@type LazyPluginSpec[]
 return {
     {
         "mbbill/undotree",
@@ -9,29 +11,29 @@ return {
         "folke/zen-mode.nvim",
         cmd = "ZenMode",
         keys = { { "<leader>Z", "<Cmd>ZenMode<CR>", desc = "zen mode" } },
-        opts = {},
     },
     {
         "catppuccin/nvim",
         name = "catppuccin",
         -- colorscheme, 1000 makes things load early
         priority = 1000,
-        config = function()
+        opts = {
+            background = { light = "latte", dark = "macchiato" },
+            float = {
+                transparent = false,
+                solid = false,
+            },
+            -- change background colors to match terminal
+            color_overrides = {
+                macchiato = { base = "#282828" },
+                latte = { base = "#fbf1c7" },
+            },
+        },
+        config = function(_, opts)
             -- sets the vim 'background' property to dark/light
             -- depending on my terminal theme
             require("user.terminal").set_background()
-            require("catppuccin").setup({
-                background = { light = "latte", dark = "macchiato" },
-                float = {
-                    transparent = false,
-                    solid = false,
-                },
-                -- change background colors to match terminal
-                color_overrides = {
-                    macchiato = { base = "#282828" },
-                    latte = { base = "#fbf1c7" },
-                },
-            })
+            require("catppuccin").setup(opts)
             vim.cmd.colorscheme("catppuccin")
         end,
     },
@@ -40,11 +42,10 @@ return {
         priority = 1000,
         opts = { options = { theme = "catppuccin" } },
     },
-    { "j-hui/fidget.nvim", event = "LspAttach", opts = {} },
-    { "stevearc/dressing.nvim", opts = {}, event = "VeryLazy" },
+    { "j-hui/fidget.nvim", event = "LspAttach" },
+    { "stevearc/dressing.nvim", event = "VeryLazy" },
     {
         "rcarriga/nvim-notify",
-        -- event = "VeryLazy",
         config = function()
             vim.notify = require("notify")
         end,
@@ -52,7 +53,6 @@ return {
     {
         "folke/todo-comments.nvim",
         event = "VeryLazy",
-        opts = {},
     },
     {
         "MeanderingProgrammer/render-markdown.nvim",
@@ -80,6 +80,8 @@ return {
                 desc = "file explorer",
             },
         },
+        --- @module 'oil'
+        --- @type oil.SetupOpts
         opts = {
             default_file_explorer = true,
             columns = { "icon" },

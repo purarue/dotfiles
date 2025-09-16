@@ -1,3 +1,5 @@
+---@module 'lazy'
+---@type LazyPluginSpec[]
 return {
     { "tpope/vim-sleuth", event = "VeryLazy" }, -- detect indentation
     { "mboughaba/i3config.vim", ft = "i3config" },

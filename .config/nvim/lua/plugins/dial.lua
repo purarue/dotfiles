@@ -15,6 +15,8 @@ function M.dial(increment, g)
     return require("dial.map")[func](group)
 end
 
+---@module 'lazy'
+---@type LazyPluginSpec
 return {
     "monaqa/dial.nvim",
     keys = {

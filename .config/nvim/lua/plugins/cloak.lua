@@ -1,8 +1,10 @@
--- 'https://github.com/laytan/cloak.nvim?tab=readme-ov-file#configuration'
+---@module 'lazy'
+---@type LazyPluginSpec
 return {
     "laytan/cloak.nvim",
     event = "BufRead",
     keys = { { "<leader>C", "<Cmd>CloakToggle<CR>", "toggle cloak" } },
+    -- 'https://github.com/laytan/cloak.nvim?tab=readme-ov-file#configuration'
     opts = {
         patterns = {
             {

@@ -6,6 +6,7 @@ local M = {}
 ---@field number_lines boolean
 ---@field sync boolean
 ---@field no_relative_lines boolean
+
 ---@param opts RemsyncOpts
 function M.tohtml(opts)
     if opts.sync then

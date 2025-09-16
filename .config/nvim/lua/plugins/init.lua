@@ -1,3 +1,5 @@
+---@module 'lazy'
+---@type LazyPluginSpec[]
 return {
     {
         "folke/which-key.nvim",
@@ -6,7 +8,6 @@ return {
             vim.o.timeout = true
             vim.o.timeoutlen = 300
         end,
-        opts = {},
     },
     -- while in visual mode
     -- []x to encode/decode HTML, []u to encode/decode URLs, []y to do C-style escaping

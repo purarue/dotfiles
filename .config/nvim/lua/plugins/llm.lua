@@ -1,18 +1,22 @@
+---@module 'lazy'
+---@type LazyPluginSpec[]
 return {
     {
         "zbirenbaum/copilot.lua",
         event = "InsertEnter",
         enabled = os.getenv("ON_OS") ~= nil,
-        suggestion = {
-            enabled = false,
-        },
-        panel = {
-            enabled = false,
-        },
-        filetypes = {
-            markdown = false,
-            env = false,
-            gitcommit = false,
+        opts = {
+            suggestion = {
+                enabled = false,
+            },
+            panel = {
+                enabled = false,
+            },
+            filetypes = {
+                markdown = false,
+                env = false,
+                gitcommit = false,
+            },
         },
         keys = {
             {
@@ -28,7 +32,7 @@ return {
         },
         config = function()
             require("copilot").setup({
-                should_attach = function(bufnr, bufname)
+                should_attach = function(_, bufname)
                     -- disable for .env files and markdown files
                     if string.match(bufname, "^.env") then
                         return false

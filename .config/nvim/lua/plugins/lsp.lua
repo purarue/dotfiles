@@ -1,3 +1,5 @@
+---@module 'lazy'
+---@type LazyPluginSpec[]
 return {
     {
         "b0o/SchemaStore.nvim",
@@ -6,6 +8,8 @@ return {
     {
         "folke/lazydev.nvim",
         ft = "lua",
+        ---@module 'lazydev'
+        ---@type lazydev.Config
         opts = {
             library = {
                 -- Library items can be absolute paths

@@ -68,10 +68,11 @@ local ensure_installed = {
     "yaml",
 }
 
+---@module 'lazy'
+---@type LazyPluginSpec[]
 return {
     {
         "windwp/nvim-ts-autotag",
-        opts = {},
         event = { "BufReadPre", "BufNewFile" },
     },
     {
@@ -91,7 +92,6 @@ return {
         build = ":TSUpdate",
         config = function()
             local TS = require("nvim-treesitter")
-            TS.setup()
 
             -- From: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/extras/ui/treesitter-main.lua
             -- maintain a list of installed languages
@@ -128,6 +128,8 @@ return {
         after = "nvim-treesitter",
         event = { "VeryLazy" },
         branch = "main",
+        ---@module 'nvim-treesitter-textobjects.configs'
+        ---@type TSTextObjects.UserConfig
         opts = {
             select = {
                 lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim

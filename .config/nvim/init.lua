@@ -25,6 +25,8 @@ vim.g.on_os = os.getenv("ON_OS") or "unknown" ---@type string
 vim.g.on_android = vim.split(vim.g.on_os, "_")[1] == "android" ---@type boolean
 
 -- load plugins from the 'lua/plugins' directory
+---@module 'lazy.config'
+---@type LazyConfig
 require("lazy").setup({
     spec = {
         { import = "plugins" },

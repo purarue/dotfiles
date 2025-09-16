@@ -9,6 +9,8 @@ local function codespell_enabled()
     return vim.fn.executable("codespell-conf") == 1
 end
 
+---@module 'lazy'
+---@type LazyPluginSpec
 return {
     "mfussenegger/nvim-lint",
     event = { "BufReadPre", "BufNewFile" },

@@ -1,3 +1,5 @@
+---@module 'lazy'
+---@type LazyPluginSpec
 return {
     "L3MON4D3/LuaSnip",
     event = "InsertEnter", -- only load snippets after I enter insert mode

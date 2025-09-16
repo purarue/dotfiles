@@ -5,6 +5,8 @@ wk.add({
     { "<leader>f", group = "telescope" },
 })
 
+---@module 'lazy'
+---@type LazyPluginSpec[]
 return {
     {
         "nvim-telescope/telescope-fzf-native.nvim",
@@ -187,20 +189,18 @@ return {
                 desc = "resume",
             },
         },
-        config = function()
-            local tl = require("telescope")
+        opts = function()
+            -- https://github.com/nvim-telescope/telescope.nvim#pickers
             local actions = require("telescope.actions")
             local previewers = require("telescope.previewers")
 
             -- this is a no-op for now, just here in case I want to modify things
             -- https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#previewers
-            local function buffer_previewer(filepath, bufnr, opts)
-                opts = opts or {}
-                return previewers.buffer_previewer_maker(filepath, bufnr, opts)
+            local function buffer_previewer(filepath, bufnr, custom_opts)
+                return previewers.buffer_previewer_maker(filepath, bufnr, custom_opts or {})
             end
 
-            -- https://github.com/nvim-telescope/telescope.nvim#pickers
-            tl.setup({
+            return {
                 defaults = {
                     winblend = 20, -- transparency
                     path_display = { "relative" },
@@ -251,11 +251,15 @@ return {
                         case_mode = "smart_case", -- or "ignore_case" or "respect_case"
                     },
                 },
-            })
+            }
+        end,
+        config = function(_, opts)
+            local telescope = require("telescope")
+            telescope.setup(opts)
 
-            tl.load_extension("fzf") -- native fzf
-            tl.load_extension("notify")
-            tl.load_extension("ui-select")
+            telescope.load_extension("fzf") -- native fzf
+            telescope.load_extension("notify")
+            telescope.load_extension("ui-select")
         end,
     },
 }
