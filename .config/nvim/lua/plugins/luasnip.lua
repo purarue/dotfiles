@@ -39,12 +39,7 @@ return {
             end
         end)
 
-        -- Extend with https://github.com/rafamadriz/friendly-snippets
-        ls.filetype_extend("gitcommit", {})
-        require("luasnip.loaders.from_vscode").lazy_load()
-
-        -- load some personal snippest (I use the snipmate for basic text-based snippets)
+        -- load some personal snippest
         require("luasnip.loaders.from_snipmate").lazy_load()
     end,
-    dependencies = { "rafamadriz/friendly-snippets" },
 }

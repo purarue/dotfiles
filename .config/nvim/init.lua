@@ -32,6 +32,7 @@ require("lazy").setup({
         { import = "plugins" },
     },
     browser = "openurl",
+    change_detection = { enabled = false, notify = false },
     performance = {
         rtp = {
             disabled_plugins = {
