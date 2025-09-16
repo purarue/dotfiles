@@ -91,8 +91,7 @@ vim.opt.wildignore:append({
 
 -- create binding for my remsync code
 vim.api.nvim_create_user_command("Remsync", function(opts)
-    local remsync = require("user.remsync")
-    remsync.tohtml({
+    require("user.remsync").tohtml({
         sync = vim.list_contains(opts.fargs, "sync"),
         number_lines = vim.list_contains(opts.fargs, "lines"),
         no_relative_lines = vim.list_contains(opts.fargs, "norelativenumber"),
