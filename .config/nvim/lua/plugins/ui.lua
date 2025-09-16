@@ -70,7 +70,7 @@ return {
     {
         -- g? : show help
         "stevearc/oil.nvim",
-        event = "BufWinEnter",
+        event = "BufWinEnter", -- present so that if you open an oil buffer on launch, the plugin is loaded
         keys = {
             {
                 "<leader>e",
