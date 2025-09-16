@@ -1,18 +1,6 @@
 # lazy load shell tools that otherwise
 # cause a bunch of lag on start up
 
-# fuck() {
-# 	eval $(thefuck --alias) # redefines the function
-# 	fuck "$@"
-# }
-
-nvm() {
-	unset NPM_CONFIG_PREFIX
-	source_if_exists /usr/share/nvm/init-nvm.sh
-	source_if_exists /usr/local/opt/nvm/nvm.sh
-	nvm "$@"
-}
-
 # https://github.com/ScoreUnder/scripts-and-dotfiles/commit/5441fedb3770ca5e62746e094411057ec9000023
 _lazy_opam_aliases=(
 	ocaml{,{c,opt}{,p},lex,mktop,mklib,dep,objinfo,prof,doc}{,.opt,.byte}

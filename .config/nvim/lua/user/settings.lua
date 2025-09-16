@@ -30,8 +30,6 @@ vim.opt.grepprg = "rg --vimgrep"
 -- cursor motion
 vim.opt.scrolloff = 8
 vim.opt.matchpairs:append("<:>")
--- dont think I ever use this...
--- vim.cmd('runtime! macros/matchit.vim')
 
 -- save spellfile to my Documents
 local os = require("os")

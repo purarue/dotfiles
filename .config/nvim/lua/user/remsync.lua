@@ -1,3 +1,5 @@
+--- Uses the :TOHtml module and syncs the generated file to my server using remsync:
+--- https://github.com/purarue/vps/blob/master/bin/remsync
 local M = {}
 
 ---@class (exact) RemsyncOpts

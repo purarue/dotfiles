@@ -29,6 +29,7 @@ require("lazy").setup({
     spec = {
         { import = "plugins" },
     },
+    checker = { enabled = true, notify = false },
     browser = "openurl",
     change_detection = { enabled = false, notify = false },
     performance = {
