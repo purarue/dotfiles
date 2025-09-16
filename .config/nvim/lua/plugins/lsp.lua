@@ -2,11 +2,8 @@
 ---@type LazyPluginSpec[]
 return {
     {
-        "b0o/SchemaStore.nvim",
-        lazy = true,
-    },
-    {
         "folke/lazydev.nvim",
+        dependencies = { "Bilal2453/luvit-meta", lazy = true }, -- update lua workspace libraries
         ft = "lua",
         ---@module 'lazydev'
         ---@type lazydev.Config
@@ -20,10 +17,13 @@ return {
                 { path = "${3rd}/luv/library", words = { "vim%.uv", "vim%.loop" } },
             },
         },
-    }, -- update lua workspace libraries
-    { "Bilal2453/luvit-meta", lazy = true },
+    },
     {
         "neovim/nvim-lspconfig",
+        dependencies = {
+            "b0o/SchemaStore.nvim",
+            lazy = true,
+        },
         event = { "BufReadPost", "BufNewFile" },
         cmd = { "LspInfo", "LspInstall", "LspUninstall" },
         config = function()
@@ -166,12 +166,11 @@ return {
                 desc = "disable lsp diagnostics for .env files",
             })
 
-            local wk = require("which-key")
-
             -- run on any client connecting
             vim.api.nvim_create_autocmd("LspAttach", {
                 group = vim.api.nvim_create_augroup("custom-lsp-attach", { clear = true }),
                 callback = function(event)
+                    local wk = require("which-key")
                     -- set omnifunc to lsp omnifunc
                     vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
                     -- when the client attaches, add keybindings
@@ -179,13 +178,6 @@ return {
                     wk.add({
                         { "<leader>T", vim.lsp.buf.code_action, desc = "lsp code action" },
                         { "<leader>r", vim.lsp.buf.rename, desc = "lsp rename" },
-                    }, { bufnr = event.buf })
-
-                    -- lsp commands in normal mode
-                    wk.add({
-                        { "gd", vim.lsp.buf.definition, desc = "goto definition" },
-                        { "gt", vim.lsp.buf.type_definition, desc = "goto type definition" },
-                        { "gr", vim.lsp.buf.references, desc = "goto references" },
                         { "D", vim.diagnostic.open_float, desc = "diagnostic hover" },
                     }, { bufnr = event.buf })
 

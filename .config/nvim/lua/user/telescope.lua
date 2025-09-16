@@ -24,15 +24,11 @@ end
 --- Edit one of my config files
 --- @return nil
 function M.edit_config()
-    local pickers = require("telescope.pickers")
-    local finders = require("telescope.finders")
-    local conf = require("telescope.config").values
-
-    pickers
+    require("telescope.pickers")
         .new({}, {
             prompt_title = "Edit Config",
-            finder = finders.new_oneshot_job({ "fzfcache", "list-config-no-hist" }, {}),
-            sorter = conf.generic_sorter({}),
+            finder = require("telescope.finders").new_oneshot_job({ "fzfcache", "list-config-no-hist" }, {}),
+            sorter = require("telescope.config").values.generic_sorter({}),
             preview = require("telescope.config").values.preview,
         })
         :find()
@@ -52,57 +48,28 @@ function M.grep_config()
     })
 end
 
---- Grep all helptext files
---- @return nil
-function M.grep_help()
-    require("telescope.builtin").live_grep({
-        prompt_title = "help",
-        search = "",
-        search_dirs = vim.api.nvim_get_runtime_file("doc/*.txt", true),
-        only_sort_text = true,
-    })
-end
-
-function M.find_lazy_plugins()
-    local basedir = vim.fn.stdpath("data") .. "/lazy"
-    require("telescope.builtin").find_files({
-        cwd = basedir,
-        prompt_title = "Search Lazy Plugins",
-        search_dirs = { basedir },
-        path_display = { "relative" },
-        preview = require("telescope.config").values.preview,
-    })
-end
-
 --- Pick one of my git repos, cd to it, and open telescope to pick a file
----
---- @param opts table?: options to pass to telescope
 --- @return nil
-function M.switch_to_repo(opts)
-    local pickers = require("telescope.pickers")
-    local finders = require("telescope.finders")
+function M.switch_to_repo()
     local actions = require("telescope.actions")
-    local builtins = require("telescope.builtin")
-    local action_state = require("telescope.actions.state")
-    opts = opts or {}
 
-    pickers
-        .new(opts, {
+    require("telescope.pickers")
+        .new({}, {
             prompt_title = "Pick Repo",
             cwd = "~/",
             -- list my git repos runs a parallel search across all my git repos
-            finder = finders.new_oneshot_job({ "fzfcache", "list-my-git-repos", "-r" }, {}),
-            sorter = require("telescope.config").values.generic_sorter(opts),
+            finder = require("telescope.finders").new_oneshot_job({ "fzfcache", "list-my-git-repos", "-r" }, {}),
+            sorter = require("telescope.config").values.generic_sorter({}),
             attach_mappings = function(prompt_bufnr, _)
                 actions.select_default:replace(function()
-                    local selection = action_state.get_selected_entry()
+                    local selection = require("telescope.actions.state").get_selected_entry()
                     if selection == nil then
                         vim.notify("No repository selected", vim.log.levels.ERROR, { title = "Repo" })
                     else
                         actions.close(prompt_bufnr)
                         -- cd to this directory, and open telescope to pick a file
                         vim.cmd("lcd " .. vim.fn.expand(selection.value))
-                        builtins.find_files()
+                        require("telescope.builtin").find_files()
                     end
                 end)
                 return true

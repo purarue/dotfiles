@@ -79,6 +79,17 @@ wk.add({
     { "<leader>X", ":w<CR>:!chmod +x %<CR>:edit<CR>", desc = "chmod +x" },
     { "<leader><CR>", ":split<CR>:term<CR>", desc = "open terminal" },
     { "<leader>S", reload_config, desc = "reload config" },
+    -- mnemonic 'cd' binding
+    {
+        "<leader>cd",
+        function()
+            local filename = vim.fn.expand("%:p:h")
+            local cmd = "cd " .. filename
+            vim.cmd(cmd)
+            vim.notify("cd " .. filename)
+        end,
+        desc = "cd to curdir",
+    },
 }, { prefix = "<leader>" })
 
 -- window/buffers

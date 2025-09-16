@@ -1,3 +1,11 @@
+local wk = require("which-key")
+
+wk.add({
+    { "<leader>f", group = "find" },
+    { "<leader>u", group = "toggle" },
+    { "<leader>g", group = "git" },
+})
+
 ---@module 'lazy'
 ---@type LazyPluginSpec
 return {
@@ -19,6 +27,7 @@ return {
             },
         },
         notify = { enabled = true },
+        quickfile = { enabled = true },
         notifier = {
             enabled = true,
             timeout = 3000,
@@ -171,9 +180,9 @@ return {
         {
             "<leader>fb",
             function()
-                Snacks.picker.lines()
+                Snacks.picker.buffers()
             end,
-            desc = "buffer lines",
+            desc = "buffers",
         },
         {
             "<leader>fc",
@@ -281,19 +290,17 @@ return {
             desc = "undo history",
         },
         {
-            "<leader>uC",
-            function()
-                Snacks.picker.colorschemes()
-            end,
-            desc = "colorschemes",
-        },
-
-        {
             "gd",
             function()
                 Snacks.picker.lsp_definitions()
             end,
             desc = "goto definition",
+        },
+        {
+            "gt",
+            function()
+                Snacks.picker.lsp_type_definitions()
+            end,
         },
         {
             "gD",
@@ -339,18 +346,11 @@ return {
             desc = "lsp workspace symbols",
         },
         {
-            "<leader>z",
+            "<leader>Z",
             function()
                 Snacks.zen()
             end,
             desc = "toggle zen mode",
-        },
-        {
-            "<leader>Z",
-            function()
-                Snacks.zen.zoom()
-            end,
-            desc = "toggle zoom",
         },
         {
             "<leader>n",
@@ -360,7 +360,7 @@ return {
             desc = "notification history",
         },
         {
-            "<leader>cR",
+            "<leader>cr",
             function()
                 Snacks.rename.rename_file()
             end,
@@ -397,10 +397,10 @@ return {
                 vim.print = _G.dd -- Override print to use snacks for `:=` command
 
                 -- Create some toggle mappings
-                Snacks.toggle.option("spell", { name = "spelling" }):map("<leader>us")
+                Snacks.toggle.option("spell", { name = "spelling" }):map("<leader>s")
                 Snacks.toggle.option("wrap", { name = "wrap" }):map("<leader>uw")
 
-                -- for when Im sharing screen, is useful to have a crosshair
+                -- for when I'm sharing screen, is useful to have a crosshair
                 Snacks.toggle.option("cursorline", { name = "cursorline" }):map("<leader>ul")
                 Snacks.toggle.option("cursorcolumn", { name = "cursorcolumn" }):map("<leader>uc")
 

@@ -103,7 +103,9 @@ return {
 
                                 if icon == nil or icon == "" then
                                     icon = "�" -- fallback icon
-                                    vim.notify_once("No icon found for LSP kind: " .. ctx.kind, vim.log.levels.WARN)
+                                    if not (ctx.kind == nil or ctx.kind == "") then
+                                        vim.notify_once("No icon found for LSP kind: " .. ctx.kind, vim.log.levels.WARN)
+                                    end
                                 end
 
                                 return icon .. ctx.icon_gap
