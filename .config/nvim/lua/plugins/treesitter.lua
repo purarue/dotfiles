@@ -1,73 +1,3 @@
-local ensure_installed = {
-    "astro",
-    "awk",
-    "bash",
-    "c",
-    "commonlisp",
-    "cpp",
-    "css",
-    "csv",
-    "dart",
-    "diff",
-    "dockerfile",
-    "dtd",
-    "eex",
-    "elixir",
-    "elm",
-    "embedded_template",
-    "erlang",
-    "git_config",
-    "git_rebase",
-    "gitcommit",
-    "gitignore",
-    "go",
-    "gomod",
-    "gosum",
-    "graphql",
-    "haskell",
-    "heex",
-    "html",
-    "hyprlang",
-    "ini",
-    "java",
-    "javascript",
-    "jq",
-    "json",
-    "jsonc",
-    "lua",
-    "make",
-    "markdown",
-    "markdown_inline",
-    "muttrc",
-    "nginx",
-    "perl",
-    "php",
-    "php_only",
-    "po",
-    "prisma",
-    "python",
-    "query",
-    "regex",
-    "requirements",
-    "rifleconf",
-    "robots",
-    "ruby",
-    "rust",
-    "scss",
-    "sql",
-    "ssh_config",
-    "templ",
-    "todotxt",
-    "toml",
-    "tsv",
-    "tsx",
-    "typescript",
-    "vim",
-    "vimdoc",
-    "xml",
-    "yaml",
-}
-
 ---@module 'lazy'
 ---@type LazyPluginSpec[]
 return {
@@ -79,6 +9,9 @@ return {
                 enable_close = true,
                 enable_rename = true,
             }
+
+            -- NOTE: https://github.com/JoosepAlviste/nvim-ts-context-commentstring/pull/56
+            -- in case I forget and think there's something wrong with my config
 
             ---@module 'nvim-ts-autotag.config.plugin'
             ---@type nvim-ts-autotag.PluginSetup
@@ -109,21 +42,97 @@ return {
         lazy = false,
         -- dir = "~/Files/OldRepos/nvim-treesitter",
         build = ":TSUpdate",
-        config = function()
-            local TS = require("nvim-treesitter")
+        opts = {
+            ensure_installed = {
+                "astro",
+                "awk",
+                "bash",
+                "c",
+                "cmake",
+                "commonlisp",
+                "cpp",
+                "css",
+                "csv",
+                "dart",
+                "diff",
+                "dockerfile",
+                "dtd",
+                "eex",
+                "elixir",
+                "elm",
+                "embedded_template",
+                "erlang",
+                "git_config",
+                "git_rebase",
+                "gitcommit",
+                "gitignore",
+                "go",
+                "gomod",
+                "gosum",
+                "graphql",
+                "haskell",
+                "heex",
+                "html",
+                "hyprlang",
+                "ini",
+                "java",
+                "javascript",
+                "jq",
+                "json",
+                "jsonc",
+                "lua",
+                "make",
+                "markdown",
+                "markdown_inline",
+                "muttrc",
+                "nginx",
+                "perl",
+                "php",
+                "php_only",
+                "po",
+                "prisma",
+                "python",
+                "query",
+                "readline",
+                "regex",
+                "requirements",
+                "rifleconf",
+                "robots",
+                "rst",
+                "ruby",
+                "rust",
+                "scss",
+                "sql",
+                "ssh_config",
+                "templ",
+                "todotxt",
+                "toml",
+                "tsv",
+                "tsx",
+                "typescript",
+                "vim",
+                "vimdoc",
+                "xml",
+                "yaml",
+            },
+        },
+        config = function(_, opts)
             -- NOTE: no setup() call required
+            local TS = require("nvim-treesitter")
 
             -- From: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/extras/ui/treesitter-main.lua
             -- maintain a list of installed languages
             local installed = TS.get_installed("parsers")
             local install = vim.tbl_filter(function(lang)
                 return not vim.tbl_contains(installed, lang)
-            end, ensure_installed)
+            end, opts.ensure_installed)
 
             -- if there are any missing parsers, install them
             if #install > 0 then
-                TS.install(install, { summary = true })
-                vim.list_extend(installed, install)
+                TS.install(install, { summary = true }):await(function()
+                    -- refresh installed languages
+                    installed = TS.get_installed("parsers")
+                end)
             end
 
             -- use bash treesitter highlighting for zsh files

@@ -177,7 +177,6 @@ return {
                     wk.add({
                         { "<leader>T", vim.lsp.buf.code_action, desc = "lsp code action" },
                         { "<leader>r", vim.lsp.buf.rename, desc = "lsp rename" },
-                        { "D", vim.diagnostic.open_float, desc = "diagnostic hover" },
                     }, { bufnr = event.buf })
 
                     -- setup inlay hints

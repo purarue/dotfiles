@@ -114,6 +114,7 @@ wk.add({
     { "[w", function() vim.diagnostic.jump({ count = -1 }) vim.api.nvim_feedkeys("zz", "n", false) end, desc = "prev diagnostic", },
     { "]e", function() vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR, }) vim.api.nvim_feedkeys("zz", "n", false) end, desc = "next error", },
     { "[e", function() vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR, }) vim.api.nvim_feedkeys("zz", "n", false) end, desc = "prev error", },
+    { "D", vim.diagnostic.open_float, desc = "diagnostic hover" },
 })
 -- stylua: ignore end
 
