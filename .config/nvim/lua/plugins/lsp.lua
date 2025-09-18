@@ -143,7 +143,6 @@ return {
                             library = {
                                 vim.env.VIMRUNTIME,
                                 "~/.config/pura_lua/", -- personal shared lua code
-                                "~/Repos/personal/pura/", -- personal nvim code
                                 -- dont need to add everything here because lazydev.nvim will
                                 -- configure lua_ls as needed:
                                 -- https://github.com/folke/lazydev.nvim

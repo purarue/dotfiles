@@ -187,6 +187,8 @@ return {
             { "[]", function() require("nvim-treesitter-textobjects.move").goto_previous_end("@class.outer", "textobjects") end, mode = { "n", "x", "o" }, desc = "previous class end" },
             { "]d", function() require("nvim-treesitter-textobjects.move").goto_next("@conditional.outer", "textobjects") end, mode = { "n", "x", "o" }, desc = "next conditional (nearest)" },
             { "[d", function() require("nvim-treesitter-textobjects.move").goto_previous("@conditional.outer", "textobjects") end, mode = { "n", "x", "o" }, desc = "previous conditional (nearest)" },
+            { "]c", function() require("nvim-treesitter-textobjects.move").goto_next_start("@comment.outer", "textobjects") end, mode = { "n", "x", "o" }, desc = "next comment start" },
+            { "[c", function() require("nvim-treesitter-textobjects.move").goto_previous_start("@comment.outer", "textobjects") end, mode = { "n", "x", "o" }, desc = "previous comment start" },
             -- stylua: ignore end
         },
     },
