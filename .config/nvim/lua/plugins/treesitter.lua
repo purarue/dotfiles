@@ -148,6 +148,7 @@ return {
         after = "nvim-treesitter",
         event = { "VeryLazy" },
         branch = "main",
+        dir = "~/Repos/nvim-treesitter-textobjects",
         ---@module 'nvim-treesitter-textobjects.configs'
         ---@type TSTextObjects.UserConfig
         opts = {
@@ -173,7 +174,7 @@ return {
             { "ic", function() require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects") end, mode = { "x", "o" }, desc = "select inside class (inner)" },
             { "co", function() require("nvim-treesitter-textobjects.select").select_textobject("@comment.outer", "textobjects") end, mode = { "x", "o" }, desc = "select around comment (outer)" },
             -- swaps
-            { "<leader>a", function() require("nvim-treesitter-textobjects.swap").swap_next("@parameter.inner") end, mode = "n", desc = "swap with next parameter (inner)" },
+            { "<leader>a", function() require("nvim-treesitter-textobjects.swap").swap_next("@parameter.outer") end, mode = "n", desc = "swap with next parameter (inner)" },
             { "<leader>A", function() require("nvim-treesitter-textobjects.swap").swap_previous("@parameter.outer") end, mode = "n", desc = "swap with previous parameter (outer)" },
             -- movement
             { "]m", function() require("nvim-treesitter-textobjects.move").goto_next_start("@function.outer", "textobjects") end, mode = { "n", "x", "o" }, desc = "next function start" },
