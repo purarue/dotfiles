@@ -18,7 +18,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 local user_autocompile = clear_group("UserAutocompile")
 
 vim.api.nvim_create_autocmd("BufWritePost", {
-    command = "!reshortcuts",
+    command = "!shortcuts create",
     group = user_autocompile,
     pattern = { "shortcuts.toml" },
     desc = "create shortcuts script when I save config file",

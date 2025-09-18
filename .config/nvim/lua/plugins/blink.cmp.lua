@@ -54,7 +54,7 @@ return {
             lazy = true,
             opts = {
                 symbol_map = {
-                    Copilot = "",
+                    Copilot = "󰚩",
                     Snippet = "",
                 },
             },

@@ -50,7 +50,7 @@ return {
         { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "find nvim config file" },
         { "<leader>ff", function() Snacks.picker.files() end, desc = "find files" },
         { "<leader>fp", function() Snacks.picker.git_files() end, desc = "find git files" },
-        { "<leader>:", function() Snacks.picker.command_history() end, desc = "command history" },
+        { "<leader>f:", function() Snacks.picker.command_history() end, desc = "command history" },
         { "<leader>fn", function() Snacks.picker.notifications() end, desc = "notification history" },
         { "<leader>E", function() Snacks.explorer() end, desc = "file explorer" },
         { "<leader>gb", function() Snacks.picker.git_branches() end, desc = "git branches" },

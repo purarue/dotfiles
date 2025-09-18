@@ -100,7 +100,7 @@ return {
         opts = {
             enable = true,
             max_lines = 10,
-            multiline_threshold = 5,
+            multiline_threshold = 20,
         },
     },
     {

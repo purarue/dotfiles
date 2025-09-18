@@ -31,7 +31,6 @@ return {
             local blink_cmp = require("blink.cmp")
             local default_capabilities = blink_cmp.get_lsp_capabilities()
 
-            default_capabilities.textDocument.completion.completionItem.snippetSupport = true
             default_capabilities.workspace = {
                 didChangeWatchedFiles = {
                     -- https://github.com/neovim/neovim/issues/23725#issuecomment-1561364086
@@ -144,6 +143,7 @@ return {
                             library = {
                                 vim.env.VIMRUNTIME,
                                 "~/.config/pura_lua/", -- personal shared lua code
+                                "~/Repos/personal/pura/", -- personal nvim code
                                 -- dont need to add everything here because lazydev.nvim will
                                 -- configure lua_ls as needed:
                                 -- https://github.com/folke/lazydev.nvim

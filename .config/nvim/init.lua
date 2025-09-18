@@ -33,6 +33,7 @@ require("lazy").setup({
     },
     browser = "openurl",
     change_detection = { enabled = false, notify = false },
+    rocks = { enabled = false },
     performance = {
         rtp = {
             disabled_plugins = {

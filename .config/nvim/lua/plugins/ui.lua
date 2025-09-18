@@ -42,12 +42,12 @@ return {
             options = { theme = "catppuccin" },
             sections = {
                 lualine_a = { "fancy_mode" }, -- fixed width
-                lualine_b = { "branch", "diff", "diagnostics" },
+                lualine_b = { "branch", "fancy_diff" },
                 lualine_c = { { "fancy_cwd", substitute_home = true }, "filename" },
-                lualine_x = { "filesize", "fancy_searchcount" },
+                lualine_x = { "fancy_diagnostics", "fancy_searchcount" },
                 -- ts_icon is present if treesitter is attached
-                lualine_y = { { "fancy_filetype", ts_icon = { "󱁉", color = { fg = "lightblue" } } }, "progress" },
-                lualine_z = { "location" },
+                lualine_y = { { "fancy_filetype", ts_icon = { "󱁉", color = { fg = "lightblue" } } } },
+                lualine_z = { "progress", "location" },
             },
         },
     },
