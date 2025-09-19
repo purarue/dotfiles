@@ -40,7 +40,6 @@ return {
         "nvim-treesitter/nvim-treesitter",
         branch = "main",
         lazy = false,
-        -- dir = "~/Files/OldRepos/nvim-treesitter",
         build = ":TSUpdate",
         opts = {
             ensure_installed = {
@@ -157,7 +156,7 @@ return {
         after = "nvim-treesitter",
         event = { "VeryLazy" },
         branch = "main",
-        dir = "~/Repos/nvim-treesitter-textobjects",
+        -- dir = "~/Repos/nvim-treesitter-textobjects",
         ---@module 'nvim-treesitter-textobjects.configs'
         ---@type TSTextObjects.UserConfig
         opts = {
