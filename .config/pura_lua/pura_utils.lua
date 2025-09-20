@@ -6,6 +6,13 @@ local M = {}
 ---@return string?
 function M.read_to_string(filename, readmode)
     local f = io.open(filename, "r")
+    return M.read_filehandle_to_string(f, readmode)
+end
+
+---@param f file*?
+---@param readmode? readmode
+---@return string?
+function M.read_filehandle_to_string(f, readmode)
     if f then
         local content = f:read(readmode or "*a")
         f:close()

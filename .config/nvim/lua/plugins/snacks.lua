@@ -120,7 +120,7 @@ return {
         { "<leader>go", gitopen, desc = "git browse", mode = { "n", "v" } },
         { "<leader>d", function() Snacks.notifier.hide() end, desc = "dismiss all notifications" },
         { "<leader>ce", function() Snacks.picker.pick({ finder = require("user.projects")._config_finder }) end, desc = "edit config" },
-        { "<leader>cR", function() Snacks.picker.projects({ projects = require("user.projects").project_list() }) end, desc = "projects" },
+        { "<leader>cR", function() Snacks.picker.projects({ dev = require("user.projects").dev_list() }) end, desc = "projects" },
         -- stylua: ignore end
     },
     init = function()

@@ -1,15 +1,20 @@
 local M = {}
 
+---@param s string?
+---@return string[]
+function M.string_to_list(s)
+    if s == nil then
+        return {}
+    end
+    return vim.iter(s:gmatch("[^\r\n]+")):totable()
+end
+
 ---@param cmd string
 ---@return string[]
 function M._command_list(cmd)
     local handle = io.popen(cmd, "r")
-    if handle == nil then
-        return {}
-    end
-    local result = handle:read("*a")
-    handle:close()
-    return vim.iter(result:gmatch("[^\r\n]+")):totable()
+    local contents = require("pura_utils").read_filehandle_to_string(handle)
+    return M.string_to_list(contents)
 end
 
 ---@param list string[]
@@ -31,8 +36,9 @@ function M._config_finder()
 end
 
 ---@return string[]
-function M.project_list()
-    return M._command_list("list-my-git-repos")
+function M.dev_list()
+    local contents = require("pura_utils").read_to_string(vim.fs.normalize("~/.cache/repo_bases.txt"))
+    return M.string_to_list(contents)
 end
 
 return M
