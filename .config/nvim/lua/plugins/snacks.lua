@@ -10,7 +10,7 @@ wk.add({
 local function lazygit()
     -- NOTE: once this lanches it caches the lazygit terminal object,
     -- could create a separate one for dotfiles or reset it on launch here?
-    if vim.loop.cwd() and vim.b["yadm_tracked"] then
+    if vim.b["yadm_tracked"] then
         local gitsigns_config = require("gitsigns-yadm").config
         Snacks.lazygit({
             args = {
@@ -20,6 +20,18 @@ local function lazygit()
         })
     else
         Snacks.lazygit()
+    end
+end
+
+local function gitopen()
+    if vim.b["yadm_tracked"] then
+        -- wrapper script that opens my dotfiles repo
+        -- in my browser:
+        -- https://purarue.xyz/d/.local/share/shortcuts/dotfiles?redirect
+        vim.fn.system("dotfiles")
+    else
+        -- NOTE: 'what' = "permalink" seems to do nothing
+        Snacks.gitbrowse.open({ what = "permalink" })
     end
 end
 
@@ -105,8 +117,7 @@ return {
         { "<leader>Z", function() Snacks.zen() end, desc = "toggle zen mode" },
         { "<leader>n", function() Snacks.notifier.show_history() end, desc = "notification history" },
         { "<leader>cr", function() Snacks.rename.rename_file() end, desc = "rename file" },
-        -- TODO: 'what' = "permalink" seems to do nothing
-        { "<leader>go", function() Snacks.gitbrowse.open({ what = "permalink" }) end, desc = "git browse", mode = { "n", "v" } },
+        { "<leader>go", gitopen, desc = "git browse", mode = { "n", "v" } },
         { "<leader>d", function() Snacks.notifier.hide() end, desc = "dismiss all notifications" },
         { "<leader>ce", function() Snacks.picker.pick({ finder = require("user.projects")._config_finder }) end, desc = "edit config" },
         { "<leader>cR", function() Snacks.picker.projects({ projects = require("user.projects").project_list() }) end, desc = "projects" },
