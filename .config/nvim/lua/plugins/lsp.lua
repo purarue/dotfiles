@@ -175,9 +175,9 @@ return {
                     -- when the client attaches, add keybindings
                     -- lsp commands with leader prefix
                     wk.add({
-                        { "<leader>T", vim.lsp.buf.code_action, desc = "lsp code action" },
-                        { "<leader>r", vim.lsp.buf.rename, desc = "lsp rename" },
-                    }, { bufnr = event.buf })
+                        { "<leader>T", vim.lsp.buf.code_action, desc = "lsp code action", buffer = event.buf },
+                        { "<leader>r", vim.lsp.buf.rename, desc = "lsp rename", buffer = event.buf },
+                    })
 
                     -- setup inlay hints
                     if not (event.data and event.data.client_id) then

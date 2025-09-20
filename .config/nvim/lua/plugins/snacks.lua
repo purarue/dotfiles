@@ -4,8 +4,24 @@ wk.add({
     { "<leader>f", group = "find" },
     { "<leader>u", group = "toggle" },
     { "<leader>g", group = "git" },
-    { "<leader>c", group = "config" },
+    { "<leader>c", group = "config", icon = "" },
 })
+
+local function lazygit()
+    -- NOTE: once this lanches it caches the lazygit terminal object,
+    -- could create a separate one for dotfiles or reset it on launch here?
+    if vim.loop.cwd() and vim.b["yadm_tracked"] then
+        local gitsigns_config = require("gitsigns-yadm").config
+        Snacks.lazygit({
+            args = {
+                "--git-dir=" .. gitsigns_config.yadm_repo_git,
+                "--work-tree=" .. gitsigns_config.homedir,
+            },
+        })
+    else
+        Snacks.lazygit()
+    end
+end
 
 ---@module 'lazy'
 ---@type LazyPluginSpec
@@ -49,16 +65,14 @@ return {
         { "<leader><space>", function() Snacks.picker.smart() end, desc = "smart find files" },
         { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "find nvim config file" },
         { "<leader>ff", function() Snacks.picker.files() end, desc = "find files" },
-        { "<leader>fp", function() Snacks.picker.git_files() end, desc = "find git files" },
+        { "<leader>fp", function() Snacks.picker.git_files() end, desc = "find git files"},
         { "<leader>f:", function() Snacks.picker.command_history() end, desc = "command history" },
         { "<leader>fn", function() Snacks.picker.notifications() end, desc = "notification history" },
         { "<leader>E", function() Snacks.explorer() end, desc = "file explorer" },
-        { "<leader>gb", function() Snacks.picker.git_branches() end, desc = "git branches" },
+        { "<leader>gr", function() Snacks.picker.git_branches() end, desc = "git branches" },
         { "<leader>gl", function() Snacks.picker.git_log() end, desc = "git log" },
-        { "<leader>gL", function() Snacks.picker.git_log_line() end, desc = "git log line" },
+        { "<leader>gg", lazygit, desc = "lazygit" },
         { "<leader>gs", function() Snacks.picker.git_status() end, desc = "git status" },
-        { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "git diff (hunks)" },
-        { "<leader>gf", function() Snacks.picker.git_log_file() end, desc = "git log file" },
         { "<leader>fl", function() Snacks.picker.lines() end, desc = "buffer lines" },
         { "<leader>fg", function() Snacks.picker.grep() end, desc = "grep" },
         { "<leader>fB", function() Snacks.picker.grep_buffers() end, desc = "grep open buffers" },
@@ -92,7 +106,7 @@ return {
         { "<leader>n", function() Snacks.notifier.show_history() end, desc = "notification history" },
         { "<leader>cr", function() Snacks.rename.rename_file() end, desc = "rename file" },
         -- TODO: 'what' = "permalink" seems to do nothing
-        { "<leader>gB", function() Snacks.gitbrowse.open({ what = "permalink" }) end, desc = "git browse", mode = { "n", "v" } },
+        { "<leader>go", function() Snacks.gitbrowse.open({ what = "permalink" }) end, desc = "git browse", mode = { "n", "v" } },
         { "<leader>d", function() Snacks.notifier.hide() end, desc = "dismiss all notifications" },
         { "<leader>ce", function() Snacks.picker.pick({ finder = require("user.projects")._config_finder }) end, desc = "edit config" },
         { "<leader>cR", function() Snacks.picker.projects({ projects = require("user.projects").project_list() }) end, desc = "projects" },

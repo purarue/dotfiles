@@ -16,6 +16,14 @@ return {
         keys = { { "[", mode = "x" }, { "]", mode = { "x" } } },
     },
     {
+        "nvim-lua/plenary.nvim",
+        lazy = true,
+    },
+    {
+        "tpope/vim-dispatch",
+        cmd = { "Dispatch", "Make", "Focus", "Start" },
+    },
+    {
         "airblade/vim-rooter",
         event = "BufWinEnter",
         init = function()
