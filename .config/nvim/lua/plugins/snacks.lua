@@ -41,37 +41,50 @@ return {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
-    ---@module 'snacks'
-    ---@type snacks.Config
-    opts = {
-        bigfile = { enabled = true },
-        gitbrowse = {
-            enabled = true,
-            open = function(url)
-                -- '%-' is an escaped hyphen
-                url = url:gsub("^(https://)git%-new", "%1github.com")
-                url = url:gsub("^(https://)git%-old", "%1github.com")
-                vim.ui.open(url)
-            end,
-        },
-        input = { enabled = true },
-        picker = {
-            enabled = true,
-            reverse = true,
-            sources = {},
-            layout = {
-                preset = "telescope",
+    opts = function(_, opts)
+        ---@module 'snacks'
+        ---@type snacks.Config
+        return vim.tbl_deep_extend("force", opts or {}, {
+            bigfile = { enabled = true },
+            gitbrowse = {
+                enabled = true,
+                open = function(url)
+                    -- '%-' is an escaped hyphen
+                    url = url:gsub("^(https://)git%-new", "%1github.com")
+                    url = url:gsub("^(https://)git%-old", "%1github.com")
+                    vim.ui.open(url)
+                end,
             },
-        },
-        notify = { enabled = true },
-        quickfile = { enabled = true },
-        notifier = {
-            enabled = true,
-            timeout = 3000,
-        },
-        statuscolumn = { enabled = true },
-        zen = { enabled = true },
-    },
+            input = { enabled = true },
+            picker = {
+                actions = require("trouble.sources.snacks").actions,
+                win = {
+                    input = {
+                        keys = {
+                            ["<C-t>"] = {
+                                "trouble_open",
+                                mode = { "n", "i" },
+                            },
+                        },
+                    },
+                },
+                enabled = true,
+                reverse = true,
+                sources = {},
+                layout = {
+                    preset = "telescope",
+                },
+            },
+            notify = { enabled = true },
+            quickfile = { enabled = true },
+            notifier = {
+                enabled = true,
+                timeout = 3000,
+            },
+            statuscolumn = { enabled = true },
+            zen = { enabled = true },
+        })
+    end,
     keys = {
         -- stylua: ignore start
         { "<leader><space>", function() Snacks.picker.smart() end, desc = "smart find files" },
