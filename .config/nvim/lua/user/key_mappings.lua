@@ -17,8 +17,6 @@ nnoremap("/", "/\\v", "incremental search")
 nnoremap("<leader>y", 'V"+y', "copy to clipboard")
 vnoremap("<leader>y", '"+y', "copy to clipboard")
 
-nnoremap("<C-s>", ":w<CR>", "save")
-
 -- swap wrapped lines behavior:
 nnoremap("j", "gj", "move wrapped line down")
 nnoremap("k", "gk", "move wrapped line up")
@@ -64,21 +62,21 @@ nnoremap("<C-n>", 'yiw:%s/<C-r>"//gc' .. leftn(3), "search and replace")
 nnoremap("<C-f>", ":%s///gcI" .. leftn(5), "empty search and replace")
 vnoremap("<C-f>", ":s///gcI" .. leftn(5), "empty search and replace on selection")
 
-nnoremap("<Esc>", "<Cmd>nohlsearch<CR>", "clear search highlight")
-
-local function reload_config()
-    vim.cmd("source ~/.config/nvim/lua/user/settings.lua")
-    vim.cmd("source ~/.config/nvim/lua/user/key_mappings.lua")
-    -- reload background color
-    require("user.terminal").set_background()
-    print("Reloaded config")
-end
+nnoremap("<Esc>", vim.cmd.nohlsearch, "clear search highlight")
 
 -- misc
 wk.add({
     { "<leader>X", ":w<CR>:!chmod +x %<CR>:edit<CR>", desc = "chmod +x" },
-    { "<leader><CR>", ":split<CR>:term<CR>", desc = "open terminal" },
-    { "<leader>S", reload_config, desc = "reload config" },
+    -- reload config
+    {
+        "<leader>S",
+        function()
+            vim.cmd("source ~/.config/nvim/lua/user/settings.lua")
+            vim.cmd("source ~/.config/nvim/lua/user/key_mappings.lua")
+            print("Reloaded config")
+        end,
+        desc = "reload config",
+    },
     -- mnemonic 'cd' binding
     {
         "<leader>cd",
@@ -98,9 +96,8 @@ wk.add({ "<leader>b", "<C-^>", desc = "swap buffers" })
 nnoremap("<leader>w", function()
     wk.show("<C-w>")
 end, "window")
-nnoremap("<leader><C-n>", "<Cmd>enew<CR>", "new file")
 
-wk.add({ { "<leader>j", ":cnext<CR>", desc = "qf next" }, { "<leader>k", ":cprev<CR>", desc = "qf prev" } })
+wk.add({ { "<leader>j", "<Cmd>:cnext<CR>", desc = "qf next" }, { "<leader>k", ":cprev<CR>", desc = "qf prev" } })
 
 wk.add({ "<leader>l", group = "loc list" })
 wk.add({

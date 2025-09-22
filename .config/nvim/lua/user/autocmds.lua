@@ -5,8 +5,9 @@
 local function clear_group(name)
     return vim.api.nvim_create_augroup(name, { clear = true })
 end
+local autocmd = vim.api.nvim_create_autocmd
 
-vim.api.nvim_create_autocmd("TextYankPost", {
+autocmd("TextYankPost", {
     desc = "highlight when yanking (copying) text",
     callback = function()
         vim.highlight.on_yank()
@@ -17,32 +18,46 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 local user_autocompile = clear_group("UserAutocompile")
 
-vim.api.nvim_create_autocmd("BufWritePost", {
+autocmd("BufWritePost", {
     command = "!shortcuts create",
     group = user_autocompile,
     pattern = { "shortcuts.toml" },
     desc = "create shortcuts script when I save config file",
 })
 
-vim.api.nvim_create_autocmd("BufWritePost", {
+autocmd("BufWritePost", {
     command = "!i3-jinja",
     group = user_autocompile,
     pattern = { ".config/i3/config.j2", "i3/config.j2" },
     desc = "create i3 config when I save config file",
 })
 
-vim.api.nvim_create_autocmd("BufWritePost", {
+autocmd("BufWritePost", {
     command = "!rm -f $(evry location -i3blocks-cache)",
     group = user_autocompile,
     pattern = { ".config/i3blocks/config.*", "i3blocks/config.*" },
     desc = "clear i3blocks cache file when I save config",
 })
 
-vim.api.nvim_create_autocmd("TermOpen", {
+autocmd("TermOpen", {
     desc = "enter insert mode when I open a terminal",
     command = "startinsert",
     group = clear_group("TerminalInsert"),
     pattern = "*",
+})
+
+autocmd("BufWinEnter", {
+    group = clear_group("BufEnterLoadView"),
+    callback = function()
+        pcall(vim.cmd.loadview)
+    end,
+})
+
+autocmd("BufWinLeave", {
+    group = clear_group("BufLeaveMkView"),
+    callback = function()
+        pcall(vim.cmd.mkview)
+    end,
 })
 
 --- converts a filename to a title
@@ -72,7 +87,7 @@ end
 -- ---
 -- title: Filename
 -- ---
-vim.api.nvim_create_autocmd({ "BufNewFile" }, {
+autocmd({ "BufNewFile" }, {
     desc = "Add metadata to new empty Markdown files",
     group = clear_group("NotesMarkdown"),
     pattern = { "*/Documents/Notes/exo/*.md", "*/Repos/exobrain/src/content/*.md" },

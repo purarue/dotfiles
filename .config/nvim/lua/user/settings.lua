@@ -60,6 +60,7 @@ vim.opt.list = true
 vim.opt.listchars:append({ tab = "▸ ", eol = "¬" })
 vim.opt.breakindent = true -- wrapped lines indent
 vim.opt.signcolumn = "yes"
+vim.opt.linebreak = true
 
 -- prevents truncated yanks, deletes, etc.
 -- makes sure that you can have lots of lines across

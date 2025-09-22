@@ -20,6 +20,7 @@ return {
             {
                 "purarue/gitsigns-yadm.nvim",
                 lazy = true,
+                enabled = os.getenv("ON_OS") ~= nil,
                 -- dir = "~/Repos/gitsigns-yadm.nvim",
                 ---@module 'gitsigns-yadm'
                 ---@type GitsignsYadm.Config
