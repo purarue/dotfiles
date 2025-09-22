@@ -68,5 +68,5 @@ function M.complete_no_duplicates(flags)
     end
 end
 
--- binding set in ./settings.lua
+-- binding set in ./options.lua
 return M

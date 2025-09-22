@@ -46,6 +46,13 @@ vnoremap("!B", ":.!bash<CR>", "run shell command")
 vnoremap("J", ":move '>+1<CR>gv=gv", "move selected text down")
 vnoremap("K", ":move '<-2<CR>gv=gv", "move selected text up")
 
+-- save the current view when closing a buffer,
+-- even if there are multiple of that buffer open
+nnoremap("ZZ", function()
+    pcall(vim.cmd.mkview)
+    vim.cmd("x")
+end, "save view and close window")
+
 nnoremap("J", "mzJ`z", "append to line")
 
 ---@param n number
@@ -71,7 +78,7 @@ wk.add({
     {
         "<leader>S",
         function()
-            vim.cmd("source ~/.config/nvim/lua/user/settings.lua")
+            vim.cmd("source ~/.config/nvim/lua/user/options.lua")
             vim.cmd("source ~/.config/nvim/lua/user/key_mappings.lua")
             print("Reloaded config")
         end,
@@ -97,12 +104,15 @@ nnoremap("<leader>w", function()
     wk.show("<C-w>")
 end, "window")
 
-wk.add({ { "<leader>j", "<Cmd>:cnext<CR>", desc = "qf next" }, { "<leader>k", ":cprev<CR>", desc = "qf prev" } })
+wk.add({
+    { "<leader>j", ":cnext<CR>", desc = "qf next" },
+    { "<leader>k", ":cprev<CR>", desc = "qf prev" },
+})
 
 wk.add({ "<leader>l", group = "loc list" })
 wk.add({
-    { "<leader>lj", "<Cmd>:lnext<CR>", desc = "next" },
-    { "<leader>lk", "<Cmd>:lprev<CR>", desc = "prev" },
+    { "<leader>lj", ":lnext<CR>", desc = "next" },
+    { "<leader>lk", ":lprev<CR>", desc = "prev" },
 })
 
 -- stylua: ignore start
