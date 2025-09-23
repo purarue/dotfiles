@@ -26,136 +26,33 @@ return {
         },
         event = { "BufReadPost", "BufNewFile" },
         cmd = { "LspInfo", "LspInstall", "LspUninstall" },
-        config = function()
-            -- NOTE: no setup() required v0.11+
-            local blink_cmp = require("blink.cmp")
-            local default_capabilities = blink_cmp.get_lsp_capabilities()
-
-            default_capabilities.workspace = {
-                didChangeWatchedFiles = {
-                    -- https://github.com/neovim/neovim/issues/23725#issuecomment-1561364086
-                    -- https://github.com/neovim/neovim/issues/23291
-                    -- disable watchfiles for lsp, runs slow on linux
-                    dynamicRegistration = false,
-                },
-            }
-
+        opts = function()
             -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
-            local servers = {
-                jsonls = {
-                    settings = {
-                        json = {
-                            schemas = require("schemastore").json.schemas(),
-                            validate = { enable = true },
-                        },
-                    },
-                },
-                basedpyright = {
-                    settings = {
-                        basedpyright = {
-                            analysis = {
-                                autoSearchPaths = true,
-                                typeCheckingMode = "off",
-                                useLibraryCodeForTypes = true,
-                                diagnosticMode = "openFilesOnly",
-                                inlayHints = {
-                                    callArgumentNames = true,
-                                },
-                            },
-                        },
-                    },
-                },
-                yamlls = {
-                    settings = {
-                        yaml = {
-                            keyOrdering = false,
-                            schemaStore = {
-                                -- Disable built-in schemaStore support
-                                enable = false,
-                                -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
-                                url = "",
-                            },
-                            schemas = require("schemastore").yaml.schemas(),
-                        },
-                    },
-                },
-                bashls = true,
-            }
-            -- disable most LSPs on android
+            local servers = { "bashls", "lua_ls", "jsonls", "yamlls" }
             if not vim.g.on_android then
-                -- find elixir-ls binary
-                local elixir_ls_bin = vim.fn.exepath("elixir-ls")
-                if elixir_ls_bin ~= "" then
-                    servers.elixirls = { cmd = { elixir_ls_bin } }
-                end
-                servers.clangd = true
-                servers.gopls = true
-                servers.ocamllsp = true
-                servers.rust_analyzer = true
-                servers.cssls = true
-                servers.html = true
-                servers.gdscript = true
-                servers.templ = true
-                servers.eslint = true
-                servers.cssmodules_ls = true
-                servers.tailwindcss = true
-                servers.ts_ls = true
-                servers.prismals = true
-                servers.astro = true
+                servers = vim.list_extend(servers, {
+                    "basedpyright",
+                    "elixirls",
+                    "clangd",
+                    "gopls",
+                    "rust_analyzer",
+                    "cssls",
+                    "html",
+                    "gdscript",
+                    "templ",
+                    "eslint",
+                    "tailwindcss",
+                    "ts_ls",
+                    "prismals",
+                    "astro",
+                })
             end
-
-            for server, config in pairs(servers) do
-                local use_capabilities = default_capabilities
-                if not config == true then
-                    use_capabilities = vim.tbl_extend("force", { capabilities = default_capabilities }, config)
-                end
-                vim.lsp.config(server, { capabilities = use_capabilities })
-                vim.lsp.enable(server)
-            end
-
-            -- this needs to be separate, I think because of the on_init function/vim.tbl_extend
-            vim.lsp.config("lua_ls", {
-                capabilities = default_capabilities,
-                on_init = function(client)
-                    if client.workspace_folders then
-                        local path = client.workspace_folders[1].name
-                        if vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc") then
-                            return
-                        end
-                    end
-
-                    client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
-                        runtime = {
-                            -- Tell the language server which version of Lua you're using
-                            -- (most likely LuaJIT in the case of Neovim)
-                            version = "LuaJIT",
-                            -- Tell the language server how to find Lua modules same way as Neovim
-                            -- (see `:h lua-module-load`)
-                            path = {
-                                "lua/?.lua",
-                                "lua/?/init.lua",
-                            },
-                        },
-                        diagnostics = { globals = { "vim" } },
-                        -- Make the server aware of Neovim runtime files
-                        workspace = {
-                            checkThirdParty = false,
-                            library = {
-                                vim.env.VIMRUNTIME,
-                                "~/.config/pura_lua/", -- personal shared lua code
-                                -- dont need to add everything here because lazydev.nvim will
-                                -- configure lua_ls as needed:
-                                -- https://github.com/folke/lazydev.nvim
-                            },
-                        },
-                    })
-                end,
-                settings = {
-                    Lua = {},
-                },
-            })
-            vim.lsp.enable("lua_ls")
-
+            return {
+                servers = servers,
+            }
+        end,
+        config = function(_, opts)
+            vim.lsp.enable(opts.servers)
             vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
                 group = vim.api.nvim_create_augroup("lsp_disable", { clear = true }),
                 pattern = { ".env", ".env.*" },
@@ -169,16 +66,8 @@ return {
             vim.api.nvim_create_autocmd("LspAttach", {
                 group = vim.api.nvim_create_augroup("custom-lsp-attach", { clear = true }),
                 callback = function(event)
-                    local wk = require("which-key")
-                    -- set omnifunc to lsp omnifunc
-                    vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
                     -- when the client attaches, add keybindings
                     -- lsp commands with leader prefix
-                    wk.add({
-                        { "<leader>T", vim.lsp.buf.code_action, desc = "lsp code action", buffer = event.buf },
-                        { "<leader>r", vim.lsp.buf.rename, desc = "lsp rename", buffer = event.buf },
-                    })
-
                     -- setup inlay hints
                     if not (event.data and event.data.client_id) then
                         return

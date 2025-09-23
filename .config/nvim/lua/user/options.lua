@@ -90,6 +90,8 @@ vim.opt.wildignore:append({
     "**/.git/*",
 })
 
+vim.diagnostic.config({ virtual_text = true, virtual_lines = false })
+
 -- create binding for my remsync code
 vim.api.nvim_create_user_command("Remsync", function(opts)
     require("user.remsync").tohtml({

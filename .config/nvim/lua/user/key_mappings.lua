@@ -109,11 +109,15 @@ wk.add({
     { "<leader>k", ":cprev<CR>", desc = "qf prev" },
 })
 
-wk.add({ "<leader>l", group = "loc list" })
 wk.add({
-    { "<leader>lj", ":lnext<CR>", desc = "next" },
-    { "<leader>lk", ":lprev<CR>", desc = "prev" },
+    "<leader>ud",
+    function()
+        local new_config = not vim.diagnostic.config().virtual_lines
+        vim.diagnostic.config({ virtual_lines = new_config })
+    end,
+    desc = "Toggle diagnostic virtual_lines",
 })
+
 
 -- stylua: ignore start
 wk.add({
@@ -124,11 +128,3 @@ wk.add({
     { "D", vim.diagnostic.open_float, desc = "diagnostic hover" },
 })
 -- stylua: ignore end
-
--- vim-unimpaired-like for basic stuff
-nnoremap("[q", "<Cmd>:cprev<CR>", "qf prev")
-nnoremap("]q", "<Cmd>:cnext<CR>", "qf next")
-nnoremap("[l", "<Cmd>:lprev<CR>", "ll prev")
-nnoremap("]l", "<Cmd>:lnext<CR>", "ll next")
-nnoremap("[n", "<Cmd>:prev<CR>", "file prev")
-nnoremap("]n", "<Cmd>:next<CR>", "file next")

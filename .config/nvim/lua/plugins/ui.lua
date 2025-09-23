@@ -1,4 +1,3 @@
----@module 'snacks'
 ---@module 'lazy'
 ---@type LazyPluginSpec[]
 return {
@@ -25,9 +24,6 @@ return {
             },
         },
         config = function(_, opts)
-            -- sets the vim 'background' property to dark/light
-            -- depending on my terminal theme
-            require("user.terminal").set_background()
             require("catppuccin").setup(opts)
             vim.cmd.colorscheme("catppuccin")
         end,
@@ -57,9 +53,10 @@ return {
         event = "VeryLazy",
         opts = {},
         keys = {
+            ---@module 'snacks'
             -- stylua: ignore start
             ---@diagnostic disable-next-line: undefined-field
-            { "<leader>ft", function() Snacks.picker.todo_comments() end, desc = "todo" },
+            { "<leader>ft", function() Snacks.picker.todo_comments() end, "todo" },
             ---@diagnostic disable-next-line: undefined-field
             { "<leader>fT", function() Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME", "BUG" } }) end, desc = "todo/fix/fixme" },
             -- stylua: ignore end

@@ -167,4 +167,22 @@ return {
         },
     },
     opts_extend = { "sources.default" },
+    config = function(_, opts)
+        -- set the base capabilities for all lsp servers
+        vim.lsp.config("*", {
+            capabilities = require("blink.cmp").get_lsp_capabilities({
+                -- override some of the defaults
+                workspace = {
+                    didChangeWatchedFiles = {
+                        -- https://github.com/neovim/neovim/issues/23725#issuecomment-1561364086
+                        -- https://github.com/neovim/neovim/issues/23291
+                        -- disable watchfiles for lsp, runs slow on linux
+                        dynamicRegistration = false,
+                    },
+                },
+            }),
+            root_markers = { ".git/" },
+        })
+        require("blink.cmp").setup(opts)
+    end,
 }
