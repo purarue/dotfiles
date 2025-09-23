@@ -1,6 +1,6 @@
 local wk = require("which-key")
 
-local mh = require("user.mapping_helpers")
+local mh = require("user.custom.mapping_helpers")
 local map_key = mh.map_key
 local nnoremap = mh.nnoremap
 local vnoremap = mh.vnoremap

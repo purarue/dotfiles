@@ -8,10 +8,10 @@
 ; can be highlighted
 (command
   name: (command_name
-    (word) @cmd_name)
-  (#eq? @cmd_name "evry")
+    (word) @_cmd_name)
+  (#eq? @_cmd_name "evry")
   argument: (word) @evry_flag
-  (#match? @evry_flag "^-")) @evry
+  (#match? @evry_flag "^-")) @_evry
 
 ; can then use a command like this to highlight it specifically:
 ; vim.api.nvim_set_hl(0, "@evry_flag", {italic = true, fg = "lightgrey"})
