@@ -109,16 +109,6 @@ wk.add({
     { "<leader>k", ":cprev<CR>", desc = "qf prev" },
 })
 
-wk.add({
-    "<leader>ud",
-    function()
-        local new_config = not vim.diagnostic.config().virtual_lines
-        vim.diagnostic.config({ virtual_lines = new_config })
-    end,
-    desc = "Toggle diagnostic virtual_lines",
-})
-
-
 -- stylua: ignore start
 wk.add({
     { "]w", function() vim.diagnostic.jump({ count = 1 }) vim.api.nvim_feedkeys("zz", "n", false) end, desc = "next diagnostic", },

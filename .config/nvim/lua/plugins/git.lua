@@ -2,23 +2,25 @@
 ---@type LazyPluginSpec[]
 return {
     {
-        "tpope/vim-dispatch",
-        cmd = { "Dispatch", "Make", "Focus", "Start" },
-    },
-    {
-        "tpope/vim-fugitive",
-        config = function()
-            vim.cmd("command Push G! push")
-            vim.cmd("command Pull G! pull")
-            vim.cmd("command -nargs=1 Commit Dispatch! git commit -m <args>")
-            vim.cmd("command -nargs=* K Dispatch git <args>")
-        end,
-    },
-    {
         "lewis6991/gitsigns.nvim",
         dependencies = {
             {
                 "purarue/gitsigns-yadm.nvim",
+                dependencies = {
+                    "tpope/vim-fugitive",
+                    cmd = { "Git" },
+                    keys = {
+                        {
+                            "<leader>gs",
+                            "<cmd>Git<cr>",
+                            desc = "Git Status",
+                        },
+                    },
+                    config = function()
+                        vim.cmd("command Push G! push")
+                        vim.cmd("command Pull G! pull")
+                    end,
+                },
                 lazy = true,
                 enabled = os.getenv("ON_OS") ~= nil,
                 -- dir = "~/Repos/gitsigns-yadm.nvim",

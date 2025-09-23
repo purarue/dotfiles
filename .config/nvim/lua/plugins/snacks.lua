@@ -99,7 +99,6 @@ return {
         { "<leader>gg", lazygit, desc = "lazygit" },
         { "<leader>gF", function() Snacks.gitbrowse.open({ what = "file" }) end, desc = "git browse file", mode = { "n", "v" } },
         { "<leader>gL", function() Snacks.gitbrowse.open({ what = "branch" }) end, desc = "git browse branch", mode = { "n", "v" } },
-        { "<leader>gs", function() Snacks.picker.git_status() end, desc = "git status" },
         { "<leader>fl", function() Snacks.picker.lines() end, desc = "buffer lines" },
         { "<leader>fg", function() Snacks.picker.grep() end, desc = "grep" },
         { "<leader>fB", function() Snacks.picker.grep_buffers() end, desc = "grep open buffers" },

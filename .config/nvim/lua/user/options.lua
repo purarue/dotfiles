@@ -90,7 +90,8 @@ vim.opt.wildignore:append({
     "**/.git/*",
 })
 
-vim.diagnostic.config({ virtual_text = true, virtual_lines = false })
+vim.diagnostic.config({ virtual_text = true, virtual_lines = { current_line = true } })
+vim.opt.winborder = "rounded"
 
 -- create binding for my remsync code
 vim.api.nvim_create_user_command("Remsync", function(opts)

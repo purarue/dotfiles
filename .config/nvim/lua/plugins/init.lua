@@ -20,10 +20,6 @@ return {
         lazy = true,
     },
     {
-        "tpope/vim-dispatch",
-        cmd = { "Dispatch", "Make", "Focus", "Start" },
-    },
-    {
         "airblade/vim-rooter",
         event = "BufWinEnter",
         init = function()

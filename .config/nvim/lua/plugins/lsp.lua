@@ -20,10 +20,10 @@ return {
     },
     {
         "neovim/nvim-lspconfig",
-        dependencies = {
+        dependencies = { {
             "b0o/SchemaStore.nvim",
             lazy = true,
-        },
+        }, "Saghen/blink.cmp" },
         event = { "BufReadPost", "BufNewFile" },
         cmd = { "LspInfo", "LspInstall", "LspUninstall" },
         opts = function()
@@ -32,7 +32,6 @@ return {
             if not vim.g.on_android then
                 servers = vim.list_extend(servers, {
                     "basedpyright",
-                    "elixirls",
                     "clangd",
                     "gopls",
                     "rust_analyzer",

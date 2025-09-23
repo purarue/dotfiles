@@ -181,7 +181,6 @@ return {
                     },
                 },
             }),
-            root_markers = { ".git/" },
         })
         require("blink.cmp").setup(opts)
     end,
