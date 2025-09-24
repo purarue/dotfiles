@@ -1,4 +1,4 @@
-local lazy = require("user.lazy")
+local lazy = require("lazy_setup")
 lazy.bootstrap()
 
 -- lazy.nvim/which-key wants a leader to be set before setting up mappings
@@ -8,4 +8,4 @@ vim.g.maplocalleader = "\\"
 require("user.custom.on_machine")
 lazy.setup()
 
--- the rest of my config/options is in after/plugin/
+-- the rest of my options/mappings are in after/plugin/
