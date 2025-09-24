@@ -2,32 +2,6 @@
 ---@type LazyPluginSpec[]
 return {
     {
-        "windwp/nvim-ts-autotag",
-        event = "InsertEnter",
-        opts = function()
-            local default_opts = {
-                enable_close = true,
-                enable_rename = true,
-            }
-
-            -- NOTE: https://github.com/JoosepAlviste/nvim-ts-context-commentstring/pull/56
-            -- in case I forget and think there's something wrong with my config
-
-            ---@module 'nvim-ts-autotag.config.plugin'
-            ---@type nvim-ts-autotag.PluginSetup
-            return {
-                per_filetype = {
-                    html = default_opts,
-                    xml = default_opts,
-                    jsx = default_opts,
-                    tsx = default_opts,
-                    markdown = default_opts,
-                    astro = default_opts,
-                },
-            }
-        end,
-    },
-    {
         "nvim-treesitter/nvim-treesitter-context",
         event = { "BufReadPre", "BufNewFile" },
         opts = {
