@@ -4,7 +4,12 @@ return {
     "zbirenbaum/copilot.lua",
     event = "InsertEnter",
     enabled = os.getenv("ON_OS") ~= nil,
+
+    ---@module 'copilot.config'
+    ---@type CopilotConfig
+    ---@diagnostic disable-next-line: missing-fields
     opts = {
+        ---@diagnostic disable-next-line: missing-fields
         suggestion = {
             enabled = false,
         },

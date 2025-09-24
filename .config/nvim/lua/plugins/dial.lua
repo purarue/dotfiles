@@ -27,6 +27,7 @@ return {
         { "g<C-x>", function() return M.dial(false, true) end, expr = true, desc = "Decrement", mode = { "n", "v" } },
         -- stylua: ignore end
     },
+    --- NOTE: no setup types
     opts = function()
         local augend = require("dial.augend")
 

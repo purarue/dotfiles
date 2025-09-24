@@ -12,12 +12,11 @@ return {
         name = "catppuccin",
         -- colorscheme, 1000 makes things load early
         priority = 1000,
+        ---@module 'catppuccin.types'
+        ---@type CatppuccinOptions
+        ---@diagnostic disable-next-line: missing-fields
         opts = {
             background = { light = "latte", dark = "macchiato" },
-            float = {
-                transparent = false,
-                solid = false,
-            },
             -- change background colors to match terminal
             color_overrides = {
                 macchiato = { base = "#282828" },
@@ -114,5 +113,12 @@ return {
             })
         end,
     },
-    { "sindrets/diffview.nvim", cmd = "DiffviewOpen", config = true, lazy = true },
+    {
+        "sindrets/diffview.nvim",
+        cmd = "DiffviewOpen",
+        ---@module 'diffview.config'
+        ---@class DiffviewConfig
+        opts = {},
+        lazy = true,
+    },
 }

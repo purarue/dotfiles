@@ -54,6 +54,7 @@ return {
             "typescriptreact",
         },
         keys = { { "gc", mode = { "n", "x" } }, { "gbc", mode = { "n", "x" } } },
+        --- NOTE: no setup types
         opts = {
             options = {
                 custom_commentstring = function()

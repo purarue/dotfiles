@@ -12,6 +12,7 @@ return {
             desc = "toggle cloak",
         },
     },
+    --- NOTE: no setup types
     opts = {
         patterns = {
             {

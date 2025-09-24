@@ -4,6 +4,8 @@ return {
     {
         "nvim-treesitter/nvim-treesitter-context",
         event = { "BufReadPre", "BufNewFile" },
+        ---@module 'treesitter-context'
+        ---@type TSContext.UserConfig
         opts = {
             enable = true,
             max_lines = 10,

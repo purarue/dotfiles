@@ -52,6 +52,7 @@ return {
         {
             "onsails/lspkind.nvim",
             lazy = true,
+            --- NOTE: no setup types
             opts = {
                 symbol_map = {
                     Copilot = "󰚩",

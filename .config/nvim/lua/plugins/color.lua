@@ -14,6 +14,7 @@ return {
     },
     -- https://github.com/norcalli/nvim-colorizer.lua
     -- colors hex codes/html colors etc #000000
+    -- NOTE:can't figure out setup types
     opts = {
         "*", -- Highlight all files, but customize some others.
         css = { rgb_fn = true }, -- Enable parsing rgb(...) functions in css.
