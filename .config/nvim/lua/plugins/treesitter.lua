@@ -119,7 +119,7 @@ return {
             -- NOTE: no setup() call required
             local TS = require("nvim-treesitter")
 
-            -- From: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/extras/ui/treesitter-main.lua
+            -- From: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/treesitter.lua
             -- maintain a list of installed languages
             local installed = TS.get_installed("parsers")
             local install = vim.tbl_filter(function(lang)
