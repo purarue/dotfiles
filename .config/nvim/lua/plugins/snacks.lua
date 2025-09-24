@@ -105,7 +105,7 @@ return {
         { "<leader>gF", function() Snacks.gitbrowse.open({ what = "file" }) end, desc = "git browse file", mode = { "n", "v" } },
         { "<leader>gL", function() Snacks.gitbrowse.open({ what = "branch" }) end, desc = "git browse branch", mode = { "n", "v" } },
         { "<leader>fl", function() Snacks.picker.lines() end, desc = "buffer lines" },
-        { "<leader>fL", function() Snacks.picker.files({ cwd = vim.fn.stdpath("data") .. "/lazy" }) end, "lazy plugins" },
+        { "<leader>fL", function() Snacks.picker.files({ cwd = vim.fn.stdpath("data") .. "/lazy" }) end, desc = "lazy plugins" },
         { "<leader>fg", function() Snacks.picker.grep() end, desc = "grep" },
         { "<leader>fB", function() Snacks.picker.grep_buffers() end, desc = "grep open buffers" },
         { "<leader>fw", function() Snacks.picker.grep_word() end, desc = "visual selection or word", mode = { "n", "x" } },
