@@ -3,13 +3,15 @@
 return {
     "laytan/cloak.nvim",
     event = "BufRead",
-    keys = { {
-        "<leader>C",
-        function()
-            require("cloak").toggle()
-        end,
-        "toggle cloak",
-    } },
+    keys = {
+        {
+            "<leader>C",
+            function()
+                require("cloak").toggle()
+            end,
+            desc = "toggle cloak",
+        },
+    },
     opts = {
         patterns = {
             {

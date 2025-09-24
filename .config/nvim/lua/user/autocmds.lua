@@ -47,6 +47,7 @@ autocmd("TermOpen", {
 })
 
 autocmd("BufWinEnter", {
+    pattern = "?*",
     group = clear_group("BufEnterLoadView"),
     callback = function()
         pcall(vim.cmd.loadview)
@@ -55,8 +56,11 @@ autocmd("BufWinEnter", {
 
 autocmd("BufWinLeave", {
     group = clear_group("BufLeaveMkView"),
+    pattern = "?*",
     callback = function()
-        pcall(vim.cmd.mkview)
+        if require("user.custom.mkview_check").mkview_check() then
+            pcall(vim.cmd.mkview)
+        end
     end,
 })
 

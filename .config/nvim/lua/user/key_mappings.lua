@@ -14,8 +14,8 @@ map_key("Q", "gq", "reformat lines", { "n", "v" })
 
 nnoremap("/", "/\\v", "incremental search")
 nnoremap("/", "/\\v", "incremental search")
-nnoremap("<leader>y", 'V"+y', "copy to clipboard")
-vnoremap("<leader>y", '"+y', "copy to clipboard")
+nnoremap("<leader>y", 'V"+y', "clipboard")
+vnoremap("<leader>y", '"+y', "clipboard")
 
 -- swap wrapped lines behavior:
 nnoremap("j", "gj", "move wrapped line down")
@@ -36,21 +36,17 @@ nnoremap("%", "%zz", "centered match")
 nnoremap("*", "*zz", "centered match")
 nnoremap("#", "#zz", "centered match")
 
--- U (opposite of u) for redo
-nnoremap("U", "<C-r>", "redo")
-
 -- when I press !B (holding shift for both)
 nnoremap("!B", ":.!bash<CR>", "run shell command")
 vnoremap("!B", ":.!bash<CR>", "run shell command")
 
-vnoremap("J", ":move '>+1<CR>gv=gv", "move selected text down")
-vnoremap("K", ":move '<-2<CR>gv=gv", "move selected text up")
-
 -- save the current view when closing a buffer,
 -- even if there are multiple of that buffer open
 nnoremap("ZZ", function()
-    pcall(vim.cmd.mkview)
-    vim.cmd("x")
+    if require("user.custom.mkview_check").mkview_check() then
+        pcall(vim.cmd.mkview)
+    end
+    vim.cmd("x") -- default ZZ behaviour, to close and write if modified
 end, "save view and close window")
 
 nnoremap("J", "mzJ`z", "append to line")
@@ -73,17 +69,7 @@ nnoremap("<Esc>", vim.cmd.nohlsearch, "clear search highlight")
 
 -- misc
 wk.add({
-    { "<leader>X", ":w<CR>:!chmod +x %<CR>:edit<CR>", desc = "chmod +x" },
-    -- reload config
-    {
-        "<leader>S",
-        function()
-            vim.cmd("source ~/.config/nvim/lua/user/options.lua")
-            vim.cmd("source ~/.config/nvim/lua/user/key_mappings.lua")
-            print("Reloaded config")
-        end,
-        desc = "reload config",
-    },
+    { "<leader>X", ":w<CR>:!chmod +x %<CR>:edit<CR>", desc = "chmod +x", icon = "" },
     -- mnemonic 'cd' binding
     {
         "<leader>cd",
@@ -95,7 +81,7 @@ wk.add({
         end,
         desc = "cd to curdir",
     },
-}, { prefix = "<leader>" })
+})
 
 -- window/buffers
 wk.add({ "<leader>b", "<C-^>", desc = "swap buffers" })
@@ -105,8 +91,8 @@ nnoremap("<leader>w", function()
 end, "window")
 
 wk.add({
-    { "<leader>j", ":cnext<CR>", desc = "qf next" },
-    { "<leader>k", ":cprev<CR>", desc = "qf prev" },
+    { "<leader>j", ":cnext<CR>", desc = "qf next", icon = "" },
+    { "<leader>k", ":cprev<CR>", desc = "qf prev", icon = "" },
 })
 
 -- stylua: ignore start

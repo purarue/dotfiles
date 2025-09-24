@@ -55,16 +55,16 @@ return {
                 end
             end
 
-            local function fix_and_lint()
+            local function codespell_fix()
                 require("user.custom.codespell").codespell_fix()
                 lint.try_lint("codespell")
             end
 
-            vim.api.nvim_create_user_command("CodespellFix", fix_and_lint, {
+            vim.api.nvim_create_user_command("CodespellFix", codespell_fix, {
                 desc = "pick one of the codespell fixes and replace it in the line",
             })
             local mh = require("user.custom.mapping_helpers")
-            mh.nnoremap("<leader>z", fix_and_lint, "codespell fix")
+            mh.nnoremap("<leader>s", codespell_fix, "codespell fix")
         end
 
         -- Note: nvim-lint has an internal list of pre-enabled linters
@@ -74,7 +74,9 @@ return {
         vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
             group = vim.api.nvim_create_augroup("RunLinter", { clear = true }),
             callback = function()
-                lint.try_lint()
+                if vim.bo.modifiable then
+                    lint.try_lint()
+                end
             end,
             desc = "run linter",
         })

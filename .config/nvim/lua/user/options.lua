@@ -15,6 +15,10 @@ vim.opt.wrap = true
 vim.opt.textwidth = 0 -- stop line wrapping
 vim.opt.formatoptions = "tcqrn1"
 
+-- dont save options when using mkview/loadview
+-- prevents things like cwd from saving
+vim.opt.viewoptions:remove("options")
+
 -- disable folding
 vim.opt.foldenable = false
 
@@ -90,7 +94,23 @@ vim.opt.wildignore:append({
     "**/.git/*",
 })
 
-vim.diagnostic.config({ virtual_text = true, virtual_lines = { current_line = true } })
+vim.diagnostic.config({
+    severity_sort = true,
+    float = { border = "rounded", source = "if_many" },
+    signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = "󰅚 ",
+            [vim.diagnostic.severity.WARN] = "󰀪 ",
+            [vim.diagnostic.severity.INFO] = "󰋽 ",
+            [vim.diagnostic.severity.HINT] = "󰌶 ",
+        },
+    },
+    virtual_text = {
+        source = "if_many",
+        spacing = 2,
+    },
+    virtual_lines = false,
+})
 vim.opt.winborder = "rounded"
 
 -- create binding for my remsync code

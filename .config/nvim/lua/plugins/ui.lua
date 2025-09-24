@@ -1,3 +1,4 @@
+---@module 'snacks'
 ---@module 'lazy'
 ---@type LazyPluginSpec[]
 return {
@@ -51,12 +52,14 @@ return {
     {
         "folke/todo-comments.nvim",
         event = "VeryLazy",
-        opts = {},
+        ---@module 'todo-comments'
+        ---@type TodoOptions
+        ---@diagnostic disable-next-line: missing-fields
+        opts = { signs = false },
         keys = {
-            ---@module 'snacks'
             -- stylua: ignore start
             ---@diagnostic disable-next-line: undefined-field
-            { "<leader>ft", function() Snacks.picker.todo_comments() end, "todo" },
+            { "<leader>ft", function() Snacks.picker.todo_comments() end, desc = "todos" },
             ---@diagnostic disable-next-line: undefined-field
             { "<leader>fT", function() Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME", "BUG" } }) end, desc = "todo/fix/fixme" },
             -- stylua: ignore end
@@ -65,6 +68,10 @@ return {
     {
         "MeanderingProgrammer/render-markdown.nvim",
         ft = "markdown",
+        ---@module 'render-markdown'
+        ---@type render.md.partial.Config
+        ---@diagnostic disable-next-line: missing-fields
+        opts = {},
         keys = {
             {
                 "<leader>p",

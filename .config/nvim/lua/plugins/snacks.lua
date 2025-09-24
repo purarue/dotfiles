@@ -8,8 +8,13 @@ wk.add({
 })
 
 local function lazygit()
-    -- NOTE: once this lanches it caches the lazygit terminal object,
-    -- could create a separate one for dotfiles or reset it on launch here?
+    if vim.b["lazygit_cwd"] and vim.b["lazygit_cwd"] ~= vim.uv.cwd() then
+        -- reset the cached terminal if the cwd has changed
+        -- unload to force refresh the terminal cache
+        package.loaded["snacks.lazygit"] = nil
+    end
+    vim.b["lazygit_cwd"] = vim.uv.cwd()
+
     if vim.b["yadm_tracked"] then
         local gitsigns_config = require("gitsigns-yadm").config
         Snacks.lazygit({
@@ -100,6 +105,7 @@ return {
         { "<leader>gF", function() Snacks.gitbrowse.open({ what = "file" }) end, desc = "git browse file", mode = { "n", "v" } },
         { "<leader>gL", function() Snacks.gitbrowse.open({ what = "branch" }) end, desc = "git browse branch", mode = { "n", "v" } },
         { "<leader>fl", function() Snacks.picker.lines() end, desc = "buffer lines" },
+        { "<leader>fL", function() Snacks.picker.files({ cwd = vim.fn.stdpath("data") .. "/lazy" }) end, "lazy plugins" },
         { "<leader>fg", function() Snacks.picker.grep() end, desc = "grep" },
         { "<leader>fB", function() Snacks.picker.grep_buffers() end, desc = "grep open buffers" },
         { "<leader>fw", function() Snacks.picker.grep_word() end, desc = "visual selection or word", mode = { "n", "x" } },
@@ -118,7 +124,6 @@ return {
         { "<leader>fq", function() Snacks.picker.qflist() end, desc = "quickfix list" },
         { "<leader>fR", function() Snacks.picker.resume() end, desc = "resume" },
         { "<leader>fu", function() Snacks.picker.undo() end, desc = "undo history" },
-        { "<leader>Z", function() Snacks.zen() end, desc = "toggle zen mode" },
         { "<leader>n", function() Snacks.notifier.show_history() end, desc = "notification history" },
         { "<leader>cr", function() Snacks.rename.rename_file() end, desc = "rename file" },
         { "<leader>go", gitopen, desc = "git browse", mode = { "n", "v" } },
@@ -142,7 +147,7 @@ return {
                 vim.print = _G.dd -- Override print to use snacks for `:=` command
 
                 -- Create some toggle mappings
-                Snacks.toggle.option("spell", { name = "spelling" }):map("<leader>s")
+                Snacks.toggle.option("spell", { name = "spelling" }):map("<leader>us")
                 Snacks.toggle.option("wrap", { name = "wrap" }):map("<leader>uw")
 
                 -- for when I'm sharing screen, is useful to have a crosshair

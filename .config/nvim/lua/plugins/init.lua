@@ -8,6 +8,17 @@ return {
             vim.o.timeout = true
             vim.o.timeoutlen = 300
         end,
+        ---@module 'which-key'
+        ---@type wk.Opts
+        ---@diagnostic disable-next-line: missing-fields
+        opts = {
+            spec = {
+                -- TODO: could add more items here with icons, maybe I can programmatically find items without icons?
+                { "<leader>x", group = "trouble", icon = "󱈸" },
+                { "gr", group = "LSP Actions", mode = { "n" } },
+                { "<leader>H", group = "hex colors", icon = "󰏘" },
+            },
+        },
     },
     -- while in visual mode
     -- []x to encode/decode HTML, []u to encode/decode URLs, []y to do C-style escaping
@@ -18,22 +29,5 @@ return {
     {
         "nvim-lua/plenary.nvim",
         lazy = true,
-    },
-    {
-        "airblade/vim-rooter",
-        event = "BufWinEnter",
-        init = function()
-            -- change directory in the window's local directory instead of the whole application
-            vim.g.rooter_cd_cmd = "lcd"
-            vim.g.rooter_silent_chdir = 1
-            vim.g.rooter_patterns = {
-                ".git",
-                "Makefile",
-                "setup.py",
-                "pyproject.toml",
-                "package.json",
-                "stylua.toml",
-            }
-        end,
     },
 }

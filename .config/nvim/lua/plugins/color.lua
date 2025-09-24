@@ -1,6 +1,3 @@
-local wk = require("which-key")
-wk.add({ { "<leader>H", group = "hex colors" } })
-
 ---@module 'lazy'
 ---@type LazyPluginSpec
 return {

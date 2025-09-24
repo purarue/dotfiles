@@ -146,9 +146,9 @@ return {
                         -- ignore errors
                         pcall(vim.treesitter.start)
                     end
+                    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
                 end,
             })
-            vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         end,
     },
     {

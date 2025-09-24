@@ -34,21 +34,23 @@ return {
                 },
             },
         },
-        --- can't use type config validation here because it expects an exact class with non nullable fields?
+        ---@module 'gitsigns'
+        ---@type Gitsigns.Config
+        ---@diagnostic disable-next-line: missing-fields
         opts = {
             signs = {
-                add = { text = "│" },
-                change = { text = "~" },
-                delete = { text = "_" },
-                topdelete = { text = "‾" },
-                changedelete = { text = "~" },
-                untracked = { text = "┆" },
+                add = { text = "│" }, ---@diagnostic disable-line: missing-fields
+                change = { text = "~" }, ---@diagnostic disable-line: missing-fields
+                delete = { text = "_" }, ---@diagnostic disable-line: missing-fields
+                topdelete = { text = "‾" }, ---@diagnostic disable-line: missing-fields
+                changedelete = { text = "~" }, ---@diagnostic disable-line: missing-fields
+                untracked = { text = "┆" }, ---@diagnostic disable-line: missing-fields
             },
             _on_attach_pre = function(bufnr, callback)
                 if vim.fn.executable("yadm") == 1 then
                     require("gitsigns-yadm").yadm_signs(callback, { bufnr = bufnr })
                 else
-                    callback()
+                    callback({})
                 end
             end,
             -- debug_mode = true,

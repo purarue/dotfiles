@@ -20,12 +20,18 @@ return {
 
         local prettier_fts = {}
         for _, ft in ipairs(prettier_filetypes) do
-            prettier_fts[ft] = { "prettierd", "prettier" }
+            prettier_fts[ft] = { "prettierd", "eslint_d" }
         end
 
         ---@module 'conform'
         ---@type conform.setupOpts
         return {
+            default_format_opts = {
+                timeout_ms = 500,
+                async = false,
+                quiet = false,
+                lsp_format = "fallback",
+            },
             formatters_by_ft = vim.tbl_extend("keep", prettier_fts, {
                 lua = { "stylua" },
                 go = { "goimports", "gofmt" },
@@ -39,14 +45,17 @@ return {
                 toml = { "taplo" },
                 sh = { "shfmt" },
                 bash = { "shfmt" },
-                -- run on all filetypes
-                ["_"] = { "trim_whitespace" },
+                -- NOTE: if there's a fallback here, it won't use LSP fallback
+                -- can use ["*"] to run on every filetype
             }),
             log_level = vim.log.levels.INFO,
             formatters = {
                 -- https://purarue.xyz/d/styluac?redirect
                 stylua = {
                     command = "styluac",
+                },
+                eslint_d = {
+                    timeout_ms = 3000,
                 },
                 setup_cfg = {
                     command = "setup-cfg-fmt-tempfile",
@@ -71,21 +80,6 @@ return {
         local conform = require("conform")
         conform.setup(opts)
 
-        conform.formatters.injected = {
-            ignore_errors = false,
-            lang_to_ext = {
-                bash = "sh",
-                javascript = "js",
-                javascriptreact = "jsx",
-                typescript = "ts",
-                typescriptreact = "tsx",
-                python = "py",
-                rust = "rs",
-                markdown = "md",
-                elixir = "exs",
-            },
-        }
-
         vim.api.nvim_create_user_command("Format", function(args)
             local range = nil
             if args.count ~= -1 then
@@ -96,8 +90,6 @@ return {
                 }
             end
             conform.format({
-                async = true,
-                lsp_format = "fallback",
                 range = range,
             }, function(err, did_edit)
                 if err ~= nil then
@@ -106,7 +98,7 @@ return {
                 if did_edit then
                     vim.print("Formatted successful")
                 else
-                    vim.print("No formatting needed")
+                    vim.print("No format needed")
                 end
             end)
         end, { range = true })

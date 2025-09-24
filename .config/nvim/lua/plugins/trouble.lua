@@ -1,8 +1,3 @@
-local wk = require("which-key")
-wk.add({
-    { "<leader>x", group = "trouble" },
-})
-
 ---@module 'lazy'
 ---@type LazyPluginSpec
 return {

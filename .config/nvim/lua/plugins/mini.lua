@@ -4,9 +4,9 @@ return {
     {
         "nvim-mini/mini.nvim",
         version = false,
-        event = "VeryLazy",
+        event = "BufEnter", -- required for setup_auto_root
         config = function()
-            -- :hlep mini.ai
+            -- :help mini.ai
             --  - va)  - [V]isually select [A]round [)]paren
             --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
             --  - ci'  - [C]hange [I]nside [']quote
@@ -16,6 +16,28 @@ return {
             -- - sd'   - [S]urround [D]elete [']quotes
             -- - sr)'  - [S]urround [R]eplace [)] [']
             require("mini.surround").setup()
+            -- automatically change buffer cwd to the root of the project (vim-rooter-esque)
+            require("mini.misc").setup_auto_root({ ".git", "Makefile", "stylua.toml" })
+            -- move visual selection in Visual mode
+            require("mini.move").setup({
+                mappings = {
+                    left = "<S-h>",
+                    right = "<S-l>",
+                    down = "<S-j>",
+                    up = "<S-k>",
+                },
+            })
+            local wk = require("which-key")
+            wk.add({
+                {
+                    "<leader>z",
+                    function()
+                        require("mini.misc").zoom()
+                    end,
+                    desc = "zoom",
+                    icon = "",
+                },
+            })
         end,
     },
     -- this is split so that we can lazy load effectively
@@ -32,7 +54,6 @@ return {
             "typescriptreact",
         },
         keys = { { "gc", mode = { "n", "x" } }, { "gbc", mode = { "n", "x" } } },
-        lazy = not vim.g.on_android, -- only load if on android, on an old version of nvim
         opts = {
             options = {
                 custom_commentstring = function()
