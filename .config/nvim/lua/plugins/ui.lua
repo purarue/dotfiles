@@ -22,6 +22,16 @@ return {
                 macchiato = { base = "#282828" },
                 latte = { base = "#fbf1c7" },
             },
+            integrations = {
+                blink_cmp = true,
+                fidget = true,
+                gitsigns = true,
+                treesitter = true,
+                treesitter_context = true,
+                snacks = true,
+                lsp_trouble = true,
+                which_key = true,
+            },
         },
         config = function(_, opts)
             require("catppuccin").setup(opts)
@@ -47,7 +57,11 @@ return {
             },
         },
     },
-    { "j-hui/fidget.nvim", opts = {}, event = "LspAttach" },
+    { "j-hui/fidget.nvim", opts = {
+        notification = {
+            window = { winblend = 0 },
+        },
+    }, event = "LspAttach" },
     {
         "folke/todo-comments.nvim",
         event = "VeryLazy",

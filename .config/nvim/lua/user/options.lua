@@ -18,6 +18,7 @@ vim.opt.formatoptions = "tcqrn1"
 -- dont save options when using mkview/loadview
 -- prevents things like cwd from saving
 vim.opt.viewoptions:remove("options")
+vim.opt.viewoptions:remove("curdir")
 
 -- disable folding
 vim.opt.foldenable = false

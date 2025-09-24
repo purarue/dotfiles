@@ -44,7 +44,7 @@ end
 ---@type LazyPluginSpec
 return {
     "folke/snacks.nvim",
-    priority = 1000,
+    priority = 800,
     lazy = false,
     opts = function(_, opts)
         ---@module 'snacks'
