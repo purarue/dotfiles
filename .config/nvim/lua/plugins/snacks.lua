@@ -128,8 +128,9 @@ return {
         { "<leader>cr", function() Snacks.rename.rename_file() end, desc = "rename file" },
         { "<leader>go", gitopen, desc = "git browse", mode = { "n", "v" } },
         { "<leader>d", function() Snacks.notifier.hide() end, desc = "dismiss all notifications" },
-        { "<leader>ce", function() Snacks.picker.pick({ finder = require("user.projects")._config_finder }) end, desc = "edit config" },
-        { "<leader>cR", function() Snacks.picker.projects({ dev = require("user.projects").dev_list() }) end, desc = "projects" },
+        { "<leader>ce", function() Snacks.picker.pick({ finder = require("user.custom.projects")._config_finder }) end, desc = "edit config" },
+        -- picker.projects seem to not work with "mini.misc".setup_auto_root?, doesnt change dir
+        { "<leader>cR", function() Snacks.picker.projects({ dev = require("user.custom.projects").dev_list() }) end, desc = "projects" },
         { "gd", function() Snacks.picker.lsp_definitions() end, desc = "lsp definitions" },
         -- stylua: ignore end
     },
