@@ -2,38 +2,36 @@
 ---@type LazyPluginSpec[]
 return {
     {
-        "lewis6991/gitsigns.nvim",
+        "purarue/gitsigns-yadm.nvim",
         dependencies = {
-            {
-                "purarue/gitsigns-yadm.nvim",
-                dependencies = {
-                    "tpope/vim-fugitive",
-                    cmd = { "Git" },
-                    keys = {
-                        {
-                            "<leader>gs",
-                            "<cmd>Git<cr>",
-                            desc = "Git Status",
-                        },
-                    },
-                    config = function()
-                        vim.cmd("command Push G! push")
-                        vim.cmd("command Pull G! pull")
-                    end,
-                },
-                lazy = true,
-                enabled = os.getenv("ON_OS") ~= nil,
-                -- dir = "~/Repos/gitsigns-yadm.nvim",
-                ---@module 'gitsigns-yadm'
-                ---@type GitsignsYadm.Config
-                opts = {
-                    on_yadm_attach = function()
-                        vim.b.yadm_tracked = true
-                        vim.fn.FugitiveDetect(require("gitsigns-yadm").config.yadm_repo_git)
-                    end,
+            "tpope/vim-fugitive",
+            cmd = { "Git" },
+            keys = {
+                {
+                    "<leader>gs",
+                    "<cmd>Git<cr>",
+                    desc = "Git Status",
                 },
             },
+            config = function()
+                vim.cmd("command Push G! push")
+                vim.cmd("command Pull G! pull")
+            end,
         },
+        lazy = true,
+        enabled = os.getenv("ON_OS") ~= nil,
+        -- dir = "~/Repos/gitsigns-yadm.nvim",
+        ---@module 'gitsigns-yadm'
+        ---@type GitsignsYadm.Config
+        opts = {
+            on_yadm_attach = function()
+                vim.b.yadm_tracked = true
+                vim.fn.FugitiveDetect(require("gitsigns-yadm").config.yadm_repo_git)
+            end,
+        },
+    },
+    {
+        "lewis6991/gitsigns.nvim",
         ---@module 'gitsigns'
         ---@type Gitsigns.Config
         ---@diagnostic disable-next-line: missing-fields
@@ -83,15 +81,15 @@ return {
                         icon = "",
                     },
                     {
-                        "<leader>gt",
+                        "<leader>ht",
                         "<Cmd>Gitsigns toggle_current_line_blame<CR>",
                         desc = "toggle line blame",
                         buffer = bufnr,
                         icon = "",
                     },
                     { "<leader>hd", "<Cmd>Gitsigns diffthis<CR>", desc = "diff this", buffer = bufnr, icon = "" },
-                    { "<leader>gD", "<Cmd>Gitsigns toggle_deleted<CR>", desc = "toggle deleted", buffer = bufnr, icon = "" },
-                    { "<leader>gw", "<Cmd>Gitsigns toggle_word_diff<CR>", desc = "toggle word diff", buffer = bufnr, icon = "" },
+                    { "<leader>hD", "<Cmd>Gitsigns toggle_deleted<CR>", desc = "toggle deleted", buffer = bufnr, icon = "" },
+                    { "<leader>hw", "<Cmd>Gitsigns toggle_word_diff<CR>", desc = "toggle word diff", buffer = bufnr, icon = "" },
                 })
             end,
         },

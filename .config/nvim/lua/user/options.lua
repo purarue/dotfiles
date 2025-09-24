@@ -131,6 +131,10 @@ vim.diagnostic.config({
     virtual_lines = false,
 })
 
+-- experimental UI (no more "hit enter to continue" prompts)
+-- can use g< to view messages
+require("vim._extui").enable({})
+
 -- create binding for my remsync code
 vim.api.nvim_create_user_command("Remsync", function(opts)
     require("user.custom.remsync").tohtml({
