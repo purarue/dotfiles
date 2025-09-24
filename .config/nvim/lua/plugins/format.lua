@@ -6,33 +6,25 @@ return {
     cmd = "ConformInfo",
     keys = { { "<leader>t", "<Cmd>Format<CR>", desc = "format" } },
     opts = function()
-        local prettier_filetypes = {
-            "javascript",
-            "typescript",
-            "yaml",
-            "css",
-            "scss",
-            "html",
-            "javascriptreact",
-            "typescriptreact",
-            "markdown",
-        }
-
-        local prettier_fts = {}
-        for _, ft in ipairs(prettier_filetypes) do
-            prettier_fts[ft] = { "prettierd", "eslint_d" }
-        end
-
         ---@module 'conform'
         ---@type conform.setupOpts
         return {
             default_format_opts = {
-                timeout_ms = 500,
+                timeout_ms = 1500,
                 async = false,
                 quiet = false,
                 lsp_format = "fallback",
             },
-            formatters_by_ft = vim.tbl_extend("keep", prettier_fts, {
+            formatters_by_ft = {
+                javascript = { "prettierd", "eslint_d" },
+                typescript = { "prettierd", "eslint_d" },
+                html = { "prettierd", "eslint_d" },
+                javascriptreact = { "prettierd", "eslint_d" },
+                typescriptreact = { "prettierd", "eslint_d" },
+                markdown = { "prettierd", "injected" },
+                scss = { "prettierd" },
+                yaml = { "prettierd" },
+                css = { "prettierd" },
                 lua = { "stylua" },
                 go = { "goimports", "gofmt" },
                 dosini = { "setup_cfg" },
@@ -47,9 +39,24 @@ return {
                 bash = { "shfmt" },
                 -- NOTE: if there's a fallback here, it won't use LSP fallback
                 -- can use ["*"] to run on every filetype
-            }),
+            },
             log_level = vim.log.levels.INFO,
             formatters = {
+                ---@type conform.InjectedFormatterOptions
+                ---@diagnostic disable-next-line: missing-fields
+                injected = {
+                    ignore_errors = false,
+                    lang_to_ft = {
+                        bash = "sh",
+                    },
+                    lang_to_ext = {
+                        bash = "sh",
+                        javascript = "js",
+                        markdown = "md",
+                        python = "py",
+                        typescript = "ts",
+                    },
+                },
                 -- https://purarue.xyz/d/styluac?redirect
                 stylua = {
                     command = "styluac",

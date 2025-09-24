@@ -1,19 +1,22 @@
 -- vim.o sets global options, vim.opt sets buffer-local options
 -- see :help vim-differences for some defaults set in nvim
 -- for :help syntax, treesitter will disable this for filetypes it knows, otherwise
--- syntax highlighting is enabled by default
-vim.opt.number = true
-vim.opt.relativenumber = true -- line number
--- Blink cursor on error instead of beeping
-vim.opt.visualbell = true
+vim.cmd([[filetype plugin indent on]])
 
--- disable intro message
-vim.opt.shortmess:append("I")
+-- lines
+vim.o.number = true
+vim.o.relativenumber = true
+
+-- Blink cursor on error instead of beeping
+vim.o.visualbell = true
+
+-- shorten some messages
+vim.opt.shortmess:append("IcCwa")
 
 -- Whitespace
-vim.opt.wrap = true
-vim.opt.textwidth = 0 -- stop line wrapping
-vim.opt.formatoptions = "tcqrn1"
+vim.o.wrap = true
+vim.o.textwidth = 0 -- stop line wrapping
+vim.o.formatoptions = "tcqrn1"
 
 -- dont save options when using mkview/loadview
 -- prevents things like cwd from saving
@@ -21,7 +24,16 @@ vim.opt.viewoptions:remove("options")
 vim.opt.viewoptions:remove("curdir")
 
 -- disable folding
-vim.opt.foldenable = false
+vim.o.foldenable = false
+
+-- backups
+vim.o.backup = false
+vim.o.writebackup = false
+
+-- splits
+vim.o.splitbelow = true
+vim.o.splitright = true
+vim.o.splitkeep = "screen"
 
 -- set tab config local to buffer
 vim.opt.tabstop = 2
@@ -33,14 +45,14 @@ vim.opt.softtabstop = 2
 vim.opt.grepprg = "rg --vimgrep"
 
 -- cursor motion
-vim.opt.scrolloff = 8
+vim.o.scrolloff = 8
 vim.opt.matchpairs:append("<:>")
 
 -- save spellfile to my Documents
 local os = require("os")
 local spellfile = os.getenv("NVIM_SPELLFILE")
 if spellfile then
-    vim.opt.spellfile = spellfile
+    vim.o.spellfile = spellfile
     vim.api.nvim_create_user_command("Spellfile", function()
         vim.cmd.edit(spellfile)
     end, {
@@ -49,39 +61,45 @@ if spellfile then
 end
 
 -- only show status line for last window
-vim.opt.laststatus = 3
+vim.o.laststatus = 3
 
--- transparency
-vim.opt.pumblend = 10
-vim.opt.winblend = 10
+-- transparency/windows
+vim.o.pumblend = 10
+vim.o.winblend = 10
+vim.o.pumheight = 10
+vim.o.winborder = "rounded"
 
 -- searching
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-vim.opt.showmatch = false -- I don't like the cursor jumping back, is distracting. also looks strange with ghosttext
+vim.o.ignorecase = true
+vim.o.smartcase = true
+vim.o.smartindent = true
+vim.o.infercase = true
+vim.o.showmatch = false -- I don't like the cursor jumping back, is distracting. also looks strange with ghosttext
 
 -- spacing/tabs/newlines
-vim.opt.list = true
+vim.o.list = true
 vim.opt.listchars:append({ tab = "▸ ", eol = "¬" })
-vim.opt.breakindent = true -- wrapped lines indent
-vim.opt.signcolumn = "yes"
-vim.opt.linebreak = true
+vim.o.breakindent = true -- wrapped lines indent
+vim.o.signcolumn = "yes"
+vim.o.fillchars = "eob: " -- Don't show `~` outside of buffer
+vim.o.linebreak = true
 
 -- prevents truncated yanks, deletes, etc.
 -- makes sure that you can have lots of lines across
 -- files/vim instances without truncating the buffer
-vim.opt.viminfo = "'20,<1000,s1000"
+vim.o.viminfo = "'20,<1000,s1000"
 
 -- marks
-vim.opt.shada = "'1000,f1,<100"
+vim.o.shada = "'1000,f1,<100"
 
 -- enable persistent undo (save undo history across file closes) if possible
-vim.opt.undofile = true
+vim.o.undofile = true
 
 -- path
 vim.opt.path:append("**")
-vim.opt.wildmode = { "longest", "list", "full" }
-vim.opt.completeopt = "menuone,noselect"
+vim.o.wildmode = "longest,list,full"
+vim.o.completeopt = "menuone,noselect"
+vim.o.virtualedit = "block"
 vim.opt.wildignore:append({
     "*__pycache__/*",
     "*.mypy_cache/*",
@@ -112,7 +130,6 @@ vim.diagnostic.config({
     },
     virtual_lines = false,
 })
-vim.opt.winborder = "rounded"
 
 -- create binding for my remsync code
 vim.api.nvim_create_user_command("Remsync", function(opts)

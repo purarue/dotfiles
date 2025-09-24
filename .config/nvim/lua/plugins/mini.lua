@@ -46,7 +46,12 @@ return {
     -- have a different comment syntax, so this plugin only loads on those filetypes
     {
         "nvim-mini/mini.comment",
-        dependencies = { "JoosepAlviste/nvim-ts-context-commentstring", opts = { enable_autocmd = false } },
+        dependencies = {
+            "JoosepAlviste/nvim-ts-context-commentstring",
+            ---@module 'ts_context_commentstring'
+            ---@type ts_context_commentstring.Config
+            opts = { enable_autocmd = false },
+        },
         ft = {
             "javascript",
             "typescript",

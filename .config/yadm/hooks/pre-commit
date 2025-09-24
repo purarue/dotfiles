@@ -9,14 +9,6 @@ sh ~/.profile || {
 	exit 1
 }
 
-# check for spelling errors in my dotfiles
-case "$ON_OS" in
-linux_*)
-	spell-dotfiles || exit $?
-	;;
-*) ;;
-esac
-
 # Copy README for git repo to $HOME so that the github repo README will be updated
 # post-commit moves the README.md back so as to not pollute $HOME
 cp ~/.config/yadm/README.md ~/README.md
