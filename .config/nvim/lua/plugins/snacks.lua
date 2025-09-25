@@ -51,6 +51,7 @@ return {
         ---@type snacks.Config
         return vim.tbl_deep_extend("force", opts or {}, {
             bigfile = { enabled = true },
+            quickfile = { enabled = false },
             gitbrowse = {
                 enabled = true,
                 open = function(url)

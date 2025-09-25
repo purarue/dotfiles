@@ -21,10 +21,10 @@ return {
             -- move visual selection in Visual mode
             require("mini.move").setup({
                 mappings = {
-                    left = "<S-h>",
-                    right = "<S-l>",
-                    down = "<S-j>",
-                    up = "<S-k>",
+                    left = "<M-h>",
+                    right = "<M-l>",
+                    down = "<M-j>",
+                    up = "<M-k>",
                 },
             })
             local wk = require("which-key")
