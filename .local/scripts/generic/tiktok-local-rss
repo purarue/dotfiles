@@ -12,7 +12,7 @@ import time
 import json
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Sequence
 
 import click
 import platformdirs
@@ -219,12 +219,18 @@ def prune(count: int, debug: bool) -> None:
 
 
 @main.command(short_help="download videos")
-def download() -> None:
+@click.argument("USER", nargs=-1, required=False)
+def download(user: Sequence[str]) -> None:
     """
     Download recent videos for all users
     """
-    for user in USERS:
-        download_user(user)
+    if user:
+        if user[0] not in USERS:
+            raise click.ClickException(f"unknown user {user[0]}")
+    for u in USERS:
+        if user and user[0] != u:
+            continue
+        download_user(u)
 
 
 if __name__ == "__main__":

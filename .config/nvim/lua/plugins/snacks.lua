@@ -81,7 +81,6 @@ return {
                 },
             },
             notify = { enabled = true },
-            quickfile = { enabled = true },
             notifier = {
                 enabled = true,
                 timeout = 3000,
@@ -129,8 +128,12 @@ return {
         { "<leader>go", gitopen, desc = "git browse", mode = { "n", "v" } },
         { "<leader>d", function() Snacks.notifier.hide() end, desc = "dismiss all notifications" },
         { "<leader>ce", function() Snacks.picker.pick({ finder = require("user.custom.projects")._config_finder }) end, desc = "edit config" },
-        -- picker.projects seem to not work with "mini.misc".setup_auto_root?, doesnt change dir
-        { "<leader>cR", function() Snacks.picker.projects({ dev = require("user.custom.projects").dev_list() }) end, desc = "projects" },
+        { "<leader>cR", function() Snacks.picker.projects({ dev = require("user.custom.projects").dev_list(), confirm = function(picker, chosen)
+            -- change default from load_session, just cd and open a picker
+            picker:close()
+            vim.fn.chdir(chosen.file)
+            Snacks.picker.files()
+        end}) end, desc = "projects" },
         { "gd", function() Snacks.picker.lsp_definitions() end, desc = "lsp definitions" },
         -- stylua: ignore end
     },

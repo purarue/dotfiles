@@ -110,9 +110,6 @@ return {
                 end)
             end
 
-            -- use bash treesitter highlighting for zsh files
-            vim.treesitter.language.register("bash", "zsh")
-
             -- enable treesitter highlighting
             vim.api.nvim_create_autocmd("FileType", {
                 -- no pattern, run on all files
@@ -121,8 +118,9 @@ return {
                     if vim.tbl_contains(installed, lang) then
                         -- ignore errors
                         pcall(vim.treesitter.start)
+                        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
                     end
-                    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                    -- this will otherwise fallback to vim indentexpr/syntax
                 end,
             })
         end,

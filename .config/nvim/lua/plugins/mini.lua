@@ -40,7 +40,7 @@ return {
             })
         end,
     },
-    -- this is split so that we can lazy load effectively
+    -- this is split so that we can lazy load on filetype effectively
     --
     -- the default 'gc' (:help commenting) binding works for most things, but react/web frameworks
     -- have a different comment syntax, so this plugin only loads on those filetypes

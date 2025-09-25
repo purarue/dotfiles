@@ -7,9 +7,9 @@ alias vlogs-render='render-notes'
 
 # https://github.com/purarue/trakt-watch
 export URL_OPENER='openurl'
-alias trk='trakt-watch'
-alias tp='trk progress'
-alias tw='trk watch --letterboxd prompt'
+abbrev-alias trk='trakt-watch'
+abbrev-alias tp='trk progress'
+abbrev-alias tw='trk watch --letterboxd prompt'
 
 # https://github.com/purarue/HPI-personal/blob/master/scripts/trakt-urls
 tu() {
@@ -92,11 +92,11 @@ bz() {
 alias 'of=offline_listens listen'
 
 # https://github.com/purarue/albums
-alias 'discogs-update=nextalbums discogs-update'
+abbrev-alias 'discogs-update=nextalbums discogs-update'
 albums-add() {
 	nextalbums add-album "$@" && nextalbums discogs-update && nextalbums discogs-update
 }
-alias albums-rate='nextalbums mark-listened'
+abbrev-alias albums-rate='nextalbums mark-listened'
 
 # https://github.com/purarue/HPI
 source_if_exists "${REPOS}/HPI/scripts/functions.sh"
@@ -193,7 +193,6 @@ if [[ ! -e "${TTALLY_ALIASES}" ]]; then
 	fi
 fi
 [[ -e "${TTALLY_ALIASES}" ]] && source "${TTALLY_ALIASES}"
-alias 'czd=PROMPT_DATETIME=1 cz'
 sn() {
 	self-now && {
 		if [[ -n "$TTALLY_FILTERS" ]]; then

@@ -7,5 +7,6 @@ vim.g.maplocalleader = "\\"
 
 require("user.custom.on_machine")
 lazy.setup()
+require("user.options")
 
--- the rest of my options/mappings are in after/plugin/
+-- the rest of my mappings are in ./after/plugin/*.lua

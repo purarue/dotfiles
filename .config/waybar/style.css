@@ -2,7 +2,7 @@
   /* `otf-font-awesome` is required to be installed for icons */
   /* can find the name of the font with `fc-list | rg -i FontAwesome` */
   font-family:
-    "Source Code Pro Medium", "Font Awesome 6 Free Solid", Roboto, Helvetica,
+    "Source Code Pro Medium", "Symbols Nerd Font Mono", Roboto, Helvetica,
     Arial, sans-serif;
   font-size: 13px;
 }

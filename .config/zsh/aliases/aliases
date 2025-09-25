@@ -6,6 +6,7 @@ alias -s {md,html,txt}=nvim
 
 # save ls so it can be used elsewhere if I want
 alias lls='command ls --color=never'
+compdef _eza eza-defaults
 alias eza-defaults='eza --git --octal-permissions --header --group-directories-first'
 # alias ls to eza
 case "$ON_OS" in
@@ -14,7 +15,7 @@ mac*)
 	alias ls='eza-defaults'
 	;;
 *)
-	alias ls='eza-defaults --icons'
+	abbrev-alias ls='eza-defaults --icons'
 	;;
 esac
 alias treel='ls --tree --git-ignore'
@@ -29,18 +30,18 @@ alias killall-nvim='killall -9 nvim'
 alias ccat='/bin/cat'
 
 # yadm aliases to work like git aliases, to manage dotfiles
-alias yds='yadm diff --staged'
-alias yst='yadm status'
-alias yd='yadm diff'
-alias ysu='yadm status -u'
-alias ya='yadm add'
-alias yA='yadm add --all'
-alias yc='yadm commit'
-alias yp='yadm push'
-alias yl='yadm pull --recurse-submodules'
-alias yrh='yadm reset'
-alias yrhh='yadm reset --hard'
-alias ylols='yadm log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'\'' --stat'
+abbrev-alias yds='yadm diff --staged'
+abbrev-alias yst='yadm status'
+abbrev-alias yd='yadm diff'
+abbrev-alias ysu='yadm status -u'
+alias ya='yadm add'  # no abbrev because slow autocompletion
+abbrev-alias yA='yadm add --all'
+abbrev-alias yc='yadm commit'
+abbrev-alias yp='yadm push'
+abbrev-alias yl='yadm pull --recurse-submodules'
+abbrev-alias yrh='yadm reset'
+abbrev-alias yrhh='yadm reset --hard'
+abbrev-alias ylols='yadm log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'\'' --stat'
 ydh() {
 	yadm diff HEAD~"${1:-1}"
 }
@@ -51,9 +52,10 @@ ycp() {
 		yadm commit -m "$*" && yadm push
 	fi
 }
+# compdef _git-diff ydh
+# compdef _git-commit ycp
 alias e=editor
-alias t=rg-nvim
-alias rgv='rg --vimgrep'
+abbrev-alias rgv='rg --vimgrep'
 
 # conflicts() {
 # 	local chosen sourcefile
