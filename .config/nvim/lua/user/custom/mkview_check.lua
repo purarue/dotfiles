@@ -1,5 +1,13 @@
 local M = {}
-function M.mkview_check()
+
+---@class (exact) MkviewCheck.Config
+---@field checker fun():boolean additional function to be called during setup
+
+---Check if mkview should be called
+---@param options MkviewCheck.Config?
+function M.mkview_check(options)
+    local opts = options or { checker = nil }
+
     if vim.wo.diff then
         return false
     end
@@ -16,13 +24,13 @@ function M.mkview_check()
         return false
     end
 
-    if bufname == "" or vim.fn.glob(bufname) == "" then
+    -- if file does not exist, skip writing
+    if bufname == "" or not vim.uv.fs_stat(bufname) then
         return false
     end
 
-    local path = vim.fn.expand(":%p")
-    if path:match("^/tmp/") or path:match("^/var/") then
-        return false
+    if opts.checker and type(opts.checker) == "function" then
+        return opts.checker()
     end
 
     return true

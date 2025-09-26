@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 # uses auto-subtitle (a local openai whisper subtitle generator wrapper) script
 # installed in a pipx venv:
+# to install, first install pipx (run 'python3 -m pip install pipx')
+# then run auto-subtitle-install script:
+#
+# that requires pyenv to be setup:
+# https://github.com/pyenv/pyenv
+#
 # https://purarue.xyz/d/auto-subtitle-install?redirect
 
 if [[ ! -f "$1" ]]; then
