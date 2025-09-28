@@ -101,7 +101,7 @@ return {
         { "<leader>E", function() Snacks.explorer() end, desc = "file explorer" },
         { "<leader>gr", function() Snacks.picker.git_branches() end, desc = "git branches" },
         { "<leader>gl", function() Snacks.picker.git_log() end, desc = "git log" },
-        { "<leader>gg", lazygit, desc = "lazygit" },
+        { "<leader>gz", lazygit, desc = "lazygit" },
         { "<leader>gF", function() Snacks.gitbrowse.open({ what = "file" }) end, desc = "git browse file", mode = { "n", "v" } },
         { "<leader>gL", function() Snacks.gitbrowse.open({ what = "branch" }) end, desc = "git browse branch", mode = { "n", "v" } },
         { "<leader>fl", function() Snacks.picker.lines() end, desc = "buffer lines" },

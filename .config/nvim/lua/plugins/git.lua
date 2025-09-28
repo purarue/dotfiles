@@ -8,7 +8,7 @@ return {
             cmd = { "Git" },
             keys = {
                 {
-                    "<leader>gs",
+                    "<leader>gg",
                     "<cmd>Git<cr>",
                     desc = "Git Status",
                 },
