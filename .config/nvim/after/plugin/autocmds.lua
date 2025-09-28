@@ -52,7 +52,7 @@ autocmd("TermOpen", {
 -- ---
 -- title: Filename
 -- ---
-autocmd({ "BufNewFile" }, {
+autocmd({ "BufNewFile", "BufEnter" }, {
     pattern = { "*/Documents/Notes/exo/*.md", "*/Repos/exobrain/src/content/*.md" },
     callback = function(e)
         return require("user.custom.frontmatter").generate_frontmatter(e.buf)
