@@ -21,6 +21,14 @@ function M.frontmatter(items)
     return res
 end
 
+-- if a file like filename.md is opened in
+-- anything that uses yaml frontmatter
+-- and its empty, add something like:
+
+-- ---
+-- title: Filename
+-- ---
+
 ---@param bufnr number
 ---@return nil
 function M.generate_frontmatter(bufnr)
