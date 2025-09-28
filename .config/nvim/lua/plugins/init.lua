@@ -17,6 +17,7 @@ return {
                 { "<leader>x", group = "trouble", icon = "󱈸" },
                 { "gr", group = "LSP Actions", mode = { "n" } },
                 { "<leader>H", group = "hex colors", icon = "󰏘" },
+                { "<leader>y", icon = "" },
             },
         },
     },

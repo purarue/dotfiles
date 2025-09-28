@@ -1,3 +1,5 @@
+---@module 'lazy'
+---@type LazyPluginSpec
 return {
     "purarue/auto-mkview.nvim",
     event = "BufWinEnter",
