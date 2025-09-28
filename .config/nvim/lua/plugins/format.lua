@@ -62,7 +62,7 @@ return {
                     command = "styluac",
                 },
                 eslint_d = {
-                    timeout_ms = 3000,
+                    timeout_ms = 5000,
                 },
                 setup_cfg = {
                     command = "setup-cfg-fmt-tempfile",

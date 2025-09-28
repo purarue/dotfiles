@@ -46,24 +46,6 @@ autocmd("TermOpen", {
     group = clear_group("TerminalInsert"),
 })
 
-autocmd("BufWinEnter", {
-    pattern = "?*",
-    callback = function()
-        pcall(vim.cmd.loadview)
-    end,
-    group = clear_group("BufEnterLoadView"),
-})
-
-autocmd("BufWinLeave", {
-    pattern = "?*",
-    callback = function()
-        if require("user.custom.mkview_check").mkview_check() then
-            pcall(vim.cmd.mkview)
-        end
-    end,
-    group = clear_group("BufLeaveMkView"),
-})
-
 -- if a file like filename.md is opened in
 -- anything that uses yaml frontmatter
 -- and its empty, add something like:

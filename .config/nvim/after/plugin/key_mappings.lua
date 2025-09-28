@@ -40,15 +40,6 @@ nnoremap("#", "#zz", "centered match")
 nnoremap("!B", ":.!bash<CR>", "run shell command")
 vnoremap("!B", ":.!bash<CR>", "run shell command")
 
--- save the current view when closing a buffer,
--- even if there are multiple of that buffer open
-nnoremap("ZZ", function()
-    if require("user.custom.mkview_check").mkview_check() then
-        pcall(vim.cmd.mkview)
-    end
-    vim.cmd("x") -- default ZZ behaviour, to close and write if modified
-end, "save view and close window")
-
 nnoremap("J", "mzJ`z", "append to line")
 
 ---@param n number
