@@ -1,9 +1,10 @@
+local asdf_node_install_path = vim.env.HOME .. "/.asdf/installs/nodejs/23.9.0/bin/node"
 ---@module 'lazy'
 ---@type LazyPluginSpec
 return {
     "zbirenbaum/copilot.lua",
     event = "InsertEnter",
-    enabled = os.getenv("ON_OS") ~= nil,
+    enabled = vim.uv.fs_stat(asdf_node_install_path) ~= nil,
 
     ---@module 'copilot.config'
     ---@type CopilotConfig
@@ -13,6 +14,7 @@ return {
         suggestion = {
             enabled = false,
         },
+        copilot_node_command = asdf_node_install_path,
         filetypes = {
             markdown = false,
             env = false,

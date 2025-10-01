@@ -1,8 +1,11 @@
 -- From LazyVim:
--- https://github.com/LazyVim/LazyVim
 local M = {}
----@type table<string, table<string, string[]>>
+---@type table<string, string>
 M.dials_by_ft = {}
+
+---@class (exact) DialOpts
+---@field dials_by_ft table<string, string>
+---@field groups table<string, Augend[]>
 
 ---@param increment boolean
 ---@param g? boolean
@@ -27,7 +30,6 @@ return {
         { "g<C-x>", function() return M.dial(false, true) end, expr = true, desc = "Decrement", mode = { "n", "v" } },
         -- stylua: ignore end
     },
-    --- NOTE: no setup types
     opts = function()
         local augend = require("dial.augend")
 
@@ -102,6 +104,7 @@ return {
             cyclic = true,
         })
 
+        ---@type DialOpts
         return {
             dials_by_ft = {
                 css = "css",
@@ -180,6 +183,7 @@ return {
             },
         }
     end,
+    ---@param opts DialOpts
     config = function(_, opts)
         require("dial.config").augends:register_group(opts.groups)
         M.dials_by_ft = opts.dials_by_ft

@@ -55,6 +55,7 @@ return {
                 "jq",
                 "json",
                 "jsonc",
+                "kitty",
                 "lua",
                 "make",
                 "markdown",

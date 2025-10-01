@@ -876,10 +876,6 @@ exec curl -w "%{url_effective}\n" -ILsS "$URL" -o /dev/null
 '''
 shebang = "#!/usr/bin/env bash"
 
-# shortcut for flatpak pinta
-[pinta]
-command = 'exec flatpak run com.github.PintaProject.Pinta "$@"'
-
 [unicode]
 command = '''
 file="${TMPDIR:-/tmp}/unicode_input"

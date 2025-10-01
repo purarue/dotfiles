@@ -1,15 +1,15 @@
-local gr = vim.api.nvim_create_namespace("user.autocmds")
+local gr = vim.api.nvim_create_augroup("user.autocmds", { clear = true })
 
 ---@param event vim.api.keyset.events|vim.api.keyset.events[] events that trigger this
 ---@param pattern string|string[] pattern to match filename
----@param callback function|string function/vimscript to execute
+---@param action function|string function/vimscript to execute
 ---@param desc string description of the autocmd
-local function au(event, pattern, callback, desc)
+local function au(event, pattern, action, desc)
     local opts = { group = gr, pattern = pattern, desc = desc }
-    if type(callback) == "string" then
-        opts.command = callback
+    if type(action) == "string" then
+        opts.command = action
     else
-        opts.callback = callback
+        opts.callback = action
     end
     vim.api.nvim_create_autocmd(event, opts)
 end

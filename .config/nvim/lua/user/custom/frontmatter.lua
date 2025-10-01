@@ -14,11 +14,10 @@ end
 ---@return string[]
 function M.frontmatter(items)
     local res = { "---" }
-    for k, v in pairs(items) do
+    vim.iter(items):each(function(k, v)
         table.insert(res, k .. ": " .. v)
-    end
-    table.insert(res, "---")
-    return res
+    end)
+    return vim.list_extend(res, { "---", "" })
 end
 
 -- if a file like filename.md is opened in
@@ -32,11 +31,10 @@ end
 ---@param bufnr number
 ---@return nil
 function M.generate_frontmatter(bufnr)
-    local buf = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false) ---@type string[]
+    local buf = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
     -- if file is empty, the result is { "" }
     if #buf == 1 and buf[1] == "" then
         local items = M.frontmatter({ title = M.unslugify(vim.fn.expand("%:t")) })
-        table.insert(items, "")
         vim.api.nvim_buf_set_lines(bufnr, 0, #items, false, items)
         vim.cmd("normal! G")
         vim.cmd.startinsert()
