@@ -1,3 +1,7 @@
+---@class (exact) TreesitterConfig
+---@field ensure_installed string[] list of parser names
+---@field ft_to_treesitter table<string, string> map filetypes to treesitter parser names
+
 ---@module 'lazy'
 ---@type LazyPluginSpec[]
 return {
@@ -17,7 +21,9 @@ return {
         branch = "main",
         lazy = false,
         build = ":TSUpdate",
+        ---@type TreesitterConfig
         opts = {
+            ft_to_treesitter = {},
             ensure_installed = {
                 "astro",
                 "awk",
@@ -63,6 +69,8 @@ return {
                 "muttrc",
                 "nginx",
                 "perl",
+                "jinja",
+                "jinja_inline",
                 "php",
                 "php_only",
                 "po",
@@ -92,6 +100,7 @@ return {
                 "yaml",
             },
         },
+        ---@param opts TreesitterConfig
         config = function(_, opts)
             -- NOTE: no setup() call required
             local TS = require("nvim-treesitter")
@@ -116,9 +125,16 @@ return {
                 -- no pattern, run on all files
                 callback = function(event)
                     local lang = vim.treesitter.language.get_lang(event.match)
-                    if vim.tbl_contains(installed, lang) then
+                    local matched = vim.tbl_contains(installed, lang)
+                    local use_lang = nil
+                    if not matched then
+                        use_lang = opts.ft_to_treesitter[event.match]
+                        matched = use_lang and vim.tbl_contains(installed, use_lang)
+                    end
+                    if matched then
+                        -- vim.notify("TS highlighting for " .. (use_lang or lang), vim.log.levels.INFO, { title = "nvim-treesitter" })
                         -- ignore errors
-                        pcall(vim.treesitter.start)
+                        pcall(vim.treesitter.start, event.buf, use_lang)
                         vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
                     end
                     -- this will otherwise fallback to vim indentexpr/syntax
