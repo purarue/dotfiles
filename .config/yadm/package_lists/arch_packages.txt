@@ -138,7 +138,6 @@ mlocate
 moreutils
 neovim-git
 net-tools
-newsboat
 newsraft
 nmap
 nsxiv
