@@ -14,7 +14,6 @@ return {
         priority = 1000,
         ---@module 'catppuccin.types'
         ---@type CatppuccinOptions
-        ---@diagnostic disable-next-line: missing-fields
         opts = {
             background = { light = "latte", dark = "macchiato" },
             -- change background colors to match terminal

@@ -5,7 +5,7 @@ return {
     event = "BufWinEnter",
     -- dir = "~/Repos/auto-mkview.nvim/",
     ---@module 'auto-mkview'
-    ---@type AutoMkview.Config?
+    ---@type AutoMkview.Config
     opts = {
         create_mappings = true,
     },

@@ -58,7 +58,7 @@ return {
             "javascriptreact",
             "typescriptreact",
         },
-        keys = { { "gc", mode = { "n", "x" } }, { "gbc", mode = { "n", "x" } } },
+        keys = { { "gc", mode = { "n", "x" } } },
         --- NOTE: no setup types
         opts = {
             options = {
