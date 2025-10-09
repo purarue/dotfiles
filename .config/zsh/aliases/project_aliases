@@ -8,8 +8,8 @@ alias vlogs-render='render-notes'
 # https://github.com/purarue/trakt-watch
 export URL_OPENER='openurl'
 abbrev-alias trk='trakt-watch'
-abbrev-alias tp='trk progress'
-abbrev-alias tw='trk watch --letterboxd prompt'
+alias tp='trk progress'
+alias tw='trk watch --letterboxd prompt'
 
 # https://github.com/purarue/HPI-personal/blob/master/scripts/trakt-urls
 tu() {
