@@ -133,8 +133,7 @@ android*)
 	;;
 esac
 
-# kitty
-alias d="kitty +kitten diff"
+alias d="kitten diff"
 
 # background jobs
 alias sctl='super --ctl'
