@@ -18,7 +18,7 @@ mac*)
 	abbrev-alias ls='eza-defaults --icons'
 	;;
 esac
-alias treel='ls --tree --git-ignore'
+alias tree='ls --tree --git-ignore'
 alias ll='ls --header --long'
 alias la='ll --all'
 alias sl='ls'
