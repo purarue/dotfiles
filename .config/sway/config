@@ -13,7 +13,7 @@ set $down j
 set $up k
 set $right l
 
-set $term wezterm
+set $term kitty
 set $browser floorp
 
 # Note: pass the final command to swaymsg so that the resulting window can be opened
@@ -23,7 +23,7 @@ bindsym $mod+Tab exec rofi -show window -display-window "window > "
 ### Output configuration
 
 # Wallpaper
-output * bg `find "${FILES_DIR}/wallpapers" -type f | shuf -n 1` fill
+# output * bg `find "${FILES_DIR}/wallpapers" -type f | shuf -n 1` fill
 
 # turn screen on/off when I close the lid
 bindswitch --reload --locked lid:on output $laptop disable
@@ -129,6 +129,8 @@ bindsym $mod+$alt+c exec clipreset
 bindsym $mod+XF86AudioMute exec mpv-play-pause && i3blocks-refresh-mpv
 bindsym $mod+XF86AudioMicMute exec mpv-next-song && i3blocks-refresh-mpv
 bindsym $mod+Shift+XF86AudioMute exec mpv-quit-latest && i3blocks-refresh-mpv
+bindsym XF86AudioPlay exec --no-startup-id mpv-play-pause && i3blocks-refresh-mpv
+bindsym XF86AudioNext exec --no-startup-id mpv-next-song && i3blocks-refresh-mpv
 bindsym $mod+m exec notify-send "$(mpv-song-description-py)"
 bindsym $alt+m exec mpv-play-pause && i3blocks-refresh-mpv
 bindsym $mod+Shift+m exec mpv-next-song && i3blocks-refresh-mpv
@@ -138,6 +140,8 @@ bindsym $mod+XF86AudioRaiseVolume exec mpv-seek '5'
 bindsym $mod+XF86AudioLowerVolume exec mpv-seek '-5'
 
 bindsym $mod+Shift+s exec reminder-sink-notify
+
+bindsym $mod+grave exec dunstctl close-all
 
 # volume
 bindsym XF86AudioRaiseVolume exec volume up
@@ -160,8 +164,8 @@ bindsym $mod+$alt+r exec i3blocks-refresh-all
 # mouse button for dragging.
 floating_modifier $mod normal
 
-# Reload the configuration file
-bindsym $mod+Shift+r reload
+# Reload the configuration file, touch waybar config to reload it (launch-waybar watches for changes)
+bindsym $mod+Shift+r reload; exec touch ~/.config/waybar/style.css
 
 # Exit sway (logs you out of your Wayland session)
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
@@ -251,39 +255,24 @@ bindsym $mod+z focus child
 
 # launcher binding
 bindsym $mod+d mode "launcher"
-bindsym $mod+Shift+d exec notify-send -t 15000 "$(i3-launcher)"; mode "launcher"
+bindsym $mod+Shift+d exec notify-send -t 15000 "$(sway-launcher)"; mode "launcher"
 
 mode "launcher" {
-    bindsym a exec ttt wezterm; mode "default"
+    bindsym a exec ttt kitty; mode "default"
     bindsym f exec ttt floorp; mode "default"
-    bindsym g exec feed-open; mode "default"
-    bindsym t exec trakt-progress; mode "default"
-    bindsym y exec mal-recent; mode "default"
-    bindsym d exec ttt discord; mode "default"
+    bindsym d exec ttt discord-browser; mode "default"
     bindsym k exec ttt keepassxc; mode "default"
     bindsym b exec bookmark-open; mode "default"
     bindsym l exec largechar-clipboard; mode "default"
     bindsym x exec exo-web; mode "default"
     bindsym Shift+x exec exo-web-personal; mode "default"
-    bindsym n exec ttt launch newsboat-force; mode "default"
+    bindsym n exec ttt launch newsraft; mode "default"
     bindsym m exec ttt launch neomuttr; mode "default"
     bindsym Shift+m exec launch sync-neomutt; mode "default"
-    bindsym h exec ttt launch htop; mode "default"
-    bindsym v exec ttt launch keyvol; mode "default"
     bindsym u exec urlview; mode "default"
-    bindsym p exec launch plainplay; mode "default"
     bindsym Shift+s exec launch splayall; mode "default"
-    bindsym s exec stream-corner; mode "default"
     bindsym $mod+f exec ttt launch full_todotxt; mode "default"
-    bindsym 4 exec stream-corner-480; mode "default"
-    bindsym 7 exec stream-corner-720; mode "default"
-    bindsym 0 exec stream-corner-1080; mode "default"
     bindsym Shift+f exec flatpak-run; mode "default"
-    bindsym c exec ttt clrs; mode "default"
-    bindsym Shift+n exec launch sn; mode "default"
-    bindsym $mod+c exec SKIP_RECENT=1 launch cz; mode "default"
-    bindsym Shift+c exec SKIP_RECENT=1 launch czd; mode "default"
-    bindsym $alt+c exec SKIP_RECENT=1 launch czl; mode "default"
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
@@ -315,6 +304,8 @@ exec ~/Repos/exobrain/scripts/exobrain-launch-in-editor
 exec autotiling
 exec warn-battery BAT1
 exec gammastep-loc
+exec launch-waybar
+exec randomize-wallpaper
 
 # Scratchpad:
 #
@@ -332,23 +323,6 @@ bindsym $mod+Shift+y exec sway-resize left
 bindsym $mod+Shift+u exec sway-resize down
 bindsym $mod+Shift+i exec sway-resize up
 bindsym $mod+Shift+o exec sway-resize right
-
-# Status Bar:
-#
-# Read `man 5 sway-bar` for more information about this section.
-bar {
-    position top
-
-# When the status_command prints a new line to stdout, swaybar updates.
-# The default just shows the current date and time.
-        status_command i3blocks
-
-        colors {
-            statusline #ffffff
-                background #323232
-                inactive_workspace #323232 #323232 #5c5c5c
-        }
-}
 
 # Appearance
 default_border none

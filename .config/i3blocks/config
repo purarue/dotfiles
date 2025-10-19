@@ -14,22 +14,22 @@ signal=16
 # interval=30
 # signal=14
 
-[mpv-song]
-command=b-mpv-description
-interval=30
-signal=10
+# [mpv-song]
+# command=b-mpv-description
+# interval=30
+# signal=10
 
-[mpv-paused]
-command=b-mpv-paused
-interval=30
-label=⏸
-signal=9
+# [mpv-paused]
+# command=b-mpv-paused
+# interval=30
+# label=⏸
+# signal=9
 
-[page-hits]
-command=b-page-hits
-interval=300
-label=📈
-signal=12
+# [page-hits]
+# command=b-page-hits
+# interval=300
+# label=📈
+# signal=12
 
 [comments]
 command=b-comments

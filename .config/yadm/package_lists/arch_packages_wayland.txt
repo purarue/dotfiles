@@ -4,6 +4,7 @@
 gammastep
 hyprland
 hyprlock
+sway
 swaybg
 pipewire
 pipewire-pulse

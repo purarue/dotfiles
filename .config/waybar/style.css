@@ -57,6 +57,10 @@ button:hover {
   background: rgba(0, 0, 0, 0.2);
 }
 
+#workspaces button.focused {
+	background-color: #34495e;
+}
+
 #submap {
   background: red;
   padding: 0 10px;

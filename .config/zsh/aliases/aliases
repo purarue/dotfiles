@@ -5,7 +5,7 @@
 alias -s {md,html,txt}=nvim
 
 # save ls so it can be used elsewhere if I want
-alias lls='command ls --color=never'
+abbrev-alias lls='/usr/bin/ls --color=never'
 compdef _eza eza-defaults
 alias eza-defaults='eza --git --octal-permissions --header --group-directories-first'
 # alias ls to eza
@@ -15,7 +15,7 @@ mac*)
 	alias ls='eza-defaults'
 	;;
 *)
-	abbrev-alias ls='eza-defaults --icons'
+	alias ls='eza-defaults --icons'
 	;;
 esac
 alias tree='ls --tree --git-ignore'
@@ -27,7 +27,7 @@ alias dc='cd' # never going to use the reverse-polish calculator, is *always* a 
 # https://github.com/neovim/neovim/issues/1808
 alias killall-nvim='killall -9 nvim'
 
-alias ccat='/bin/cat'
+abbrev-alias ccat='/usr/bin/cat'
 
 # yadm aliases to work like git aliases, to manage dotfiles
 abbrev-alias yds='yadm diff --staged'
@@ -121,7 +121,7 @@ alias 'confirm=fzf --multi'
 alias 'up=TERM=xterm up'
 alias screens='cd $SCREENSHOTS'
 
-alias rrm='command rm'
+abbrev-alias rrm='/usr/bin/rm'
 
 # dont use rmtrash on android, doesn't work
 case "$ON_OS" in

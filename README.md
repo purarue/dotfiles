@@ -29,7 +29,7 @@ On Arch/X11:
 - [`picom`](https://github.com/yshui/picom) for window compositing
 - [`i3blocks`](https://github.com/vivien/i3blocks) as a status bar
 
-On Arch/[Hyprland](https://github.com/hyprwm/Hyprland):
+On Arch/[sway](https://swaywm.org/):
 
 - [`rofi` wayland fork](https://github.com/lbonn/rofi#wayland-support)
 - [`waybar`](https://github.com/Alexays/Waybar) as a status bar

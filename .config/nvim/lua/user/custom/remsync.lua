@@ -54,17 +54,15 @@ end
 function M.complete_no_duplicates(flags)
     return function(ArgLead, Cmdline, _)
         local cmdline_has = vim.iter(vim.split(Cmdline, " ")):skip(1):totable()
-        local matches = {}
-        vim.iter(flags)
+        return vim.iter(flags)
             :filter(function(opt)
                 return not vim.tbl_contains(cmdline_has, opt)
             end)
-            :each(function(opt)
+            :map(function(opt)
                 if opt:find(ArgLead) == 1 then
-                    table.insert(matches, opt)
+                    return opt
                 end
-            end)
-        return matches or flags
+            end):totable() or flags
     end
 end
 

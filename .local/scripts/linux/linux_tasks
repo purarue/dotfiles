@@ -39,9 +39,9 @@ else
 	({ for f in "${FILES[@]}"; do printf '%s\n' "$f"; done; } | entr -n i3blocks-refresh-mk reminder-sink LINUX_TASK) &
 
 	# note: in ps -ef, it looks like this creates 2 processes, but its just the one
-	if (($(procs i3blocks-watch-mpv-daemon-logs --no-header | grep -c bash) == 0)); then
-		setsid -f i3blocks-watch-mpv-daemon-logs
-	fi
+	# if (($(procs i3blocks-watch-mpv-daemon-logs --no-header | grep -c bash) == 0)); then
+	# 	setsid -f i3blocks-watch-mpv-daemon-logs
+	# fi
 
 fi
 

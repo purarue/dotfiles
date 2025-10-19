@@ -7,8 +7,8 @@
 	"spacing": 0, // Gaps between modules (4px)
 	// Choose the order of the modules
 	"modules-left": [
-		"hyprland/workspaces",
-		"hyprland/submap"
+		"sway/workspaces",
+		"sway/mode"
 	],
 	"modules-center": [],
 	"modules-right": [
@@ -24,19 +24,12 @@
 		"clock",
 		"tray"
 	],
-	// Modules configuration
-	"hyprland/workspaces": {
+	"sway/workspaces": {
 		"disable-scroll": true,
-		"all-outputs": true,
-		"warp-on-scroll": false,
-		"on-scroll-up": "hyprctl dispatch workspace e+1",
-		"on-scroll-down": "hyprctl dispatch workspace e-1",
-		"format": "{name}"
+		"all-outputs": true
 	},
-	"hyprland/submap": {
-		"format": "{}",
-		"max-length": 30,
-		"tooltip": false
+	"sway/mode": {
+		"format": "<span style=\"italic\">{}</span>"
 	},
 	"sway/scratchpad": {
 		"format": "{icon} {count}",
