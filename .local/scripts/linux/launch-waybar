@@ -7,6 +7,6 @@ trap "killall waybar" EXIT
 sleep 1
 while true; do
 	waybar &
-	inotifywait -e create,modify $CONFIG_FILES
+	inotifywait -e create,modify,attrib $CONFIG_FILES
 	killall waybar
 done
