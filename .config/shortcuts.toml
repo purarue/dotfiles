@@ -480,7 +480,11 @@ command = 'exec fzf --preview="${HOME}/.config/fzf_preview {}" "$@"'
 [largechar-clipboard]
 command = '''
 CONTENTS="$(clippaste)"
-[ -z "${CONTENTS}" ] && exit 1
+[ -z "${CONTENTS}" ] && {
+	notify "Clipboard is empty"
+	exit 1
+}
+notify "largechar: launching..."
 printf '%s' "${CONTENTS}" | largechar -c
 '''
 

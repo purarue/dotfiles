@@ -3,6 +3,7 @@
 # os
 
 avahi
+autotiling-git
 brightnessctl
 cups
 cups-pdf

@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# prints a piece of text like:
+#
+# $ sway-launcher
+# K | keyvol
+# d | discord
+# f | firefox
+# h | htop
+# k | keepassxc
+# s | slack
+# t | thunderbird
+
+# has some customizations to make my notification in particular look better (e.g. remove -developer-edition from firefox)
+
+# shellcheck disable=SC2016
+awk '/^.*mode "launcher".*{/,/^$/' <~/.config/sway/config | chomp |
+	sed -e 's/^\s*//;
+s/\s*$//;
+/^\s*$/d;
+/^#/d; /[\{\}]\s*$/d;
+/\(Escape\|Return\)/d;
+s/;\s*mode "default"$//;
+s/launch //;
+s/-developer-edition//;
+s/-browser//;
+s/-force$//;
+s/neomuttr/neomutt/;
+s/SKIP_RECENT=1 //;
+s/ttt //;
+s/sn$/self-now/;
+s/bindsym \([[:print:]]*\)\s*exec\s*--no-startup-id /\1\| /;
+s/Shift+\([[:print:]]\)/\U\1/;
+s/$mod+/⊞/;
+s/bindsym //;
+s/exec //;' |
+	sort

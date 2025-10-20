@@ -95,6 +95,7 @@ seat seat0 hide_cursor 3000
 #
 # Start a terminal
 bindsym $mod+Return exec $term
+bindsym $mod+Shift+a exec $term
 bindsym $mod+Shift+Return exec $browser
 
 # Kill focused window
