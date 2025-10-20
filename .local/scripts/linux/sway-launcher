@@ -30,7 +30,7 @@ s/ttt //;
 s/sn$/self-now/;
 s/bindsym \([[:print:]]*\)\s*exec\s*--no-startup-id /\1\| /;
 s/Shift+\([[:print:]]\)/\U\1/;
-s/$mod+/⊞/;
+s/$mod/⊞/;
 s/bindsym //;
 s/exec //;' |
 	sort

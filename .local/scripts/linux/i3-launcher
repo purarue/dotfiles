@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# sends a notification to the user like:
+# creates text for a notification to send to me like:
 #
-# $ i3-notify-launcher
+# $ i3-launcher
 # K | keyvol
 # d | discord
 # f | firefox

@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+wait-for-internet --timeout 0 || {
+	notify "No internet!"
+	exit 1
+}
+
 set -o pipefail
 
 usage() {
