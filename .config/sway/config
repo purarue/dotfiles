@@ -1,4 +1,4 @@
-# vim: set ft=i3config
+# vim: ft=swayconfig
 # Read `man 5 sway` for a complete reference.
 
 ### Variables
