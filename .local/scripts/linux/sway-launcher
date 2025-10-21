@@ -19,7 +19,7 @@ s/\s*$//;
 /^\s*$/d;
 /^#/d; /[\{\}]\s*$/d;
 /\(Escape\|Return\)/d;
-s/;\s*mode "default"$//;
+s/;\s*mode "default";$//;
 s/launch //;
 s/-developer-edition//;
 s/-browser//;

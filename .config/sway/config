@@ -1,3 +1,4 @@
+# vim: set ft=i3config
 # Read `man 5 sway` for a complete reference.
 
 ### Variables
@@ -31,12 +32,12 @@ bindsym $mod+Shift+Escape sway-display-off
 ### Idle configuration
 set $locker 'swaylock -f -e -c 1d2021 --inside-color 000000b3 -s fill -i ~/.cache/lockscreen'
 exec swayidle -w \
-    timeout 1800 'mpv-pause-all' \
-    timeout 1800 $locker \
-    timeout 900 'swaymsg "output * dpms off"' \
-    timeout 15 'if pgrep -x swaylock; then swaymsg "output * dpms off"; fi' \
-    resume 'swaymsg "output * dpms on"' \
-    before-sleep $locker
+         timeout 1800 'mpv-pause-all' \
+         timeout 1800 $locker \
+         timeout 900 'swaymsg "output * dpms off"' \
+         timeout 15 'if pgrep -x swaylock; then swaymsg "output * dpms off"; fi' \
+         resume 'swaymsg "output * dpms on"' \
+         before-sleep $locker
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -63,10 +64,10 @@ input "type:keyboard" {
 
 input * {
     natural_scroll enabled
-        dwt true  # disable while typing
-        tap enabled
-        accel_profile "flat"
-        pointer_accel 1
+    dwt true  # disable while typing
+    tap enabled
+    accel_profile "flat"
+    pointer_accel 1
 }
 
 # hide cursor after 3 seconds
@@ -113,7 +114,6 @@ bindsym $mod+XF86AudioMicMute exec mpv-next-song && i3blocks-refresh-mpv
 bindsym $mod+Shift+XF86AudioMute exec mpv-quit-latest && i3blocks-refresh-mpv
 bindsym XF86AudioPlay exec --no-startup-id mpv-play-pause && i3blocks-refresh-mpv
 bindsym XF86AudioNext exec --no-startup-id mpv-next-song && i3blocks-refresh-mpv
-bindsym $mod+m exec notify-send "$(mpv-song-description-py)"
 bindsym $alt+m exec mpv-play-pause && i3blocks-refresh-mpv
 bindsym $mod+Shift+m exec mpv-next-song && i3blocks-refresh-mpv
 
@@ -233,32 +233,78 @@ bindsym $mod+d mode "launcher"
 bindsym $mod+Shift+d exec notify-send -t 15000 "$(sway-launcher)"; mode "launcher"
 
 mode "launcher" {
-    bindsym a exec ttt kitty; mode "default"
-    bindsym f exec ttt floorp; mode "default"
-    bindsym d exec ttt discord-browser; mode "default"
-    bindsym k exec ttt keepassxc; mode "default"
-    bindsym b exec bookmark-open; mode "default"
-    bindsym l exec largechar-clipboard; mode "default"
-    bindsym x exec exo-web; mode "default"
-    bindsym Shift+x exec exo-web-personal; mode "default"
-    bindsym n exec ttt launch newsraft; mode "default"
-    bindsym m exec ttt launch neomuttr; mode "default"
-    bindsym Shift+m exec launch sync-neomutt; mode "default"
-    bindsym u exec urlview; mode "default"
-    bindsym Shift+s exec launch splayall; mode "default"
-    bindsym Shift+f exec flatpak-run; mode "default"
-    bindsym Escape mode "default"
-    bindsym Return mode "default"
+    bindsym a exec ttt kitty; mode "default";
+    bindsym f exec ttt floorp; mode "default";
+    bindsym d exec ttt discord-browser; mode "default";
+    bindsym k exec ttt keepassxc; mode "default";
+    bindsym b exec bookmark-open; mode "default";
+    bindsym l exec largechar-clipboard; mode "default";
+    bindsym x exec exo-web; mode "default";
+    bindsym Shift+x exec exo-web-personal; mode "default";
+    bindsym n exec ttt launch newsraft; mode "default";
+    bindsym m exec ttt launch neomuttr; mode "default";
+    bindsym Shift+m exec launch sync-neomutt; mode "default";
+    bindsym u exec urlview; mode "default";
+    bindsym Shift+s exec launch splayall; mode "default";
+    bindsym Shift+f exec flatpak-run; mode "default";
+    bindsym Escape mode "default";
+    bindsym Return mode "default";
 }
 
 bindsym $mod+s mode "server_clipboard"
 mode "server_clipboard" {
-    bindsym c exec with-secrets server_clipboard_notify copy; mode "default"
-    bindsym v exec with-secrets server_clipboard_notify paste; mode "default"
-    bindsym p exec with-secrets server_clipboard_notify paste; mode "default"
-    bindsym Escape mode "default"
-    bindsym Return mode "default"
+    bindsym c exec with-secrets server_clipboard_notify copy; mode "default";
+    bindsym v exec with-secrets server_clipboard_notify paste; mode "default";
+    bindsym p exec with-secrets server_clipboard_notify paste; mode "default";
+    bindsym Escape mode "default";
+    bindsym Return mode "default";
 }
+
+mode "mouse" {
+    # Cursor movement
+    bindsym j exec wlrctl pointer move 0 10;
+    bindsym k exec wlrctl pointer move 0 -10;
+    bindsym l exec wlrctl pointer move 10 0;
+    bindsym h exec wlrctl pointer move -10 0;
+    bindsym Shift+j exec wlrctl pointer move 0 50;
+    bindsym Shift+k exec wlrctl pointer move 0 -50;
+    bindsym Shift+l exec wlrctl pointer move 50 0;
+    bindsym Shift+h exec wlrctl pointer move -50 0;
+    bindsym Mod1+j exec wlrctl pointer move 0 2;
+    bindsym Mod1+k exec wlrctl pointer move 0 -2;
+    bindsym Mod1+l exec wlrctl pointer move 2 0;
+    bindsym Mod1+h exec wlrctl pointer move -2 0;
+
+    # Click and exit mouse mode
+    bindsym space exec wlrctl pointer click left; mode "default";
+    bindsym s exec wlrctl pointer click left; mode "default";
+    bindsym d exec wlrctl pointer click middle; mode "default";
+    bindsym f exec wlrctl pointer click right; mode "default";
+
+    # Click without exiting mouse mode
+    bindsym Shift+s exec wlrctl pointer click left;
+    bindsym Shift+d exec wlrctl pointer click middle;
+    bindsym Shift+f exec wlrctl pointer click right;
+    bindsym 1 exec wlrctl pointer click left;
+    bindsym 2 exec wlrctl pointer click middle;
+    bindsym 3 exec wlrctl pointer click right;
+
+    # Restart wl-kbptr and re-enter mouse mode
+    bindsym semicolon mode "default"; exec 'wl-kbptr; swaymsg mode "mouse"';
+    bindsym $mod+semicolon mode "default"; exec 'wl-kbptr; swaymsg mode "mouse"';
+
+    # Scroll up and down (if supported)
+    bindsym e exec wlrctl pointer scroll 10 0;
+    bindsym r exec wlrctl pointer scroll -10 0;
+    bindsym t exec wlrctl pointer scroll 0 -10;
+    bindsym g exec wlrctl pointer scroll 0 10;
+
+    bindsym Escape mode "default";
+    bindsym Return mode "default";
+}
+
+bindsym $mod+comma mode "mouse"
+bindsym $mod+semicolon exec 'wl-kbptr; swaymsg mode "mouse"'
 
 # keyboard shortcut to check if I have a remote internet connection
 bindsym $mod+Shift+w exec wfi

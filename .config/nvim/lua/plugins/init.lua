@@ -25,7 +25,7 @@ return {
     -- []x to encode/decode HTML, []u to encode/decode URLs, []y to do C-style escaping
     {
         "purarue/vim-unimpaired-conversions",
-        keys = { { "[", mode = "x" }, { "]", mode = { "x" } } },
+        keys = { { "[", mode = "x" }, { "]", mode = "x" } },
     },
     {
         "nvim-lua/plenary.nvim",
