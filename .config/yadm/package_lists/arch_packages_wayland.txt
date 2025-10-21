@@ -2,10 +2,9 @@
 
 # os
 gammastep
-hyprland
-hyprlock
 sway
 swaybg
+swaylock
 pipewire
 pipewire-pulse
 polkit-kde-agent
@@ -15,7 +14,6 @@ rofi-lbonn-wayland-git
 wev
 wireplumber
 wl-clipboard
-xdg-desktop-portal-hyprland
 xorg-xwayland
 
 auto-cpufreq  # for battery life

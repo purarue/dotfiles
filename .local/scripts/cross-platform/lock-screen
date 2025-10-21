@@ -9,8 +9,8 @@ mac*)
 	exit 0
 	;;
 linux*)
-	if [ -n "$WAYLAND_DISPLAY" ]; then
-		hyprlock
+	if [ -n "$SWAYSOCK" ]; then
+		swaylock -f -e -c 1d2021 --inside-color 000000b3 -s fill -i "$(find ~/Files/wallpapers | shuf -n1)"
 	elif [ "$1" = "-b" ]; then # daemon
 		while true; do
 			scrot --silent --overwrite "${HOME}/.cache/desktop.png"

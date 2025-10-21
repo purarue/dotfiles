@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-# This is the script that I run when I start my arch system
-#
-# This is called from the terminal right after I login
-# I do not have a login greeter, I launch directly
-# into the arch cmdline
-
-source ~/.profile
-exec Hyprland

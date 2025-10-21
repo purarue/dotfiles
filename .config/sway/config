@@ -20,9 +20,6 @@ bindsym $mod+Tab exec rofi -show window -display-window "window > "
 bindswitch --reload --locked lid:on output $laptop disable
 bindswitch --reload --locked lid:off output $laptop enable
 
-# lock/turnoff screen
-bindsym $mod+Shift+Escape sway-display-off
-
 # Example configuration:
 #
 #   output HDMI-A-1 resolution 1920x1080 position 1920,0
@@ -82,6 +79,9 @@ bindsym $mod+Shift+Return exec $browser
 
 # Kill focused window
 bindsym $mod+Shift+q kill
+
+# lock screen
+bindsym $mod+Shift+Escape exec ttt lock-screen
 
 # application launcher
 bindsym $mod+r exec rofi -show run -display-run "run >" | xargs swaymsg exec --
