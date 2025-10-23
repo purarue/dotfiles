@@ -4,7 +4,6 @@ CONFIG_FILES="$HOME/.config/waybar/config.jsonc $HOME/.config/waybar/style.css"
 
 trap "killall waybar" EXIT
 
-sleep 1
 while true; do
 	waybar &
 	inotifywait -e create,modify,attrib $CONFIG_FILES

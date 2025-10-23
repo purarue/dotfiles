@@ -211,6 +211,7 @@ __pycache__
 /.config/*/zoom.conf
 /.config/3T
 /.config/Signal/
+/.config/ngrok/
 /.config/BraveSoftware/
 /.config/gh-copilot/
 /.config/Code - OSS/
