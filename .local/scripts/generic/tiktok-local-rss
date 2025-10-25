@@ -145,9 +145,11 @@ users_file = (
 assert (
     users_file.exists()
 ), f"cannot find tiktok user file {users_file}, should have one username per line"
-USERS = [
-    s.strip().lstrip("@") for s in users_file.read_text().splitlines() if s.strip()
-]
+USERS = []
+for user in users_file.read_text().splitlines():
+    if user.strip().startswith("#"):
+        continue
+    USERS.append(user.strip().lstrip("@"))
 
 
 def generate_rss_file(user: str, rss_dir: Path) -> None:
