@@ -2,7 +2,7 @@
 
 import os
 import json
-from datetime import datetime
+from datetime import datetime, date
 from collections import defaultdict
 from pathlib import Path
 from typing import Any, NamedTuple, TypeVar, get_args, Literal, Iterator, Self
@@ -393,8 +393,9 @@ class UVSummary(NamedTuple):
 
 
 @click.argument("WHERE")
+@click.option("--today", is_flag=True, help="only show today's forecast")
 @main.command(short_help="display custom weather info", name="forecast")
-def forecast(where: str) -> None:
+def forecast(where: str, today: bool) -> None:
     forecast: dict[Location, dict[str, dict[str, Any]]] = defaultdict(dict)
     for loc, locations in iter_locations(
         where, after=datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
@@ -411,17 +412,14 @@ def forecast(where: str) -> None:
         for day, day_data in location_day_data.items():
             rain_hours: list[RainSummary] = []
             uv_hours: list[UVSummary] = []
-            uv_min_hour = None
-            uv_max_hour = None
             for data in day_data:
                 if data.precipitation_probability >= 10.0:
                     rain_hours.append(RainSummary.from_data(data))
                 if data.uv_index >= 2.8:
                     uv_hours.append(UVSummary.from_data(data))
 
-            if uv_hours:
-                uv_min_hour = int(uv_hours[0].hour)
-                uv_max_hour = int(uv_hours[-1].hour)
+            uv_min_hour = int(uv_hours[0].hour) if uv_hours else None
+            uv_max_hour = int(uv_hours[-1].hour) if uv_hours else None
 
             # find min and max hour for the day and include
             # one hour before/one hour after in the UV summary
@@ -441,8 +439,18 @@ def forecast(where: str) -> None:
         forecast[loc] = daily_summary
 
     fc = {loc.name: daily_summary for loc, daily_summary in forecast.items()}
-    if len(forecast) == 1:
-        fc = list(forecast.values())[0]
+
+    # if only today is requested, filter out other days
+    if today:
+        today_str = str(date.today())
+        fc = {
+            loc.name: daily_summary[today_str] if today_str in daily_summary else {}
+            for loc, daily_summary in forecast.items()
+        }
+
+    # if there's only one location, remove the nesting
+    if len(fc) == 1:
+        fc = list(fc.values())[0]
     click.echo(dumps(fc))
 
 
