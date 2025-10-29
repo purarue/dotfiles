@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
-from collections import defaultdict
 import os
 import json
 from datetime import datetime
+from collections import defaultdict
 from pathlib import Path
-from typing import Any, NamedTuple, TypeVar, get_args, Literal, Iterator, Sequence
+from typing import Any, NamedTuple, TypeVar, get_args, Literal, Iterator, Self
+from my.core.serialize import dumps
 
 import click
 from autotui.shortcuts import load_from, prompt_namedtuple, dump_to
@@ -239,7 +240,9 @@ class Data(NamedTuple):
 OutputFormat = Literal["table", "json"]
 
 
-def iter_locations(item: str) -> Iterator[tuple[str, list[Data]]]:
+def iter_locations(
+    item: str, after: datetime | None = None
+) -> Iterator[tuple[str, list[Data]]]:
     locations, id_to_location = load_locations()
 
     if item == "all":
@@ -286,10 +289,10 @@ def iter_locations(item: str) -> Iterator[tuple[str, list[Data]]]:
         parsed = [Data(**v) for v in info.values()]
         parsed.sort(key=lambda x: x.dt)
 
-        now = datetime.now().replace(microsecond=0, second=0, minute=0)
-        after_now = list(filter(lambda x: x.dt >= now, parsed))
+        after = after or datetime.now().replace(microsecond=0, second=0, minute=0)
+        after_now = list(filter(lambda x: x.dt >= after, parsed))
 
-        yield loc.name, after_now
+        yield loc, after_now
 
 
 @click.argument("WHERE")
@@ -306,7 +309,7 @@ def display(hours: int, where: str, output_fmt: OutputFormat) -> None:
     """
     Display weather data
     """
-    for name, locations in iter_locations(where):
+    for loc, locations in iter_locations(where):
 
         headers = [
             "Time",
@@ -350,34 +353,97 @@ def display(hours: int, where: str, output_fmt: OutputFormat) -> None:
             )
             width = len(tbl.splitlines()[0])
             # center name above top row
-            cname = name.center(width)
+            cname = loc.name.center(width)
             click.echo(f"{cname}\n{tbl}")
         else:
-            d = {"name": name, "forecast": []}
+            d = {"name": loc.name, "forecast": []}
             slugified_headers = ["_".join(s.lower().split()) for s in headers]
             for where in items:
                 combined = {}
                 for k, v in zip(slugified_headers, where):
                     combined[k] = v
                 d["forecast"].append(combined)
-            click.echo(json.dumps(d))
+            click.echo(dumps(d))
 
 
-@click.option(
-    "-n",
-    "--next",
-    multiple=True,
-    is_flag=True,
-    help="Show next day, can pass multiple times",
-)
+class RainSummary(NamedTuple):
+    hour: int
+    probability: float
+    rainfall: float
+
+    @classmethod
+    def from_data(cls, data: Data) -> Self:
+        return cls(
+            data.dt.hour,
+            data.precipitation_probability,
+            data.precipitation,
+        )
+
+
+class UVSummary(NamedTuple):
+    hour: int
+    uv_index: float
+
+    @classmethod
+    def from_data(cls, data: Data) -> Self:
+        return cls(
+            data.dt.hour,
+            data.uv_index,
+        )
+
+
 @click.argument("WHERE")
 @main.command(short_help="display custom weather info", name="forecast")
-def forecast(where: str, next: Sequence[bool]) -> None:
-    offset_days = len(next)
+def forecast(where: str) -> None:
+    forecast: dict[Location, dict[str, dict[str, Any]]] = defaultdict(dict)
+    for loc, locations in iter_locations(
+        where, after=datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    ):
+        location_day_data: dict[str, list[Data]] = defaultdict(list)
+        for data in locations:
+            location_day_data[data.dt.date()].append(data)
 
-    # if offsetting, it should show the whole day, not timedelta+1
-    for name, locations in iter_locations(where):
-        pass
+        # create output per day, that shows if there's a rain probability above 10%
+        # and the hours that is the case for, like 10AM-11AM, 2-4PM
+        # and if there's UV index above 3, what hours it is above 2.8 for
+        daily_summary: dict[str, dict[str, Any]] = defaultdict()
+
+        for day, day_data in location_day_data.items():
+            rain_hours: list[RainSummary] = []
+            uv_hours: list[UVSummary] = []
+            uv_min_hour = None
+            uv_max_hour = None
+            for data in day_data:
+                if data.precipitation_probability >= 10.0:
+                    rain_hours.append(RainSummary.from_data(data))
+                if data.uv_index >= 2.8:
+                    uv_hours.append(UVSummary.from_data(data))
+
+            if uv_hours:
+                uv_min_hour = int(uv_hours[0].hour)
+                uv_max_hour = int(uv_hours[-1].hour)
+
+            # find min and max hour for the day and include
+            # one hour before/one hour after in the UV summary
+            if uv_min_hour is not None and uv_max_hour is not None:
+                for data in day_data:
+                    if (
+                        data.dt.hour == uv_min_hour - 1
+                        or data.dt.hour == uv_max_hour + 1
+                    ):
+                        uv_hours.append(UVSummary.from_data(data))
+
+            daily_summary[str(day)] = {
+                "rain_hours": rain_hours,
+                "uv_hours": uv_hours,
+            }
+
+        forecast[loc] = daily_summary
+
+    fc = {loc.name: daily_summary for loc, daily_summary in forecast.items()}
+    if len(forecast) == 1:
+        fc = list(forecast.values())[0]
+    click.echo(dumps(fc))
 
 
 if __name__ == "__main__":
