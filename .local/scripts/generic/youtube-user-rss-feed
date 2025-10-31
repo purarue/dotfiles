@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# users the youtube-user-id script to get the channel ID, and print the corresponding youtube RSS feed and name
+# print the corresponding youtube RSS feed and name
+# can pass a youtube link or channel URL as input
 # this is the RSS format expected by newsraft
 data="$(yt-dlp --print channel_url --print channel --playlist-items 1 "${1?Provide a youtube url}")"
 channel_id="$(awk -F'/' 'NR == 1 {print $NF}' <<<"$data")"
