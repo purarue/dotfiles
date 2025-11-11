@@ -1,3 +1,5 @@
+local enabled = os.getenv("ON_OS") ~= nil
+
 ---@class (exact) TreesitterConfig
 ---@field ensure_installed string[] list of parser names
 ---@field ft_to_treesitter table<string, string> map filetypes to treesitter parser names
@@ -8,6 +10,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter-context",
         event = { "BufReadPre", "BufNewFile" },
+        enabled = enabled,
         ---@module 'treesitter-context'
         ---@type TSContext.UserConfig
         opts = {
@@ -19,6 +22,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         branch = "main",
+        enabled = enabled,
         lazy = false,
         build = ":TSUpdate",
         ---@type TreesitterConfig
@@ -147,6 +151,7 @@ return {
         after = "nvim-treesitter",
         event = { "VeryLazy" },
         branch = "main",
+        enabled = enabled,
         -- dir = "~/Repos/nvim-treesitter-textobjects",
         ---@module 'nvim-treesitter-textobjects.configs'
         ---@type TSTextObjects.UserConfig
