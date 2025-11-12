@@ -64,7 +64,7 @@ return {
                 desc = "pick one of the codespell fixes and replace it in the line",
             })
             local mh = require("user.custom.mapping_helpers")
-            mh.nnoremap("<leader>s", codespell_fix, "codespell fix")
+            mh.nnoremap("<leader>z", codespell_fix, "codespell fix")
         end
 
         -- Note: nvim-lint has an internal list of pre-enabled linters

@@ -8,5 +8,6 @@ return {
     ---@type AutoMkview.Config
     opts = {
         create_mappings = true,
+        disabled_fts = { "gitcommit", "gitrebase" },
     },
 }

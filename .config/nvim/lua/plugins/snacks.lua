@@ -87,7 +87,6 @@ return {
                 timeout = 3000,
             },
             statuscolumn = { enabled = true },
-            zen = { enabled = true },
         })
     end,
     keys = {
@@ -150,19 +149,23 @@ return {
                     Snacks.debug.backtrace()
                 end
                 vim.print = _G.dd -- Override print to use snacks for `:=` command
-
-                -- Create some toggle mappings
-                Snacks.toggle.option("spell", { name = "spelling" }):map("<leader>us")
-                Snacks.toggle.option("wrap", { name = "wrap" }):map("<leader>uw")
-
-                -- for when I'm sharing screen, is useful to have a crosshair
-                Snacks.toggle.option("cursorline", { name = "cursorline" }):map("<leader>ul")
-                Snacks.toggle.option("cursorcolumn", { name = "cursorcolumn" }):map("<leader>uc")
-
-                Snacks.toggle.inlay_hints():map("<leader>uh")
-                Snacks.toggle.indent():map("<leader>ug")
-                Snacks.toggle.dim():map("<leader>uz")
             end,
         })
+    end,
+    config = function(_, opts)
+        require("snacks").setup(opts)
+
+        -- Create some toggle mappings
+        Snacks.toggle.option("spell", { name = "spelling" }):map("<leader>us")
+        Snacks.toggle.option("wrap", { name = "wrap" }):map("<leader>uw")
+
+        Snacks.toggle.diagnostics({ name = "diagnostics" }):map("<leader>ud")
+        Snacks.toggle.inlay_hints({ name = "inlay hints" }):map("<leader>uh")
+        Snacks.toggle.indent():map("<leader>ug")
+        Snacks.toggle.dim():map("<leader>uz")
+
+        -- for when I'm sharing screen, is useful to have a crosshair
+        Snacks.toggle.option("cursorline", { name = "cursorline" }):map("<leader>ul")
+        Snacks.toggle.option("cursorcolumn", { name = "cursorcolumn" }):map("<leader>uc")
     end,
 }

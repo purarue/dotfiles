@@ -27,17 +27,6 @@ return {
                     up = "<M-k>",
                 },
             })
-            local wk = require("which-key")
-            wk.add({
-                {
-                    "<leader>z",
-                    function()
-                        require("mini.misc").zoom()
-                    end,
-                    desc = "zoom",
-                    icon = "",
-                },
-            })
         end,
     },
     -- this is split so that we can lazy load on filetype effectively

@@ -3,9 +3,9 @@
 local M = {}
 
 ---@class (exact) RemsyncOpts
----@field number_lines boolean
----@field sync boolean
----@field no_relative_lines boolean
+---@field sync boolean instead of generating html, just run remsync
+---@field number_lines boolean include number lines in the html output
+---@field no_relative_lines boolean disable relative line numbers in the html output
 
 ---@param opts RemsyncOpts
 function M.tohtml(opts)
@@ -28,11 +28,8 @@ function M.tohtml(opts)
     local html = require("tohtml").tohtml(nil, {
         title = basename,
         number_lines = opts.number_lines,
-        width = 100,
     })
-    if opts.no_relative_lines then
-        vim.opt.relativenumber = old_rel
-    end
+    vim.opt.relativenumber = old_rel
     vim.fn.writefile(html, outfile)
     local job = require("plenary.job"):new({
         command = "remsync",
@@ -62,7 +59,8 @@ function M.complete_no_duplicates(flags)
                 if opt:find(ArgLead) == 1 then
                     return opt
                 end
-            end):totable() or flags
+            end)
+            :totable() or flags
     end
 end
 

@@ -58,7 +58,7 @@ button:hover {
 }
 
 #workspaces button.focused {
-	background-color: #34495e;
+  background-color: #34495e;
 }
 
 #submap {
