@@ -202,6 +202,19 @@ sn() {
 		fi
 	}
 }
+se() {
+	local tf
+	if [[ -z "$TTALLY_FILTERS" ]] || grep -q '|' <<<"$TTALLY_FILTERS"; then
+		echo 'TTALLY_FILTERS is not set or has multiple filters, skipping sync' >&2
+		return 1
+	fi
+	tf="$(mktemp)" || return $?
+	jq --null-input --arg TIMESTAMP "$(epoch)" --arg FILTER "$(upper <<<"$TTALLY_FILTERS")" '[{"when": $TIMESTAMP, "what": $FILTER}]' | tee "$tf" | jq '.[] | .what' -r | surround "'" | prefix 'added ' && \
+		python3 -m ttally from-json self --file "${tf}" && \
+		vps_sync_ttally
+	command rm -f "$tf"
+}
+
 rs() {
 	reminder-sink-silence && {
 		tail -n1 "$(reminder-sink silence file)" | grep -qiE "$TTALLY_FILTERS" && vps_sync_ttally || true
