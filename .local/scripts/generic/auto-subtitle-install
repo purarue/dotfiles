@@ -9,7 +9,7 @@
 # openai-whisper
 set -ex
 if [[ -z "$PYENV_ROOT" ]]; then
-	echo "PYENV_ROOT not set" >&2
+	echo "PYENV_ROOT not set, install/configure https://github.com/pyenv/pyenv" >&2
 	exit 1
 fi
 PYTHON_VER="3.11.9"
