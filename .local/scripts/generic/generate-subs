@@ -20,7 +20,7 @@ process_file() {
 	srt_path="${full_path%.*}.srt"
 	if [[ ! -f "$srt_path" ]]; then
 		echo "Generating subtitles for $full_path" >&2
-		auto_subtitle --srt_only true "$full_path" --model medium.en || {
+		auto_subtitle --task transcribe --language en --srt_only true "$full_path" --model large-v3-turbo || {
 			echo "Failed to generate subtitles for $file" >&2
 			rm -f "$srt_path"
 		}

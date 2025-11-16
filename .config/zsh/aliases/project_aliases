@@ -214,6 +214,7 @@ se() {
 		vps_sync_ttally
 	command rm -f "$tf"
 }
+abbrev-alias es=se
 
 rs() {
 	reminder-sink-silence && {

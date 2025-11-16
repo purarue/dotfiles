@@ -102,15 +102,15 @@ alias ft='todo full'
 alias ti='todo interactive'
 alias td='todo edit'
 
-alias ghd='gh dash'
-alias rr='rifle'
+abbrev-alias ghd='gh dash'
+abbrev-alias rr='rifle'
 alias optipng='optipng -o5'
 alias R=ranger
 alias nr='neomuttr'
 urban() {
 	udict "$@" | less
 }
-alias xxd='hexyl'
+abbrev-alias xxd='hexyl'
 alias calc='ipython3 --profile=calculator'
 alias XMODMAP-RESET='xmodmap-reset' # in case Im stuck in capslock
 alias 'countdown=termdown'
@@ -136,10 +136,10 @@ esac
 alias d="kitten diff"
 
 # background jobs
-alias sctl='super --ctl'
-alias sc=sctl
+abbrev-alias sctl='super --ctl'
+abbrev-alias sc=sctl
 alias sclp=server_clipboard
-alias slogs='super --logs'
+abbrev-alias slogs='super --logs'
 
 # custom non-standard stuff
 # shorthand for reverse of https://purarue.xyz/d/star?dark
