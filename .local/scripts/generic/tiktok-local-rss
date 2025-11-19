@@ -49,7 +49,7 @@ def download_user(name: str) -> None:
     ydl_opts = {
         "quiet": False,
         "no_warnings": False,
-        "outtmpl": os.path.join(userfile.parent, "%(id)s-%(title)s.mp4"),
+        "outtmpl": os.path.join(userfile.parent, "%(id)s.mp4"),
         "playlistend": DOWNLOAD_RECENT,
         "download_archive": userfile.parent / "downloaded.txt",
         "lazy_playlist": True,
