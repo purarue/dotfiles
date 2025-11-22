@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 contents="$(cat "$HOME/.config/newsraft/feeds")"
-usernames="$(cat "$XDG_DOCUMENTS_DIR/tiktok.txt")"
+usernames="$(spkglist "$XDG_DOCUMENTS_DIR/tiktok.txt")"
 
 while read -r line; do
 	if grep -q "rss/${line}.xml " <<<"$contents"; then

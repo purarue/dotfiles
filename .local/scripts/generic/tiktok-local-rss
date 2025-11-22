@@ -49,7 +49,7 @@ def download_user(name: str) -> None:
     ydl_opts = {
         "quiet": False,
         "no_warnings": False,
-        "outtmpl": os.path.join(userfile.parent, "%(id)s.mp4"),
+        "outtmpl": os.path.join(userfile.parent, "%(id)s-%(title)s.mp4"),
         "playlistend": DOWNLOAD_RECENT,
         "download_archive": userfile.parent / "downloaded.txt",
         "lazy_playlist": True,
@@ -153,7 +153,12 @@ for user in users_file.read_text().splitlines():
 
 
 def generate_rss_file(user: str, rss_dir: Path) -> None:
-    assert (filedir / user / "downloaded.txt").exists()
+    downloaded = filedir / user / "downloaded.txt"
+    if not downloaded.exists():
+        click.echo(
+            f"no downloaded videos for {user}, skipping RSS generation", err=True
+        )
+        return
     feed = FeedGenerator()
     feed.id(user)
     feed.title(f"TikTok Local: {user}")
