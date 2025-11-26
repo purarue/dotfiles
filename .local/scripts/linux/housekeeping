@@ -105,8 +105,8 @@ backup-cubing
 
 # remove redundant backups, merge browser/mpv history
 # https://github.com/purarue/bleanser
-evry 1 week -merge-browser-history && merge-browser-history
-evry 1 week -merge-mpv-history && merge-mpv-history
+evry 1 week -merge-browser-history && flock ~/.cache/merge-history-browser merge-browser-history
+evry 1 week -merge-mpv-history && flock ~/.cache/merge-history-mpv merge-mpv-history
 evry 1 month -dedupe-ghexport && dedupe-ghexport --move-files
 
 # https://github.com/purarue/HPI-personal/blob/master/scripts/mpv_clean_priv_frames
