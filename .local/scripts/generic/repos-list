@@ -9,7 +9,10 @@ stars() {
 
 mine() {
 	local file="$REPOS/projects/cache.json"
-	[[ -e "$file" ]] || return
+	if [[ ! -e "$file" ]]; then
+		echo "No cache file found at $file" >&2
+		return 0
+	fi
 	jq -r '.[] | .html_url' <"$file"
 }
 
