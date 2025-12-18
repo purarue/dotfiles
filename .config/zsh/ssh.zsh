@@ -8,7 +8,7 @@ if [[ ! -S "$SHARED_AUTH_SOCK" ]]; then
 	ssh-add -l >/dev/null || {
 		for ssh_key in "${HOME}/.ssh/id_rsa" "${HOME}/.ssh/id_ed25519"; do
 			if [[ -e "$ssh_key" ]]; then
-				ssh-add "$ssh_key"
+				ssh-add "$ssh_key" 2>&1 | sed -e "s|$oname|user|g"
 			else
 				printf "Key doesn't exist: %s\n" "$ssh_key"
 			fi

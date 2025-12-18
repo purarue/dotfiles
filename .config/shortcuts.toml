@@ -941,3 +941,15 @@ command = 'exec exiftool -all:all= -r "$@"'
 
 [img-auto-orient]
 command = 'exec mogrify -auto-orient "$@"'
+
+[largechar-wifi-password]
+
+command = '''
+pw="$(nmcli device wifi show-password | grep '^Password' | sed 's/Password: //')"
+if [ -z "$pw" ]; then
+	echo "No wifi password found" >&2
+	exit 1
+else
+	exec largechar "$(nmcli device wifi show-password | grep '^Password' | sed 's/Password: //')" -c
+fi
+'''
