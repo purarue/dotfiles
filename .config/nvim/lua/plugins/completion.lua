@@ -42,10 +42,6 @@ return {
     "Saghen/blink.cmp",
     dependencies = {
         {
-            "fang2hou/blink-copilot",
-            lazy = true,
-        },
-        {
             "nvim-tree/nvim-web-devicons",
             lazy = true,
         },
@@ -55,7 +51,6 @@ return {
             --- NOTE: no setup types
             opts = {
                 symbol_map = {
-                    Copilot = "󰚩",
                     Snippet = "",
                 },
             },
@@ -141,7 +136,7 @@ return {
         -- Default list of enabled providers defined so that you can extend it
         -- elsewhere in your config, without redefining it, due to `opts_extend`
         sources = {
-            default = { "copilot", "lsp", "path", "snippets", "buffer" },
+            default = { "lsp", "path", "snippets", "buffer" },
             per_filetype = {
                 lua = {
                     inherit_defaults = true,
@@ -153,16 +148,6 @@ return {
                     name = "lazydev",
                     module = "lazydev.integrations.blink",
                     score_offset = 150, -- higher prio
-                },
-                copilot = {
-                    name = "copilot",
-                    module = "blink-copilot",
-                    score_offset = 100,
-                    async = true,
-                    opts = {
-                        max_completions = 3,
-                        max_attempts = 2,
-                    },
                 },
             },
         },
