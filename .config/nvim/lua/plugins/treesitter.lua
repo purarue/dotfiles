@@ -115,7 +115,7 @@ return {
 
             -- if there are any missing parsers, install them
             if #install > 0 then
-                TS.install(install, { summary = true }):await(function()
+                TS.install(install, { summary = false }):await(function()
                     -- refresh installed languages
                     installed = TS.get_installed("parsers")
                 end)
