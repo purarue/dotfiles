@@ -384,11 +384,11 @@ wca-local() {
 
 # https://github.com/purarue/scramble-history
 cube-event-descriptions() {
-	scramble_history merge -a json | jq '.[].event_description' -r | unique
+	python3 -m scramble_history merge -a json | jq '.[].event_description' -r | unique
 }
-alias _cube-stats-merge='scramble_history merge -g event_description -a stats "$@"'
+alias _cube-stats-merge='python3 -m scramble_history merge -g event_description -a stats "$@"'
 cube-stats() {
-	_cube-stats-merge -q 'event_description?=["3x3", "3x3 OH", "2x2", "4x4", "5x5"]' "$@"
+	_cube-stats-merge -q 'event_description?=["3x3", "3x3 OH", "2x2", "4x4"]' "$@"
 }
 alias cube-stats-graphs='cube-stats -G'
 alias cube-stats-all=_cube-stats-merge

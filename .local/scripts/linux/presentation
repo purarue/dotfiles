@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+super --ctl 'stop bgproc'
+pkill launch-waybar
+pkill waybar

@@ -22,6 +22,7 @@ return {
                 javascriptreact = { "prettierd", "eslint_d" },
                 typescriptreact = { "prettierd", "eslint_d" },
                 markdown = { "prettierd", "injected" },
+                caddyfile = { "caddy_fmt" },
                 scss = { "prettierd" },
                 yaml = { "prettierd" },
                 css = { "prettierd" },
@@ -63,6 +64,11 @@ return {
                 },
                 eslint_d = {
                     timeout_ms = 5000,
+                },
+                caddy_fmt = {
+                    command = "caddy",
+                    args = { "fmt" },
+                    stdin = true,
                 },
                 setup_cfg = {
                     command = "setup-cfg-fmt-tempfile",
