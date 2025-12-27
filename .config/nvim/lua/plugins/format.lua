@@ -22,7 +22,7 @@ return {
                 javascriptreact = { "prettierd", "eslint_d" },
                 typescriptreact = { "prettierd", "eslint_d" },
                 markdown = { "prettierd", "injected" },
-                caddyfile = { "caddy_fmt" },
+                caddy = { "caddy_fmt" },
                 scss = { "prettierd" },
                 yaml = { "prettierd" },
                 css = { "prettierd" },
