@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+set -eu
+input="$1"
+output="$2"
+exec magick -define jpeg:size=720x "$input" -auto-orient -thumbnail 720x -unsharp 0x.5 "$output"

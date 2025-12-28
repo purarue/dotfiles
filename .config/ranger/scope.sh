@@ -80,13 +80,19 @@ if [ "$preview_images" = "True" ]; then
 		# remove extension and replace with 'JPG', try to preview
 		maybe_jpg="${path%.*}.JPG"
 		if [[ -f "$maybe_jpg" ]]; then
-			cp "$maybe_jpg" "$cached" && exit 6 || exit 1
+			thumbnail-img "$maybe_jpg" "$cached" && exit 6 || exit 1
 		else
 			pistol_or_exifinfo
 		fi
 		;;
 	image/*)
-		exit 7
+		size="$(du "$path" | cut -f1)"
+		# if over 3MB, then cache the image
+		if ((size > 3000)); then
+			thumbnail-img "$path" "$cached" && exit 6 || exit 1
+		else
+			exit 7
+		fi
 		;;
 		# Image preview for video, disabled by default.:
 	video/*)
