@@ -87,8 +87,8 @@ if [ "$preview_images" = "True" ]; then
 		;;
 	image/*)
 		size="$(du "$path" | cut -f1)"
-		# if over 3MB, then cache the image
-		if ((size > 3000)); then
+		# if over 2MB, then cache the image
+		if ((size > 2000)); then
 			thumbnail-img "$path" "$cached" && exit 6 || exit 1
 		else
 			exit 7

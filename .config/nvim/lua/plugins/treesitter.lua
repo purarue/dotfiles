@@ -1,4 +1,3 @@
-
 ---@class (exact) TreesitterConfig
 ---@field ensure_installed string[] list of parser names
 ---@field ft_to_treesitter table<string, string> map filetypes to treesitter parser names
@@ -113,13 +112,13 @@ return {
                 return not vim.tbl_contains(installed, lang)
             end, opts.ensure_installed)
 
-            -- if there are any missing parsers, install them
-            if #install > 0 then
+            vim.api.nvim_create_user_command("TSInstall", function()
                 TS.install(install, { summary = true }):await(function()
-                    -- refresh installed languages
                     installed = TS.get_installed("parsers")
                 end)
-            end
+            end, {
+                desc = "Install any missing parsers",
+            })
 
             -- enable treesitter highlighting
             vim.api.nvim_create_autocmd("FileType", {

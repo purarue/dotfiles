@@ -37,6 +37,7 @@ abbrev-alias ysu='yadm status -u'
 alias ya='yadm add' # no abbrev because slow autocompletion
 abbrev-alias yA='yadm add --all'
 abbrev-alias yc='yadm commit'
+abbrev-alias 'yc!=yadm commit --amend'
 abbrev-alias yp='yadm push'
 abbrev-alias yl='yadm pull --recurse-submodules'
 abbrev-alias yrh='yadm reset'
