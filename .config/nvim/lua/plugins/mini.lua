@@ -17,7 +17,7 @@ return {
             -- - sr)'  - [S]urround [R]eplace [)] [']
             require("mini.surround").setup()
             -- automatically change buffer cwd to the root of the project (vim-rooter-esque)
-            require("mini.misc").setup_auto_root({ ".git", "Makefile", "stylua.toml" })
+            require("mini.misc").setup_auto_root({ ".git", "Makefile", "stylua.toml", ".project_root" })
             -- move visual selection in Visual mode
             require("mini.move").setup({
                 mappings = {
