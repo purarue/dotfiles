@@ -51,7 +51,7 @@ ${PATH}"
 
 # defaults, some of these are overwrriten in the case below
 XDG_MUSIC_DIR="${HOME}/Music"
-BROWSER='floorp'
+BROWSER='qutebrowser'
 
 if hash on_machine; then
 	ON_OS="$(on_machine)"
