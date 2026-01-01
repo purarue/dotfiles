@@ -211,7 +211,6 @@ zsh-syntax-highlighting
 
 chromedriver
 digikam
-floorp
 qutebrowser
 gimp
 google-chrome
