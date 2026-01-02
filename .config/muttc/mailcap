@@ -2,8 +2,7 @@
 # most of these just forward to rifle, my file manager
 # for config see https://github.com/purarue/dotfiles/blob/master/.config/ranger/rifle.conf
 text/plain; rifle %s ;
-text/html; rifle %s ; nametemplate=%s.html
-text/html; qutebrowser %s; needsterminal; nametemplate=%s.html
+text/html; setsid -f ttt qutebrowser -R --temp-basedir --target private-window -s content.javascript.enabled false -s content.local_content_can_access_file_urls true -s content.local_content_can_access_remote_urls true %s; nametemplate=%s.html
 text/html; ttt lynx -assume_charset=%{charset} -display_charset=utf-8 -dump %s; nametemplate=%s.html; copiousoutput;
 text/csv; rifle %s ;
 image/*; rifle %s ;
