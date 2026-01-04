@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+port="${1?:pass port to watch}"
+port_pattern="$(printf ':%d\>' "$port")"
+while true; do
+	found="$(netstat -tna | grep 'LISTEN\>' | grep "$port_pattern")"
+	if [[ -n "$found" ]]; then
+		exit 0
+	fi
+	sleep 0.1
+done
