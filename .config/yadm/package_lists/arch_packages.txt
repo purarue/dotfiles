@@ -212,6 +212,7 @@ zsh-syntax-highlighting
 chromedriver
 digikam
 qutebrowser
+python-adblock
 gimp
 google-chrome
 gpxsee

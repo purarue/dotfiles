@@ -64,10 +64,10 @@ end
 vim.o.laststatus = 3
 
 -- transparency/windows
-vim.o.pumblend = 10
-vim.o.winblend = 10
-vim.o.pumheight = 10
-vim.o.winborder = "rounded"
+-- vim.o.pumblend = 10
+-- vim.o.winblend = 10
+-- vim.o.pumheight = 10
+-- vim.o.winborder = "rounded"
 
 -- searching
 vim.o.ignorecase = true
