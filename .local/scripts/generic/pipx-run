@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# A script runner which parses inline script metadata!
+# run `python3 -m pip install pipx` beforehand, and then
+# you can use inline script metadata:
+# https://packaging.python.org/en/latest/specifications/inline-script-metadata/#inline-script-metadata
+# to specify your dependencies
+declare script="${1?:Pass script as first argument}"
+declare path
+if [[ -f "$script" ]]; then
+	path="$script"
+else
+	path="$(which "$script")" || exit 1
+fi
+shift
+exec python3 -m pipx run --path "$path" "$@"

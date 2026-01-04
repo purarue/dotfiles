@@ -114,7 +114,6 @@ alias albums-mu-japan-desc='albums-mu-japan | albums-describe'
 alias albums-manual='hpi query my.nextalbums.reason_manual -s'
 alias albums-manual-desc='albums-manual | albums-describe'
 
-
 # https://github.com/purarue/HPI
 source_if_exists "${REPOS}/HPI/scripts/functions.sh"
 source_if_exists "${REPOS}/HPI-personal/scripts/functions.sh"
@@ -226,8 +225,8 @@ se() {
 		return 1
 	fi
 	tf="$(mktemp)" || return $?
-	jq --null-input --arg TIMESTAMP "$(epoch)" --arg FILTER "$(upper <<<"$TTALLY_FILTERS")" '[{"when": $TIMESTAMP, "what": $FILTER}]' | tee "$tf" | jq '.[] | .what' -r | surround "'" | prefix 'added ' && \
-		python3 -m ttally from-json self --file "${tf}" && \
+	jq --null-input --arg TIMESTAMP "$(epoch)" --arg FILTER "$(upper <<<"$TTALLY_FILTERS")" '[{"when": $TIMESTAMP, "what": $FILTER}]' | tee "$tf" | jq '.[] | .what' -r | surround "'" | prefix 'added ' &&
+		python3 -m ttally from-json self --file "${tf}" &&
 		vps_sync_ttally
 	command rm -f "$tf"
 }
