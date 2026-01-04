@@ -4,6 +4,8 @@
 # you can use inline script metadata:
 # https://packaging.python.org/en/latest/specifications/inline-script-metadata/#inline-script-metadata
 # to specify your dependencies
+#
+# this saves a virtualenv to an virtualenv in ~/.cache/pipx/
 declare script="${1?:Pass script as first argument}"
 declare path
 if [[ -f "$script" ]]; then
