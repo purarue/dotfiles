@@ -98,6 +98,23 @@ albums-add() {
 }
 abbrev-alias albums-rate='nextalbums mark-listened'
 
+# filters
+alias albums-recommended='hpi query my.nextalbums.reason_recommendation -s'
+alias albums-recommended-desc='albums-recommended | albums-describe'
+
+alias albums-relation='hpi query my.nextalbums.reason_relation -s'
+alias albums-relation-desc='albums-relation | albums-describe'
+
+alias albums-fantano='hpi query my.nextalbums.reason_fantano -s'
+alias albums-fantano-desc='albums-fantano | albums-describe'
+
+alias albums-mu-japan='hpi query my.nextalbums.reason_mu_reason_japan -s'
+alias albums-mu-japan-desc='albums-mu-japan | albums-describe'
+
+alias albums-manual='hpi query my.nextalbums.reason_manual -s'
+alias albums-manual-desc='albums-manual | albums-describe'
+
+
 # https://github.com/purarue/HPI
 source_if_exists "${REPOS}/HPI/scripts/functions.sh"
 source_if_exists "${REPOS}/HPI-personal/scripts/functions.sh"

@@ -1,0 +1,60 @@
+#!/usr/bin/env zsh
+journal() {
+	cd "$XDG_DOCUMENTS_DIR/Notes/journal/" || return $?
+	ranger
+}
+
+journal-public() {
+	cd "$REPOS/exobrain" || return $?
+	./scripts/journal-public "${1:-$(epoch)}"
+}
+
+journal-md() {
+	local chosen
+	case "$(echo 'private\npublic\nedit-last' | fzf)"; in
+		private) journal-new ;;
+		public)
+			"$REPOS/exobrain/scripts/journal-public" "$*" && {
+				cd "$REPOS/exobrain"
+				git status
+			}
+			;;
+		edit-last) journal-last ;;
+		*) return 1 ;;
+	esac
+}
+
+journal-new() {
+	local target
+	local default_dir="${XDG_DOCUMENTS_DIR}/Notes/journal"
+	if [[ -n "$1" ]]; then
+		if [[ -d "$1" ]]; then
+			default_dir="$1"
+		else
+			printf '%s does not exist\n' "$1"
+			return 1
+		fi
+	fi
+	cd "$default_dir" || return
+	target="$(daystamp_).md"
+	if [[ ! -f "$target" ]]; then
+		{
+			date
+			printf '\n\n'
+		} >"$target"
+	fi
+	editor "$target"
+}
+
+journal-last() {
+	local target
+	cd "${XDG_DOCUMENTS_DIR}/Notes/journal" || return
+	target="$(find -type f | sort -n | tail -n 1)" || return
+	editor "$target"
+}
+
+# quick note for something I should write about more later
+journal-idea() {
+	journal-new "$XDG_DOCUMENTS_DIR/Notes/journal_ideas"
+}
+
