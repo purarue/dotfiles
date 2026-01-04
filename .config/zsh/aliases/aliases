@@ -119,6 +119,7 @@ alias 'countdown=termdown'
 alias cl='clipcopy'
 alias 'ml=mailsync-loop'
 alias 'confirm=fzf --multi'
+alias color-picker='hyprpicker'
 alias 'up=TERM=xterm up'
 alias screens='cd $SCREENSHOTS'
 
