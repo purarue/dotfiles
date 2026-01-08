@@ -185,6 +185,7 @@ viddy
 vim
 wget
 whatmp3
+xh
 yadm
 yq
 zip
