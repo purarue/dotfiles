@@ -2525,7 +2525,7 @@ config.bind("x", "tab-close")
 # config.bind('n', 'prompt-accept no', mode='yesno')
 # config.bind('y', 'prompt-accept yes', mode='yesno')
 
-PASSTHROUGH_PATTERNS = ["localhost:5006", "discord.com"]
+PASSTHROUGH_PATTERNS = ["localhost:5006"]
 
 # passthrough for certain websites
 for pat in PASSTHROUGH_PATTERNS:
