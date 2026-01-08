@@ -2,7 +2,7 @@
 # sync photos from the syncthing directory to my $XDG_PICTURES_DIR
 # dcim-auto-rotate is a script that rotates images based on EXIF data
 
-evry 5 minutes -copy_images && {
+evry 5 minutes -copy_phone_photos_images_rotate && {
 	dcim-auto-rotate # bake in rotations for images taken in the last 2 weeks
 	dcim-auto-rotate "$HOME/Shared/photo-doc/"
 	rsync -Pavh --exclude=".*" "$HOME/.local/share/PhoneCamera/" "${XDG_PICTURES_DIR}/phone_pictures" &&
