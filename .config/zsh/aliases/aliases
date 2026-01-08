@@ -23,6 +23,7 @@ alias ll='ls --header --long'
 alias la='ll --all'
 alias sl='ls'
 alias dc='cd' # never going to use the reverse-polish calculator, is *always* a typo
+alias ncdu='dua i'
 
 # https://github.com/neovim/neovim/issues/1808
 alias killall-nvim='killall -9 nvim'

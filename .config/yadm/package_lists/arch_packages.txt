@@ -97,12 +97,13 @@ dex
 dos2unix
 dragon-drop
 drive-bin
+dua-cli
 dust
 entr
 eza
+fastfetch
 fd
 feh
-fastfetch
 ffmpeg
 ffmpegthumbnailer
 figlet
