@@ -106,9 +106,9 @@ __pycache__
 /.dart-tool/
 /.degit
 /.dmrc
+/.dotnet
 /.electron-gyp
 /.elvish
-/.purple
 /.emacs.d/
 /.floorp
 /.gem
@@ -149,18 +149,18 @@ __pycache__
 /.nuget
 /.nvm
 /.oh-my-stars
+/.ollama
 /.opam
 /.openshot_qt/
 /.oracle_jre_usage/
 /.parallel
-/.ollama
 /.pki/nssdb
+/.pscale/
 /.psql_history
 /.pulse-cookie
+/.purple
 /.putty
 /.pylint.d/*
-/.dotnet
-/.templateengine
 /.python_history
 /.rbenv
 /.rnd
@@ -180,8 +180,10 @@ __pycache__
 /.subversion
 /.surf
 /.swipl-dir*
+/.templateengine
 /.terminfo
 /.thunderbird
+/.todo
 /.tool-versions
 /.tor-browser
 /.tox
@@ -207,13 +209,9 @@ __pycache__
 /.zoom
 
 # Top level config/local files to ignore
-.config/git/gitk
 /.config/*/zoom.conf
 /.config/3T
-/.config/Signal/
-/.config/ngrok/
 /.config/BraveSoftware/
-/.config/gh-copilot/
 /.config/Code - OSS/
 /.config/CrossCode
 /.config/Electron
@@ -222,14 +220,12 @@ __pycache__
 /.config/Microsoft/
 /.config/MongoDB Compass/
 /.config/Pinta
-/.config/bandcamp-dl.json
 /.config/Postman/
 /.config/QtProject.conf
-/.config/balenaEtcher/
+/.config/Signal/
 /.config/Slack
 /.config/StardewValley
 /.config/Thunar
-/.config/stripe
 /.config/UNDERTALE/
 /.config/Vampire_Survivors*
 /.config/VirtualBox/
@@ -237,16 +233,14 @@ __pycache__
 /.config/asciinema/
 /.config/astro
 /.config/audacity
-/.config/bolt-launcher/
 /.config/autostart
 /.config/balena-etcher
+/.config/balenaEtcher/
+/.config/baloofileinformationrc
+/.config/bandcamp-dl.json
+/.config/bolt-launcher/
 /.config/bookmark.txt/*
 /.config/brittany
-/.config/dolphinrc
-/.config/kde.org/
-/.config/hyfetch.json
-/.config/ksnip/
-/.config/session/
 /.config/cef_user_data
 /.config/chromium
 /.config/clojure
@@ -255,19 +249,22 @@ __pycache__
 /.config/configstore
 /.config/create-next-app-nodejs/
 /.config/czkawka
+/.config/darktable
 /.config/dconf
 /.config/digikam*
 /.config/digikam*
 /.config/discord
 /.config/discordcanary/
+/.config/dolphinrc
 /.config/enchant
-/.config/starter
 /.config/filezilla
 /.config/flameshot
 /.config/fontforge
+/.config/gh-copilot/
 /.config/gh/hosts.yml
 /.config/gh/state.yml
 /.config/giget
+/.config/git/gitk
 /.config/github-copilot/
 /.config/go/
 /.config/godot/
@@ -275,15 +272,18 @@ __pycache__
 /.config/gpxsee/
 /.config/gtk-*
 /.config/hub
+/.config/hyfetch.json
 /.config/imgur_uploader
 /.config/inkscape/
 /.config/kconf_updaterc
+/.config/kde.org/
 /.config/kdeglobals
 /.config/kdiff3rc
 /.config/keepassxc/keepassxc.ini
 /.config/kid3rc
 /.config/konsole*
 /.config/krita*
+/.config/ksnip/
 /.config/kwalletrc
 /.config/largechar
 /.config/lazygit
@@ -300,10 +300,10 @@ __pycache__
 /.config/newsboat/urls
 /.config/newsraft/feeds
 /.config/nextjs-nodejs
+/.config/ngrok/
 /.config/nvim/.netrwhist
 /.config/nvim/spell
 /.config/obs-studio
-/.config/darktable
 /.config/okularpartrc
 /.config/okularrc
 /.config/opera
@@ -311,6 +311,7 @@ __pycache__
 /.config/pulse
 /.config/ranger/plugins
 /.config/rncbc.org
+/.config/session/
 /.config/slack-term/
 /.config/snes9x
 /.config/snes9x
@@ -318,6 +319,8 @@ __pycache__
 /.config/sonic-pi.net/
 /.config/sops
 /.config/sqlitebrowser
+/.config/starter
+/.config/stripe
 /.config/syncplay*
 /.config/syncthing
 /.config/systemd/
@@ -337,8 +340,6 @@ __pycache__
 /.config/xfce4/
 /.config/zoom.conf
 /.config/zoomus.conf
-/.pscale/
-/.todo
 
 # exclusions to the .config ignores
 !/.config/todo/config
