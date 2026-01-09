@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 set -eo pipefail
 proj_name="${1?:pass project name}"
-json="$(xh --body -F https://pypi.org/simple/"${proj_name}" accept:application/vnd.pypi.simple.v1+json)" || exit $?
+json="$(xh --body --follow https://pypi.org/simple/"${proj_name}" accept:application/vnd.pypi.simple.v1+json)" || exit $?
 jq <<<"$json" '"\(.name)\t\(.versions[-1])\nLast Released: \(.files.[-1]["upload-time"])"' -r
