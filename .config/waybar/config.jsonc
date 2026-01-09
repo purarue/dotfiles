@@ -20,6 +20,7 @@
 		// "custom/todo",
 		"custom/mail",
 		"network",
+		"custom/vpn",
 		"battery",
 		"clock",
 		"tray"
@@ -152,6 +153,12 @@
 			"balanced": "",
 			"power-saver": ""
 		}
+	},
+	"custom/vpn": {
+		"format": " {}",
+		"exec": "b-vpn",
+		"interval": 10,
+		"signal": 8
 	},
 	"network": {
 		// "interface": "wlp2*", // (Optional) To force the use of this interface

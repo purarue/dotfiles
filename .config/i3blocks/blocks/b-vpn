@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+if [[ -f /tmp/vpn-status ]]; then
+	echo "VPN"
+else
+	echo
+fi
