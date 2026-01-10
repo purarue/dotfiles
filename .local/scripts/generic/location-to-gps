@@ -6,7 +6,7 @@ from geopy.geocoders import Nominatim  # type: ignore
 
 
 def get_lat_lon(query: typing.Sequence[str]) -> tuple[float, float]:
-    geolocator = Nominatim(user_agent="purarue.xyz/get_lat_lon")
+    geolocator = Nominatim(user_agent="https://purarue.xyz/d/location-to-gps")
     try:
         location = geolocator.geocode(" ".join(query))
         if location:
