@@ -36,3 +36,5 @@
   postinstall: git remote add upstream "https://github.com/karlicoss/promnesia"
 "https://github.com/purarue/promnesia":
   pip: install
+"https://github.com/purarue/dateq":
+  pip: install

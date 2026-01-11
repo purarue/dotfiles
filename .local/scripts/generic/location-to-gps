@@ -7,21 +7,21 @@ from geopy.geocoders import Nominatim  # type: ignore
 
 def get_lat_lon(query: typing.Sequence[str]) -> tuple[float, float]:
     geolocator = Nominatim(user_agent="https://purarue.xyz/d/location-to-gps")
-    try:
-        location = geolocator.geocode(" ".join(query))
-        if location:
-            return location.latitude, location.longitude
-        else:
-            raise Exception("couldnt fetch fetch")
-    except Exception as e:
-        return f"An error occurred: {e}"
+    location = geolocator.geocode(" ".join(query))
+    if location:
+        return location.latitude, location.longitude
+    else:
+        raise Exception("couldn't fetch location")
 
 
 @click.command()
 @click.argument("QUERY", nargs=-1)
 def main(query) -> None:
-    res = get_lat_lon(query)
-    click.echo(res)
+    try:
+        lat, lon = get_lat_lon(query)
+    except Exception as e:
+        click.Abort(str(e))
+    click.echo(f"{lat},{lon}")
 
 
 if __name__ == "__main__":

@@ -2,6 +2,9 @@
 
 Pygments
 black
+srt
+pysrt
+flake8
 codespell
 exifread
 feedgen
@@ -12,7 +15,6 @@ idna
 ipdb
 ipython
 jinjanator
-mlength
 phonenumbers
 pip
 pipenv

@@ -157,7 +157,7 @@ primesieve
 pulsemixer
 pup
 qrencode
-ranger-git
+ranger
 ripgrep
 rlwrap
 rofi
