@@ -38,3 +38,5 @@
   pip: install
 "https://github.com/purarue/dateq":
   pip: install
+"https://github.com/purarue/mlength":
+  pip: install
