@@ -10,6 +10,8 @@
 # so it'll prompt me when I next do that
 export MY_FEED_BG=1
 
+at-home && exit 0
+
 wait-for-internet -q --timeout "${WFI_TIMEOUT:-10}" || exit 0
 
 evry 3 hours -my-feed-index-bg && {

@@ -17,6 +17,7 @@ ipython
 jinjanator
 phonenumbers
 pip
+mistletoe
 pipenv
 pipx
 platformdirs
