@@ -60,6 +60,7 @@ DISABLED_MODULES = [
     "my.polar",
     "my.rtm",
     "my.media",
+    "my.pdfs",
     # ignore legacy google takeout modules
     r"my.google\.takeout.html",
     r"my.google\.takeout.paths",

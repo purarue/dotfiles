@@ -111,12 +111,24 @@ return {
                 return not vim.tbl_contains(installed, lang)
             end, opts.ensure_installed)
 
-            vim.api.nvim_create_user_command("TSInstall", function()
-                TS.install(install, { summary = true }):await(function()
-                    installed = TS.get_installed("parsers")
-                end)
+            vim.api.nvim_create_user_command("TSInstallBase", function()
+                if vim.tbl_count(install) == 0 then
+                    vim.notify("All parsers have been installed!")
+                else
+                    vim.notify("Installing " .. vim.inspect(install))
+                    TS.install(install, { summary = true }):await(function()
+                        installed = TS.get_installed("parsers")
+                    end)
+                end
             end, {
                 desc = "Install any missing parsers",
+            })
+
+            vim.api.nvim_create_user_command("TSInstall", function(cmd_opts)
+                TS.install(cmd_opts.args, { summary = true })
+            end, {
+                nargs = 1,
+                desc = "Install a specific parser",
             })
 
             -- enable treesitter highlighting
