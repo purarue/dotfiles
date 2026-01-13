@@ -23,7 +23,7 @@ case "$1" in
 file://*)
 	rifle "${1#file://}"
 	;;
-*mkv | *webm | *mp4 | *youtube.com/watch* | *youtube.com/playlist* | *youtu.be*)
+*mkv | *webm | *mp4 | *youtube.com/watch* | *youtube.com/shorts* | *youtube.com/playlist* | *youtu.be*)
 	# a mpv, wrapper that plays videos picture-in-picture
 	# set the CLIPBOARD_CONTENTS envvar, else stream-corner grabs it from my clipboard
 	export CLIPBOARD_CONTENTS="$1"
