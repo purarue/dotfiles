@@ -28,7 +28,7 @@ file://*)
 	# set the CLIPBOARD_CONTENTS envvar, else stream-corner grabs it from my clipboard
 	export CLIPBOARD_CONTENTS="$1"
 	shift # remove url, pass any additional arguments to stream-corner
-	setsid -f stream-corner-480 "$@" >/dev/null 2>&1
+	setsid -f stream-corner-720 "$@" >/dev/null 2>&1
 	;;
 *png | *jpg | *jpe | *jpeg | *gif)
 	fname="$(echo "$1" | sed "s/.*\///")"
