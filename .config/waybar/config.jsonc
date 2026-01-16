@@ -204,7 +204,7 @@
 		"format": "{}",
 		"exec": "b-mail",
 		"interval": 600,
-		"on-click": "launch neomutt",
+		"on-click": "launch neomuttr",
 		"signal": 3
 	},
 	"custom/reminder-sink": {
