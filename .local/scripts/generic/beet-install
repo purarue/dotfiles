@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 pipx install beets --python ~/.local/share/pyenv/versions/3.12.8/bin/python
 pipx inject beets beets-filetote
 pipx inject beets discogs_client
