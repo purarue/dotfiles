@@ -234,7 +234,8 @@ bindsym $mod+Shift+d exec notify-send -t 15000 "$(sway-launcher)"; mode "launche
 
 mode "launcher" {
     bindsym a exec ttt kitty; mode "default";
-    bindsym f exec ttt qutebrowser; mode "default";
+    bindsym f exec ttt floorp; mode "default";
+    bindsym q exec ttt qutebrowser; mode "default";
     bindsym d exec ttt discord-browser; mode "default";
     bindsym k exec ttt keepassxc; mode "default";
     bindsym b exec bookmark-open; mode "default";
