@@ -1,4 +1,10 @@
 #!/usr/bin/env python
+# /// script
+# requires-python = ">=3.14"
+# dependencies = [
+#     "click>=8.3.1",
+# ]
+# ///
 
 """
 Cleans up the Google Contacts CSV export and extracts the Name, E-mail and Phone

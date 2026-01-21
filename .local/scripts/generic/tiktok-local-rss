@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.14"
+# dependencies = [
+#     "feedgen>=1.0.0",
+#     "mlength",
+#     "platformdirs>=4.5.1",
+#     "yt-dlp>=2025.12.8",
+#     "mlength",
+# ]
+# ///
+
 # uses yt-dlp to download recent tiktoks from
 # specific users
 #

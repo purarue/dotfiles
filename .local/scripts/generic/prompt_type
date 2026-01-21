@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.14"
+# dependencies = [
+#     "click>=8.3.1",
+# ]
+# ///
 
 """
 A basic script that prompts the user for a type, optionally coercing it to a type

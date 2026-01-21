@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.14"
+# dependencies = [
+#     "pyautogui>=0.9.54",
+# ]
+# ///
+
 # automatically click the 'save in password manager' and 'ok' buttons for the gpg dialog
 # see ~/.local/share/gpg_autoclick
 

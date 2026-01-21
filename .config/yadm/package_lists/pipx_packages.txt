@@ -6,7 +6,8 @@ csvkit
 cube-scramble-cli
 currencyconverter
 diceware
-eyeD3
+eyed3
+pip-tools
 greasyfork-archive
 pypyp
 setup-cfg-fmt
@@ -16,3 +17,5 @@ termdown
 termgraph
 time-in
 urlscan
+sigal
+pypistats

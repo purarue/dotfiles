@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.14"
+# dependencies = [
+#     "click>=8.3.1",
+#     "pyautogui>=0.9.54",
+# ]
+# ///
 
 import time
 

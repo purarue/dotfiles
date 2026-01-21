@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.14"
+# dependencies = [
+#     "jsonc-parser>=1.1.5",
+# ]
+# ///
 
 import os
 from jsonc_parser.parser import JsoncParser
