@@ -30,6 +30,7 @@ HPIDATA="${HOME}/data"
 
 # common path modifications
 export PATH="\
+${XDG_DATA_HOME}/pipx_isolate/bin:\
 ${XDG_DATA_HOME}/basher/cellar/bin:\
 ${REPOS}/personal/bin:\
 ${HPIDATA}/bin:\
