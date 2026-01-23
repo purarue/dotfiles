@@ -1,0 +1,2 @@
+#!/bin/sh
+rg --files-with-matches -e '/// script' | xargs -I{} sh -c "test -x {} && echo {}"

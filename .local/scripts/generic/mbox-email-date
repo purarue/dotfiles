@@ -1,4 +1,18 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.14"
+# dependencies = [
+#     "click>=8.3.1",
+#     "dateparser>=1.2.2",
+#     "hpi-purarue>=0.1.0",
+#     "hpi[optional]>=0.7.20250911",
+#     "mail-parser>=4.1.4",
+# ]
+# ///
+
+"""
+Print timestamps for all the messages in a MBOX file
+"""
 
 
 import sys
@@ -11,16 +25,18 @@ import click
 from my.mail.mbox import _iter_mailbox
 
 
-@click.command()
+@click.command(help=__doc__)
 @click.option(
     "--format",
     default="%s",
     help="Date output format",
 )
-@click.argument("FILE", type=click.Path(exists=True, dir_okay=False, path_type=Path))
-def main(format: str, file: Path) -> None:
+@click.argument(
+    "MBOX_FILE", type=click.Path(exists=True, dir_okay=False, path_type=Path)
+)
+def main(format: str, mbox_file: Path) -> None:
     with NamedTemporaryFile() as temp_file:
-        shutil.copy(file, temp_file.name)
+        shutil.copy(mbox_file, temp_file.name)
         msgs = list(_iter_mailbox(Path(temp_file.name)))
         exit_code = 0
         for msg in msgs:
