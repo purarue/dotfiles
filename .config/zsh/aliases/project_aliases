@@ -182,22 +182,8 @@ source_if_exists -q "$REPOS/vps/functions.sh"
 alias twitchlive-table='twitchlive --output-format=table'
 bindkey -s '^[L' 'twitchlive-table\n'
 
-source_if_exists "$REPOS/exobrain/functions.sh"
-
 # https://github.com/purarue/exobrain
-exo() {
-	cd "$REPOS/exobrain" || return 1
-	./scripts/exo "$@"
-}
-exo-upload() {
-	local abspath
-	[[ -f "$1" ]] || {
-		echo 'not a file' >&2
-		return 1
-	}
-	abspath=$(realpath "$1")
-	(cd "$REPOS/exobrain" && ./scripts/exo-upload.py upload -t photography "$abspath")
-}
+source_if_exists "$REPOS/exobrain/functions.sh"
 
 # https://github.com/purarue/greasyfork_repo_generator
 alias greasyfork_generate='cd ${REPOS}/greasyfork_repo_generator && mix escript.build && greasyfork_archive 96096 --output-file scraped_data.json && ./greasyfork_repo_generator -j scraped_data.json --output-dir ../greasyfork --ignore-ids 37826 && cd ../greasyfork && git status'
