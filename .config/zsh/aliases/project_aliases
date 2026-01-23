@@ -182,6 +182,8 @@ source_if_exists -q "$REPOS/vps/functions.sh"
 alias twitchlive-table='twitchlive --output-format=table'
 bindkey -s '^[L' 'twitchlive-table\n'
 
+source_if_exists "$REPOS/exobrain/functions.sh"
+
 # https://github.com/purarue/exobrain
 exo() {
 	cd "$REPOS/exobrain" || return 1
@@ -417,3 +419,5 @@ cube-stats-for() {
 	echo "Running: scramble_history merge -g event_description -a stats -q 'event_description?=[\"${chosen}\"]'" >&2
 	scramble_history merge -g event_description -a stats -q "event_description?=[\"${chosen}\"]"
 }
+
+# vim: ft=bash
