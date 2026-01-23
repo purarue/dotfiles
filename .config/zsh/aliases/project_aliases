@@ -196,7 +196,6 @@ exo-upload() {
 	abspath=$(realpath "$1")
 	(cd "$REPOS/exobrain" && ./scripts/exo-upload.py upload -t photography "$abspath")
 }
-alias meam="$REPOS/exobrain/scripts/meam-add"
 
 # https://github.com/purarue/greasyfork_repo_generator
 alias greasyfork_generate='cd ${REPOS}/greasyfork_repo_generator && mix escript.build && greasyfork_archive 96096 --output-file scraped_data.json && ./greasyfork_repo_generator -j scraped_data.json --output-dir ../greasyfork --ignore-ids 37826 && cd ../greasyfork && git status'
