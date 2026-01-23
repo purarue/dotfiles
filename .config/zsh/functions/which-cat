@@ -8,7 +8,14 @@ function which-cat() {
 		# if the file is readable
 		if [[ -r "${COMMAND_OUTPUT}" ]]; then
 			if iconv --from-code="utf-8" --to-code="utf-8" "${COMMAND_OUTPUT}" >/dev/null 2>&1; then
-				command cat "${COMMAND_OUTPUT}"
+				# if in pipx_isolate bin, reroute to source script
+				if grep -q 'pipx_isolate/bin' "$COMMAND_OUTPUT"; then
+
+					COMMAND_OUTPUT="$(where "$USER_INPUT" | grep -v "pipx_isolate/bin" | head -n1)"
+					command cat "$COMMAND_OUTPUT"
+				else
+					command cat "$COMMAND_OUTPUT"
+				fi
 			elif gzip -t "${COMMAND_OUTPUT}" >/dev/null 2>&1; then
 				zcat "${COMMAND_OUTPUT}"
 			else
@@ -22,3 +29,5 @@ function which-cat() {
 		printf '%s\n' "${COMMAND_OUTPUT}" >&2
 	fi
 }
+
+# vim: ft=bash

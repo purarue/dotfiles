@@ -30,8 +30,6 @@ HPIDATA="${HOME}/data"
 
 # common path modifications
 export PATH="\
-${XDG_DATA_HOME}/pipx_isolate/bin:\
-${XDG_DATA_HOME}/basher/cellar/bin:\
 ${REPOS}/personal/bin:\
 ${HPIDATA}/bin:\
 ${REPOS}/vps/bin:\
@@ -91,6 +89,12 @@ windows*)
 	BROWSER='/mnt/c/Program Files/Mozilla Firefox/firefox.exe'
 	;;
 esac
+
+# some things which should be at the front of my $PATH after other modifications
+export PATH="\
+${XDG_DATA_HOME}/pipx_isolate/bin:\
+${XDG_DATA_HOME}/basher/cellar/bin:\
+$PATH"
 
 export HPIDATA BROWSER XDG_MUSIC_DIR PATH SCREENSHOTS XDG_DOWNLOAD_DIR XDG_DOCUMENTS_DIR XDG_PICTURES_DIR XDG_VIDEOS_DIR
 export PLAINTEXT_PLAYLIST_PLAYLISTS="${HPIDATA}/playlists"

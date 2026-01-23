@@ -293,10 +293,11 @@ exec mv -v "${FILE}" "./$1"
 [vic]
 command = '''
 EXECUTABLE="${1:?No Executable provided}"
-LOCATION="$(command -v "${EXECUTABLE}")" || exit $?
+LOCATION="$(where "${EXECUTABLE}" | grep -v "pipx_isolate/bin" | head -n1)" || exit $?
 cd "$(dirname "${LOCATION}")" || exit $?
 exec editor "$(basename "${LOCATION}")"
 '''
+shebang = "#!/bin/zsh"
 
 [list-config-no-hist]
 command = '''
