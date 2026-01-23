@@ -134,6 +134,8 @@ if [[ "$RUN_BACKUP" -eq 1 ]] && [[ "$DRIVE_CONNECTED" -eq 1 ]]; then
 	restic-backup backup
 fi
 
+evry 2 weeks -discord-download-attachments && discord-download-attachments
+
 # make sure my pythonanywhere website doesn't expire:
 # https://github.com/purarue/pythonanywhere-3-months
 evry 2 months -pythonanywhere && python3 -m pythonanywhere_3_months -c "$(which chromedriver)"
