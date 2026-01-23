@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # give this keys like:
-# "something here" and it turns into "something_her"
+# "words are here" and it turns into "words_are_here"
 # easier to process with jq
 set -eo pipefail
 gron | sed -E ':a; s/\["([^"]*)\s([^"]*)"/\["\1_\2"/g; ta' | gron -u
