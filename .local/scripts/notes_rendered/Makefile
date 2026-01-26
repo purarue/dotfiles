@@ -11,6 +11,8 @@ JOURNAL_FILES := $(shell find ${XDG_DOCUMENTS_DIR}/Notes/journal -name "*.md" | 
 JOURNAL_IDEAS_TARGET := $(shell echo "${XDG_DOCUMENTS_DIR}/NotesRendered/journal-ideas.html")
 JOURNAL_IDEAS_FILES := $(shell find ${XDG_DOCUMENTS_DIR}/Notes/journal_ideas -name "*.md" | sort -r)
 
+GALLERY_TARGET := $(shell echo "${XDG_DOCUMENTS_DIR}/NotesRendered/gallery.html")
+
 VLOGS_TARGET := $(shell echo "${XDG_DOCUMENTS_DIR}/NotesRendered/vlogs.html")
 VLOGS_FILES := $(shell find "${HOME}/Files/Vlogs/" -name '*.srt' | sort -r)
 
@@ -22,7 +24,10 @@ EVENTS_PLAYS := $(shell echo "${XDG_DOCUMENTS_DIR}/NotesRendered/events-plays.ht
 
 VLOG_TXT_FILES_DIR := $(shell echo "${XDG_CACHE_HOME}/vlog_txt_files")
 
-all: $(JOURNAL_TARGET) $(VLOGS_TARGET) $(EVENTS_TARGET_SCORE) $(EVENTS_TARGET_DATE) $(JOURNAL_IDEAS_TARGET) $(EVENTS_COMMENTS) $(EVENTS_PLAYS)
+all: $(JOURNAL_TARGET) $(VLOGS_TARGET) $(EVENTS_TARGET_SCORE) $(EVENTS_TARGET_DATE) $(JOURNAL_IDEAS_TARGET) $(EVENTS_COMMENTS) $(EVENTS_PLAYS) $(GALLERY_TARGET)
+
+$(GALLERY_TARGET): ~/Files/gallery/gallery/
+	find ~/Files/gallery/gallery -maxdepth 1 -mindepth 1 -type d -printf '- <https://purarue.xyz/gl/%f\n' | suffix '>' | pandoc -s | html-head | picofy --theme dark | sponge $(GALLERY_TARGET)
 
 $(JOURNAL_TARGET): $(JOURNAL_FILES)
 	markdown_stew -dark-mode -title Journal $(JOURNAL_FILES) > $(JOURNAL_TARGET)
