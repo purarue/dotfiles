@@ -27,7 +27,7 @@ VLOG_TXT_FILES_DIR := $(shell echo "${XDG_CACHE_HOME}/vlog_txt_files")
 all: $(JOURNAL_TARGET) $(VLOGS_TARGET) $(EVENTS_TARGET_SCORE) $(EVENTS_TARGET_DATE) $(JOURNAL_IDEAS_TARGET) $(EVENTS_COMMENTS) $(EVENTS_PLAYS) $(GALLERY_TARGET)
 
 $(GALLERY_TARGET): ~/Files/gallery/gallery/
-	find ~/Files/gallery/gallery -maxdepth 1 -mindepth 1 -type d -printf '- <https://purarue.xyz/gl/%f\n' | suffix '>' | pandoc -s | html-head | picofy --theme dark | sponge $(GALLERY_TARGET)
+	find ~/Files/gallery/gallery -maxdepth 1 -mindepth 1 -type d -printf '- <https://purarue.xyz/gl/%f>\n' | pandoc -s | html-head | picofy --theme dark | sponge $(GALLERY_TARGET)
 
 $(JOURNAL_TARGET): $(JOURNAL_FILES)
 	markdown_stew -dark-mode -title Journal $(JOURNAL_FILES) > $(JOURNAL_TARGET)
@@ -54,7 +54,7 @@ $(EVENTS_PLAYS): $(EVENTS)
 	events-generate --filter-type play --include-comments | pandoc | html-head --add css-pre-wrap | picofy > $(EVENTS_PLAYS)
 
 clean:
-	rm -f $(JOURNAL_TARGET) $(VLOGS_TARGET) $(EVENTS_TARGET) $(EVENTS_TARGET_SCORE) $(EVENTS_TARGET_DATE) $(JOURNAL_IDEAS_TARGET) $(EVENTS_COMMENTS) $(EVENTS_PLAYS)
+	rm -f $(JOURNAL_TARGET) $(VLOGS_TARGET) $(EVENTS_TARGET) $(EVENTS_TARGET_SCORE) $(EVENTS_TARGET_DATE) $(JOURNAL_IDEAS_TARGET) $(EVENTS_COMMENTS) $(EVENTS_PLAYS) $(GALLERY_TARGET)
 	rm -rf $(VLOG_TXT_FILES_DIR)
 
 .PHONY: all clean
