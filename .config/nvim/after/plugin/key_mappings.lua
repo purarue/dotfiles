@@ -42,6 +42,8 @@ vnoremap("!B", ":.!bash<CR>", "run shell command")
 
 nnoremap("J", "mzJ`z", "append to line")
 
+nnoremap("<leader><CR>", ":split | terminal<CR>", "open terminal")
+
 ---@param n number
 local function leftn(n)
     return string.rep("<Left>", n)

@@ -48,6 +48,7 @@ return {
             end
             return {
                 servers = servers,
+                enable_inlay_hints = false,
             }
         end,
         config = function(_, opts)
@@ -61,24 +62,28 @@ return {
                 desc = "disable lsp diagnostics for .env files",
             })
 
-            -- run on any client connecting
-            vim.api.nvim_create_autocmd("LspAttach", {
-                group = vim.api.nvim_create_augroup("custom-lsp-attach", { clear = true }),
-                callback = function(event)
-                    -- when the client attaches, add keybindings
-                    -- lsp commands with leader prefix
-                    -- setup inlay hints
-                    if not (event.data and event.data.client_id) then
-                        return
-                    end
-                    local client = vim.lsp.get_client_by_id(event.data.client_id)
+            if opts.enable_inlay_hints then
+                -- run on any client connecting
+                vim.api.nvim_create_autocmd("LspAttach", {
+                    group = vim.api.nvim_create_augroup("custom-lsp-attach", { clear = true }),
+                    callback = function(event)
+                        -- when the client attaches, add keybindings
+                        -- lsp commands with leader prefix
+                        -- setup inlay hints
+                        if not (event.data and event.data.client_id) then
+                            return
+                        end
+                        local client = vim.lsp.get_client_by_id(event.data.client_id)
 
-                    if client and (client:supports_method("textDocument/inlayHint") or client.server_capabilities.inlayHintProvider) then
-                        vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
-                    end
-                end,
-                desc = "lsp keybindings",
-            })
+                        if
+                            client and (client:supports_method("textDocument/inlayHint") or client.server_capabilities.inlayHintProvider)
+                        then
+                            vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+                        end
+                    end,
+                    desc = "lsp keybindings",
+                })
+            end
         end,
     },
 }

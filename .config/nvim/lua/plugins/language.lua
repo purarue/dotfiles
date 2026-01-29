@@ -3,4 +3,5 @@
 return {
     { "paniash/abook.vim", ft = "abook" },
     { "purarue/abookrc.vim", ft = "abookrc" },
+    { "tartansandal/vim-compiler-pytest", ft = "python" },
 }
