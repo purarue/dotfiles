@@ -3,7 +3,7 @@ return {
         basedpyright = {
             analysis = {
                 autoSearchPaths = true,
-                typeCheckingMode = "off",
+                -- typeCheckingMode = "recommended",
                 useLibraryCodeForTypes = true,
                 diagnosticMode = "openFilesOnly",
                 inlayHints = {

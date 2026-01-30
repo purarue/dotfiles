@@ -4,7 +4,6 @@
     - shortcuts create
 "https://github.com/purarue/ttally":
   pip: install
-"https://github.com/purarue/personal":
 "https://github.com/purarue/reminder-sink":
   pip: install
 "https://github.com/purarue/pura-utils":
