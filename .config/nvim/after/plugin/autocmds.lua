@@ -22,3 +22,7 @@ au("TermOpen", "*", "startinsert", "enter insert mode when I open a terminal")
 au({ "BufNewFile", "BufEnter" }, { "*/Documents/Notes/exo/*.md", "*/Repos/exobrain/src/content/*.md" }, function(e)
     return require("user.custom.frontmatter").generate_frontmatter(e.buf)
 end, "Add metadata to new empty Markdown files")
+au({ "BufNewFile", "BufEnter" }, { "*/*interview*/*" }, function()
+    vim.opt_local.cursorcolumn = true
+    vim.opt_local.cursorline = true
+end, "enable cursor line/cursor column if Im sharing screen with someone")
