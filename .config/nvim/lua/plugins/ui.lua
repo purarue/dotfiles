@@ -78,6 +78,29 @@ return {
         },
     },
     {
+        "iamcco/markdown-preview.nvim",
+        cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+        ft = { "markdown" },
+        init = function()
+            vim.g.mkdp_filetypes = { "markdown" }
+        end,
+        keys = {
+            {
+                "<leader>po",
+                function()
+                    if vim.bo.filetype == "markdown" then
+                        vim.cmd("MarkdownPreviewToggle")
+                        vim.notify("Toggling preview window...")
+                    else
+                        vim.notify("Not in a markdown buffer!", vim.log.levels.ERROR)
+                    end
+                end,
+                desc = "open preveiew window",
+            },
+        },
+        build = "cd app && yarn install",
+    },
+    {
         "MeanderingProgrammer/render-markdown.nvim",
         ft = "markdown",
         ---@module 'render-markdown'
@@ -86,11 +109,11 @@ return {
         opts = {},
         keys = {
             {
-                "<leader>p",
+                "<leader>pp",
                 function()
                     require("render-markdown").toggle()
                 end,
-                desc = "preview markdown toggle",
+                desc = "toggle markdown rendering",
             },
         },
     },
