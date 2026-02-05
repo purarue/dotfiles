@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-pipx install beets --python ~/.local/share/pyenv/versions/3.12.8/bin/python
+pipx install beets --python "$(pyenv-full-path 3.12.8)"
 pipx inject beets beets-filetote
 pipx inject beets discogs_client
 pipx inject beets pylast

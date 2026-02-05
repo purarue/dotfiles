@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -e
+
+use_python_ver="${1?:pass something like 3.11 or 3.12 as input}"
+version="$(pyenv versions --bare | tac | grep "^${use_python_ver}" -m1)"
+
+if [[ -z "$version" ]]; then
+	echo 'No pyenv version found, install one of these first!' >&2
+	pyenv install "${use_python_ver}."
+	exit 1
+fi
+
+full_path="$(pyenv root)/versions/${version}/bin/python"
+if [[ ! -e "$full_path" ]]; then
+	printf 'Could not find python at %s\n' "$full_path" >&2
+	exit 1
+fi
+echo "$full_path"
