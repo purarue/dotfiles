@@ -42,6 +42,7 @@ return {
                     "eslint",
                     "tailwindcss",
                     "ts_ls",
+                    "cmake",
                     "prismals",
                     "astro",
                 })
@@ -49,9 +50,14 @@ return {
             return {
                 servers = servers,
                 enable_inlay_hints = false,
+                debug = true,
             }
         end,
         config = function(_, opts)
+            if opts.debug then
+                vim.lsp.set_log_level("debug")
+            end
+
             vim.lsp.enable(opts.servers)
             vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
                 group = vim.api.nvim_create_augroup("lsp_disable", { clear = true }),
