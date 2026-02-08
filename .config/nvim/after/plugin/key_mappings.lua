@@ -36,6 +36,9 @@ nnoremap("%", "%zz", "centered match")
 nnoremap("*", "*zz", "centered match")
 nnoremap("#", "#zz", "centered match")
 
+-- search for and open the currently hovered filename from the current directory
+nnoremap("go", ":silent !fd -I <cfile> -1 | xargs -I{} rifle '{}'<CR>", "search and open file with file")
+
 -- when I press !B (holding shift for both)
 nnoremap("!B", ":.!bash<CR>", "run shell command")
 vnoremap("!B", ":.!bash<CR>", "run shell command")
