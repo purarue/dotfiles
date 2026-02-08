@@ -8,6 +8,7 @@ return {
                     reportUnknownParameterType = false,
                     reportUnknownVariableType = false,
                     reportExplicitAny = false,
+                    reportUnknownMemberType = false,
                     reportPrivateLocalImportUsage = false,
                 },
                 autoSearchPaths = true,
