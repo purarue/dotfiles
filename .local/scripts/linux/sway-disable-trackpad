@@ -1,0 +1,2 @@
+#!/bin/sh
+exec swaymsg input "$(swaymsg -t get_inputs | jq '.[] | select(.type == "touchpad") | .identifier' -r)" events disabled
