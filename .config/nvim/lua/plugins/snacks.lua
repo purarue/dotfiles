@@ -167,5 +167,11 @@ return {
         -- for when I'm sharing screen, is useful to have a crosshair
         Snacks.toggle.option("cursorline", { name = "cursorline" }):map("<leader>ul")
         Snacks.toggle.option("cursorcolumn", { name = "cursorcolumn" }):map("<leader>uc")
+
+        vim.api.nvim_create_user_command("Emoji", function()
+            Snacks.picker.icons()
+        end, {
+            desc = "pick emoji",
+        })
     end,
 }
