@@ -12,7 +12,7 @@ if [[ ! -r "$input" ]]; then
 fi
 magick convert "$input" "$tdir/page.png"
 
-montage -border 5x5 -tile 2x2 -geometry +0+0 "$tdir/page.png" "$tdir/page.png" "$tdir/page.png" "$tdir/page.png" \
+montage -border 5x5 -tile "${TILE:-2x2}" -geometry +0+0 "$tdir/page.png" "$tdir/page.png" "$tdir/page.png" "$tdir/page.png" \
 	-background white -gravity center -page A4 -quality 100 "$tdir/output.png"
 
 echo "Output written to $tdir/output.png"

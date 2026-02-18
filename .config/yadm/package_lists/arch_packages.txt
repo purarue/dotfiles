@@ -213,7 +213,7 @@ zsh-syntax-highlighting
 
 chromedriver
 digikam
-qutebrowser
+floorp
 python-adblock
 gimp
 google-chrome

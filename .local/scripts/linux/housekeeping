@@ -147,8 +147,6 @@ evry 1 week -sync-dbsentinel && {
 # https://github.com/purarue/grouvee_export
 evry 2 months -grouvee-export && python3 -m grouvee_export export
 
-evry 1 month -qutebrowser-userscript-update && python3 -m qute_script_manager update
-
 # https://github.com/purarue/albums
 # try to resolve releases to their collection URLs/refresh expired album data
 evry 1 week -discogs-update && {

@@ -351,6 +351,7 @@ __pycache__
 /.local/*.toml
 /.local/*.txt
 /.local/*LICENSE
+/.local/COPY*
 /.local/*lock
 /.local/LICENSE
 /.local/bin

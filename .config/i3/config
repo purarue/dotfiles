@@ -297,7 +297,8 @@ bindsym $mod+Shift+d exec --no-startup-id notify-send -t 15000 "$(i3-launcher)";
 mode "launcher" {
     
     bindsym a exec --no-startup-id ttt wezterm; mode "default"
-    bindsym f exec --no-startup-id ttt qutebrowser; mode "default"
+    bindsym f exec --no-startup-id ttt floorp; mode "default"
+    bindsym t exec --no-startup-id ttt tor-browser; mode "default"
     bindsym g exec --no-startup-id feed-open; mode "default"
     bindsym t exec --no-startup-id trakt-progress; mode "default"
     bindsym y exec --no-startup-id mal-recent; mode "default"
@@ -348,7 +349,7 @@ bindsym $mod+Shift+w exec --no-startup-id wfi
 bindsym $mod+Return exec --no-startup-id ttt wezterm
 
 # open a browser tab
-bindsym $mod+Shift+Return exec --no-startup-id ttt qutebrowser --new-tab;
+bindsym $mod+Shift+Return exec --no-startup-id ttt floorp --new-tab;
 
 # move chromedriver (webscraping) instances to 9
 assign [class="Chromium-browser"] 9

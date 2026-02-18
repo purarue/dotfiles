@@ -23,22 +23,22 @@ def sources() -> Iterator[Callable[[], Iterator["FeedItem"]]]:
 
     from my_feed.sources import (
         trakt,
-        listens,
+        # listens,
         nextalbums,
         mal,
-        mpv,
-        offline_listens,
-        facebook_spotify_listens,
+        # mpv,
+        # offline_listens,
+        # facebook_spotify_listens,
     )
 
-    yield offline_listens.history
+    # yield offline_listens.history
     yield transform(trakt.history)
     yield nextalbums.history
     yield mal.history
     yield mal.deleted_history
-    yield transform(listens.history)
-    yield transform(mpv.history)
-    yield transform(facebook_spotify_listens.history)
+    # yield transform(listens.history)
+    # yield transform(mpv.history)
+    # yield transform(facebook_spotify_listens.history)
 
 
 __all__ = [
