@@ -43,10 +43,10 @@ interval=once
 label=📰
 signal=7
 
-[mail]
-command=b-mail
-interval=60
-signal=6
+; [mail]
+; command=b-mail
+; interval=60
+; signal=6
 
 # [towatch]
 # command=b-to-watch

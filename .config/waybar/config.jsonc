@@ -18,7 +18,7 @@
 		"custom/rss",
 		// "custom/calcurse",
 		// "custom/todo",
-		"custom/mail",
+		// "custom/mail",
 		"network",
 		"custom/vpn",
 		"battery",
@@ -155,17 +155,18 @@
 		}
 	},
 	"custom/vpn": {
-		"format": " {}",
+		"format": "{}",
 		"exec": "b-vpn",
 		"interval": 10,
-		"signal": 8
+		"signal": 8,
+		"on-click": "vpn-toggle"
 	},
 	"network": {
 		// "interface": "wlp2*", // (Optional) To force the use of this interface
 		"format-wifi": "{essid} ({signalStrength}%) ",
 		"format-ethernet": "{ipaddr}/{cidr} ",
 		"tooltip-format": "{ifname} via {gwaddr} ",
-		"format-linked": "{ifname} (No IP) ",
+		"format-linked": "{ifname}",
 		"format-disconnected": "Disconnected ⚠",
 		"format-alt": "{ifname}: {ipaddr}/{cidr}"
 	},

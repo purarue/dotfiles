@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-if [[ -f /tmp/vpn-status ]]; then
-	echo "VPN"
+if [[ -f /tmp/vpnstatus ]]; then
+	echo " VPN"
 else
-	echo
+	echo "<span color='red'> NO VPN</span>"
 fi
