@@ -34,27 +34,27 @@ evry 1 week -empty-trash && {
 }
 
 # run https://github.com/odeke-em/drive to pull/push from google drive
-evry 6 hours -google-drive && {
-	# run in subshell to avoid changing directory
-	(
-		cd "${HOME}/GoogleDrive/" || exit $?
-		echo "Syncing Google Drive..."
-		drive pull -ignore-conflict -no-prompt || {
-			drive pull -fix-clashes -no-prompt && drive pull -no-prompt
-		}
-		drive push -no-prompt
-		# if there's a new google takeout, unzip it
-		# https://github.com/purarue/google_takeout_parser
-		# script from https://github.com/purarue/HPI-personal
-		TAKEOUT_DIR="${HOME}/GoogleDrive/Takeout"
-		[[ -e "$TAKEOUT_DIR" ]] && unzip-google-takeout "$TAKEOUT_DIR" && drive push
-		# remove takeout dir (only works if directory is empty)
-		[[ -e "$TAKEOUT_DIR" ]] && {
-			rmdir "${TAKEOUT_DIR}"
-			[[ ! -e "$TAKEOUT_DIR" ]] && drive push
-		}
-	)
-}
+# evry 6 hours -google-drive && {
+# 	# run in subshell to avoid changing directory
+# 	(
+# 		cd "${HOME}/GoogleDrive/" || exit $?
+# 		echo "Syncing Google Drive..."
+# 		drive pull -ignore-conflict -no-prompt || {
+# 			drive pull -fix-clashes -no-prompt && drive pull -no-prompt
+# 		}
+# 		drive push -no-prompt
+# 		# if there's a new google takeout, unzip it
+# 		# https://github.com/purarue/google_takeout_parser
+# 		# script from https://github.com/purarue/HPI-personal
+# 		TAKEOUT_DIR="${HOME}/GoogleDrive/Takeout"
+# 		[[ -e "$TAKEOUT_DIR" ]] && unzip-google-takeout "$TAKEOUT_DIR" && drive push
+# 		# remove takeout dir (only works if directory is empty)
+# 		[[ -e "$TAKEOUT_DIR" ]] && {
+# 			rmdir "${TAKEOUT_DIR}"
+# 			[[ ! -e "$TAKEOUT_DIR" ]] && drive push
+# 		}
+# 	)
+# }
 
 # refresh https://dev.twitch.tv/docs/api/
 # so that https://github.com/purarue/twitchlive continues to work
