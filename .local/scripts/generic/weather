@@ -112,6 +112,14 @@ def add_location(latlon: tuple[float, float] | None) -> None:
     dump_to(locations, location_file)
 
 
+@loc_group.command(name="file", short_help="print location file location")
+def location_file_cmd() -> None:
+    """
+    Print the location of the YAML location config file
+    """
+    click.echo(location_file)
+
+
 @loc_group.command(name="list", short_help="list locations")
 @click.option("-l", "--include-locations", is_flag=True)
 def list_locations(include_locations: bool) -> None:
