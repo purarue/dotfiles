@@ -3,20 +3,12 @@
 # https://purarue.xyz/d/cd.zsh?dark
 #
 # using
-# https://purarue.xyz/d/tttlist?dark
 # and the commits modules to scan my local repos
 # https://github.com/karlicoss/HPI/blob/master/my/coding/commits.py
 
 set -e
 set -o pipefail
 
-# update tttlist cache once a day
-tttlist_cached() {
-	evry 1d -tttlist && tttlist >~/.cache/tttlist
-	cat ~/.cache/tttlist
-}
-
 {
-	tttlist_cached
 	hpi query my.coding.commits.repos -s | jq -r
 } | grep -v '^/tmp' | unique || exit $?

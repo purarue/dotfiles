@@ -1,6 +1,5 @@
 #!/bin/sh
 # wait for internet connection and ping me
-command -v tttlog >/dev/null 2>&1 && tttlog "$(basename "$0")"
 wait-for-internet "$@" && {
 	notify "INTERNET"
 	playping

@@ -12,8 +12,6 @@
 	exit
 }
 
-command -v tttlog >/dev/null 2>&1 && tttlog "linkhandler $1"
-
 # mp4/mp3 uses stream-* (my stream-link) wrapper scripts, so
 # it runs behind `tsp`, meaning lots of podcasts can be
 # queued in the task spooler, waits till the previous video

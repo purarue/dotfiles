@@ -216,7 +216,6 @@ havecmd bpkg || curl -Lo- "https://raw.githubusercontent.com/bpkg/bpkg/master/se
 havecmd bpkg || exit $?
 
 set -e
-havecmd tttlog || bpkg install -g purarue/ttt
 havecmd exists || bpkg install -g purarue/exists
 havecmd genpasswd || bpkg install -g purarue/genpasswd
 set +e

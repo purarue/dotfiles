@@ -1,3 +1,2 @@
 #!/bin/sh
-command -v tttlog >/dev/null 2>&1 && tttlog "$(basename "$0") $*"
 exec curl -s "https://cheat.sh/$*"

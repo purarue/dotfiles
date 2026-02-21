@@ -83,7 +83,7 @@ bindsym $mod+Shift+Return exec $browser
 bindsym $mod+Shift+q kill
 
 # lock screen
-bindsym $mod+Shift+Escape exec ttt lock-screen
+bindsym $mod+Shift+Escape exec lock-screen
 
 # application launcher
 bindsym $mod+r exec rofi -show run -display-run "run >" | xargs swaymsg exec --
@@ -97,10 +97,10 @@ bindsym $mod+b exec todo-prompt bookmark list
 bindsym $mod+Shift+b exec todo-prompt bookmark add
 
 # screenshots
-bindsym --release Print exec ttt screenshot
-bindsym Shift+Print exec ttt screenshot --full
+bindsym --release Print exec screenshot
+bindsym Shift+Print exec screenshot --full
 # upload latest screenshot to my server
-bindsym $mod+Print exec ttt screenshot-upload
+bindsym $mod+Print exec screenshot-upload
 
 # add to my self model from https://github.com/purarue/ttally
 bindsym $alt+s exec self-picker
@@ -224,6 +224,8 @@ bindsym $mod+Shift+z split h
 # split in vertical orientation
 bindsym $mod+Shift+v split v
 
+bindsym $mod+$alt+v exec vpn-toggle
+
 # focus the parent container
 bindsym $mod+a focus parent
 
@@ -235,16 +237,16 @@ bindsym $mod+d mode "launcher"
 bindsym $mod+Shift+d exec notify-send -t 15000 "$(sway-launcher)"; mode "launcher"
 
 mode "launcher" {
-    bindsym a exec ttt kitty; mode "default";
-    bindsym f exec ttt floorp; mode "default";
-    bindsym d exec ttt discord-browser; mode "default";
-    bindsym k exec ttt keepassxc; mode "default";
+    bindsym a exec kitty; mode "default";
+    bindsym f exec floorp; mode "default";
+    bindsym d exec discord-browser; mode "default";
+    bindsym k exec keepassxc; mode "default";
     bindsym b exec bookmark-open; mode "default";
     bindsym l exec largechar-clipboard; mode "default";
     bindsym x exec exo-web; mode "default";
     bindsym Shift+x exec exo-web-personal; mode "default";
-    bindsym n exec ttt launch newsraft; mode "default";
-    bindsym m exec ttt launch neomuttr; mode "default";
+    bindsym n exec launch newsraft; mode "default";
+    bindsym m exec launch neomuttr; mode "default";
     bindsym Shift+m exec launch sync-neomutt; mode "default";
     bindsym u exec urlview; mode "default";
     bindsym Shift+s exec launch splayall; mode "default";

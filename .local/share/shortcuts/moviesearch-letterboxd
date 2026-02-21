@@ -2,5 +2,4 @@
 # searches letterboxd for a movie
 [ -z "$SEARCH_STR" ] && SEARCH_STR=$(input-dialog "Search for a movie > " | chomp | tr " " "+")
 [ -z "$SEARCH_STR" ] && exit 1
-command -v tttlog >/dev/null 2>&1 && tttlog "$(basename "$0") $SEARCH_STR"
 exec openurl "https://letterboxd.com/search/films/${SEARCH_STR}"

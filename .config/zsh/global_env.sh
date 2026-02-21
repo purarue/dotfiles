@@ -11,16 +11,6 @@ export SHELL_BOOT_TIME
 export TTALLY_DATA_DIR="${HPIDATA}/ttally"
 # https://github.com/purarue/mint
 export MINT_DATA="${HPIDATA}/mint"
-# https://github.com/purarue/ttt
-TTT_DATADIR="${XDG_DATA_HOME}/ttt"
-
-# might be nice to move this check elsewhere, but ttt is built into
-# a lot of my keybindings so having this here just makes sure I'm
-# never in a situation where a keybinding fails if ttt doesn't work
-if [ ! -d "$TTT_DATADIR" ]; then
-	mkdir -p "$TTT_DATADIR"
-fi
-export TTT_HISTFILE="${TTT_DATADIR}/${SHELL_BOOT_TIME}.csv"
 # https://github.com/purarue/url_cache
 export URL_CACHE_DIR="${HPIDATA}/url_cache"
 # https://github.com/purarue/oh-my-stars

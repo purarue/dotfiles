@@ -17,7 +17,6 @@ from promnesia_pura.sources import (
     twitch,
     mail,
     trakt,
-    ttt,
     zsh,
     bash,
     grouvee,
@@ -69,7 +68,6 @@ SOURCES = [
     mpv,
     trakt,
     old_forums,
-    ttt,
     zsh,
 ]
 

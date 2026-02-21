@@ -108,7 +108,6 @@ abbrev-alias ghd='gh dash'
 abbrev-alias rr='rifle'
 alias optipng='optipng -o5'
 alias R=ranger
-alias nr='neomuttr'
 urban() {
 	udict "$@" | less
 }

@@ -7,15 +7,12 @@
 set $mod Mod4
 set $alt Mod1
 
-# ttt is littered throughout here, to track i3 bindsyms
-# see https://github.com/purarue/ttt/ for more info
-
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font pango:Source Code Pro 12
 
 # keybind to lock screen manually; automatically locks on screen close
-bindsym $mod+Shift+Escape {{ ex }} ttt lock-screen
+bindsym $mod+Shift+Escape {{ ex }} lock-screen
 
 # run process to cache pixelated desktop for lock screen
 {{ ex }} lock-screen -b
@@ -48,12 +45,12 @@ bindsym $mod+v {{ ex }} sleep 0.2 && xdotool click --clearmodifiers 3
 {{ ex }} randomize-wallpaper
 
 # bind display key to randomize wallpaper
-bindsym XF86Display {{ ex }} ttt randomize-wallpaper
+bindsym XF86Display {{ ex }} randomize-wallpaper
 
 # Disable trackpad
 #{{ ex }} trackpad disable
 # keyboard shortcut to toggle trackpad
-bindsym $mod+g {{ ex }} ttt trackpad
+bindsym $mod+g {{ ex }} trackpad
 
 # for when I plug in an external keyboard - refresh i3 to rebind keys
 # could use udev events instead, but this is easier
@@ -68,7 +65,7 @@ exec_always --no-startup-id ~/.config/screenlayout/auto.sh
 bindsym $mod+grave {{ ex }} dunstctl close-all
 
 # command to display/run i3 key bindings
-bindsym $mod+Shift+Tab {{ ex }} ttt i3binds-prompt
+bindsym $mod+Shift+Tab {{ ex }} i3binds-prompt
 
 # Bind brightness keys
 # sudo usermod -aG video <yourusername>
@@ -123,11 +120,11 @@ bindsym $mod+r {{ ex }} rofi -show run -display-run "run > "
 bindsym $mod+Tab {{ ex }} rofi -show window -display-window "window > "
 
 # take a screenshot (select rectangle with cursor)
-bindsym --release Print {{ ex }} ttt screenshot
+bindsym --release Print {{ ex }} screenshot
 # take a screenshot of the entire screen
-bindsym Shift+Print {{ ex }} ttt screenshot --full
+bindsym Shift+Print {{ ex }} screenshot --full
 # upload latest screenshot to my server
-bindsym $mod+Print {{ ex }} ttt screenshot-upload
+bindsym $mod+Print {{ ex }} screenshot-upload
 # add to my self model from https://github.com/purarue/ttally
 bindsym $alt+s {{ ex }} self-picker
 # edit clipboard in vim
@@ -298,10 +295,10 @@ mode "server_clipboard" {
 bindsym $mod+Shift+w {{ ex }} wfi
 
 # open terminal
-bindsym $mod+Return {{ ex }} ttt wezterm
+bindsym $mod+Return {{ ex }} wezterm
 
 # open a browser tab
-bindsym $mod+Shift+Return {{ ex }} ttt floorp --new-tab;
+bindsym $mod+Shift+Return {{ ex }} floorp --new-tab;
 
 # move chromedriver (webscraping) instances to 9
 assign [class="Chromium-browser"] 9

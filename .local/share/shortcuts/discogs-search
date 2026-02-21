@@ -3,5 +3,4 @@
 # searches discogs for an album
 SEARCH_STR=$(input-dialog "Search for an album > " | chomp | tr " " "+")
 [ -z "$SEARCH_STR" ] && exit 1
-command -v tttlog >/dev/null 2>&1 && tttlog "$(basename "$0") $SEARCH_STR"
 exec openurl "https://www.discogs.com/search/?q=${SEARCH_STR}&type=all"

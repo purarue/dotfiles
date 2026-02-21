@@ -71,7 +71,6 @@ printf "\n"
 [wfi]
 command = '''
 # wait for internet connection and ping me
-command -v tttlog >/dev/null 2>&1 && tttlog "$(basename "$0")"
 wait-for-internet "$@" && {
 	notify "INTERNET"
 	playping
@@ -90,7 +89,6 @@ command = '''
 # searches trakt for a movie
 [ -z "$SEARCH_STR" ] && SEARCH_STR=$(input-dialog "Search for a movie > " | chomp | tr " " "+")
 [ -z "$SEARCH_STR" ] && exit 1
-command -v tttlog >/dev/null 2>&1 && tttlog "$(basename "$0") $SEARCH_STR"
 exec openurl "https://trakt.tv/search/movies?query=${SEARCH_STR}&utf8=%E2%9C%93"
 '''
 
@@ -99,7 +97,6 @@ command = '''
 # searches letterboxd for a movie
 [ -z "$SEARCH_STR" ] && SEARCH_STR=$(input-dialog "Search for a movie > " | chomp | tr " " "+")
 [ -z "$SEARCH_STR" ] && exit 1
-command -v tttlog >/dev/null 2>&1 && tttlog "$(basename "$0") $SEARCH_STR"
 exec openurl "https://letterboxd.com/search/films/${SEARCH_STR}"
 '''
 
@@ -119,7 +116,6 @@ command = '''
 # searches trakt for a tv show
 SEARCH_STR=$(input-dialog "Search for a TV show > " | chomp | tr " " "+")
 [ -z "$SEARCH_STR" ] && exit 1
-command -v tttlog >/dev/null 2>&1 && tttlog "$(basename "$0") $SEARCH_STR"
 exec openurl "https://trakt.tv/search/shows?query=${SEARCH_STR}&utf8=%E2%9C%93"
 '''
 
@@ -136,7 +132,6 @@ command = '''
 # searches discogs for an album
 SEARCH_STR=$(input-dialog "Search for an album > " | chomp | tr " " "+")
 [ -z "$SEARCH_STR" ] && exit 1
-command -v tttlog >/dev/null 2>&1 && tttlog "$(basename "$0") $SEARCH_STR"
 exec openurl "https://www.discogs.com/search/?q=${SEARCH_STR}&type=all"
 '''
 
@@ -315,7 +310,6 @@ list-config-no-hist | xargs grep -Hrin "$@"
 
 [cheat]
 command = '''
-command -v tttlog >/dev/null 2>&1 && tttlog "$(basename "$0") $*"
 exec curl -s "https://cheat.sh/$*"
 '''
 

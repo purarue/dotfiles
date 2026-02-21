@@ -1,14 +1,12 @@
-# to track 'shell-like' history https://github.com/purarue/ttt
-# most of these just forward to rifle, my file manager
 # for config see https://github.com/purarue/dotfiles/blob/master/.config/ranger/rifle.conf
 text/plain; rifle %s ;
 text/html; rifle %s ; nametemplate=%s.html
-text/html; ttt lynx -assume_charset=%{charset} -display_charset=utf-8 -dump %s; nametemplate=%s.html; copiousoutput;
+text/html; lynx -assume_charset=%{charset} -display_charset=utf-8 -dump %s; nametemplate=%s.html; copiousoutput;
 text/csv; rifle %s ;
 image/*; rifle %s ;
 video/*; rifle %s ; copiousoutput
 audio/*; rifle %s ;
-application/zip; ttt unzip %s ;
+application/zip; unzip %s ;
 application/pdf; rifle %s ;
-application/pgp-encrypted; ttt gpg -d '%s'; copiousoutput;
-application/pgp-keys; ttt gpg --import '%s'; copiousoutput;
+application/pgp-encrypted; gpg -d '%s'; copiousoutput;
+application/pgp-keys; gpg --import '%s'; copiousoutput;

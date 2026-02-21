@@ -1,2 +1,2 @@
 #!/bin/sh
-exec ttt nvim "$@"
+exec nvim "$@"

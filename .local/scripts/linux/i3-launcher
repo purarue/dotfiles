@@ -25,7 +25,6 @@ s/-browser//;
 s/-force$//;
 s/neomuttr/neomutt/;
 s/SKIP_RECENT=1 //;
-s/ttt //;
 s/sn$/self-now/;
 s/bindsym \([[:print:]]*\)\s*exec\s*--no-startup-id /\1\| /;
 s/Shift+\([[:print:]]\)/\U\1/' |

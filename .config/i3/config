@@ -7,15 +7,12 @@
 set $mod Mod4
 set $alt Mod1
 
-# ttt is littered throughout here, to track i3 bindsyms
-# see https://github.com/purarue/ttt/ for more info
-
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font pango:Source Code Pro 12
 
 # keybind to lock screen manually; automatically locks on screen close
-bindsym $mod+Shift+Escape exec --no-startup-id ttt lock-screen
+bindsym $mod+Shift+Escape exec --no-startup-id lock-screen
 
 # run process to cache pixelated desktop for lock screen
 exec --no-startup-id lock-screen -b
@@ -48,12 +45,12 @@ bindsym $mod+v exec --no-startup-id sleep 0.2 && xdotool click --clearmodifiers 
 exec --no-startup-id randomize-wallpaper
 
 # bind display key to randomize wallpaper
-bindsym XF86Display exec --no-startup-id ttt randomize-wallpaper
+bindsym XF86Display exec --no-startup-id randomize-wallpaper
 
 # Disable trackpad
 #exec --no-startup-id trackpad disable
 # keyboard shortcut to toggle trackpad
-bindsym $mod+g exec --no-startup-id ttt trackpad
+bindsym $mod+g exec --no-startup-id trackpad
 
 # for when I plug in an external keyboard - refresh i3 to rebind keys
 # could use udev events instead, but this is easier
@@ -68,7 +65,7 @@ exec --no-startup-id dunst
 bindsym $mod+grave exec --no-startup-id dunstctl close-all
 
 # command to display/run i3 key bindings
-bindsym $mod+Shift+Tab exec --no-startup-id ttt i3binds-prompt
+bindsym $mod+Shift+Tab exec --no-startup-id i3binds-prompt
 
 # Bind brightness keys
 # sudo usermod -aG video <yourusername>
@@ -123,11 +120,11 @@ bindsym $mod+r exec --no-startup-id rofi -show run -display-run "run > "
 bindsym $mod+Tab exec --no-startup-id rofi -show window -display-window "window > "
 
 # take a screenshot (select rectangle with cursor)
-bindsym --release Print exec --no-startup-id ttt screenshot
+bindsym --release Print exec --no-startup-id screenshot
 # take a screenshot of the entire screen
-bindsym Shift+Print exec --no-startup-id ttt screenshot --full
+bindsym Shift+Print exec --no-startup-id screenshot --full
 # upload latest screenshot to my server
-bindsym $mod+Print exec --no-startup-id ttt screenshot-upload
+bindsym $mod+Print exec --no-startup-id screenshot-upload
 # add to my self model from https://github.com/purarue/ttally
 bindsym $alt+s exec --no-startup-id self-picker
 # edit clipboard in vim
@@ -296,33 +293,33 @@ bindsym $mod+Shift+d exec --no-startup-id notify-send -t 15000 "$(i3-launcher)";
 
 mode "launcher" {
     
-    bindsym a exec --no-startup-id ttt wezterm; mode "default"
-    bindsym f exec --no-startup-id ttt floorp; mode "default"
-    bindsym t exec --no-startup-id ttt tor-browser; mode "default"
+    bindsym a exec --no-startup-id wezterm; mode "default"
+    bindsym f exec --no-startup-id floorp; mode "default"
+    bindsym t exec --no-startup-id tor-browser; mode "default"
     bindsym g exec --no-startup-id feed-open; mode "default"
     bindsym t exec --no-startup-id trakt-progress; mode "default"
     bindsym y exec --no-startup-id mal-recent; mode "default"
-    bindsym d exec --no-startup-id ttt discord-browser; mode "default"
-    bindsym k exec --no-startup-id ttt keepassxc; mode "default"
+    bindsym d exec --no-startup-id discord-browser; mode "default"
+    bindsym k exec --no-startup-id keepassxc; mode "default"
     bindsym b exec --no-startup-id bookmark-open; mode "default"
     bindsym l exec --no-startup-id largechar-clipboard; mode "default"
     bindsym x exec --no-startup-id exo-web; mode "default"
     bindsym Shift+x exec --no-startup-id exo-web-personal; mode "default"
-    bindsym n exec --no-startup-id ttt launch newsboat-force; mode "default"
-    bindsym m exec --no-startup-id ttt launch neomuttr; mode "default"
+    bindsym n exec --no-startup-id launch newsboat-force; mode "default"
+    bindsym m exec --no-startup-id launch neomuttr; mode "default"
     bindsym Shift+m exec --no-startup-id launch sync-neomutt; mode "default"
-    bindsym h exec --no-startup-id ttt launch htop; mode "default"
-    bindsym v exec --no-startup-id ttt launch keyvol; mode "default"
+    bindsym h exec --no-startup-id launch htop; mode "default"
+    bindsym v exec --no-startup-id launch keyvol; mode "default"
     bindsym u exec --no-startup-id urlview; mode "default"
     bindsym p exec --no-startup-id launch plainplay; mode "default"
     bindsym Shift+s exec --no-startup-id launch splayall; mode "default"
     bindsym s exec --no-startup-id stream-corner; mode "default"
-    bindsym $mod+f exec --no-startup-id ttt launch full_todotxt; mode "default"
+    bindsym $mod+f exec --no-startup-id launch full_todotxt; mode "default"
     bindsym 4 exec --no-startup-id stream-corner-480; mode "default"
     bindsym 7 exec --no-startup-id stream-corner-720; mode "default"
     bindsym 0 exec --no-startup-id stream-corner-1080; mode "default"
     bindsym Shift+f exec --no-startup-id flatpak-run; mode "default"
-    bindsym c exec --no-startup-id ttt clrs; mode "default"
+    bindsym c exec --no-startup-id clrs; mode "default"
     bindsym Shift+n exec --no-startup-id launch sn; mode "default"
     bindsym $mod+c exec --no-startup-id SKIP_RECENT=1 launch cz; mode "default"
     bindsym Shift+c exec --no-startup-id SKIP_RECENT=1 launch czd; mode "default"
@@ -346,10 +343,10 @@ mode "server_clipboard" {
 bindsym $mod+Shift+w exec --no-startup-id wfi
 
 # open terminal
-bindsym $mod+Return exec --no-startup-id ttt wezterm
+bindsym $mod+Return exec --no-startup-id wezterm
 
 # open a browser tab
-bindsym $mod+Shift+Return exec --no-startup-id ttt floorp --new-tab;
+bindsym $mod+Shift+Return exec --no-startup-id floorp --new-tab;
 
 # move chromedriver (webscraping) instances to 9
 assign [class="Chromium-browser"] 9
