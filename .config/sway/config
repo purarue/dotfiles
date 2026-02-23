@@ -330,6 +330,7 @@ exec warn-battery BAT1
 exec gammastep-loc
 exec launch-waybar
 exec randomize-wallpaper
+exec vpn-toggle
 # open a terminal on launch
 exec $term
 
