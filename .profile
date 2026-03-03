@@ -23,6 +23,7 @@ export FILES_DIR="${HOME}/Files"
 SCREENSHOTS="${FILES_DIR}/Screenshots"
 
 export REPOS="${HOME}/Repos"
+export SHARED_DIR="${HOME}/Shared"
 
 # https://github.com/purarue/HPI
 # the 'root data directory' for HPI
@@ -76,7 +77,9 @@ mac*)
 	SCREENSHOTS="${HOME}/Desktop" # Screenshots on Mac are saved on the Desktop
 	;;
 android*)
-	HPIDATA="${HOME}/storage/shared/data"
+	SYNCTHING_BASE="${HOME}/storage/shared/syncthing"
+	SHARED_DIR="${SYNCTHING_BASE}/Shared"
+	HPIDATA="${SYNCTHING_BASE}/data"
 	XDG_MUSIC_DIR="${HOME}/storage/music"
 	XDG_DOWNLOAD_DIR="${HOME}/storage/downloads"
 	XDG_DOCUMENTS_DIR="${HOME}/storage/shared/Documents"
@@ -96,7 +99,7 @@ ${XDG_DATA_HOME}/pipx_isolate/bin:\
 ${XDG_DATA_HOME}/basher/cellar/bin:\
 $PATH"
 
-export HPIDATA BROWSER XDG_MUSIC_DIR PATH SCREENSHOTS XDG_DOWNLOAD_DIR XDG_DOCUMENTS_DIR XDG_PICTURES_DIR XDG_VIDEOS_DIR
+export HPIDATA BROWSER XDG_MUSIC_DIR PATH SCREENSHOTS XDG_DOWNLOAD_DIR XDG_DOCUMENTS_DIR XDG_PICTURES_DIR XDG_VIDEOS_DIR SHARED_DIR
 export PLAINTEXT_PLAYLIST_PLAYLISTS="${HPIDATA}/playlists"
 
 # some system wide defaults

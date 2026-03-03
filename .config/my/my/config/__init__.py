@@ -8,7 +8,7 @@ https://github.com/purarue/HPI-personal
 
 import tempfile
 from os import environ, path
-from typing import Optional, Callable, List, Sequence, Union, Tuple, Set
+from collections.abc import Callable, Sequence
 from pathlib import Path
 from datetime import datetime, date, timedelta
 
@@ -23,15 +23,15 @@ from .common import repo
 #############
 
 
-def if_exists(p: PathIsh) -> Optional[Path]:
+def if_exists(p: PathIsh) -> Path | None:
     pp = Path(p)
     if pp.exists():
         return pp
     return None
 
 
-def filter_exists(pths: List[PathIsh]) -> List[Path]:
-    res: List[Path] = []
+def filter_exists(pths: list[PathIsh]) -> list[Path]:
+    res: list[Path] = []
     for p in pths:
         r = if_exists(p)
         if r is not None:
@@ -42,11 +42,36 @@ def filter_exists(pths: List[PathIsh]) -> List[Path]:
 # if the HPIDATA environment variable is set (which points to my data)
 # use that. Else, just default to ~/data
 PREFIX: Path = Path(environ.get("HPIDATA", path.expanduser("~/data")))
+plaintext_mount: Path | None = None
+
+home = Path.home()
+file_mnt = home / "Files" / "crypt" / "plain" / "data"
+
+if file_mnt.exists():
+    plaintext_mount = file_mnt
 
 
-def data(p: PathIsh) -> Path:
+def data_single(p: PathIsh) -> Path:
+    found = data(p)
+    assert len(found) <= 1
+    if len(found) == 0:
+        return PREFIX / p
+    else:
+        return found[0]
+
+
+def data(p: PathIsh) -> tuple[Path, ...]:
     """prepend my data directory onto this path"""
-    return PREFIX / p
+    found: list[Path] = []
+    base_data = PREFIX / p
+    if base_data.exists():
+        found.append(base_data)
+    if plaintext_mount:
+        pm = plaintext_mount / p
+        if pm.exists():
+            found.append(pm)
+
+    return tuple(found)
 
 
 #############
@@ -123,7 +148,7 @@ class github:
     github GDPR export
     """
 
-    gdpr_dir: PathIsh = data("github/gdpr")
+    gdpr_dir: PathIsh = data_single("github/gdpr")
     export_path: Paths = data("github/ghexport")
 
 
@@ -137,7 +162,7 @@ MAILDIR = environ.get("MAILDIR", "~/.local/share/mail")
 # this is all custom, and may not work for you -- this
 # is how I filter certain Junk/Trash paths from my mail
 
-FILTER_PARTS: Set[str] = {".notmuch", "Trash", "Spam", "Junk"}
+FILTER_PARTS: set[str] = {".notmuch", "Trash", "Spam", "Junk"}
 
 
 def filter_mail_path(p: Path) -> bool:
@@ -160,7 +185,7 @@ class mail:
         mailboxes = MAILDIR
 
         # filter function which filters the input paths
-        filter_path: Optional[Callable[[Path], bool]] = filter_mail_path
+        filter_path: Callable[[Path], bool] | None = filter_mail_path
 
     class mbox:
         pass
@@ -184,31 +209,29 @@ class reddit:
 
 # parses my zsh history and any backups
 class zsh:
-    export_path: Paths = (data("zsh_history"), data("zsh_history_old"))
-    live_file: Optional[PathIsh] = if_exists(
-        path.join(environ["ZDOTDIR"], ".zsh_history")
-    )
+    export_path: Paths = (*data("zsh_history"), *data("zsh_history_old"))
+    live_file: PathIsh | None = if_exists(path.join(environ["ZDOTDIR"], ".zsh_history"))
 
 
 # parses bash history
 class bash:
-    export_path: Paths = (data("bash_history"), data("bash"))
+    export_path: Paths = (*data("bash_history"), *data("bash"))
 
 
 # parses current/done http://todotxt.org/
 class todotxt:
     class git_history:
-        export_path: Path = data("doc/todo_git_history")
+        export_path: Path = data_single("doc/todo_git_history")
 
     class active:
-        export_path: Path = data("todo")
+        export_path: Path = data_single("todo")
 
 
 # parses the history of me adding/removing rss feeds
 class rss:
     class newsboat:
         class git_history:
-            export_path: Path = data("doc/newsboat_git")
+            export_path: Path = data_single("doc/newsboat_git")
 
 
 # parses information from git repositories which match my emails
@@ -240,7 +263,7 @@ class mpv:
         require_percent = 0.5
 
 
-live_dbs: List[Path] = []
+live_dbs: list[Path] = []
 try:
     from browserexport.browsers.firefox import Firefox
 
@@ -294,8 +317,8 @@ class mal:
     class export:
         """https://github.com/purarue/malexport"""
 
-        export_path: PathIsh = data("malexport")
-        zip_backup_path: PathIsh = data("malexport_backups")
+        export_path: PathIsh = data("malexport")[-1]
+        zip_backup_path: PathIsh = data("malexport_backups")[-1]
 
 
 class grouvee:
@@ -361,12 +384,12 @@ class skype:
 
 class facebook:
     class gdpr:
-        gdpr_dir: PathIsh = data("gdpr/facebook")
+        gdpr_dir: PathIsh = data_single("gdpr/facebook")
 
 
 class spotify:
     class gdpr:
-        gdpr_dir: PathIsh = data("gdpr/spotify")
+        gdpr_dir: PathIsh = data_single("gdpr/spotify")
 
 
 class twitch:
@@ -381,15 +404,15 @@ class twitch:
     class gdpr:
         """parses the privacy request"""
 
-        gdpr_dir: PathIsh = data("twitch/gdpr")
+        gdpr_dir: PathIsh = data_single("twitch/gdpr")
 
 
 class ipython:
     """parses backups of my ipython history"""
 
     export_path: Paths = (
-        data("ipython_default/*.sqlite"),
-        data("ipython_calculator/*.sqlite"),
+        *data("ipython_default/*.sqlite"),
+        *data("ipython_calculator/*.sqlite"),
     )
 
 
@@ -413,9 +436,9 @@ class activitywatch:
 
     class active_window:
         export_path: Paths = (
-            data("window_watcher/*.csv*"),
-            data("aw-window/phone/*.json*"),
-            data("aw-window/windows/*.json*"),
+            *data("window_watcher/*.csv*"),
+            *data("aw-window/phone/*.json*"),
+            *data("aw-window/windows/*.json*"),
         )
         error_policy = "raise"
 
@@ -426,12 +449,12 @@ class smscalls:
 
 class apple:
     class privacy_export:
-        gdpr_dir: PathIsh = data("gdpr/apple")
+        gdpr_dir: PathIsh = data_single("gdpr/apple")
 
 
 class linkedin:
     class privacy_export:
-        gdpr_dir: PathIsh = data("gdpr/linkedin")
+        gdpr_dir: PathIsh = data_single("gdpr/linkedin")
 
 
 class discord:
@@ -454,10 +477,10 @@ class minecraft:
 
 
 class pdfs:
-    paths: Paths = [
+    paths: Paths = (
         "~/Files/Books/",
         "~/Documents/Notes/",
-    ]
+    )
 
 
 class zulip:
@@ -479,8 +502,8 @@ class offline:
         export_path: Paths = data("offline_listens/*.yaml")
 
 
-DateIsh = Union[datetime, date, str]
-LatLon = Tuple[float, float]
+DateIsh = datetime | date | str
+LatLon = tuple[float, float]
 
 
 class location:
@@ -518,7 +541,7 @@ class location:
 class time:
     class tz:
         # force_abbreviations = ("PST", "PDT")
-        force_abbreviations: List[str] = []
+        force_abbreviations: list[str] = []
         policy = "convert"
 
         class via_location:
