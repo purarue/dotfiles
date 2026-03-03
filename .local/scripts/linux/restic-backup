@@ -65,7 +65,7 @@ run_backup() {
 		remove-empty-ipython-dbs -v
 		bleanser-runall
 		merge-mpv-history
-		merge-browser-history
+		# merge-browser-history
 	fi
 	flags=(-r "$(backup_to)" backup --verbose --one-file-system
 	--files-from "$INCLUDE_FILE"

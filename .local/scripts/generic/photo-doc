@@ -15,6 +15,6 @@ printf '%s\nModified: %s ago\nMove? [Y|n] ' "$FILE" "$(file-modified-ago "$FILE"
 
 read -r answer
 [[ "$answer" == [Nn]* ]] && exit 1
-to_folder="${HOME}/shared/Shared/photo-doc"
+to_folder="${SHARED_DIR}/photo-doc"
 mkdir -p "$to_folder"
 mv -vn "$FILE" "$to_folder"

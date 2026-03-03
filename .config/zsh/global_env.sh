@@ -28,7 +28,7 @@ export IPGEOCACHE_DIR="${HPIDATA}/ipgeocache"
 export TODO_DIR="${HPIDATA}/todo" # todo.txt
 # https://github.com/purarue/mpv-history-daemon
 export MPV_HISTORY_DAEMON_SCAN_TIME='5'
-export CALCURSE_DIR="${HPIDATA}/calcurse"
+export CALCURSE_DIR="${HOME}/.cache/cacurse_generated"
 export CALCURSE_LOAD_DIR="${HPIDATA}/calcurse_load"
 # $PATH for bgproc directories, for background processes
 # https://github.com/purarue/bgproc
