@@ -32,7 +32,8 @@ nodejs
 htop
 boxes
 rlwrap
-openjdk-17
+openjdk-25
+cmake
 perl
 calcurse
 golang
