@@ -115,9 +115,6 @@ evry 1 day -clean-mpv-priv-frames && {
 	mpv-clean-priv-frames clean
 }
 
-# other random private jobs
-bash "$HPIDATA/private.job"
-
 BACKUP_FILE="${HOME}/.cache/restic-backup.lastrun"
 restic-backup connected >/dev/null 2>&1 && DRIVE_CONNECTED=1 || DRIVE_CONNECTED=0
 RUN_BACKUP=0

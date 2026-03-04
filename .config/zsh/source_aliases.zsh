@@ -6,7 +6,7 @@ source "${ALIAS_DIR}/git_aliases"     # Git aliases (from oh-my-zsh)
 source "${ALIAS_DIR}/project_aliases" # Aliases for my own projects
 source "${ALIAS_DIR}/dev_aliases"     # language tooling/programming aliases
 # Personal Aliases (e.g. ssh to servers)
-source_if_exists "${SHARED_DIR}/creds/personal_aliases"
+source_if_exists "${SHARED_DIR}/personal_aliases"
 # Tokens for interacting with APIs etc
 source_if_exists "${SHARED_DIR}/creds/tokens"
 source_if_exists "${REPOS}/malexport/malexport.sh"
