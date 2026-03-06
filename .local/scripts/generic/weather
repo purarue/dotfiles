@@ -25,7 +25,7 @@ from my.core.serialize import dumps
 import click
 from autotui.shortcuts import load_from, prompt_namedtuple, dump_to
 
-prefix: Path = Path(os.environ.get("HPIDATA", os.path.expanduser("~/data")))
+prefix: Path = Path(os.environ.get("SHARED_DIR", os.path.expanduser("~/data")))
 
 
 user_cache_dir = os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache"))
