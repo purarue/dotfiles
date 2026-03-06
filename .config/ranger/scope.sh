@@ -62,7 +62,7 @@ pistol_or_exifinfo() {
 }
 
 # dont preview items in private folders
-if [[ "$path" =~ (^|/)\.priv(ate)?([/_]|$) || "$path" =~ .*priv.(jpg|png)$ ]]; then
+if [[ "$path" =~ (^|/)\.priv(ate)?([/_]|$) || "$path" =~ .*priv.(jpe?g|png)$ ]]; then
 	exifinfo "$path" && exit 0
 fi
 

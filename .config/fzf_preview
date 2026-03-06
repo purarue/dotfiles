@@ -52,6 +52,12 @@ image/gif)
 	}
 	;;
 image/*)
+	if [[ "$path" =~ (^|/)\.priv(ate)?([/_]|$) || "$path" =~ .*priv.(jpe?g|png)$ ]]; then
+		try exifinfo "$path" && {
+			dump
+			exit 0
+		}
+	fi
 	column_width=$(((COLUMNS / 2) - 2))
 	column_height=$((maxln - 2))
 	try chafa --size "${column_height}x${column_width}" "$path" 2>/dev/null && {
