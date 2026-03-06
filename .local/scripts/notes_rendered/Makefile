@@ -5,22 +5,22 @@
 
 ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-JOURNAL_TARGET := $(shell echo "${XDG_DOCUMENTS_DIR}/NotesRendered/journal.html")
-JOURNAL_FILES := $(shell find ${XDG_DOCUMENTS_DIR}/Notes/journal -name "*.md" | sort -r)
+JOURNAL_TARGET := $(shell echo "${SHARED_DIR}/NotesRendered/journal.html")
+JOURNAL_FILES := $(shell find ${SHARED_DIR}/Notes/journal -name "*.md" | sort -r)
 
-JOURNAL_IDEAS_TARGET := $(shell echo "${XDG_DOCUMENTS_DIR}/NotesRendered/journal-ideas.html")
-JOURNAL_IDEAS_FILES := $(shell find ${XDG_DOCUMENTS_DIR}/Notes/journal_ideas -name "*.md" | sort -r)
+JOURNAL_IDEAS_TARGET := $(shell echo "${SHARED_DIR}/NotesRendered/journal-ideas.html")
+JOURNAL_IDEAS_FILES := $(shell find ${SHARED_DIR}/Notes/journal_ideas -name "*.md" | sort -r)
 
-GALLERY_TARGET := $(shell echo "${XDG_DOCUMENTS_DIR}/NotesRendered/gallery.html")
+GALLERY_TARGET := $(shell echo "${SHARED_DIR}/NotesRendered/gallery.html")
 
-VLOGS_TARGET := $(shell echo "${XDG_DOCUMENTS_DIR}/NotesRendered/vlogs.html")
+VLOGS_TARGET := $(shell echo "${SHARED_DIR}/NotesRendered/vlogs.html")
 VLOGS_FILES := $(shell find "${HOME}/Files/Vlogs/" -name '*.srt' | sort -r)
 
 EVENTS := $(shell find "${HPIDATA}/ttally" -name 'event-*' | sort -r)
-EVENTS_TARGET_SCORE := $(shell echo "${XDG_DOCUMENTS_DIR}/NotesRendered/events-score.html")
-EVENTS_TARGET_DATE := $(shell echo "${XDG_DOCUMENTS_DIR}/NotesRendered/events.html")
-EVENTS_COMMENTS := $(shell echo "${XDG_DOCUMENTS_DIR}/NotesRendered/events-comments.html")
-EVENTS_PLAYS := $(shell echo "${XDG_DOCUMENTS_DIR}/NotesRendered/events-plays.html")
+EVENTS_TARGET_SCORE := $(shell echo "${SHARED_DIR}/NotesRendered/events-score.html")
+EVENTS_TARGET_DATE := $(shell echo "${SHARED_DIR}/NotesRendered/events.html")
+EVENTS_COMMENTS := $(shell echo "${SHARED_DIR}/NotesRendered/events-comments.html")
+EVENTS_PLAYS := $(shell echo "${SHARED_DIR}/NotesRendered/events-plays.html")
 
 VLOG_TXT_FILES_DIR := $(shell echo "${XDG_CACHE_HOME}/vlog_txt_files")
 

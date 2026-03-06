@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 journal() {
-	cd "$XDG_DOCUMENTS_DIR/Notes/journal/" || return $?
+	cd "$SHARED_DIR/Notes/journal/" || return $?
 	ranger
 }
 
@@ -26,7 +26,7 @@ journal-md() {
 
 journal-new() {
 	local target
-	local default_dir="${XDG_DOCUMENTS_DIR}/Notes/journal"
+	local default_dir="${SHARED_DIR}/Notes/journal"
 	if [[ -n "$1" ]]; then
 		if [[ -d "$1" ]]; then
 			default_dir="$1"
@@ -48,13 +48,13 @@ journal-new() {
 
 journal-last() {
 	local target
-	cd "${XDG_DOCUMENTS_DIR}/Notes/journal" || return
+	cd "${SHARED_DIR}/Notes/journal" || return
 	target="$(find -type f | sort -n | tail -n 1)" || return
 	editor "$target"
 }
 
 # quick note for something I should write about more later
 journal-idea() {
-	journal-new "$XDG_DOCUMENTS_DIR/Notes/journal_ideas"
+	journal-new "${SHARED_DIR}/Notes/journal_ideas"
 }
 

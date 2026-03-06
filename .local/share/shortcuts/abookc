@@ -1,2 +1,2 @@
 #!/bin/sh
-exec abook -C "$XDG_CONFIG_HOME/abook/abookrc" -f "$XDG_DOCUMENTS_DIR/addressbook" "$@"
+exec abook -C "$XDG_CONFIG_HOME/abook/abookrc" -f "${SHARED_DIR}/addressbook" "$@"

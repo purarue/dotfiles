@@ -422,7 +422,7 @@ class google:
     https://github.com/purarue/google_takeout_parser
     """
 
-    takeout_path: Paths = data("google_takeout/*.zip")
+    takeout_path: Paths = data("google_takeout")
 
 
 class ttt:

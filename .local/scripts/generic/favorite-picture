@@ -3,7 +3,7 @@
 INPUT_FILE="${1?:pass input file as first arg}"
 FILENAME="$(basename "$INPUT_FILE")"
 
-TARGET_DIR="${XDG_DOCUMENTS_DIR}/PicturesFavorites"
+TARGET_DIR="${SHARED_DIR}/PicturesFavorites"
 if [[ ! -d "${TARGET_DIR}" ]]; then
 	printf 'Target directory %s does not exist\n' "${TARGET_DIR}" >&2
 fi
