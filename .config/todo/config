@@ -3,7 +3,7 @@
 
 # Your todo.txt directory (this should be an absolute path)
 if [[ -z "$TODO_DIR" ]]; then
-	export TODO_DIR="${HPIDATA}/todo"
+	export TODO_DIR="${SHARED_DIR}/todos/todo"
 fi
 
 # Your todo/done/report.txt locations
