@@ -11,8 +11,6 @@ export SHELL_BOOT_TIME
 export TTALLY_DATA_DIR="${HPIDATA}/ttally"
 # https://github.com/purarue/mint
 export MINT_DATA="${HPIDATA}/mint"
-# https://github.com/purarue/url_cache
-export URL_CACHE_DIR="${HPIDATA}/url_cache"
 # https://github.com/purarue/oh-my-stars
 export OH_MY_STARS_NETRC="${XDG_CONFIG_HOME}/netrc"
 # https://github.com/purarue/malexport
@@ -23,20 +21,20 @@ export MAL_ID_CACHE_DIR="${REPOS}/dbsentinel/data/mal-id-cache"
 # https://github.com/purarue/plaintext-playlist
 export PLAINTEXT_PLAYLIST_MUSIC_DIR="${XDG_MUSIC_DIR}"
 # https://github.com/purarue/ipgeocache
-export IPGEOCACHE_DIR="${HPIDATA}/ipgeocache"
+export IPGEOCACHE_DIR="$HOME/.cache/ipgeocache"
 # https://github.com/todotxt/todo.txt-cli
-export TODO_DIR="${HPIDATA}/todo" # todo.txt
+export TODO_DIR="${SHARED_DIR}/todos/todo" # todo.txt
 # https://github.com/purarue/mpv-history-daemon
 export MPV_HISTORY_DAEMON_SCAN_TIME='5'
 export CALCURSE_DIR="${HOME}/.cache/cacurse_generated"
-export CALCURSE_LOAD_DIR="${HPIDATA}/calcurse_load"
+export CALCURSE_LOAD_DIR="${SHARED_DIR}/.calcurse_load"
 # $PATH for bgproc directories, for background processes
 # https://github.com/purarue/bgproc
 export BGPROC_PATH="${REPOS}/HPI-personal/jobs:${HPIDATA}/jobs:${HOME}/.local/scripts/supervisor_jobs:${REPOS}/vps/jobs"
 export BGPROC_DATE_FMT='+%Y-%m-%dT%H-%M-%S'
 # $PATH for https://github.com/purarue/reminder-sink
-export REMINDER_SINK_PATH="${HPIDATA}/reminder-sink:${HOME}/.local/scripts/reminder-sink"
-export REMINDER_SINK_SILENT_FILE="${HPIDATA}/reminder-sink-silent.txt"
+export REMINDER_SINK_PATH="${SHARED_DIR}/reminder-sink:${HOME}/.local/scripts/reminder-sink"
+export REMINDER_SINK_SILENT_FILE="${SHARED_DIR}/reminder-sink-silent.txt"
 # https://github.com/purarue/my_feed
 export TMDB_CACHE_DIR="${FILES_DIR}/feed_tmdb_cache"
 export GIANTBOMB_CACHE_DIR="${FILES_DIR}/feed_giantbomb_cache"

@@ -43,8 +43,8 @@ class Event(NamedTuple):
 import os
 from enum import Enum
 
-if "HPIDATA" in os.environ:
-    self_types_file = os.path.join(os.environ["HPIDATA"], ".self_types.txt")
+if "SHARED_DIR" in os.environ:
+    self_types_file = os.path.join(os.environ["SHARED_DIR"], ".self_types.txt")
 elif "SELF_TYPES_FILE" in os.environ:
     self_types_file = os.environ["SELF_TYPES_FILE"]
 else:

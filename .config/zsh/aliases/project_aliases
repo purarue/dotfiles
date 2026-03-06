@@ -234,7 +234,7 @@ flf() {
 	fl flip
 	fls
 }
-alias flip-edit='editor "$HPIDATA/.flipflop.txt"'
+alias flip-edit='editor "$SHARED_DIR/.flipflop.txt"'
 
 # https://github.com/purarue/mpv-sockets
 # cd to the directory where the current piece of media is playing from
