@@ -3,8 +3,6 @@
 set -e
 set -o pipefail
 
-export GENPASSWD_LENGTH=32
-
 # generates a password and puts it on your clipboard
 # uses https://github.com/purarue/genpasswd
 # or 'pip install diceware'
