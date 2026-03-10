@@ -23,7 +23,7 @@ else
 	myArray=("$@")
 	for arg in "${myArray[@]}"; do
 		if [[ -f "$arg" && ! -f "$DIR/${arg%.*}.mp4" ]]; then
-			ffmpeg -i "$arg" -codec:v libx264 -preset medium -crf 22 -codec:a aac -qscale:a 6 -strict experimental "$DIR/${arg%.*}.mp4"
+			ffmpeg -i "$arg" -codec:v libx264 -preset slow -crf 23 -codec:a aac -qscale:a 4 "$DIR/${arg%.*}.mp4"
 		else
 			printf "%s\n" "$arg is invalid or output file already exist"
 			continue

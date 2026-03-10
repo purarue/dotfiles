@@ -37,7 +37,7 @@ else
 			if is_vertical_video "$arg"; then
 				scale='-1:1080'
 			fi
-			ffmpeg -i "$arg" -vf scale="$scale" -codec:v libx264 -preset medium -crf 23 -codec:a aac -qscale:a 6 -strict normal "$DIR/${arg%.*}.mp4"
+			ffmpeg -i "$arg" -vf scale="$scale" -codec:v libx264 -preset medium -crf 23 -codec:a aac -qscale:a 4 -strict normal "$DIR/${arg%.*}.mp4"
 			oldsize="$(du -h "$arg" | awk '{print $1}')"
 			newsize="$(du -h "$DIR/${arg%.*}.mp4" | awk '{print $1}')"
 			echo "old size: $oldsize"
