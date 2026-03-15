@@ -55,7 +55,7 @@ return {
         end,
         config = function(_, opts)
             if opts.debug then
-                vim.lsp.set_log_level("debug")
+                vim.lsp.log.set_level("debug")
             end
 
             vim.lsp.enable(opts.servers)

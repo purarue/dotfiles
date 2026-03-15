@@ -66,7 +66,7 @@ return {
         },
         config = function(_, opts)
             require("catppuccin").setup(opts)
-            vim.cmd.colorscheme("catppuccin")
+            vim.cmd.colorscheme("catppuccin-nvim")
         end,
     },
     {
@@ -76,7 +76,7 @@ return {
         },
         priority = 500,
         opts = {
-            options = { theme = "catppuccin" },
+            options = { theme = "catppuccin-nvim" },
             sections = {
                 lualine_a = { "fancy_mode" }, -- fixed width
                 lualine_b = { "branch", "fancy_diff" },
