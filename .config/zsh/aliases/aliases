@@ -57,6 +57,11 @@ ycp() {
 # compdef _git-diff ydh
 # compdef _git-commit ycp
 alias e=nvim
+editor() {
+	notify "Warning: this script is invoking 'editor' not 'e'"
+	sleep 3
+	e "$@"
+}
 abbrev-alias rgv='rg --vimgrep'
 
 # conflicts() {
