@@ -16,4 +16,4 @@ declare -a RG_PARTS
 readarray -d ':' -t RG_PARTS < <(rg_lines "$@")
 [[ -z "${RG_PARTS[*]}" ]] && exit 1
 # arithmetic substitution removes extra newline from number
-exec editor "+$((RG_PARTS[1]))" "${RG_PARTS[0]}"
+exec nvim "+$((RG_PARTS[1]))" "${RG_PARTS[0]}"

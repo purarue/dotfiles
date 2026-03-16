@@ -56,7 +56,7 @@ ycp() {
 }
 # compdef _git-diff ydh
 # compdef _git-commit ycp
-alias e=editor
+alias e=nvim
 abbrev-alias rgv='rg --vimgrep'
 
 # conflicts() {

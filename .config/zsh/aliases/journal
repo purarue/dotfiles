@@ -43,14 +43,14 @@ journal-new() {
 			printf '\n\n'
 		} >"$target"
 	fi
-	editor "$target"
+	nvim "$target"
 }
 
 journal-last() {
 	local target
 	cd "${SHARED_DIR}/Notes/journal" || return
 	target="$(find -type f | sort -n | tail -n 1)" || return
-	editor "$target"
+	nvim "$target"
 }
 
 # quick note for something I should write about more later

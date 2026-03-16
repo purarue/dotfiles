@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 FILE="$(fzfp +m -q "$*")"
 if [[ -n "$FILE" ]]; then
-	editor "$FILE"
+	nvim "$FILE"
 else
 	echo "No file selected" >&2
 	exit 1

@@ -290,7 +290,7 @@ command = '''
 EXECUTABLE="${1:?No Executable provided}"
 LOCATION="$(where "${EXECUTABLE}" | grep -v "pipx_isolate/bin" | head -n1)" || exit $?
 cd "$(dirname "${LOCATION}")" || exit $?
-exec editor "$(basename "${LOCATION}")"
+exec nvim "$(basename "${LOCATION}")"
 '''
 shebang = "#!/bin/zsh"
 
@@ -763,7 +763,7 @@ shebang = "#!/usr/bin/env bash"
 command = '''
 FILE="$(fzfp +m -q "$*")"
 if [[ -n "$FILE" ]]; then
-	editor "$FILE"
+	nvim "$FILE"
 else
 	echo "No file selected" >&2
 	exit 1

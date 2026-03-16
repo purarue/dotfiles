@@ -2,4 +2,4 @@
 EXECUTABLE="${1:?No Executable provided}"
 LOCATION="$(where "${EXECUTABLE}" | grep -v "pipx_isolate/bin" | head -n1)" || exit $?
 cd "$(dirname "${LOCATION}")" || exit $?
-exec editor "$(basename "${LOCATION}")"
+exec nvim "$(basename "${LOCATION}")"

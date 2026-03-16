@@ -22,7 +22,7 @@ read -rp "Branch name: " BRANCH
 git checkout -b "$BRANCH"
 
 # open the file in my editor
-"${EDITOR:-nano}" "$FILE"
+"${EDITOR:-vim}" "$FILE"
 
 # Commit the changes
 git add "$FILE"
