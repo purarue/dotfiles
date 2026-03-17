@@ -34,6 +34,8 @@ Brewfile.lock.json
 # mail
 /.config/msmtp
 /.config/mutt
+/.config/aerc/
+/.config/protonmail/
 /.mbsyncrc
 /.notmuch-config
 /.password-store
