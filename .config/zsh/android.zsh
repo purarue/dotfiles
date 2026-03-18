@@ -27,7 +27,6 @@ syncfiles() {
 	uqf
 }
 alias sf=syncfiles
-alias e=nvim
 
 uu() {
 	syncfiles || true
