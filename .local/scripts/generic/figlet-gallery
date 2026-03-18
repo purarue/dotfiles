@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+try() {
+	output=$(eval '"$@"')
+}
+dump() { cat <<<"$output"; }
+
+for f in /usr/share/figlet/fonts/*; do
+	if try figlet -f "$f" "$@"; then
+		echo "$f"
+		dump
+	fi
+done

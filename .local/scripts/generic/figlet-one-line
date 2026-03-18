@@ -14,7 +14,6 @@ embedded into code as a single string with newlines
 copies that to my clipboard
 """
 
-
 import subprocess
 
 import click

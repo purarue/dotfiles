@@ -32,7 +32,6 @@ from feedgen.feed import FeedGenerator
 from mlength import MediaFile, display_duration
 from yt_dlp.utils import DownloadError
 
-
 filedir = Path(platformdirs.user_cache_dir("tiktok-local-rss"))
 
 if not filedir.exists():

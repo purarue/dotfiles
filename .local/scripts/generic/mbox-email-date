@@ -14,7 +14,6 @@
 Print timestamps for all the messages in a MBOX file
 """
 
-
 import sys
 import shutil
 from tempfile import NamedTemporaryFile

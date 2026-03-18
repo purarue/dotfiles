@@ -16,7 +16,6 @@ from typing import Sequence, Union
 
 import click
 
-
 compression_type = int(
     getattr(zipfile, os.environ.get("RECOMPRESS_ZIP_COMPRESSION", "ZIP_DEFLATED"))
 )

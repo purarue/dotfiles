@@ -31,7 +31,6 @@ import click
 os.environ["TTALLY_SKIP_DEFAULT_IMPORT"] = "1"
 from ttally.core import Extension
 
-
 with open(os.path.join(os.environ["SHARED_DIR"], ".flipflop.txt")) as f:
     flipflop_choices = f.read().strip().splitlines()
 
