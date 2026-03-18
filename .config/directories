@@ -7,12 +7,14 @@ S ~/Pictures/Screenshots
 e ~/.local/share/evry/data/
 b ~/Files/Books
 d ~/Downloads
-f ~/Documents/PicturesFavorites
+f ~/Shared/PicturesFavorites
 m ~/Music
 n ~/Documents/Notes
+t ~/Shared/Notes/timeline/
 p ~/data/playlists
 P ~/Pictures
 r ~/Repos
 s ~/Downloads/Sort
 y ~/.config/yadm
 z ~/.config/zsh
+v ~/Files/Vlogs
