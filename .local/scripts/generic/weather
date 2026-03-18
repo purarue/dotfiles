@@ -321,6 +321,16 @@ def cel_to_fahr(cel: float) -> float:
     return (cel * 9 / 5) + 32
 
 
+today = datetime.now().date()
+
+
+def display_date(dt: datetime) -> str:
+    if dt.date() == today:
+        return dt.strftime("%H:%M")
+    else:
+        return dt.strftime("%a %H:%M").lower()
+
+
 @click.argument("WHERE")
 @click.option("-h", "--hours", default=12, type=click.IntRange(1))
 @click.option(
@@ -360,7 +370,7 @@ def display(hours: int, where: str, output_fmt: OutputFormat) -> None:
             items.append(
                 [
                     (
-                        data.dt.strftime("%H:%M")
+                        display_date(data.dt)
                         if output_fmt == "table"
                         else data.dt.isoformat()
                     ),
