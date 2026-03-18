@@ -13,9 +13,9 @@ abbrev-alias() {
 _autoexpand_abbreviations() {
 	# if there's anything in RBUFFER (after cursor) or if there's a space in the entire buffer, short circuit
 	# otherwise check if the LBUFFER (text before cursor) matches an abbrev-alias
-	if [[ -z "$RBUFFER" && "$LBUFFER$RBUFFER" != *" "* ]] && (( ${#_alias_abbreviations[(r)${LBUFFER}]} )); then
+	if [[ -z "$RBUFFER" && "$LBUFFER$RBUFFER" != *" "* ]] && ((${#_alias_abbreviations[(r)${LBUFFER}]})); then
 		# if enabled, clear zsh-autoggestion to avoid inserting into RBUFFER
-		(( $+widgets[autosuggest-clear] )) && zle autosuggest-clear
+		(($+widgets[autosuggest-clear])) && zle autosuggest-clear
 		zle _expand_alias # expand the alias into the full command
 		return
 	fi

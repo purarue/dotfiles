@@ -317,6 +317,10 @@ def iter_locations(
         yield loc, after_now
 
 
+def cel_to_fahr(cel: float) -> float:
+    return (cel * 9 / 5) + 32
+
+
 @click.argument("WHERE")
 @click.option("-h", "--hours", default=12, type=click.IntRange(1))
 @click.option(
@@ -360,7 +364,7 @@ def display(hours: int, where: str, output_fmt: OutputFormat) -> None:
                         if output_fmt == "table"
                         else data.dt.isoformat()
                     ),
-                    data.temperature_2m,
+                    cel_to_fahr(data.temperature_2m),
                     rain,
                     data.cloud_cover,
                     data.uv_index,
