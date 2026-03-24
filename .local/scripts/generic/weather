@@ -487,6 +487,8 @@ def forecast(where: str, today: bool) -> None:
     # if there's only one location, remove the nesting
     if len(fc) == 1:
         fc = list(fc.values())[0]
+
+    # TODO: add table display
     click.echo(dumps(fc))
 
 
