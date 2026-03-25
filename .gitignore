@@ -121,6 +121,7 @@ __pycache__
 /.gnome/apps/chrome-*
 /.gnupg
 /.gore
+/.gphoto
 /.gradle
 /.ipynb_checkpoints
 /.ivy2
