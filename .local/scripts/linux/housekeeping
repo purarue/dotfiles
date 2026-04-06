@@ -25,7 +25,7 @@ evry 3 days -backup_server && vps_backup_server
 evry 1 day -reminders-notify && reminder-sink-notify
 evry 1 day -reminder-silence-prune && reminder-sink --debug silence reset --if-expired
 
-evry 1 day -save-sms-images && sms-images
+# evry 1 day -save-sms-images && sms-images
 
 # https://github.com/andreafrancia/trash-cli
 evry 1 week -empty-trash && {
@@ -58,7 +58,7 @@ evry 1 week -empty-trash && {
 
 # refresh https://dev.twitch.tv/docs/api/
 # so that https://github.com/purarue/twitchlive continues to work
-evry 2 months -twitch_cli && twitch token
+# evry 2 months -twitch_cli && twitch token
 
 evry 2 hours -data-sync-conflicts && {
 	SYNC_CONFLICTS="$(sync-conflicts "$HPIDATA" 2>/dev/null)"
@@ -80,14 +80,14 @@ evry 1 day -plainplay-resolve && plainplay resolve
 evry 3 weeks -id3stuff && id3stuff -R
 evry 1 day -car-playlist && car-playlist
 
-evry 1 day -backup-keepassdb && backup-keepass-db
+# evry 1 day -backup-keepassdb && backup-keepass-db
 
 # check for new formats in normalizing solves into a single schema
 # https://github.com/purarue/scramble-history
-evry 1 day -check-scramble-history-formats && {
-	python3 -m scramble_history merge --check
-	rifleman "$XDG_CONFIG_HOME/scramble_history/sourcemap.json"
-}
+# evry 1 day -check-scramble-history-formats && {
+# 	python3 -m scramble_history merge --check
+# 	rifleman "$XDG_CONFIG_HOME/scramble_history/sourcemap.json"
+# }
 
 # update https://github.com/purarue/mnu_gsheets
 evry 1 day -mnu && {
@@ -101,19 +101,19 @@ evry 1 day -update-projects && {
 }
 
 # https://github.com/purarue/HPI-personal/blob/master/scripts/backup-cubing
-backup-cubing
+# backup-cubing
 
 # remove redundant backups, merge browser/mpv history
 # https://github.com/purarue/bleanser
 # evry 1 week -merge-browser-history && flock ~/.cache/merge-history-browser merge-browser-history
 # evry 1 week -merge-mpv-history && flock ~/.cache/merge-history-mpv merge-mpv-history
-evry 1 month -dedupe-ghexport && dedupe-ghexport --move-files
+# evry 1 month -dedupe-ghexport && dedupe-ghexport --move-files
 
 # https://github.com/purarue/HPI-personal/blob/master/scripts/mpv_clean_priv_frames
-evry 1 day -clean-mpv-priv-frames && {
-	echo 'Checking priv mpv frames...'
-	mpv-clean-priv-frames clean
-}
+# evry 1 day -clean-mpv-priv-frames && {
+# 	echo 'Checking priv mpv frames...'
+# 	mpv-clean-priv-frames clean
+# }
 
 BACKUP_FILE="${HOME}/.cache/restic-backup.lastrun"
 restic-backup connected >/dev/null 2>&1 && DRIVE_CONNECTED=1 || DRIVE_CONNECTED=0
@@ -131,7 +131,7 @@ if [[ "$RUN_BACKUP" -eq 1 ]] && [[ "$DRIVE_CONNECTED" -eq 1 ]]; then
 	restic-backup backup
 fi
 
-evry 2 weeks -discord-download-attachments && discord-download-attachments
+# evry 2 weeks -discord-download-attachments && discord-download-attachments
 
 # make sure my pythonanywhere website doesn't expire:
 # https://github.com/purarue/pythonanywhere-3-months
@@ -149,6 +149,7 @@ evry 1 week -sync-dbsentinel && {
 evry 1 week -discogs-update && {
 	(cd "$REPOS/albums" && ./update -r)
 }
+# NOTE: this doesn't work unless script is available on $PATH
 evry 3 days -auto-mal-update && {
 	auto-mal-update && rm -rvf "$(evry location -malexport_partial_update)"
 }

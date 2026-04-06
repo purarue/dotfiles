@@ -332,6 +332,7 @@ __pycache__
 /.config/trackma
 /.config/transmission/
 /.config/trashrc
+/.config/VeraCrypt/
 /.config/tree-sitter/
 /.config/twitch-cli/
 /.config/twitchlive
@@ -402,3 +403,5 @@ __pycache__
 /phonedata
 /shared
 /tmp
+.wine
+MY CAMERA.lnk
