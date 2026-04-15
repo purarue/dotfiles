@@ -102,11 +102,7 @@ def main(input_file: Path | None, theme: str, local_css: bool) -> None:
             "rel": "stylesheet",
         },
     )
-    pico_link = None
-    for link in links:
-        if "pico" in link["href"]:
-            pico_link = link
-            break
+    pico_link = any(["pico" in link["href"] for link in links])
 
     if not pico_link:
         head.append(
