@@ -13,8 +13,8 @@ evry 1 day -create_playlists && {
 	# delete playlists if they already existed, so we re-create
 	if [[ -d ./playlists ]]; then
 		find ./playlists -name '*.m3u8' -print -delete
+		rmdir ./playlists
 	fi
-	rmdir ./playlists
 	mkdir ./playlists && cd ./playlists || exit $?
 	# list the names of the playlists using fd
 	# pipe those into 'plainplay m3u' commands that run in parallel (4 per CPU)
