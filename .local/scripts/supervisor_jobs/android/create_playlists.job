@@ -1,11 +1,20 @@
 #!/usr/bin/env bash
 
 evry 1 day -create_playlists && {
-	printlog 'creating playlists...'
-	# cd "$PLAINTEXT_PLAYLIST_MUSIC_DIR" && find . "$PLAINTEXT_PLAYLIST_MUSIC_DIR" -maxdepth 1 -type f -name '*.m3u8' -print -delete
-	cd "$SYNCTHING_BASE"
-	cd playlists
 
+	printlog 'creating playlists...'
+	cd "$SYNCTHING_BASE" || exit $?
+	# delete playlists if they already existed, so we re-create
+	if [[ -d ./playlists ]]; then
+		find ./playlists -name '*.m3u8' -print -delete
+	fi
+	rmdir ./playlists
+	cd ./playlists || exit $?
+	# list the names of the playlists using fd
+	# pipe those into 'plainplay m3u' commands that run in parallel (4 per CPU)
+	# this adds a prefix that fixes the paths to be the relative location of my music directory
 	fd . -I "$PLAINTEXT_PLAYLIST_PLAYLISTS" -d 1 | parallel --max-chars 9999 -j "$(($(nproc) * 4))" -t 'plainplay --m3u-prefix ../../Music/ m3u {/.} > {/.}.m3u8'
+
+	# shuffle the car playlist so I'm not listening to the same thing over and over
 	m3u-shuf "car.m3u8" -o "car.m3u8"
 }
