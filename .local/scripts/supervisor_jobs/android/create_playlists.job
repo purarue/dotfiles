@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 
 evry 1 day -create_playlists && {
-
 	printlog 'creating playlists...'
+	if [[ -z "$SYNCTHING_BASE" ]]; then
+		echo 'SYNCTHING_BASE variable unset' >&2
+		exit 1
+	elif [[ ! -d "$SYNCTHING_BASE" ]]; then
+		printf 'SYNCTHING_BASE directory at %s does not exist\n' "$SYNCTHING_BASE" >&2
+		exit 1
+	fi
 	cd "$SYNCTHING_BASE" || exit $?
 	# delete playlists if they already existed, so we re-create
 	if [[ -d ./playlists ]]; then
