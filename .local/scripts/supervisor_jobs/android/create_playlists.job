@@ -2,8 +2,10 @@
 
 evry 1 day -create_playlists && {
 	printlog 'creating playlists...'
-	cd "$PLAINTEXT_PLAYLIST_MUSIC_DIR" && find . "$PLAINTEXT_PLAYLIST_MUSIC_DIR" -maxdepth 1 -type f -name '*.m3u8' -print -delete
-	cd "$PLAINTEXT_PLAYLIST_MUSIC_DIR" && fd . -I "$PLAINTEXT_PLAYLIST_PLAYLISTS" -d 1 | parallel -j "$(($(nproc) * 4))" -t 'plainplay m3u {/.} > {/.}.m3u8'
+	# cd "$PLAINTEXT_PLAYLIST_MUSIC_DIR" && find . "$PLAINTEXT_PLAYLIST_MUSIC_DIR" -maxdepth 1 -type f -name '*.m3u8' -print -delete
+	cd "$SYNCTHING_BASE"
+	cd playlists
 
-	m3u-shuf "${PLAINTEXT_PLAYLIST_MUSIC_DIR}/car.m3u8" -o "${PLAINTEXT_PLAYLIST_MUSIC_DIR}/car.m3u8"
+	fd . -I "$PLAINTEXT_PLAYLIST_PLAYLISTS" -d 1 | parallel --max-chars 9999 -j "$(($(nproc) * 4))" -t 'plainplay --m3u-prefix ../../Music/ m3u {/.} > {/.}.m3u8'
+	m3u-shuf "car.m3u8" -o "car.m3u8"
 }
