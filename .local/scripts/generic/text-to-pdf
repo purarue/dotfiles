@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+input="${1:?Input file}"
+output="${2?:Output file}"
+
+if ! command -v weasyprint >/dev/null; then
+	# shellcheck disable=SC2016
+	echo 'Could not find weasyprint on your $PATH' >&2
+	exit 1
+fi
+
+tmpfile="$(mktemp)"
+trap 'rm "$tmpfile"' EXIT
+
+cat <<EOF >"$tmpfile"
+---
+page-size: Letter
+mainfont: sans-serif
+---
+EOF
+
+cat "$input" >>"$tmpfile"
+exec pandoc -f markdown+hard_line_breaks --pdf-engine=weasyprint -o "$output" <"$tmpfile"
