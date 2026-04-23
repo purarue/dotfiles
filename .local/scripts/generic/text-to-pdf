@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
-input="${1:?Input file}"
-output="${2?:Output file}"
+
+set -e
+
+input="${1:?provide input file as first argument}"
+output="${2?:provide output file as second argument}"
 
 if ! command -v weasyprint >/dev/null; then
 	# shellcheck disable=SC2016
@@ -20,3 +23,5 @@ EOF
 
 cat "$input" >>"$tmpfile"
 exec pandoc -f markdown+hard_line_breaks --pdf-engine=weasyprint -o "$output" <"$tmpfile"
+# TODO: if output is an HTML file, wrap this in a HTML/head with utf-8 and some basic CSS?
+# or maybe make another script?
