@@ -1,0 +1,2 @@
+#!/bin/sh
+exec rsync -Pavh ~/.local/opt/tor-browser/app/Browser/Downloads/ ~/Downloads/
