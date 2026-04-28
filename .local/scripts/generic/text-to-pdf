@@ -22,6 +22,6 @@ mainfont: sans-serif
 EOF
 
 cat "$input" >>"$tmpfile"
-exec pandoc -f markdown+hard_line_breaks --pdf-engine=weasyprint -o "$output" <"$tmpfile"
+pandoc -f markdown+hard_line_breaks --pdf-engine=weasyprint -o "$output" <"$tmpfile" || exit $?
 # TODO: if output is an HTML file, wrap this in a HTML/head with utf-8 and some basic CSS?
 # or maybe make another script?
