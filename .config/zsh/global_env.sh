@@ -46,5 +46,5 @@ export OFFLINE_LISTENS_COMMANDS='offline-listens-source'
 export OFFLINE_LISTENS_FILE="${HPIDATA}/offline_listens/${ON_OS}.yaml"
 export ABOOK_FILE="${SHARED_DIR}/addressbook"
 
-export NVIM_SPELLFILE="${XDG_DOCUMENTS_DIR}/.nvim_spelldir/en.utf-8.add"
+export NVIM_SPELLFILE="${SHARED_DIR}/.nvim_spelldir/en.utf-8.add"
 export GENPASSWD_LENGTH=48
