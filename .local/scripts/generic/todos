@@ -9,7 +9,7 @@ maybe_boxes() {
 	fi
 }
 
-chomp <"$XDG_DOCUMENTS_DIR/.todo_names.txt" | while read -r name; do
+chomp <"$SHARED_DIR/.todo_names.txt" | while read -r name; do
 	maybe_boxes <<<"${name/_/ }"
 	"$name" list
 done

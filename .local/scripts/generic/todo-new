@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # a script which creates a todo.txt wrapper
-# this puts a script in $REPOS/personal/bin/ and a directory in $XDG_DOCUMENTS_DIR/todos/
+# this puts a script in $REPOS/personal/bin/ and a directory in $SHARED_DIR/todos/
 
 SCRIPT_DIR="$REPOS/personal/bin/"
 NAME="$(gum input --prompt "Name of script/todo.txt directory> " | chomp)" || exit 1
@@ -15,8 +15,8 @@ if [[ ! -d "$SCRIPT_DIR" ]]; then
 	exit 1
 fi
 
-BASE_DIR="$XDG_DOCUMENTS_DIR/todos/$NAME"
-BASE_DIR_QUOTED="\$XDG_DOCUMENTS_DIR/todos/$NAME"
+BASE_DIR="$SHARED_DIR/todos/$NAME"
+BASE_DIR_QUOTED="\$SHARED_DIR/todos/$NAME"
 
 mkdir -p "$BASE_DIR" || {
 	echo "Error creating directory $BASE_DIR" >&2
@@ -32,4 +32,4 @@ EOF
 } >"$SCRIPT_DIR/$NAME"
 
 chmod +x "$SCRIPT_DIR/$NAME"
-echo "$NAME" >>"$XDG_DOCUMENTS_DIR/.todo_names.txt"
+echo "$NAME" >>"$SHARED_DIR/.todo_names.txt"
