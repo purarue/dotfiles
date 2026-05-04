@@ -8,7 +8,11 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 let g:is_posix = 1
-set background=dark
+if $TERMINAL_THEME ==? 'light'
+  set background=light
+else
+  set background=dark
+endif
 
 " use this command to create banners
 " echo banner | boxes -pv1h3 -dshell | tr '#' '"'
@@ -31,6 +35,7 @@ Plug 'airblade/vim-rooter'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround'
 Plug 'itchyny/lightline.vim'
+Plug 'https://gitlab.com/dbeniamine/todo.txt-vim'
 " enable when im testing with :StartupTime
 " Plug 'dstein64/vim-startuptime'
 call plug#end()
@@ -391,6 +396,12 @@ augroup vimrcAutoView
     " Autosave & Load Views.
     autocmd BufUnload,BufWritePost,BufLeave,WinLeave ?* if MakeViewCheck() | mkview | endif
     autocmd BufWinEnter ?* if MakeViewCheck() | silent loadview | endif
+augroup end
+
+" TODO: move to a ftdetect file?
+augroup vimCustomFiletypes
+	autocmd!
+	autocmd BufNewFile,BufRead todo.txt,done.txt :setfiletype todo
 augroup end
 
 " TODO: add custom syntax/ftplugin files?

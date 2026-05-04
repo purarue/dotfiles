@@ -192,7 +192,6 @@ __pycache__
 /.tox
 /.ts_node_repl_history
 /.var
-/.vim
 /.viminfo
 /.vpython
 /.vpython-root
