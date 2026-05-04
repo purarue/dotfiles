@@ -461,14 +461,14 @@ class discord:
     class data_export:
         """https://github.com/purarue/discord_data"""
 
-        export_path: Paths = data("discord/*.zip")
+        export_path: Paths = data("discord")
 
         _use_zippath = False
 
 
 class runelite:
     class screenshots:
-        export_path: Paths = data("runelite_screenshots")
+        export_path: Paths = "~/Files/runelite_screenshots/"
 
 
 class minecraft:
