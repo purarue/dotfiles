@@ -8,6 +8,12 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 let g:is_posix = 1
+
+" colorscheme configuration, set before loading plugins
+let g:lightline = {'colorscheme': 'everforest'}
+let g:everforest_transparent_background = 1  " disable custom background, use terminal color
+set termguicolors
+
 if $TERMINAL_THEME ==? 'light'
   set background=light
 else
@@ -27,15 +33,16 @@ let mapleader =" "
 
 call plug#begin('~/.local/share/vim/plugged')
 Plug 'sainnhe/everforest'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-sleuth'
 Plug 'mbbill/undotree'
 Plug 'airblade/vim-rooter'
+Plug 'jasonccox/vim-wayland-clipboard'
 Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-surround'
 Plug 'itchyny/lightline.vim'
-Plug 'https://gitlab.com/dbeniamine/todo.txt-vim'
+Plug 'https://gitlab.com/dbeniamine/todo.txt-vim.git'
 " enable when im testing with :StartupTime
 " Plug 'dstein64/vim-startuptime'
 call plug#end()
@@ -57,11 +64,18 @@ if !isdirectory($HOME."/.local/share/vim/swap")
 endif
 set directory=~/.local/share/vim/swap
 
+if !isdirectory($HOME."/.local/share/vim/view")
+  silent! execute "!mkdir -p ~/.local/share/vim/view"
+endif
+set viewdir=~/.local/share/vim/view
+
 syntax enable
 filetype plugin indent on
 
 " manually set encoding
 set encoding=utf-8
+
+set clipboard=unnamedplus
 
 " dont be compatibble with vi
 set nocompatible
@@ -171,7 +185,6 @@ if &t_Co == 8 && $TERM !~# '^Eterm'
 endif
 
 " whitespace
-" TODO: maybe use vim-sleuth
 set wrap
 set textwidth=0 wrapmargin=0 " stop line wrapping
 set formatoptions=tcqrnj1
@@ -193,8 +206,6 @@ set undodir=$HOME/.cache/vim/undodir
 set undofile " save undo history across file closes
 
 " searching
-nnoremap / /\v
-vnoremap / /\v
 set hlsearch
 set incsearch
 set ignorecase
@@ -222,134 +233,12 @@ set wildignore+=**/.git/*
 
 set number relativenumber
 
-" set termguicolors "TODO: make sure this works on remote machines while ssh'd?, background color doesnt work?
-
-""""""""""""""""
-"              "
-"   MAPPINGS   "
-"              "
-""""""""""""""""
-
-map <leader>s :set spell!<CR>
-
-" move up/down in paragraphs/long lines
-nnoremap j gj
-nnoremap k gk
-
-" Wrap long lines of text (use Qq to run)
-" 5Qq to do multiple lines
-" Qip to format paragraph
-nnoremap Q gq
-
-" center/fix cursor when jumping around text
-nnoremap n nzzzv
-nnoremap N Nzzzv
-nnoremap J mzJ`z
-
-" copy visual selection to clipboard
-vmap <leader>c "+y
-vmap <leader>y "+y
-nnoremap <leader>y V"+y
-
-" open netrw like a sidebar file manager
-nnoremap <leader>e :wincmd v<bar> :Explore <bar> :vertical resize 30<CR>
-" open netrw full screen
-nnoremap <leader>E :Explore<CR>
-
-inoremap <C-U> <C-G>u<C-U>
-inoremap <C-W> <C-G>u<C-W>
-nnoremap <C-u> <C-u>zz
-nnoremap <C-d> <C-d>zz
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap G Gzz
-nnoremap gg ggzz
-nnoremap <C-i> <C-i>zz
-nnoremap <C-o> <C-o>zz
-nnoremap % %zz
-nnoremap * *zz
-nnoremap # #zz
-
-nnoremap !B :.!bash<CR>
-vnoremap !B :.!bash<CR>
-
-" append to line
-nnoremap J mzJ`z
-nnoremap <leader><CR> :terminal<CR>
-
-" start a :%s/ with selected text, prompting for replacement
-vnoremap <C-n> y':%s/<C-r>"//gc<Left><Left><Left>
-" in normal mode, use next word as search term
-nnoremap <C-n> yiw:%s/<C-r>"//gc<Left><Left><Left>
-" just start a search/replace and move me to where I can start typing
-
-" swap to previous buffer
-" map <leader><leader> :bprevious<CR>
-
-" nicer binding for window management
-map <leader>w <C-W>
-" can use <leader>w+ and <leader>w- to increase
-" vertical resizing
-nnoremap <leader>= :vertical resize +5<CR>
-nnoremap <leader>- :vertical resize -5<CR>
-
-nnoremap <leader>+ :wincmd +<CR>
-nnoremap <leader>_ :wincmd -<CR>
-
-" undotree
-nnoremap <leader>u :UndotreeToggle<CR>
-nnoremap <leader>X :w<CR>:!chmod +x %<CR>:edit<CR>
-
-" quickfix
-nnoremap <leader>j :cnext<CR>
-nnoremap <leader>k :cnext<CR>
 
 """""""""""""""""""""""
 "                     "
 "   PLUGIN MAPPINGS   "
 "                     "
 """""""""""""""""""""""
-
-" fzf
-map <leader>b :Buffers<CR>
-map <leader>f :Files<CR>
-map <leader>l :Lines<CR>
-map <C-p> :GitFiles<CR>
-" match all lines/files recursively using the_silver_searcher
-map <leader>r :Ag<CR>
-
-" git
-" git related bindings
-
-" jumping around the git gutter
-nmap ]h <Plug>(GitGutterNextHunk)
-nmap [h <Plug>(GitGutterPrevHunk)
-" preview changed git hunks
-nmap <leader>gP <Plug>(GitGutterPreviewHunk)
-
-" stage hunk
-nmap <leader>gA <Plug>(GitGutterStageHunk)
-
-" fugitive (git)
-nmap <leader>gi :G<CR>:wincmd _<CR>
-nmap <leader>gp :Git push<CR>
-nmap <leader>gll :Git pull<CR>
-nmap <leader>glo :Git log<CR>
-" windcmd _ full screens  can <C-W>= to reset
-nmap <leader>gc :Git commit<CR>:wincmd _<CR>
-nmap <leader>gdd :Git diff<CR>:wincmd _<CR>
-nmap <leader>gds :Git diff --staged<CR>:wincmd _<CR>
-nmap <leader>gdh :Git diff HEAD~1 HEAD<CR>:wincmd _<CR>
-" --update, only add item which are already in the index
-nmap <leader>gaa :Git add -u<CR>
-" add everything, adds untracked files
-nmap <leader>gaA :Git add --all<CR>
-" add everything, but prompt me with --patch
-nmap <leader>gap :Git add --all --patch<CR>
-nmap <leader>gst :Git status<CR>
-nmap <leader>gsu :Git status -u<CR>
-nmap <leader>grs :Git reset<CR>
-nmap <leader>grhh :Git reset --hard HEAD<CR>
 
 " runtime ftplugin/man.vim
 
@@ -359,44 +248,6 @@ if !empty($NVIM_SPELLFILE)
 endif
 
 autocmd BufWinEnter,WinEnter term://* startinsert
-
-" https://vim.fandom.com/wiki/Make_views_automatic
-let g:skipview_files = []
-            " \ '[EXAMPLE PLUGIN BUFFER]'
-            " \ ]
-function! MakeViewCheck()
-    if has('quickfix') && &buftype =~ 'nofile'
-        " Buffer is marked as not a file
-        return 0
-    endif
-    if empty(glob(expand('%:p')))
-        " File does not exist on disk
-        return 0
-    endif
-    if len($TEMP) && expand('%:p:h') == $TEMP
-        " We're in a temp dir
-        return 0
-    endif
-    if len($TMP) && expand('%:p:h') == $TMP
-        " Also in temp dir
-        return 0
-    endif
-    if len($TMPPREFIX) && expand('%:p:h') == $TMPPREFIX
-        " still in a temp dir
-        return 0
-    endif
-    if index(g:skipview_files, expand('%')) >= 0
-        " File is in skip list
-        return 0
-    endif
-    return 1
-endfunction
-augroup vimrcAutoView
-    autocmd!
-    " Autosave & Load Views.
-    autocmd BufUnload,BufWritePost,BufLeave,WinLeave ?* if MakeViewCheck() | mkview | endif
-    autocmd BufWinEnter ?* if MakeViewCheck() | silent loadview | endif
-augroup end
 
 " TODO: move to a ftdetect file?
 augroup vimCustomFiletypes

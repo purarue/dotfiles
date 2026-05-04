@@ -84,13 +84,13 @@ if [[ -z $(git config --global user.email) ]]; then
 	fi
 fi
 
-# set editor to use as nvim
-git config --global core.editor nvim
+# set editor to use as vim
+git config --global core.editor vim
 # specify how to handle divergent branches
 git config --global pull.rebase false
 git config --global core.pager 'less -i'
 # set similar configuration for yadm itself
-yadm gitconfig core.editor nvim
+yadm gitconfig core.editor vim
 yadm gitconfig pull.rebase false
 yadm gitconfig core.pager 'less -i'
 case "$ON_OS" in
