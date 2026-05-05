@@ -158,7 +158,10 @@ reminder-list() {
 	tr ':' '\n' <<<"$REMINDER_SINK_PATH" | parallel --keep-order fd . '{}' --type f
 }
 reminder-edit() {
-	reminder-list | fzf-edit "$*"
+	local chosen
+	chosen="$(reminder-list | fzfp +m -q "$*")" || return $?
+	[[ -n "$chosen" ]] && e "$chosen"
+
 }
 reminder-toggle() {
 	local chosen
@@ -224,7 +227,7 @@ rs() {
 		tail -n1 "$(reminder-sink silence file)" | grep -qiE "$TTALLY_FILTERS" && vps_sync_ttally || true
 	}
 }
-alias self-edit='nvim "$HPIDATA/.self_types.txt"'
+alias self-edit='e "$HPIDATA/.self_types.txt"'
 snl() {
 	while sn; do; done
 }
@@ -234,7 +237,7 @@ flf() {
 	fl flip
 	fls
 }
-alias flip-edit='nvim "$SHARED_DIR/.flipflop.txt"'
+alias flip-edit='e "$SHARED_DIR/.flipflop.txt"'
 
 # https://github.com/purarue/mpv-sockets
 # cd to the directory where the current piece of media is playing from
@@ -372,7 +375,8 @@ _job-run() {
 compdef _job-run job-run run-job job-reset
 
 job-edit() {
-	tr ':' '\n' <<<"$BGPROC_PATH" | parallel --keep-order fd . '{}' --type f | fzf-edit "$*"
+  chosen="$(tr ':' '\n' <<<"$BGPROC_PATH" | parallel --keep-order fd . '{}' --type f | fzfp +m -q "$*")" || return $?
+	[[ -n "$chosen" ]] && e "$chosen"
 }
 
 # search for cubing competitions near me

@@ -1,6 +1,6 @@
 #!/bin/sh
 # I have a which-cat zsh function as well, this is a fallback for scripts
-# or when I'm in nvim
+# or when I'm in vim
 EXEC="${1:?Must provide executable as first argument}"
 if LOC="$(which "$EXEC")" >/dev/null 2>&1; then
 	cat "$LOC"

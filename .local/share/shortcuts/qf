@@ -1,4 +1,4 @@
 #!/bin/sh
 # usually used like qf <(grep -Hrin ...) or qf <(!!)
 # to repeat last command and create a quickfix list
-exec nvim -q "$@" +copen
+exec vim -q "$@" +copen

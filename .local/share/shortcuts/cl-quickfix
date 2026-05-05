@@ -4,4 +4,4 @@
 # output of the previous command, then calls this in a new window
 # https://github.com/purarue/dotfiles/blob/cdae322fa6b735d5ca12dd3248354b5eeaaab0be/.config/kitty/kitty.conf#L1581-L1588
 set -e
-exec nvim -q <(clippaste) +copen
+exec vim -q <(clippaste) +copen

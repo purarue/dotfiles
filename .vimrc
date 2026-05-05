@@ -150,7 +150,7 @@ set mousemodel=popup_setpos
 set viewoptions+=unix,slash
 set viewoptions-=options,curdir
 set sessionoptions+=unix,slash
-set sessionoptions-=options,curdir
+set sessionoptions-=curdir
 
 " disable folds
 set nofoldenable

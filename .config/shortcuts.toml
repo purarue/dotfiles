@@ -20,7 +20,8 @@ cd # home
 command = '''
 cd ~ || exit $?
 # fuzzy match list-config names, open one to edit (Edit Config)
-fzfcache list-config-no-hist | sed "s#^$HOME/##g" | fzf-edit
+chosen="$(fzfcache list-config-no-hist | sed "s#^$HOME/##g" | fzfp +m -q "$*")" || return $?
+[ -n "$chosen" ] && exec vim "$chosen"
 '''
 
 [dotfiles]
@@ -290,7 +291,7 @@ command = '''
 EXECUTABLE="${1:?No Executable provided}"
 LOCATION="$(where "${EXECUTABLE}" | grep -v "pipx_isolate/bin" | head -n1)" || exit $?
 cd "$(dirname "${LOCATION}")" || exit $?
-exec nvim "$(basename "${LOCATION}")"
+exec vim "$(basename "${LOCATION}")"
 '''
 shebang = "#!/bin/zsh"
 
@@ -620,7 +621,7 @@ command = '''
 # output of the previous command, then calls this in a new window
 # https://github.com/purarue/dotfiles/blob/cdae322fa6b735d5ca12dd3248354b5eeaaab0be/.config/kitty/kitty.conf#L1581-L1588
 set -e
-exec nvim -q <(clippaste) +copen
+exec vim -q <(clippaste) +copen
 '''
 shebang = "#!/usr/bin/env bash"
 
@@ -628,7 +629,7 @@ shebang = "#!/usr/bin/env bash"
 command = '''
 # usually used like qf <(grep -Hrin ...) or qf <(!!)
 # to repeat last command and create a quickfix list
-exec nvim -q "$@" +copen
+exec vim -q "$@" +copen
 '''
 
 [lessi]
@@ -763,7 +764,7 @@ shebang = "#!/usr/bin/env bash"
 command = '''
 FILE="$(fzfp +m -q "$*")"
 if [[ -n "$FILE" ]]; then
-	nvim "$FILE"
+	exec vim "$FILE"
 else
 	echo "No file selected" >&2
 	exit 1
@@ -854,7 +855,7 @@ exec give
 [which-cat]
 command = '''
 # I have a which-cat zsh function as well, this is a fallback for scripts
-# or when I'm in nvim
+# or when I'm in vim
 EXEC="${1:?Must provide executable as first argument}"
 if LOC="$(which "$EXEC")" >/dev/null 2>&1; then
 	cat "$LOC"
