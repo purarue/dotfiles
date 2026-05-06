@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# exit code 0 if the window is floating, 1 if its tiling
+
+out="$(swaymsg -t get_tree | jq '.. | select(.focused? == true).type == "floating_con"')"
+[[ "$out" == "false" ]] && exit 1
+exit 0

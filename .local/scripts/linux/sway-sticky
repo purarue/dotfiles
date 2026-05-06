@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# i3-sticky [enable|disable]
+# if no argument is provided, toggles sticky
+
+enable_sticky() {
+	swaymsg "floating enable; sticky enable"
+}
+
+disable_sticky() {
+	swaymsg "floating disable; sticky disable"
+}
+
+case "$1" in
+enable)
+	enable_sticky
+	;;
+disable)
+	disable_sticky
+	;;
+*)
+	if sway-is-floating-window; then
+		disable_sticky
+	else
+		enable_sticky
+	fi
+	;;
+esac

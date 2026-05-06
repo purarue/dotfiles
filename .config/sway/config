@@ -1,4 +1,4 @@
-# vim: ft=swayconfig
+# vim: ft=conf
 # Read `man 5 sway` for a complete reference.
 
 ### Variables
@@ -123,7 +123,7 @@ bindsym $mod+Shift+m exec mpv-next-song && i3blocks-refresh-mpv
 bindsym $mod+XF86AudioRaiseVolume exec mpv-seek '5'
 bindsym $mod+XF86AudioLowerVolume exec mpv-seek '-5'
 
-bindsym $mod+Shift+s exec reminder-sink-notify
+# bindsym $mod+Shift+s exec reminder-sink-notify
 
 bindsym $mod+grave exec dunstctl close-all
 
@@ -147,6 +147,9 @@ bindsym $mod+$alt+r exec i3blocks-refresh-all
 # Change normal to inverse to use left mouse button for resizing and right
 # mouse button for dragging.
 floating_modifier $mod normal
+
+# toggle a window to be sticky and float
+bindsym $mod+Shift+s exec --no-startup-id sway-sticky
 
 # Reload the configuration file, touch waybar config to reload it (launch-waybar watches for changes)
 bindsym $mod+Shift+r reload; exec touch ~/.config/waybar/style.css
