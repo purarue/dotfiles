@@ -1,4 +1,6 @@
 " vim ft=vimrc
+"
+" bootstrap plugin manager
 if empty(glob('~/.vim/autoload/plug.vim'))
   if executable('curl')
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -20,10 +22,19 @@ else
   set background=dark
 endif
 
+" $ON_OS is a variable I set on my machines to determine if
+" I'm on a local machine. It's used in my configuration to determine
+" if I should install additional plugins or do custom functionalilty
+" that depends on my local setup
+
+let g:on_os = $ON_OS
+let g:is_local = !empty(g:on_os)  
+
 " use this command to create banners
 " echo banner | boxes -pv1h3 -dshell | tr '#' '"'
 
-let mapleader =" "
+let g:mapleader=" "
+" TODO: set maplocalleader?
 
 """""""""""""""
 "             "
@@ -38,6 +49,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-commentary'
 Plug 'mbbill/undotree'
 Plug 'airblade/vim-rooter'
 Plug 'jasonccox/vim-wayland-clipboard'
