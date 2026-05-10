@@ -2,9 +2,11 @@
 nnoremap <leader>fb :Buffers<CR>
 nnoremap <leader>ff :Files<CR>
 nnoremap <leader>fl :Lines<CR>
+nnoremap <leader>fh :Helptags<CR>
+
 nnoremap <C-p> :GitFiles<CR>
 " match all lines/files recursively using the_silver_searcher
-nnoremap <leader>r :Ag<CR>
+nnoremap <leader>fg :Ag<CR>
 
 " swap buffers
 nnoremap <leader>b <C-^>

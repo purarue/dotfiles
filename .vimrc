@@ -260,6 +260,22 @@ if !empty($NVIM_SPELLFILE)
   command! Spellfile :edit $NVIM_SPELLFILE
 endif
 
+function s:UnderlineColors()
+  highlight clear SpellBad
+  highlight SpellBad cterm=underline,bold
+endfunction
+
+" underline highlights, make sure the change to highlights
+" gets called whenever the colorscheme is changed
+augroup spell_color
+  autocmd!
+  autocmd ColorScheme * call s:UnderlineColors()
+augroup END
+" call once to toggle on
+call s:UnderlineColors()
+" disable capitlization checking
+set spellcapcheck=
+
 autocmd BufWinEnter,WinEnter term://* startinsert
 
 " TODO: move to a ftdetect file?
