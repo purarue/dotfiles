@@ -29,6 +29,7 @@ pipenv() {
 
 	if [[ -z "$PYENV_ROOT" ]]; then
 		echo "No PYENV_ROOT" set
+		return 1
 	fi
 
 	found=
