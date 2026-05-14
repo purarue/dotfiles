@@ -79,6 +79,7 @@ __pycache__
 # https://github.com/michelesr/ipdb/blob/99fdd984e8b78676a69e62420832f3af6dfd1e8a/ipdb/__main__.py#L31
 # https://github.com/ipython/ipython/blob/46a51ed69cdf41b4333943d9ceeb945c4ede5668/IPython/terminal/interactiveshell.py#L133-L135
 /.pdbhistory
+/*_history
 
 # application config files to ignore
 /.3T

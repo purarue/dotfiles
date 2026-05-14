@@ -1,6 +1,51 @@
 #!/bin/zsh
 # development or programming aliases
 
+pipenv() {
+	# use the correct version of python when running pipenv!
+	# why doesn't it do this by default!?!?!?
+
+	# cd to the Pipfile directory
+	local TEMP_PWD="$PWD"
+	while [[ ! -f ./Pipfile ]]; do
+		cd ..
+		# if we weren't in a git repo, and we hit root
+		if [[ $PWD == / ]]; then
+			echo "Could not find Pipfile in current tree" >&2
+			cd "$TEMP_PWD"
+			return 1
+		fi
+	done
+	OLDPWD="$TEMP_PWD"
+
+	local py_ver raw_ver found python_ver_path
+	printf "Changed current directory to %s\n" "$(pwd)" >&2
+	py_ver="$(grep -m1 'python_version' Pipfile)"
+	if [[ -z "$py_ver" ]]; then
+		echo "Could not find python_version in Pipfile!" >&2
+		return 1
+	fi
+	raw_ver="$(cut -d'=' -f2- <<<"$py_ver" | tr -d ' "')"
+
+	if [[ -z "$PYENV_ROOT" ]]; then
+		echo "No PYENV_ROOT" set
+	fi
+
+	found=
+	for f in "$PYENV_ROOT"/versions/${raw_ver}*; do
+		found="$f"
+		break
+	done
+
+	if [[ -z "$found" ]]; then
+		echo "No python version that matches $raw_ver" >&2
+		return 1
+	fi
+
+	python_ver_path="${found}/bin/python"
+	command pipenv --python "${python_ver_path}" "$@"
+}
+
 alias pn=pipenv
 alias pnsh='pipenv shell'
 alias pnd='pipenv run dev'

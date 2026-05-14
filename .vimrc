@@ -93,6 +93,11 @@ set clipboard=unnamedplus
 " dont be compatibble with vi
 set nocompatible
 
+" these are the defaults, modelineexpr is off so arbitrary stuff
+" does not get run in modelines. modelines are fine, see :help modeline for more
+" set modeline
+" set nomodelineexpr
+
 " disable completions from #include files
 set complete-=i
 
