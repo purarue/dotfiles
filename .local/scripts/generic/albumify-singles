@@ -3,6 +3,11 @@
 # converts a bunch of singles to a bunch of albums with the individual
 # singles. This is useful to maintain album art for singles
 
+if [[ -z "$1" ]]; then
+	echo 'Pass 'run' as the first argument to run'
+	exit 1
+fi
+
 while read -r line; do
 	name=$(remove-extension "$line")
 	if [[ -f "$name" ]]; then
