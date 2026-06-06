@@ -99,6 +99,7 @@ __pycache__
 /.cache
 /.cargo
 /.cdk
+/.nix-*
 /.clojure_history
 /.codeium
 /.cookiecutter_replay
