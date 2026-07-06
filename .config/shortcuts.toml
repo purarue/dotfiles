@@ -614,17 +614,6 @@ exec calcurse --datadir "$CALCURSE_DIR" --confdir "$XDG_CONFIG_HOME/calcurse" "$
 '''
 shebang = "#!/usr/bin/env bash"
 
-[cl-quickfix]
-command = '''
-# pastes text from the clipboard and creates a quickfist list
-# this is typically called from kitty -- which saves the
-# output of the previous command, then calls this in a new window
-# https://github.com/purarue/dotfiles/blob/cdae322fa6b735d5ca12dd3248354b5eeaaab0be/.config/kitty/kitty.conf#L1581-L1588
-set -e
-exec vim -q <(clippaste) +copen
-'''
-shebang = "#!/usr/bin/env bash"
-
 [qf] # quickfix
 command = '''
 # usually used like qf <(grep -Hrin ...) or qf <(!!)
@@ -873,17 +862,6 @@ if [[ -z "$URL" ]]; then
 	exit 1
 fi
 exec curl -w "%{url_effective}\n" -ILsS "$URL" -o /dev/null
-'''
-shebang = "#!/usr/bin/env bash"
-
-[unicode]
-command = '''
-file="${TMPDIR:-/tmp}/unicode_input"
-kitty -- sh -c "kitten unicode_input >\"$file\"" || exit $?
-contents="$(cat "$file")"
-[[ -z "$contents" ]] && exit 1
-clp <<<"$contents"
-rm -f "$file"
 '''
 shebang = "#!/usr/bin/env bash"
 

@@ -7,7 +7,7 @@ set -o pipefail
 source "$HPIDATA/tokens"
 
 EXIT=0
-OUTPUT="$(flipflop.py status --filter-on -o json | jq 'keys[]' -r | tr '_' ' ')" || {
+OUTPUT="$(uv run --script "$(which flipflop.py)" status --filter-on -o json | jq 'keys[]' -r | tr '_' ' ')" || {
 	notify "flipflop failed to run"
 	exit 1
 }

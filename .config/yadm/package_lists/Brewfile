@@ -133,7 +133,6 @@ cask 'font-hack-nerd-font'
 # Applications
 cask 'alfred'         # spotlight replacement
 cask 'alacritty'
-cask 'kitty'
 cask 'chromedriver'   # for webscraping
 cask 'mysqlworkbench' # easy mysql interface
 cask 'adoptopenjdk/openjdk/adoptopenjdk8' # java

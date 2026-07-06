@@ -50,20 +50,23 @@ linux*)
 	# add flatpak to $PATH. It already adds itself to XDG_USER_DIRS (which is picked up by rofi)
 	# in /etc/profile.d/flatpak.sh but that doesn't let me launch it from my terminal
 	export PATH="/var/lib/flatpak/exports/bin:${PATH}"
-	# fzf
-	source_if_exists /usr/share/fzf/key-bindings.zsh
-	source_if_exists /usr/share/fzf/completion.zsh
-	# other plugins
-	source_if_exists /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 	source "${ZDOTDIR}/linux.zsh"
-	export ASDF_DATA_DIR="$HOME/.asdf"
-	export PATH="$ASDF_DATA_DIR/shims:$PATH"
 	function linux_updates() {
 		housekeeping-offline
 		rj
 		true
 	}
 	alias u=linux_updates
+
+	# weird ordering right now
+	#
+	# I set my ZDOTDIR in ~/.profile which gets configured on TTY launch before I start sway (my window manager)
+	# that sources ~/.config/zsh/.zshrc (this file)
+	#
+	# nix (home-manager switch) generates a zsh configuration at ~/.zshenv and ~/.zshrc
+	# which we are now sourcing here to get all the generated filepaths for completion/custom shell integration
+	source "$HOME/.zshenv"
+	source "$HOME/.zshrc"
 	;;
 mac*)
 	# Setup fzf
@@ -96,12 +99,5 @@ windows*)
 	;;
 esac
 
-source_if_exists "${XDG_DATA_HOME}/basher/cellar/packages/rupa/z/z.sh"
-
-# override the CTRL+R widget using my hpi zsh history
-source_if_exists "${REPOS}/HPI-personal/scripts/fzf_history_widget.zsh"
-
 havecmd basher && eval "$(basher init - zsh)"
-
-source "${ZDOTDIR}/cache_aliases.zsh"
-true
+true  # prevent exit code of last cmd from showing up in prompt

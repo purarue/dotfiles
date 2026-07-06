@@ -1,4 +1,12 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "click>=8.4.2",
+#     "tabulate>=0.10.0",
+#     "ttally>=0.1.4",
+# ]
+# ///
 
 """
 toggeable todos with the ability to flip back/forth easily
@@ -52,7 +60,7 @@ def extension() -> Extension:
         # use this file as the config file - the Flip namedtuple
         config_file=__file__,
         cache_dir=os.path.expanduser("~/.cache/flipflop"),
-        data_dir=os.path.join(os.environ["HPIDATA"], "flipflop"),
+        data_dir=os.path.join(os.environ["SHARED_DIR"], "flipflop"),
     )
 
 

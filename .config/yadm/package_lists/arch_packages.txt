@@ -3,80 +3,17 @@
 # os
 
 avahi
-autotiling-git
-brightnessctl
 cups
 cups-pdf
 dunst
-flatpak
 gnome-keyring
 networkmanager
 nss-mdns
 pacman-contrib
 pacman-static
 pipewire-pulse
-reflector
-restic
 wireless_tools
 wpa_supplicant
-
-# language support
-
-asdf-vm
-bc
-cabal-install
-ccls
-checkbashisms
-cmake
-composer
-dart
-dash
-dashbinsh
-docker
-elixir
-elixir-ls
-elm-bin
-ghc
-go
-gopls
-graphviz
-inotify-tools
-java-environment-common
-java-runtime-common
-julia
-jupyter-notebook
-lua
-lua-format
-lua-language-server
-mariadb
-mypy
-npm
-nvm
-ocaml
-opam
-perl
-perl-test-perltidy
-php
-poetry
-postgresql
-pyenv
-python-gobject
-python-pip
-python3
-redis
-ruby
-ruby-bundler
-rust
-sbcl
-sbt
-scala
-scalafmt
-shfmt
-stylua
-tidy
-tree-sitter-cli
-valgrind
-yarn
 
 # utilities
 aspell
@@ -110,119 +47,28 @@ figlet
 flameshot
 fzf
 gifsicle
-git
-git-delta
-git-extras
-github-cli
-glow
-gnu-netcat
-gron
-highlight
-htop-vim-git
-hub
-hyperfine
-imagemagick
-jq
-keynav
-khinsider
-kitty
-ldm
-lftp
-libjpeg-turbo # for jpegtran
-librsync
-lm_sensors
-lsb-release
-lynx
-maim
+# khinsider
 man-db
-mediainfo
-mlocate
-moreutils
+# mlocate
 neovim-git
-net-tools
-newsraft
-nmap
-nsxiv
-ntfysh-bin
-ntp
-optipng
-pamixer
-pandoc-bin
-parallel
-pastel
-patch
-perl-image-exiftool
+# TODO: replace?
+# newsraft
 pkgfile
-primesieve
-pulsemixer
-pup
-qrencode
-ranger-git
-ripgrep
-rlwrap
-rofi
-rofi-dmenu
-rsync
-sc-im
-scrot
-shellcheck-bin
-smpeg
-socat
-strace
-syncthing
-task-spooler
-the_silver_searcher
-todotxt-git
-toilet
-tree
-twitch-cli-bin
-unarchiver
-unrar
-unzip
-up
-util-linux
-vi
-viddy
-vim
-wget
-whatmp3
-xh
-yadm
-yq
-zip
+# sc-im
+# smpeg
+# syncthing
+# twitch-cli-bin
 
-# mail
-
-abook
-isync
-msmtp
-mutt-wizard
-neomutt
-notmuch
-pass
-
-# shell
-
-bash
-zsh
-zsh-autosuggestions
-zsh-completions
-zsh-syntax-highlighting
+# TODO: replace?
+# whatmp3
 
 # gui applications
-
-chromedriver
-digikam
-floorp
-python-adblock
-gimp
+python-adblock  # for qutebrowser
 google-chrome
-gpxsee
-keepassxc
-mpv
 obs-studio
-okular
-sqlitebrowser
+
+# installed through here on purpose (doesnt work with nix?)
+mpv
 
 # fonts
 

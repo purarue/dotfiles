@@ -11,7 +11,7 @@ set $down j
 set $up k
 set $right l
 
-set $term 'kitty -1'
+set $term foot
 set $browser floorp
 
 bindsym $mod+Tab exec rofi -show window -display-window "window > "
@@ -240,7 +240,7 @@ bindsym $mod+d mode "launcher"
 bindsym $mod+Shift+d exec notify-send -t 15000 "$(sway-launcher)"; mode "launcher"
 
 mode "launcher" {
-    bindsym a exec kitty; mode "default";
+    bindsym a exec $term; mode "default";
     bindsym f exec floorp; mode "default";
     bindsym d exec discord-browser; mode "default";
     bindsym k exec keepassxc; mode "default";
@@ -331,7 +331,6 @@ exec ~/Repos/exobrain/scripts/exobrain-launch-in-editor
 exec autotiling
 exec warn-battery BAT1
 exec gammastep-loc
-exec launch-waybar
 exec randomize-wallpaper
 exec vpn-toggle
 # open a terminal on launch
@@ -361,6 +360,20 @@ font pango:Source Code Pro 8
 titlebar_padding 1
 titlebar_border_thickness 0
 hide_edge_borders --i3 smart
+
+bar {
+    position top
+
+    # When the status_command prints a new line to stdout, swaybar updates.
+    # The default just shows the current date and time.
+    status_command i3status
+
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #32323200 #32323200 #5c5c5c
+    }
+}
 
 set $background #332b2b
 set $color_urgent #fb4934

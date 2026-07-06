@@ -20,7 +20,7 @@ fi
 
 notify "Starting stream..." "${CLIPBOARD_CONTENTS}"
 
-# run behind tsp (task spooler) so that streams dont overlap
+# run behind ts (task spooler) so that streams dont overlap
 # can add lots of things to stream and one only starts
 # after the previous one has exited
-exec tsp "${STREAM_MEDIA_CMD:-mpvf}" "${CLIPBOARD_CONTENTS}" "$@"
+exec ts "${STREAM_MEDIA_CMD:-mpvf}" "${CLIPBOARD_CONTENTS}" "$@"

@@ -61,14 +61,6 @@ else
 	done
 fi
 
-# copy 'man gawk' -> 'man awk'
-man -w awk 2>/dev/null 1>&2 || {
-	if gawk_path="$(man -w gawk 2>/dev/null)"; then
-		echo 'Copying gawk path...'
-		sudo cp "${gawk_path}" "${gawk_path/gawk/awk}"
-	fi
-}
-
 # install linux related python packages
 havecmd python3 || exit $?
 echo "Installing linux-specific python packages..."

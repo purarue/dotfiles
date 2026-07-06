@@ -295,22 +295,8 @@ mpv-next-ep-and-quit-delete-last() {
 
 alias mpv-play-all='mpv-pause-all false'
 
-curplaying-text() {
-	python3 -m currently_listening_py print --server-url 'wss://purarue.xyz/currently_listening/ws' -o text
-}
-
-# https://github.com/purarue/currently_listening
-curplaying-image() {
-	python3 -m currently_listening_py print --server-url 'wss://purarue.xyz/currently_listening/ws' -o image 2>/dev/null &&
-		kitty icat --align=left ~/.cache/currently-listening-py/currently_listening.jpg
-}
-
 curplaying() {
-	if [[ "$TERM" == 'xterm-kitty' ]]; then
-		curplaying-image
-	else
-		curplaying-text
-	fi
+	python3 -m currently_listening_py print --server-url 'wss://purarue.xyz/currently_listening/ws' -o text
 }
 
 # https://github.com/purarue/rifleman
@@ -375,7 +361,7 @@ _job-run() {
 compdef _job-run job-run run-job job-reset
 
 job-edit() {
-  chosen="$(tr ':' '\n' <<<"$BGPROC_PATH" | parallel --keep-order fd . '{}' --type f | fzfp +m -q "$*")" || return $?
+  chosen="$(tr ':' '\n' <<<"$BGPROC_PATH" | exists | parallel --keep-order fd . '{}' --type f | fzfp +m -q "$*")" || return $?
 	[[ -n "$chosen" ]] && e "$chosen"
 }
 

@@ -60,7 +60,6 @@ return {
                 "javascript",
                 "jq",
                 "json",
-                "kitty",
                 "lua",
                 "make",
                 "markdown",

@@ -44,6 +44,7 @@ let g:mapleader=" "
 
 call plug#begin('~/.local/share/vim/plugged')
 Plug 'sainnhe/everforest'
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'

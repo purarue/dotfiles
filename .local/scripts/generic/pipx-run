@@ -11,7 +11,11 @@ declare path
 if [[ -f "$script" ]]; then
 	path="$script"
 else
-	path="$(which "$script")" || exit 1
+	path="$(command -v "$script")" || exit 1
+	if [[ ! -f "$path" ]]; then
+		printf "Could not find %s on your $PATH\n" "$path"
+		exit 1
+	fi
 fi
 shift
-exec python3 -m pipx run --path "$path" "$@"
+exec pipx run --path "$path" "$@"

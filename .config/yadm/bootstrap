@@ -10,6 +10,9 @@
 # once `yadm clone` has been run and the computer
 # has been restarted.
 
+echo "DONT USE THIS ANYMORE WE USE NIX NOW!"
+exit 1
+
 print_error() {
 	havecmd notify 2>/dev/null && notify -u critical "bootstrap error" "$1"
 	printf '%s%s%s\n' "$(tput setaf 1)" "$1" "$(tput sgr0)" 1>&2
@@ -20,17 +23,10 @@ abort() {
 	exit 1
 } && export -f abort
 
-# install my package list parser/machine detection code
-install_go_cmds() {
-	havecmd go || return $?
-	if ! havecmd spkglist; then
-		go install -v 'github.com/purarue/spkglist/cmd/spkglist@latest' || return $?
-	fi
-	if ! havecmd on_machine; then
-		go install -v 'github.com/purarue/on_machine/cmd/on_machine@latest' || return $?
-	fi
-} && export -f install_go_cmds
+# TODO:
+# install spkglist and on_machine automatically
 
+# install my package list parser/machine detection code
 declare -rx YADM_DIR="${HOME}/.config/yadm"
 declare -rx PACKAGE_DIR="${YADM_DIR}/package_lists"
 
@@ -243,8 +239,6 @@ havecmd basher && {
 	done < <(spkglist "${BASH_PACKAGE_LIST}")
 }
 
-echo 'Setting up kitty theme...'
-printf '# BEGIN_KITTY_THEME\n# Dark\ninclude current-theme.conf\n# END_KITTY_THEME\n' >"${XDG_CONFIG_HOME}/kitty/theme.conf"
 dark-theme # set shared terminal theme
 
 if havecmd reshortcuts; then

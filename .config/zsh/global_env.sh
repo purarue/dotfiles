@@ -8,9 +8,7 @@ SHELL_BOOT_TIME="$(date '+%s')"
 export SHELL_BOOT_TIME
 
 # https://github.com/purarue/ttally
-export TTALLY_DATA_DIR="${HPIDATA}/ttally"
-# https://github.com/purarue/mint
-export MINT_DATA="${HPIDATA}/mint"
+export TTALLY_DATA_DIR="${SHARED_DIR}/ttally"
 # https://github.com/purarue/oh-my-stars
 export OH_MY_STARS_NETRC="${XDG_CONFIG_HOME}/netrc"
 # https://github.com/purarue/malexport
@@ -20,8 +18,6 @@ export MALEXPORT_ZIP_BACKUPS="${HPIDATA}/malexport_backups"
 export MAL_ID_CACHE_DIR="${REPOS}/dbsentinel/data/mal-id-cache"
 # https://github.com/purarue/plaintext-playlist
 export PLAINTEXT_PLAYLIST_MUSIC_DIR="${XDG_MUSIC_DIR}"
-# https://github.com/purarue/ipgeocache
-export IPGEOCACHE_DIR="$HOME/.cache/ipgeocache"
 # https://github.com/todotxt/todo.txt-cli
 export TODO_DIR="${SHARED_DIR}/todos/todo" # todo.txt
 # https://github.com/purarue/mpv-history-daemon

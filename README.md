@@ -33,7 +33,7 @@ On Arch/[sway](https://swaywm.org/):
 
 - [`rofi` wayland fork](https://github.com/lbonn/rofi#wayland-support)
 - [`waybar`](https://github.com/Alexays/Waybar) as a status bar
-- [`kitty`](https://sw.kovidgoyal.net/kitty/) as a terminal (has better wayland support)
+- [`foot`] as my terminal
 
 On Mac:
 

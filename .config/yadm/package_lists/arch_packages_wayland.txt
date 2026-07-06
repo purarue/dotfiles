@@ -1,7 +1,6 @@
 # vim: ft=conf
 
 # os
-gammastep
 sway
 swaybg
 swaylock
@@ -10,15 +9,6 @@ pipewire-pulse
 polkit-kde-agent
 qt5-wayland
 qt6-wayland
-rofi-lbonn-wayland-git
 wev
 wireplumber
-wl-clipboard
 xorg-xwayland
-
-auto-cpufreq  # for battery life
-otf-font-awesome  # for waybar
-
-# for clicking without my trackpad
-wlrctl
-wl-kbptr

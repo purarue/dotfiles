@@ -54,28 +54,16 @@ alias icat='kitten icat'
 
 # https://github.com/sharkdp/bat
 # https://github.com/eza-community/eza
-# https://sw.kovidgoyal.net/kitty/kittens/icat/
 #
 # if trying to 'cat' all images -- use kitty to print the image directly in the terminal
 # if only one argument and a directory, ls instead
 # else, use bat
 cat() {
-	local all_images=1
 	local all_dirs=1
 
 	if [[ -z "$1" ]]; then
-		all_images=0
 		all_dirs=0
 	else
-		# loop through arguments
-		# if its not an image, break -- and use bat instead
-		# if I'm in tmux -- kitty can't print images, so fallback
-		for arg in "$@"; do
-			[[ -z "$TMUX" && -f "$arg" && "$(file-mime "$1")" =~ '^image/' ]] && continue
-			all_images=0
-			break
-		done
-
 		for arg in "$@"; do
 			if [[ ! -d "$arg" ]]; then
 				all_dirs=0
@@ -86,9 +74,11 @@ cat() {
 
 	if ((all_dirs)); then
 		eza "$@"
-	elif ((all_images)); then
-		icat "$@"
 	else
-		bat "$@"
+		if havecmd bat; then
+			bat "$@"
+		else
+			command cat "$@"
+		fi
 	fi
 }
