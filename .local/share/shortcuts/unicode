@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-file="${TMPDIR:-/tmp}/unicode_input"
-kitty -- sh -c "kitten unicode_input >\"$file\"" || exit $?
-contents="$(cat "$file")"
-[[ -z "$contents" ]] && exit 1
-clp <<<"$contents"
-rm -f "$file"

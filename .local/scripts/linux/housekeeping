@@ -78,7 +78,7 @@ evry 1 day -plainplay-resolve && plainplay resolve
 # fix broken ID3 metadata on my music, add songs to my car playlist
 # https://github.com/purarue/plaintext_playlist_py
 evry 3 weeks -id3stuff && id3stuff -R
-evry 1 day -car-playlist && car-playlist
+evry 1 day -car-playlist && pipx-run car-playlist
 
 # evry 1 day -backup-keepassdb && backup-keepass-db
 

@@ -13,7 +13,7 @@ try:
     # default history len is -1 (infinite), which may grow unruly
     readline.set_history_length(1000)
     # https://bugs.python.org/issue20886#msg265568
-except FileNotFoundError:
+except FileNotFoundError, OSError:
     pass
 
 atexit.register(readline.write_history_file, history)

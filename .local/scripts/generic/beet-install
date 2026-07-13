@@ -1,14 +1,5 @@
 #!/usr/bin/env bash
-if ! havecmd uv; then
-  echo 'Could not find uv on your $PATH' >&2
-  exit 1
-fi
-python_path="$(uv python find 3.12.8)"
-if [[ -z "$python_path" ]]; then
-  echo "Could not find python 3.12.8, run 'uv python install 3.12.8' to install it" >&2
-  exit 1
-fi
-pipx install beets --python "$python_path"
+pipx install beets --python "$(pyenv-full-path 3.12.8)"
 pipx inject beets beets-filetote
 pipx inject beets discogs_client
 pipx inject beets pylast

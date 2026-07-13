@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 
-# actual (budgeting tool) configuration
+# actual (name of the budgeting tool) configuration
 let
   actualDataDir = "${config.home.homeDirectory}/.local/share/budget-data";
   actualCfgDir  = "${config.home.homeDirectory}/.config/actual";
@@ -53,12 +53,12 @@ in
     pkgs.pipx
     pkgs.fd
     pkgs.rofi
-    # TODO: configure flavor that I want, maybe using https://github.com/yazi-rs/flavors/tree/main/dracula.yazi and https://github.com/aguirre-matteo/nix-yazi-flavors/blob/main/README.md
-    pkgs.yazi
     pkgs.autotiling
     pkgs.proton-vpn-cli
     pkgs.inotify-tools
     pkgs.trash-cli
+    pkgs.todo-txt-cli
+    pkgs.boxes
     pkgs.zip
     pkgs.yadm
     pkgs.xh
@@ -90,6 +90,9 @@ in
     pkgs.ntfy-sh
     pkgs.nsxiv
     pkgs.nmap
+    pkgs.mongodb-tools
+    pkgs.neovim
+    pkgs.tree-sitter
     pkgs.pulsemixer
     pkgs.pup
     pkgs.qrencode
@@ -99,11 +102,11 @@ in
     pkgs.maim
     pkgs.lynx
     pkgs.gocryptfs
+    pkgs.asdf-vm
+    pkgs.shfmt
+    pkgs.git-open
     pkgs.croc
-    pkgs.libxcrypt
-    pkgs.pkg-config
     pkgs.newsraft
-    pkgs.lsb-release
     pkgs.lm_sensors
     pkgs.jq
     pkgs.imagemagick
@@ -113,6 +116,8 @@ in
     pkgs.gron
     pkgs.netcat-gnu
     pkgs.glow
+    pkgs.gum
+    pkgs.gh
     pkgs.git-extras
     pkgs.delta  # TODO; migrate config here
     pkgs.libjpeg # for jpegtran
@@ -124,12 +129,8 @@ in
     # NOTE: hmm -- should these be installed here? or through arch/pacman?
     # mpv in particular installed through nix seems to have some error playing video (works fine through pacman)
     pkgs.digikam
-    pkgs.tor-browser
     pkgs.kdePackages.okular
-    pkgs.chromedriver
     pkgs.sqlitebrowser
-    pkgs.ungoogled-chromium
-    pkgs.floorp-bin
     pkgs.gimp
     pkgs.gpxsee
     pkgs.keepassxc

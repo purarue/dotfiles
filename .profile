@@ -112,7 +112,7 @@ export LC_ALL='en_US.UTF-8'
 export VISUAL='vim'
 export EDITOR='vim'
 export PAGER='less'
-export TERMINAL='kitty'
+export TERMINAL='foot'
 export READER='okular'
 
 # define where ZDOTDIR (rest of zsh configuration) is

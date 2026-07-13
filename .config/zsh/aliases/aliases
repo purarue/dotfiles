@@ -35,7 +35,7 @@ abbrev-alias yds='yadm diff --staged'
 abbrev-alias yst='yadm status'
 abbrev-alias yd='yadm diff'
 abbrev-alias ysu='yadm status -u'
-alias yad='yadm add' # no abbrev because yadm has slow completion
+alias ya='yadm add' # no abbrev because yadm has slow completion
 abbrev-alias yA='yadm add --all'
 abbrev-alias yc='yadm commit'
 abbrev-alias 'yc!=yadm commit --amend'
@@ -153,14 +153,18 @@ unstar() {
 	star "$1" DELETE
 }
 # create a notes file in the current directory
-alias create-note='touch "$(daystamp_).md"'
+note-create() {
+	local filename
+	filename="$(daystamp_).md"
+	touch "$filename" && echo "Created '$filename'" >&2
+}
 # pipe some command into stripcolors, removes any ANSI color codes
 alias stripcolors="sed 's/\x1B\[[0-9;]\+[A-Za-z]//g'"
 alias '?=duck'                                         # alias ? to duck, searches duckduckgo in lynx
 alias tetris='autoload -Uz tetriscurses; tetriscurses' # tetris in zsh!
-alias rgf='rg --files | rg'                            # search against filepaths with rg
+abbrev-alias rgf='rg --files | rg'                     # search against filepaths with rg
 # start a server to test HTTP requests against
-alias httpbin='docker run -p 80:80 kennethreitz/httpbin'
+abbrev-alias httpbin='docker run -p 80:80 kennethreitz/httpbin'
 
 # stop import from crashing my system for some reason
 alias 'import=printf "Use /usr/bin/import instead\n"'

@@ -115,9 +115,9 @@ alias albums-manual='hpi query my.nextalbums.reason_manual -s'
 alias albums-manual-desc='albums-manual | albums-describe'
 
 # https://github.com/purarue/HPI
-source_if_exists "${REPOS}/HPI/scripts/functions.sh"
-source_if_exists "${REPOS}/HPI-personal/scripts/functions.sh"
-source_if_exists "${REPOS}/my_feed/scripts/functions.sh"
+#source_if_exists "${REPOS}/HPI/scripts/functions.sh"
+#source_if_exists "${REPOS}/HPI-personal/scripts/functions.sh"
+#source_if_exists "${REPOS}/my_feed/scripts/functions.sh"
 hpi-create-custom-editable() {
 	reorder_editable reorder --create-custom -e "$(python3 -m site --user-site)/_00_hpi_force_order.pth" ~/Repos/HPI-personal ~/Repos/HPI ~/Repos/HPI-karlicoss/src
 }
@@ -221,6 +221,7 @@ se() {
 	command rm -f "$tf"
 }
 abbrev-alias es=se
+alias ct='cd "$TTALLY_DATA_DIR"; ls'
 
 rs() {
 	reminder-sink-silence && {
@@ -361,7 +362,7 @@ _job-run() {
 compdef _job-run job-run run-job job-reset
 
 job-edit() {
-  chosen="$(tr ':' '\n' <<<"$BGPROC_PATH" | exists | parallel --keep-order fd . '{}' --type f | fzfp +m -q "$*")" || return $?
+	chosen="$(tr ':' '\n' <<<"$BGPROC_PATH" | exists | parallel --keep-order fd . '{}' --type f | fzfp +m -q "$*")" || return $?
 	[[ -n "$chosen" ]] && e "$chosen"
 }
 

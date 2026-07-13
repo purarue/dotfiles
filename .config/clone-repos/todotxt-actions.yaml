@@ -3,5 +3,6 @@
   preinstall: git pull
   postinstall:
     - pip install -r ./requirements.txt
+    - mkdir ~/.local/share/todo-actions
     - rsync -Pavh ./todo.actions.d/ "$HOME/.local/share/todo-actions/"
     - sed -i -e 's#0 - Start task.*#\\#' "$HOME/.local/share/todo-actions/actionmenu" # patch actionmenu to remove the first option (timetrack), this makes complete the default option

@@ -20,7 +20,7 @@ cd # home
 command = '''
 cd ~ || exit $?
 # fuzzy match list-config names, open one to edit (Edit Config)
-chosen="$(fzfcache list-config-no-hist | sed "s#^$HOME/##g" | fzfp +m -q "$*")" || return $?
+chosen="$(fzfcache list-config-no-hist | sed "s#^$HOME/##g" | fzfp +m -q "$*")" || exit $?
 [ -n "$chosen" ] && exec vim "$chosen"
 '''
 
@@ -529,7 +529,7 @@ command = '''
 # wait for internet, sync my mail, then launch neomutt
 wait-for-internet && mailsync
 i3blocks-refresh-mk mail
-neomuttr || return $?
+neomuttr || exit $?
 i3blocks-refresh-mk mail
 '''
 

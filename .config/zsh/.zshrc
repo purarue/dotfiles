@@ -100,4 +100,6 @@ windows*)
 esac
 
 havecmd basher && eval "$(basher init - zsh)"
-true  # prevent exit code of last cmd from showing up in prompt
+true # prevent exit code of last cmd from showing up in prompt
+
+cat -n "$TODO_DIR/todo.txt" | boxes | chomp

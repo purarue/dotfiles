@@ -41,6 +41,9 @@ export PYENV_ROOT="${XDG_DATA_HOME}/pyenv"
 export PIPENV_PYTHON="${PYENV_ROOT}/shims/python"
 export PYTHONBREAKPOINT='ipdb.set_trace'
 
+# asdf vm
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+
 # Cookiecutter - for pypi projects
 export COOKIECUTTER_CONFIG="${XDG_CONFIG_HOME}/cookiecutterrc"
 

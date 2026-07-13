@@ -301,6 +301,7 @@ __pycache__
 /.config/mozilla
 /.config/malexport
 /.config/torbrowser
+/.tor project/
 /.config/menus
 /.xsession
 /.config/mimeapps.list

@@ -1,5 +1,5 @@
 #!/bin/sh
 cd ~ || exit $?
 # fuzzy match list-config names, open one to edit (Edit Config)
-chosen="$(list-config-no-hist | sed "s#^$HOME/##g" | fzfp +m -q "$*")" || exit $?
+chosen="$(fzfcache list-config-no-hist | sed "s#^$HOME/##g" | fzfp +m -q "$*")" || exit $?
 [ -n "$chosen" ] && exec vim "$chosen"

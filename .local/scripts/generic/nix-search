@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-exec nix search nixpkgs "$@" 
+exec nix search nixpkgs "$@"

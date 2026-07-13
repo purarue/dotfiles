@@ -9,5 +9,5 @@ source "${ALIAS_DIR}/dev_aliases"     # language tooling/programming aliases
 source_if_exists "${SHARED_DIR}/personal_aliases"
 # Tokens for interacting with APIs etc
 source_if_exists "${SHARED_DIR}/creds/tokens"
-source_if_exists "${REPOS}/malexport/malexport.sh"
-source_if_exists "${REPOS}/malexport/scripts/bot_sources.sh"
+# source_if_exists "${REPOS}/malexport/malexport.sh"
+# source_if_exists "${REPOS}/malexport/scripts/bot_sources.sh"
