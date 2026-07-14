@@ -16,6 +16,9 @@ if [[ -n "$WAYLAND_DISPLAY" ]]; then
 	if ((FULL)); then
 		wayshot -c "$OUTPUT_FILENAME"
 	else
+		# TODO: this is not working right now, maybe need to install
+		# something to select an window or something?
+		# or find a different tool for sway, but I thought this was wlroots compatible??
 		wayshot -c -s "$OUTPUT_FILENAME"
 	fi
 else

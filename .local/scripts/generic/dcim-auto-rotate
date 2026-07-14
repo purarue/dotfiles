@@ -3,7 +3,7 @@ set -xeo pipefail
 if [[ -n "$1" ]]; then
 	dir="$1"
 else
-	dir="$HOME/.local/share/PhoneCamera"
+	dir="$HOME/.local/share/OpenCamera"
 	case "$ON_OS" in
 	android_termux*)
 		dir="$HOME/storage/dcim"

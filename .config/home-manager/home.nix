@@ -51,6 +51,8 @@ in
     pkgs.zsh
     pkgs.bash
     pkgs.pipx
+    pkgs.wayshot
+    pkgs.dragon-drop
     pkgs.fd
     pkgs.rofi
     pkgs.autotiling
