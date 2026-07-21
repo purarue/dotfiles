@@ -50,9 +50,9 @@ in
     pkgs.bat
     pkgs.zsh
     pkgs.bash
-    pkgs.pipx
     pkgs.wayshot
     pkgs.dragon-drop
+    pkgs.figlet
     pkgs.fd
     pkgs.rofi
     pkgs.autotiling
@@ -73,7 +73,6 @@ in
     pkgs.unzip
     pkgs.unar
     pkgs.tree
-    pkgs.uv
     pkgs.toilet
     pkgs.ts # task spooler
     pkgs.strace
@@ -130,7 +129,6 @@ in
     # gui applications
     # NOTE: hmm -- should these be installed here? or through arch/pacman?
     # mpv in particular installed through nix seems to have some error playing video (works fine through pacman)
-    pkgs.digikam
     pkgs.kdePackages.okular
     pkgs.sqlitebrowser
     pkgs.gimp

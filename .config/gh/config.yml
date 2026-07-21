@@ -8,9 +8,9 @@ prompt: enabled
 pager:
 # Aliases allow you to create nicknames for gh commands
 aliases:
-  co: pr checkout
-  rc: repo create
-  prc: pr create
-  rcl: repo clone
-  ci: run watch
+    co: pr checkout
+    rc: repo create
+    prc: pr create
+    rcl: repo clone
+    ci: run watch
 version: "1"

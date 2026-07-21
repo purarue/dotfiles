@@ -3,58 +3,47 @@
 #
 # https://github.com/purarue/markdown_stew
 
-ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+ROOT_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
-JOURNAL_TARGET := $(shell echo "${SHARED_DIR}/NotesRendered/journal.html")
-JOURNAL_FILES := $(shell find ${SHARED_DIR}/Notes/journal -name "*.md" | sort -r)
+# Output targets
+NOTES_RENDERED_DIR := $(SHARED_DIR)/NotesRendered
+JOURNAL_TARGET := $(NOTES_RENDERED_DIR)/journal.html
+JOURNAL_IDEAS_TARGET := $(NOTES_RENDERED_DIR)/journal-ideas.html
+GALLERY_TARGET := $(NOTES_RENDERED_DIR)/gallery.html
+VLOGS_TARGET := $(NOTES_RENDERED_DIR)/vlogs.html
+VLOG_TXT_FILES_DIR := $(XDG_CACHE_HOME)/vlog_txt_files
 
-JOURNAL_IDEAS_TARGET := $(shell echo "${SHARED_DIR}/NotesRendered/journal-ideas.html")
-JOURNAL_IDEAS_FILES := $(shell find ${SHARED_DIR}/Notes/journal_ideas -name "*.md" | sort -r)
+# compute source files
+JOURNAL_FILES := $(shell find $(SHARED_DIR)/Notes/journal -name "*.md" | sort -r)
+JOURNAL_IDEAS_FILES := $(shell find $(SHARED_DIR)/Notes/journal_ideas -name "*.md" | sort -r)
+VLOGS_FILES := $(shell find $(HOME)/Files/Vlogs/ -name '*.srt' | sort -r)
 
-GALLERY_TARGET := $(shell echo "${SHARED_DIR}/NotesRendered/gallery.html")
-
-VLOGS_TARGET := $(shell echo "${SHARED_DIR}/NotesRendered/vlogs.html")
-VLOGS_FILES := $(shell find "${HOME}/Files/Vlogs/" -name '*.srt' | sort -r)
-
-EVENTS := $(shell find "${HPIDATA}/ttally" -name 'event-*' | sort -r)
-EVENTS_TARGET_SCORE := $(shell echo "${SHARED_DIR}/NotesRendered/events-score.html")
-EVENTS_TARGET_DATE := $(shell echo "${SHARED_DIR}/NotesRendered/events.html")
-EVENTS_COMMENTS := $(shell echo "${SHARED_DIR}/NotesRendered/events-comments.html")
-EVENTS_PLAYS := $(shell echo "${SHARED_DIR}/NotesRendered/events-plays.html")
-
-VLOG_TXT_FILES_DIR := $(shell echo "${XDG_CACHE_HOME}/vlog_txt_files")
-
-all: $(JOURNAL_TARGET) $(VLOGS_TARGET) $(EVENTS_TARGET_SCORE) $(EVENTS_TARGET_DATE) $(JOURNAL_IDEAS_TARGET) $(EVENTS_COMMENTS) $(EVENTS_PLAYS) $(GALLERY_TARGET)
-
-$(GALLERY_TARGET): ~/Files/gallery/gallery/
-	find ~/Files/gallery/gallery -maxdepth 1 -mindepth 1 -type d -printf '- <https://purarue.xyz/gl/%f>\n' | pandoc -s | html-head | picofy --theme dark | sponge $(GALLERY_TARGET)
-
-$(JOURNAL_TARGET): $(JOURNAL_FILES)
-	markdown_stew -dark-mode -title Journal $(JOURNAL_FILES) > $(JOURNAL_TARGET)
-
-$(JOURNAL_IDEAS_TARGET): $(JOURNAL_IDEAS_FILES)
-	markdown_stew -dark-mode -title 'Journal Ideas' $(JOURNAL_IDEAS_FILES) > $(JOURNAL_IDEAS_TARGET)
-
-$(VLOGS_TARGET): $(VLOGS_FILES)
-	mkdir -p $(VLOG_TXT_FILES_DIR)
-	$(foreach file, $(VLOGS_FILES), bash "${ROOT_DIR}/cache-srt-to-text" $(file) $(VLOG_TXT_FILES_DIR)/$(shell basename $(file) .srt).txt;)
-	FILES=$$(find $(VLOG_TXT_FILES_DIR) -name "*.txt" | sort -r); \
-		markdown_stew -dark-mode -title Vlogs $$FILES > $(VLOGS_TARGET)
-
-$(EVENTS_TARGET_SCORE): $(EVENTS)
-	events-generate --sort-by score | pandoc | html-head --add css-pre-wrap | picofy > $(EVENTS_TARGET_SCORE)
-
-$(EVENTS_TARGET_DATE): $(EVENTS)
-	events-generate | pandoc | html-head --add css-pre-wrap | picofy > $(EVENTS_TARGET_DATE)
-
-$(EVENTS_COMMENTS): $(EVENTS)
-	events-generate --include-comments | pandoc | html-head --add css-pre-wrap | picofy > $(EVENTS_COMMENTS)
-
-$(EVENTS_PLAYS): $(EVENTS)
-	events-generate --filter-type play --include-comments | pandoc | html-head --add css-pre-wrap | picofy > $(EVENTS_PLAYS)
-
-clean:
-	rm -f $(JOURNAL_TARGET) $(VLOGS_TARGET) $(EVENTS_TARGET) $(EVENTS_TARGET_SCORE) $(EVENTS_TARGET_DATE) $(JOURNAL_IDEAS_TARGET) $(EVENTS_COMMENTS) $(EVENTS_PLAYS) $(GALLERY_TARGET)
-	rm -rf $(VLOG_TXT_FILES_DIR)
+all: $(JOURNAL_TARGET) $(VLOGS_TARGET) $(JOURNAL_IDEAS_TARGET) $(GALLERY_TARGET)
 
 .PHONY: all clean
+
+$(NOTES_RENDERED_DIR):
+	mkdir -p $@
+
+$(GALLERY_TARGET): $(HOME)/Files/gallery/gallery/ $(NOTES_RENDERED_DIR)
+	find $(HOME)/Files/gallery/gallery -maxdepth 1 -mindepth 1 -type d \
+		-printf '- <https://purarue.xyz/gl/%f>\n' \
+		| pandoc -s | html-head | picofy --theme dark | sponge $@
+
+$(JOURNAL_TARGET): $(JOURNAL_FILES) $(NOTES_RENDERED_DIR)
+	markdown_stew -dark-mode -title Journal $(JOURNAL_FILES) > $@
+
+$(JOURNAL_IDEAS_TARGET): $(JOURNAL_IDEAS_FILES) $(NOTES_RENDERED_DIR)
+	markdown_stew -dark-mode -title 'Journal Ideas' $(JOURNAL_IDEAS_FILES) > $@
+
+$(VLOGS_TARGET): $(VLOGS_FILES) $(NOTES_RENDERED_DIR)
+	mkdir -p $(VLOG_TXT_FILES_DIR)
+	$(foreach file,$(VLOGS_FILES),\
+		bash "$(ROOT_DIR)/cache-srt-to-text" "$(file)" \
+			"$(VLOG_TXT_FILES_DIR)/$(notdir $(basename $(file))).txt";)\
+	FILES=$$(find $(VLOG_TXT_FILES_DIR) -name "*.txt" | sort -r); \
+		markdown_stew -dark-mode -title Vlogs $$FILES > $@
+
+clean:
+	rm -f $(JOURNAL_TARGET) $(VLOGS_TARGET) $(JOURNAL_IDEAS_TARGET) $(GALLERY_TARGET)
+	rm -rf $(VLOG_TXT_FILES_DIR)
