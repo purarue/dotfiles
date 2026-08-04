@@ -1,2 +1,0 @@
-#!/bin/sh
-exec google-chrome-stable 'http://clients3.google.com/generate_204'
