@@ -313,12 +313,12 @@ class trakt:
         export_path: Paths = data("trakt")
 
 
-class mal:
-    class export:
-        """https://github.com/purarue/malexport"""
-
-        export_path: PathIsh = data("malexport")[-1]
-        zip_backup_path: PathIsh = data("malexport_backups")[-1]
+#class mal:
+#    class export:
+#        """https://github.com/purarue/malexport"""
+#
+#        export_path: PathIsh = data("malexport")[-1]
+#        zip_backup_path: PathIsh = data("malexport_backups")[-1]
 
 
 class grouvee:

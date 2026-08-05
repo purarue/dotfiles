@@ -39,7 +39,7 @@ $(JOURNAL_IDEAS_TARGET): $(JOURNAL_IDEAS_FILES) $(NOTES_RENDERED_DIR)
 $(VLOGS_TARGET): $(VLOGS_FILES) $(NOTES_RENDERED_DIR)
 	mkdir -p $(VLOG_TXT_FILES_DIR)
 	$(foreach file,$(VLOGS_FILES),\
-		bash "$(ROOT_DIR)/cache-srt-to-text" "$(file)" \
+		bash "$(ROOT_DIR)cache-srt-to-text" "$(file)" \
 			"$(VLOG_TXT_FILES_DIR)/$(notdir $(basename $(file))).txt";)\
 	FILES=$$(find $(VLOG_TXT_FILES_DIR) -name "*.txt" | sort -r); \
 		markdown_stew -dark-mode -title Vlogs $$FILES > $@

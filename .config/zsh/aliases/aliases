@@ -15,7 +15,7 @@ mac*)
 	alias ls='eza-defaults'
 	;;
 *)
-	alias ls='eza-defaults --icons'
+	alias ls='eza-defaults --icons auto'
 	;;
 esac
 alias tree='ls --tree --git-ignore'

@@ -56,7 +56,6 @@ in
     pkgs.fd
     pkgs.rofi
     pkgs.autotiling
-    pkgs.proton-vpn-cli
     pkgs.inotify-tools
     pkgs.trash-cli
     pkgs.todo-txt-cli
@@ -106,6 +105,7 @@ in
     pkgs.asdf-vm
     pkgs.shfmt
     pkgs.git-open
+    pkgs.abook
     pkgs.croc
     pkgs.newsraft
     pkgs.lm_sensors

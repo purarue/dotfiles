@@ -7,7 +7,7 @@
 if [ "$1" = '--urlextract' ]; then
 	urls="$(extracturls)" || exit $?
 else
-	urls="$(urlscan -n)"
+	urls="$(urlscan -n | unique)"
 fi
 
 if [ -z "${urls}" ]; then
