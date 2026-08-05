@@ -80,6 +80,7 @@ in
     pkgs.scrot
     pkgs.rsync
     pkgs.rlwrap
+    pkgs.stork
     pkgs.exiftool
     pkgs.patch
     pkgs.pastel
