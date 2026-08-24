@@ -81,6 +81,7 @@ in
     pkgs.rsync
     pkgs.rlwrap
     pkgs.stork
+    pkgs.dua
     pkgs.exiftool
     pkgs.patch
     pkgs.pastel

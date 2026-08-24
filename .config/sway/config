@@ -332,7 +332,7 @@ exec autotiling
 exec warn-battery BAT1
 exec gammastep-loc
 exec randomize-wallpaper
-exec vpn-toggle
+# exec vpn-toggle
 # open a terminal on launch
 exec $term
 
