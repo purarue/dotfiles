@@ -197,6 +197,7 @@ __pycache__
 /.ts_node_repl_history
 /.var
 /.viminfo
+/.viminfz.tmp
 /.vpython
 /.vpython-root
 /.vpython_cipd_cache

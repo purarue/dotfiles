@@ -171,6 +171,8 @@ set showcmd
 " dont add two spaces after a .
 set nojoinspaces
 
+set nofoldenable
+
 " enable mouse in specific modes
 set mouse=nvi
 set mousemodel=popup_setpos
