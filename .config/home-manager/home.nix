@@ -106,6 +106,7 @@ in
     pkgs.gocryptfs
     pkgs.asdf-vm
     pkgs.shfmt
+    pkgs.datamash
     pkgs.git-open
     pkgs.abook
     pkgs.croc
