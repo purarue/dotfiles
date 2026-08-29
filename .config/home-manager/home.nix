@@ -113,6 +113,9 @@ in
     pkgs.newsraft
     pkgs.lm_sensors
     pkgs.jq
+    pkgs.cmatrix
+    pkgs.lolcat
+    pkgs.banner
     pkgs.imagemagick
     pkgs.hyperfine
     pkgs.htop-vim
