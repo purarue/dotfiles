@@ -64,7 +64,6 @@ in
     pkgs.yadm
     pkgs.xh
     pkgs.wget
-    pkgs.yt-dlp
     pkgs.up
     pkgs.vim
     pkgs.viddy
