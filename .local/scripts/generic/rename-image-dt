@@ -14,7 +14,7 @@ from datetime import datetime
 import exifread
 import click
 
-ALLOWED_EXTENSIONS = {".jpg", ".png", ".jpeg"}
+ALLOWED_EXTENSIONS = {".jpg", ".png", ".jpeg", ".mp4"}
 
 
 def taken_at(source: Path) -> datetime:

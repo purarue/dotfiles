@@ -32,7 +32,6 @@ in
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
-
     pkgs.pistol
     # tools
     pkgs.git  # TODO: migrate config here
@@ -46,6 +45,7 @@ in
     pkgs.gammastep
     pkgs.ripgrep
     pkgs.udiskie
+    pkgs.prettier
     pkgs.restic
     pkgs.bat
     pkgs.zsh
@@ -70,6 +70,7 @@ in
     pkgs.util-linux
     pkgs.unzip
     pkgs.unar
+    pkgs.chafa
     pkgs.tree
     pkgs.toilet
     pkgs.ts # task spooler
@@ -88,6 +89,7 @@ in
     pkgs.pandoc
     pkgs.pamixer
     pkgs.optipng
+    pkgs.calcurse
     pkgs.ntfy-sh
     pkgs.nsxiv
     pkgs.nmap

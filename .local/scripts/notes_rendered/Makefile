@@ -17,6 +17,7 @@ VLOG_TXT_FILES_DIR := $(XDG_CACHE_HOME)/vlog_txt_files
 JOURNAL_FILES := $(shell find $(SHARED_DIR)/Notes/journal -name "*.md" | sort -r)
 JOURNAL_IDEAS_FILES := $(shell find $(SHARED_DIR)/Notes/journal_ideas -name "*.md" | sort -r)
 VLOGS_FILES := $(shell find $(HOME)/Files/Vlogs/ -name '*.srt' | sort -r)
+VLOG_TXT_FILES := $(shell find $(VLOG_TXT_FILES_DIR) -name '*.txt' | sort -r)
 
 all: $(JOURNAL_TARGET) $(VLOGS_TARGET) $(JOURNAL_IDEAS_TARGET) $(GALLERY_TARGET)
 
@@ -36,7 +37,7 @@ $(JOURNAL_TARGET): $(JOURNAL_FILES) $(NOTES_RENDERED_DIR)
 $(JOURNAL_IDEAS_TARGET): $(JOURNAL_IDEAS_FILES) $(NOTES_RENDERED_DIR)
 	markdown_stew -dark-mode -title 'Journal Ideas' $(JOURNAL_IDEAS_FILES) > $@
 
-$(VLOGS_TARGET): $(VLOGS_FILES) $(NOTES_RENDERED_DIR)
+$(VLOGS_TARGET): $(VLOGS_FILES) $(NOTES_RENDERED_DIR) $(VLOG_TXT_FILES)
 	mkdir -p $(VLOG_TXT_FILES_DIR)
 	$(foreach file,$(VLOGS_FILES),\
 		bash "$(ROOT_DIR)cache-srt-to-text" "$(file)" \

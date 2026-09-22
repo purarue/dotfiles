@@ -6,4 +6,5 @@ evry 5 minutes -copy_phone_photos_images_rotate && {
 	dcim-auto-rotate # bake in rotations for images taken in the last 2 weeks
 	rsync -Pavh --exclude=".*" "$HOME/.local/share/OpenCamera/" "${XDG_PICTURES_DIR}/phone_pictures" &&
 		find "$HOME/.local/share/OpenCamera" -type f -mtime +180 -print -delete
+	rsync -Pavh --exclude=".*" "$HOME/.local/share/SignalPhotos/" "${XDG_PICTURES_DIR}/phone_pictures/signal"
 }

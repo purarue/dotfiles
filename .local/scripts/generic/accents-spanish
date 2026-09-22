@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+if picked="$(echo 'Á á É é Í í Ñ ñ Ó ó Ü ü ¿ ¡' | tr ' ' '\n' | fzf)"; then
+  APP=accents clp <<<"$picked"
+else
+  echo 'No item picked!'
+  exit 1
+fi
