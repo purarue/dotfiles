@@ -5,7 +5,7 @@ $(BOOKMARKS_FILE): ./dir-aliases ~/.config/directories
 	./dir-aliases
 preview.rc: ./generate_image_preview
 	./generate_image_preview
-hidden_filter.rc: ./hidden_template.rc
+hidden_filter.rc: ./hidden_template.rc ./generate_filter
 	./generate_filter
 clean:
 	rm -f ./hidden_filter.rc ./preview.rc $(BOOKMARKS_FILE)
