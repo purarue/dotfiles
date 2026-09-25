@@ -71,6 +71,7 @@ in
     pkgs.unzip
     pkgs.unar
     pkgs.chafa
+    pkgs.pdftk
     pkgs.tree
     pkgs.toilet
     pkgs.ts # task spooler

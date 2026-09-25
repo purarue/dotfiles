@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -o pipefail
+
+if ! havecmd pdftk; then
+    echo 'Could not find pdftk on your $PATH' >&2
+    exit 1
+fi
+if [[ -z "$1" ]]; then
+    echo 'Must pass at least one file as input' >&2
+    exit 1
+fi
+outfile="${OUTPUT_FILE:-out-$(date +'%s%N').pdf}"
+exec pdftk "$@" output "$outfile"

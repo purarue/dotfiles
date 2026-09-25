@@ -217,6 +217,7 @@ __pycache__
 
 # Top level config/local files to ignore
 /.config/*/zoom.conf
+/.config/zoom/
 /.config/3T
 /.config/BraveSoftware/
 /.config/Code - OSS/
