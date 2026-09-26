@@ -72,6 +72,7 @@ in
     pkgs.unar
     pkgs.chafa
     pkgs.pdftk
+    pkgs.ffmpegthumbnailer
     pkgs.tree
     pkgs.toilet
     pkgs.ts # task spooler
