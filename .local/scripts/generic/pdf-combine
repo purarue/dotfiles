@@ -11,4 +11,5 @@ if [[ -z "$1" ]]; then
     exit 1
 fi
 outfile="${OUTPUT_FILE:-out-$(date +'%s%N').pdf}"
+printf "Saving to %s\n" "$outfile" >&2
 exec pdftk "$@" output "$outfile"
