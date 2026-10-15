@@ -36,7 +36,7 @@ exec swayidle -w \
          resume 'swaymsg "output * dpms on"' \
          before-sleep $locker
 
-exec sway-disable-trackpad
+# exec sway-disable-trackpad
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when

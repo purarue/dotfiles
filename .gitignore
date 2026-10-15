@@ -115,6 +115,8 @@ __pycache__
 /.elvish
 /.emacs.d/
 /.floorp
+/.config/foorp
+*hub*
 /.gem
 /.ghc/ghci_history
 /.giget
