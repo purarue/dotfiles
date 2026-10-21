@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+DIR=W_SUBS
+mkdir -p "$DIR"
+
+for file in "$@"; do
+	srt="$(replace-extension "$file" srt)"
+	basefile="$(basename "$file")"
+	target="$(replace-extension "$basefile" mp4)"
+	ffmpeg -y -i "$file" "$srt" </dev/null
+	ffmpeg -i "$1" -vf subtitles="$srt" "${DIR}/${target}"
+done

@@ -115,7 +115,8 @@ __pycache__
 /.elvish
 /.emacs.d/
 /.floorp
-/.config/foorp
+/.config/floorp
+/.docker*
 *hub*
 /.gem
 /.ghc/ghci_history
@@ -220,6 +221,7 @@ __pycache__
 # Top level config/local files to ignore
 /.config/*/zoom.conf
 /.config/zoom/
+/.config/prisma*
 /.config/3T
 /.config/BraveSoftware/
 /.config/Code - OSS/

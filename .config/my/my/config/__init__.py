@@ -313,7 +313,7 @@ class trakt:
         export_path: Paths = data("trakt")
 
 
-#class mal:
+# class mal:
 #    class export:
 #        """https://github.com/purarue/malexport"""
 #
