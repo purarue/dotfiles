@@ -12,7 +12,7 @@ from collections.abc import Callable, Sequence
 from pathlib import Path
 from datetime import datetime, date, timedelta
 
-from my.core.common import PathIsh, Paths
+from my.core.common import Paths
 
 from .common import repo
 
@@ -23,14 +23,14 @@ from .common import repo
 #############
 
 
-def if_exists(p: PathIsh) -> Path | None:
+def if_exists(p: Path | str) -> Path | None:
     pp = Path(p)
     if pp.exists():
         return pp
     return None
 
 
-def filter_exists(pths: list[PathIsh]) -> list[Path]:
+def filter_exists(pths: list[Path | str]) -> list[Path]:
     res: list[Path] = []
     for p in pths:
         r = if_exists(p)
@@ -51,7 +51,7 @@ if file_mnt.exists():
     plaintext_mount = file_mnt
 
 
-def data_single(p: PathIsh) -> Path:
+def data_single(p: Path | str) -> Path:
     found = data(p)
     assert len(found) <= 1
     if len(found) == 0:
@@ -60,7 +60,7 @@ def data_single(p: PathIsh) -> Path:
         return found[0]
 
 
-def data(p: PathIsh) -> tuple[Path, ...]:
+def data(p: Path | str) -> tuple[Path, ...]:
     """prepend my data directory onto this path"""
     found: list[Path] = []
     base_data = PREFIX / p
@@ -126,8 +126,8 @@ DISABLED_MODULES = [
 
 
 class core:
-    cache_dir: PathIsh = path.expanduser("~/.cache/cachew")
-    tmp_dir: PathIsh = environ.get(
+    cache_dir: Path | str = path.expanduser("~/.cache/cachew")
+    tmp_dir: Path | str = environ.get(
         "HPI_TEMPDIR", path.join(tempfile.gettempdir(), "HPI-tempdir")
     )
     enabled_modules: Sequence[str] = []
@@ -148,7 +148,7 @@ class github:
     github GDPR export
     """
 
-    gdpr_dir: PathIsh = data_single("github/gdpr")
+    gdpr_dir: Path | str = data_single("github/gdpr")
     export_path: Paths = data("github/ghexport")
 
 
@@ -210,7 +210,7 @@ class reddit:
 # parses my zsh history and any backups
 class zsh:
     export_path: Paths = (*data("zsh_history"), *data("zsh_history_old"))
-    live_file: PathIsh | None = if_exists(path.join(environ["ZDOTDIR"], ".zsh_history"))
+    live_file: Path | str | None = if_exists(path.join(environ["ZDOTDIR"], ".zsh_history"))
 
 
 # parses bash history
@@ -317,8 +317,8 @@ class trakt:
 #    class export:
 #        """https://github.com/purarue/malexport"""
 #
-#        export_path: PathIsh = data("malexport")[-1]
-#        zip_backup_path: PathIsh = data("malexport_backups")[-1]
+#        export_path: Path | str = data("malexport")[-1]
+#        zip_backup_path: Path | str = data("malexport_backups")[-1]
 
 
 class grouvee:
@@ -384,12 +384,12 @@ class skype:
 
 class facebook:
     class gdpr:
-        gdpr_dir: PathIsh = data_single("gdpr/facebook")
+        gdpr_dir: Path | str = data_single("gdpr/facebook")
 
 
 class spotify:
     class gdpr:
-        gdpr_dir: PathIsh = data_single("gdpr/spotify")
+        gdpr_dir: Path | str = data_single("gdpr/spotify")
 
 
 class twitch:
@@ -404,7 +404,7 @@ class twitch:
     class gdpr:
         """parses the privacy request"""
 
-        gdpr_dir: PathIsh = data_single("twitch/gdpr")
+        gdpr_dir: Path | str = data_single("twitch/gdpr")
 
 
 class ipython:
@@ -449,12 +449,12 @@ class smscalls:
 
 class apple:
     class privacy_export:
-        gdpr_dir: PathIsh = data_single("gdpr/apple")
+        gdpr_dir: Path | str = data_single("gdpr/apple")
 
 
 class linkedin:
     class privacy_export:
-        gdpr_dir: PathIsh = data_single("gdpr/linkedin")
+        gdpr_dir: Path | str = data_single("gdpr/linkedin")
 
 
 class discord:
@@ -494,7 +494,7 @@ class twitter_archive:
 
 class stackexchange:
     export_path: Paths = data("stackexchange")
-    # stexport: Optional[PathIsh] = repo("stexport")
+    # stexport: Optional[Path | str] = repo("stexport")
 
 
 class offline:
